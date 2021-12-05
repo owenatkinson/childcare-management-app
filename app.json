@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "childcare-management-app",
+    "slug": "childcare-management-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "childcare-management-app"
+}
