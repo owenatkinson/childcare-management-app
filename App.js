@@ -3,16 +3,17 @@ import { StyleSheet, View, Button } from 'react-native';
 import Date from './Date';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ManageChildren from './Screens/ManageChildren';
+import ManageChildren from './Screens/ManageChildren/ManageChildren';
 import AllergyDetection from './Screens/AllergyDetection';
 import ViewLogs from './Screens/ViewLogs';
 import VisitorLogs from './Screens/VisitorLogs';
 import Policies from './Screens/Policies';
 import Planner from './Screens/Planner';
 import HealthSafetyChecks from './Screens/HealthSafetyChecks';
-import AttendanceRegister from './Screens/AttendanceRegister';
-import AccidentReports from './Screens/AccidentReports';
+import AttendanceRegister from './Screens/Attendance Register/AttendanceRegister';
+import AccidentReports from './Screens/Accident Report/AccidentReports';
 import Finances from './Screens/Finances';
+import AddNewChild from './Screens/ManageChildren/AddChildDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +34,7 @@ function App() {
           <Stack.Screen name="Attendance" component={AttendanceRegister} options={{ title: 'Attendance Register'}}/>
           <Stack.Screen name="Children" component={ManageChildren} options={{ title: 'Manage Children'}}/>
           <Stack.Screen name="Accident" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
-          <Stack.Screen name="Finances" component={Finances} options={{ title: 'Finances'}}/>
+          <Stack.Screen name="Finances" component={AddNewChild} options={{ title: 'Finances'}}/>
         </Stack.Navigator>
       </NavigationContainer>
   );
@@ -48,38 +49,47 @@ function HomeScreen({ navigation }) {
             title="Attendance Register"
             onPress={() => navigation.navigate('Attendance')}
           />
+          <View style={styles.space}></View>
           <Button 
             title="Health & Safety Checks"
             onPress={() => navigation.navigate('HealthSafetyChecks')}
           />
+          <View style={styles.space}></View>
           <Button
             title="Planner"
             onPress={() => navigation.navigate('Planner')}
           />
+          <View style={styles.space}></View>
           <Button 
             title="Manage Children"
             onPress={() => navigation.navigate('Children')}
           />
+          <View style={styles.space}></View>
           <Button 
             title="Policies"
             onPress={() => navigation.navigate('Policies')}
           />
+          <View style={styles.space}></View>
           <Button 
             title="Finances"
             onPress={() => navigation.navigate('Finances')}
           />
+          <View style={styles.space}></View>
           <Button
             title="Allergy Detection"
             onPress={() => navigation.navigate('Allergy')}
           />
+          <View style={styles.space}></View>
           <Button
             title="Accident Reports"
             onPress={() => navigation.navigate('Accident')}
           />
+          <View style={styles.space}></View>
           <Button
             title="View Logs"
             onPress={() => navigation.navigate('ViewLogs')}
           />
+          <View style={styles.space}></View>
           <Button
             title="Visitor Logs"
             onPress={() => navigation.navigate('Visitor')}
