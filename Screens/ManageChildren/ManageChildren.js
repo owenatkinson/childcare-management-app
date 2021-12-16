@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, LogBox } from 'react-native';
 // import AddNewChildButton from '../../AddButton';
 import "firebase/firestore";
 import { SafeAreaView } from 'react-native-safe-area-context';

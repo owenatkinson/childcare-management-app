@@ -47,11 +47,11 @@ class LoadChildren extends Component {
               return (
                 <ListItem 
                   key={i}
-                //   onPress={() => {
-                //     this.props.navigation.navigate('UpdateChildDetails', {
-                //       userkey: res.key
-                //     });
-                //   }}                        
+                  onPress={() => {
+                    this.props.navigation.navigate("UpdateChildDetails", {
+                      userkey: res.key
+                    });
+                  }}                        
                   bottomDivider>
                   <ListItem.Content>
                     <ListItem.Title>{res.child_forename} {res.child_surname}</ListItem.Title>
