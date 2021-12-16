@@ -12,6 +12,10 @@ function AddNewChild() {
   const [ childEmergencyContactName, setChildEmergencyContactName ] = useState('');
   const [ childEmergencyNumber, setChildEmergencyNumber ] = useState('');
   const [ childEmergencyRelation, setChildEmergencyRelation ] = useState('');
+  const [ doctorName, setDoctorName ] = useState('');
+  const [ doctorAddress, setDoctorAddress ] = useState('');
+  const [ doctorNumber, setDoctorNumber ] = useState('');
+
 
   const fireDB = app.firestore().collection('children');
 
@@ -24,7 +28,10 @@ function AddNewChild() {
       child_is_active: childIsActive,
       child_emergency_contact_name: childEmergencyContactName,
       child_emergency_contact_number: childEmergencyNumber,
-      child_emergency_contact_relation: childEmergencyRelation
+      child_emergency_contact_relation: childEmergencyRelation,
+      doctor_name: doctorName,
+      doctor_address: doctorAddress,
+      doctor_number: doctorNumber
     });
     setChildForename('');
     setChildSurname('');
@@ -34,6 +41,9 @@ function AddNewChild() {
     setChildEmergencyContactName('');
     setChildEmergencyNumber('');
     setChildEmergencyRelation('');
+    setDoctorName('');
+    setDoctorAddress('');
+    setDoctorNumber('');
   }
 
   return (
@@ -55,6 +65,12 @@ function AddNewChild() {
       <TextInput style={styles.input} label={'Emergency Contact Number'} value={childEmergencyNumber} onChangeText={setChildEmergencyNumber}/>
       <Text style={styles.bold}>Emergency Contact Relation</Text>
       <TextInput style={styles.input} label={'Emergency Contact Relation'} value={childEmergencyRelation} onChangeText={setChildEmergencyRelation}/>
+      <Text style={styles.bold}>Doctor's Name</Text>
+      <TextInput style={styles.input} label={'Doctor\'s Name'} value={doctorName} onChangeText={setDoctorName}/>
+      <Text style={styles.bold}>Doctor's Address</Text>
+      <TextInput style={styles.input} label={'Doctor\'s Address'} value={doctorAddress} onChangeText={setDoctorAddress}/>
+      <Text style={styles.bold}>Doctors's Number</Text>
+      <TextInput style={styles.input} label={'Doctors\'s Number'} value={doctorNumber} onChangeText={setDoctorNumber}/>
       <View style={styles.space}></View>
       <Button 
           title="Add Child"
