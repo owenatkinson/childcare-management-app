@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert } from 'react-native';
+import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 
@@ -10,7 +10,15 @@ class UpdateChildDetails extends Component {
       isLoading: true,
       forename: '',
       surname: '',
-      isActive: ''
+      dob: '',
+      allergies: '',
+      isActive: '',
+      emergencyName: '',
+      emergencyNumber: '',
+      emergencyRelation: '',
+      doctorName: '',
+      doctorAddress: '',
+      doctorNumber: '',
     };
   }
 
@@ -23,7 +31,15 @@ class UpdateChildDetails extends Component {
           key: res.id,
           forename: user.child_forename,
           surname: user.child_surname,
+          dob: user.child_DOB,
+          allergies: user.child_allergies,
           isActive: user.child_is_active,
+          emergencyName: user.child_emergency_contact_name,
+          emergencyNumber: user.child_emergency_contact_number,
+          emergencyRelation: user.child_emergency_contact_relation,
+          doctorName: user.doctor_name,
+          doctorAddress: user.doctor_address,
+          doctorNumber: user.doctor_number,
           isLoading: false
         });
       } else {
@@ -46,13 +62,27 @@ class UpdateChildDetails extends Component {
     docUpdate.set({
       child_forename: this.state.forename,
       child_surname: this.state.surname,
+      child_DOB: this.state.dob,
+      child_allergies: this.state.allergies,
       child_is_active: this.state.isActive,
+      child_emergency_contact_name: this.state.emergencyName,
+      child_emergency_contact_number: this.state.emergencyNumber,
+      child_emergency_contact_relation: this.state.emergencyRelation,
+      doctor_name: this.state.doctorName,
+      doctor_address: this.state.doctorAddress,
+      doctor_number: this.state.doctorNumber
     }).then(() => {
       this.setState({
         key: '',
         forename: '',
         surname: '',
         isActive: '',
+        emergencyName: '',
+        emergencyNumber: '',
+        emergencyRelation: '',
+        doctorName: '',
+        doctorAddress: '',
+        doctorNumber: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewChildren');
@@ -89,50 +119,110 @@ class UpdateChildDetails extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.formEl}>
+      <ScrollView>
+        <View style={styles.space}></View>
+          <Text style={styles.bold}>Child Forename</Text>
           <TextInput
+              style={styles.input}
               placeholder={'Forename'}
               value={this.state.forename}
               onChangeText={(val) => this.inputEl(val, 'forename')}
           />
-        </View>
-        <View style={styles.formEl}>
+          <Text style={styles.bold}>Child Surname</Text>
           <TextInput
-              // multiline={true}
+              style={styles.input}
               placeholder={'Surname'}
-              // numberOfLines={5}
               value={this.state.surname}
               onChangeText={(val) => this.inputEl(val, 'surname')}
           />
-        </View>
-        <View style={styles.formEl}>
+          <Text style={styles.bold}>Child DOB</Text>
           <TextInput
+              style={styles.input}
+              placeholder={'Date of Birth'}
+              value={this.state.dob}
+              onChangeText={(val) => this.inputEl(val, 'dob')}
+          />
+          <Text style={styles.bold}>Child Allergies</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Child Allergies'}
+              value={this.state.allergies}
+              onChangeText={(val) => this.inputEl(val, 'allergies')}
+          />
+          <Text style={styles.bold}>Child Is Active?</Text>
+          <TextInput
+              style={styles.input}
               placeholder={'Is Active'}
               value={this.state.isActive}
               onChangeText={(val) => this.inputEl(val, 'isActive')}
           />
-        </View>
-        <View style={styles.button}>
+          <Text style={styles.bold}>Emergency Contact Name</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Emergency Contact Name'}
+              value={this.state.emergencyName}
+              onChangeText={(val) => this.inputEl(val, 'emergencyName')}
+          />
+          <Text style={styles.bold}>Emergency Contact Number</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Emergency Contact Number'}
+              value={this.state.emergencyNumber}
+              onChangeText={(val) => this.inputEl(val, 'emergencyNumber')}
+          />
+          <Text style={styles.bold}>Emergency Contact Relation</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Emergency Contact Relation'}
+              value={this.state.emergencyRelation}
+              onChangeText={(val) => this.inputEl(val, 'emergencyRelation')}
+          />
+          <Text style={styles.bold}>Doctor's Name</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Doctor\'s Name'}
+              value={this.state.doctorName}
+              onChangeText={(val) => this.inputEl(val, 'doctorName')}
+          />
+          <Text style={styles.bold}>Doctor's Address</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Doctor\'s Address'}
+              value={this.state.doctorAddress}
+              onChangeText={(val) => this.inputEl(val, 'doctorAddress')}
+          />
+          <Text style={styles.bold}>Doctor's Number</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Doctor\'s Number'}
+              value={this.state.doctorNumber}
+              onChangeText={(val) => this.inputEl(val, 'doctorNumber')}
+          />
+          <View style={styles.space}></View>
           <Button
             title='Update'
             onPress={() => this.editChild()} 
             color="green"
           />
-          </View>
-         <View>
+          <View style={styles.space}></View>
           <Button
             title='Delete'
             onPress={this.alertDialog}
             color="red"
           />
-        </View>
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    backgroundColor: '#DADADA'
+  },
   container: {
     flex: 1,
     padding: 35
@@ -155,6 +245,12 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 8, 
+  },
+  bold: {
+    fontWeight: 'bold'
+  },
+  space: {
+    height: 20,
   }
 })
 

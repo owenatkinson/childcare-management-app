@@ -49,28 +49,28 @@ function AddNewChild() {
   return (
     <ScrollView>
       <View style={styles.space}></View>
-      <Text style={styles.bold}>Child Forename</Text>
-      <TextInput style={styles.input} label={'Child Forename'} value={childForename} onChangeText={setChildForename}/>
-      <Text style={styles.bold}>Child Surname</Text>
-      <TextInput style={styles.input} label={'Child Surname'} value={childSurname} onChangeText={setChildSurname}/>
-      <Text style={styles.bold}>Child DOB</Text>
-      <TextInput style={styles.input} label={'Child DOB'} value={childDOB} onChangeText={setChildDOB}/>
-      <Text style={styles.bold}>Child Allergies</Text>
-      <TextInput style={styles.input} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
-      <Text style={styles.bold}>Child Is Active?</Text>
-      <TextInput style={styles.input} label={'Child Is Active'} value={childIsActive} onChangeText={setChildIsActive}/>
-      <Text style={styles.bold}>Emergency Contact Name</Text>
-      <TextInput style={styles.input} label={'Emergency Contact Name'} value={childEmergencyContactName} onChangeText={setChildEmergencyContactName}/>
-      <Text style={styles.bold}>Emergency Contact Number</Text>
-      <TextInput style={styles.input} label={'Emergency Contact Number'} value={childEmergencyNumber} onChangeText={setChildEmergencyNumber}/>
-      <Text style={styles.bold}>Emergency Contact Relation</Text>
-      <TextInput style={styles.input} label={'Emergency Contact Relation'} value={childEmergencyRelation} onChangeText={setChildEmergencyRelation}/>
-      <Text style={styles.bold}>Doctor's Name</Text>
-      <TextInput style={styles.input} label={'Doctor\'s Name'} value={doctorName} onChangeText={setDoctorName}/>
-      <Text style={styles.bold}>Doctor's Address</Text>
-      <TextInput style={styles.input} label={'Doctor\'s Address'} value={doctorAddress} onChangeText={setDoctorAddress}/>
-      <Text style={styles.bold}>Doctors's Number</Text>
-      <TextInput style={styles.input} label={'Doctors\'s Number'} value={doctorNumber} onChangeText={setDoctorNumber}/>
+        <Text style={styles.bold}>Child Forename</Text>
+        <TextInput style={styles.input} label={'Child Forename'} value={childForename} onChangeText={setChildForename}/>
+        <Text style={styles.bold}>Child Surname</Text>
+        <TextInput style={styles.input} label={'Child Surname'} value={childSurname} onChangeText={setChildSurname}/>
+        <Text style={styles.bold}>Child DOB</Text>
+        <TextInput style={styles.input} label={'Child DOB'} value={childDOB} onChangeText={setChildDOB}/>
+        <Text style={styles.bold}>Child Allergies</Text>
+        <TextInput style={styles.input} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
+        <Text style={styles.bold}>Child Is Active?</Text>
+        <TextInput style={styles.input} label={'Child Is Active'} value={childIsActive} onChangeText={setChildIsActive}/>
+        <Text style={styles.bold}>Emergency Contact Name</Text>
+        <TextInput style={styles.input} label={'Emergency Contact Name'} value={childEmergencyContactName} onChangeText={setChildEmergencyContactName}/>
+        <Text style={styles.bold}>Emergency Contact Number</Text>
+        <TextInput style={styles.input} label={'Emergency Contact Number'} value={childEmergencyNumber} onChangeText={setChildEmergencyNumber}/>
+        <Text style={styles.bold}>Emergency Contact Relation</Text>
+        <TextInput style={styles.input} label={'Emergency Contact Relation'} value={childEmergencyRelation} onChangeText={setChildEmergencyRelation}/>
+        <Text style={styles.bold}>Doctor's Name</Text>
+        <TextInput style={styles.input} label={'Doctor\'s Name'} value={doctorName} onChangeText={setDoctorName}/>
+        <Text style={styles.bold}>Doctor's Address</Text>
+        <TextInput style={styles.input} label={'Doctor\'s Address'} value={doctorAddress} onChangeText={setDoctorAddress}/>
+        <Text style={styles.bold}>Doctor's Number</Text>
+        <TextInput style={styles.input} label={'Doctors\'s Number'} value={doctorNumber} onChangeText={setDoctorNumber}/>
       <View style={styles.space}></View>
       <Button 
           title="Add Child"

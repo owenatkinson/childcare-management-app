@@ -14,6 +14,8 @@ import Finances from './Screens/Finances';
 import AddNewChild from './Screens/ManageChildren/AddChildDetails';
 import LoadChildren from './LoadChildren';
 import UpdateChildDetails from './Screens/ManageChildren/UpdateChildDetails';
+import LogAccidentReport from './Screens/Accident Report/LogAccidentReport';
+import ViewAccidentReports from './Screens/Accident Report/ViewAccidentReports';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -36,6 +38,8 @@ const StackNavigator = () => {
           <Stack.Screen name="ViewChildren" component={LoadChildren} options={{ title: 'View Children'}}/>
           <Stack.Screen name="UpdateChildDetails" component={UpdateChildDetails} options={{ title: 'Update Child Details'}}/>
           <Stack.Screen name="Accident" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
+          <Stack.Screen name="LogAccidentReport" component={LogAccidentReport} options={{ title: 'Log Accident Reports'}}/>
+          <Stack.Screen name="ViewAccidentReports" component={ViewAccidentReports} options={{ title: 'View Accident Reports'}}/>
           <Stack.Screen name="Finances" component={Finances} options={{ title: 'Finances'}}/>
         </Stack.Navigator>
     );
