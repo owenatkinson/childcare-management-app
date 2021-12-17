@@ -12,10 +12,11 @@ import AttendanceRegister from './Screens/Attendance Register/AttendanceRegister
 import AccidentReports from './Screens/Accident Report/AccidentReports';
 import Finances from './Screens/Finances';
 import AddNewChild from './Screens/ManageChildren/AddChildDetails';
-import LoadChildren from './LoadChildren';
+import ViewChildren from './Screens/ManageChildren/ViewChildren';
 import UpdateChildDetails from './Screens/ManageChildren/UpdateChildDetails';
 import LogAccidentReport from './Screens/Accident Report/LogAccidentReport';
 import ViewAccidentReports from './Screens/Accident Report/ViewAccidentReports';
+import UpdateAccidentReport from './Screens/Accident Report/UpdateAccidentReport';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -35,11 +36,12 @@ const StackNavigator = () => {
           <Stack.Screen name="Attendance" component={AttendanceRegister} options={{ title: 'Attendance Register'}}/>
           <Stack.Screen name="Children" component={ManageChildren} options={{ title: 'Manage Children'}}/>
           <Stack.Screen name="AddNewChild" component={AddNewChild} options={{ title: 'Add New Child'}}/>
-          <Stack.Screen name="ViewChildren" component={LoadChildren} options={{ title: 'View Children'}}/>
+          <Stack.Screen name="ViewChildren" component={ViewChildren} options={{ title: 'View Children'}}/>
           <Stack.Screen name="UpdateChildDetails" component={UpdateChildDetails} options={{ title: 'Update Child Details'}}/>
           <Stack.Screen name="Accident" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
           <Stack.Screen name="LogAccidentReport" component={LogAccidentReport} options={{ title: 'Log Accident Reports'}}/>
           <Stack.Screen name="ViewAccidentReports" component={ViewAccidentReports} options={{ title: 'View Accident Reports'}}/>
+          <Stack.Screen name="UpdateAccidentReport" component={UpdateAccidentReport} options={{ title: 'Update Accident Report'}}/>
           <Stack.Screen name="Finances" component={Finances} options={{ title: 'Finances'}}/>
         </Stack.Navigator>
     );

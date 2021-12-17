@@ -4,13 +4,13 @@ import app from '../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 
-export default class ViewAccidentReports extends Component {
+export default class ViewChildren extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('accidentReports');
+    this.docs = app.firestore().collection('children');
     this.state = {
       isLoading: true,
-      accidentReports: []
+      children: []
     };
   }
 
@@ -23,19 +23,18 @@ export default class ViewAccidentReports extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const accidentReports = [];
+    const children = [];
     querySnapshot.forEach((res) => {
-      const { child_name, accident_date, accident_time, accident_notes } = res.data();
-      accidentReports.push({
+      const { child_forename, child_surname, child_is_active } = res.data();
+      children.push({
         key: res.id,
-        child_name,
-        accident_date,
-        accident_time,
-        accident_notes
+        child_forename,
+        child_surname,
+        child_is_active
       });
     });
     this.setState({
-      accidentReports,
+      children,
       isLoading: false
     });
   }
@@ -44,19 +43,19 @@ export default class ViewAccidentReports extends Component {
     return (
       <ScrollView style={styles.wrapper}>
           {
-            this.state.accidentReports.map((res, i) => {
+            this.state.children.map((res, i) => {
               return (
                 <ListItem 
                   key={i}
                   onPress={() => {
-                    this.props.navigation.navigate("UpdateAccidentReport", {
+                    this.props.navigation.navigate("UpdateChildDetails", {
                       userkey: res.key
                     });
                   }}                        
                   bottomDivider>
                   <ListItem.Content>
-                    <ListItem.Title>{res.child_name}</ListItem.Title>
-                    <ListItem.Subtitle>Date of Accident: {res.accident_date}</ListItem.Subtitle>
+                    <ListItem.Title>{res.child_forename} {res.child_surname}</ListItem.Title>
+                    <ListItem.Subtitle>Active: {res.child_is_active}</ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron 
                      color="black" 

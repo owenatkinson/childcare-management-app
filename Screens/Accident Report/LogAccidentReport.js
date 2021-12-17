@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 
-function LogAccidentReport() {
+export default function LogAccidentReport() {
   const [ childName, setChildName ] = useState('');
   const [ accidentDate, setAccidentDate ] = useState('');
   const [ accidentTime, setAccidentTime ] = useState('');
@@ -27,20 +27,20 @@ function LogAccidentReport() {
   return (
     <ScrollView>
       <View style={styles.space}></View>
-      <Text style={styles.bold}>Child Name</Text>
-      <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
+        <Text style={styles.bold}>Child Name</Text>
+        <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
       <View style={styles.space}></View>
-      <Text style={styles.bold}>Date of Accident</Text>
-      <TextInput style={styles.input} label={'Date of Accident'} value={accidentDate} onChangeText={setAccidentDate}/>
+        <Text style={styles.bold}>Date of Accident</Text>
+        <TextInput style={styles.input} label={'Date of Accident'} value={accidentDate} onChangeText={setAccidentDate}/>
       <View style={styles.space}></View>
-      <Text style={styles.bold}>Accident Time</Text>
-      <TextInput style={styles.input} label={'Accident Time'} value={accidentTime} onChangeText={setAccidentTime}/>
+        <Text style={styles.bold}>Accident Time</Text>
+        <TextInput style={styles.input} label={'Accident Time'} value={accidentTime} onChangeText={setAccidentTime}/>
       <View style={styles.space}></View>
-      <Text style={styles.bold}>Accident Notes</Text>
-      <TextInput style={styles.input} label={'Accident Notes'} value={accidentNotes} onChangeText={setAccidentNotes}/>
+        <Text style={styles.bold}>Accident Notes</Text>
+        <TextInput style={styles.input} label={'Accident Notes'} value={accidentNotes} onChangeText={setAccidentNotes}/>
       <View style={styles.space}></View>
       <Button 
-          title="Log Attendance"
+          title="Log Accident Report"
           onPress={() => addAccidentReport()}
         />
     </ScrollView>
@@ -62,5 +62,3 @@ const styles = StyleSheet.create({
     height: 20,
   }
 });
-
-export default LogAccidentReport;

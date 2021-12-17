@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 
-export default function AccidentReports() {
+export default function AccidentReports({ navigation }) {
   return (
-    <View style={styles.fixToText}>
+    <View style={styles.fixToText, styles.space}>
       <View style={styles.space}></View>
       <Button 
         title="Log Accident Report"
@@ -12,7 +12,7 @@ export default function AccidentReports() {
       <View style={styles.space}></View>
       <Button
         title="View Accident Reports"
-        onPress={() => navigation.navigate('ViewAccidentReport')}
+        onPress={() => navigation.navigate('ViewAccidentReports')}
       />
     </View>
   );

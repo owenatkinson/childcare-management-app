@@ -3,7 +3,7 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import app from '../../firebase';
 import "firebase/firestore";
 
-class UpdateChildDetails extends Component {
+export default class UpdateChildDetails extends Component {
   constructor() {
     super();
     this.state = {
@@ -202,13 +202,13 @@ class UpdateChildDetails extends Component {
           <Button
             title='Update'
             onPress={() => this.editChild()} 
-            color="green"
+            color="#0B8FDC"
           />
           <View style={styles.space}></View>
           <Button
             title='Delete'
             onPress={this.alertDialog}
-            color="red"
+            color="#EE752E"
           />
       </ScrollView>
     );
@@ -253,5 +253,3 @@ const styles = StyleSheet.create({
     height: 20,
   }
 })
-
-export default UpdateChildDetails;

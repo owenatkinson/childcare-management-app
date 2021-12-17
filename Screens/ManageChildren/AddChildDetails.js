@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 
-function AddNewChild() {
+export default function AddNewChild() {
   const [ childForename, setChildForename ] = useState('');
   const [ childSurname, setChildSurname ] = useState('');
   const [ childDOB, setChildDOB ] = useState('');
@@ -95,5 +95,3 @@ const styles = StyleSheet.create({
     height: 20,
   }
 });
-
-export default AddNewChild;
