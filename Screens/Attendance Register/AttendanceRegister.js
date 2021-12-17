@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
+import { CheckBox } from 'react-native-elements';
 
 function AttendanceRegister() {
   const [ additionalNotes, setAdditionalNotes ] = useState('');

@@ -4,7 +4,10 @@ import Home from './Screens/Home';
 import ManageChildren from './Screens/ManageChildren/ManageChildren';
 import AllergyDetection from './Screens/AllergyDetection';
 import ViewLogs from './Screens/ViewLogs';
-import VisitorLogs from './Screens/VisitorLogs';
+import VisitorLogs from './Screens/Visitor Logs/VisitorLogs';
+import UpdateVisitorLog from './Screens/Visitor Logs/UpdateVisitorLog';
+import LogVisitor from './Screens/Visitor Logs/LogVisitor';
+import ViewVisitorLogs from './Screens/Visitor Logs/ViewVisitorLogs';
 import Policies from './Screens/Policies';
 import Planner from './Screens/Planner';
 import HealthSafetyChecks from './Screens/HealthSafetyChecks';
@@ -43,6 +46,9 @@ const StackNavigator = () => {
           <Stack.Screen name="ViewAccidentReports" component={ViewAccidentReports} options={{ title: 'View Accident Reports'}}/>
           <Stack.Screen name="UpdateAccidentReport" component={UpdateAccidentReport} options={{ title: 'Update Accident Report'}}/>
           <Stack.Screen name="Finances" component={Finances} options={{ title: 'Finances'}}/>
+          <Stack.Screen name="UpdateVisitorLog" component={UpdateVisitorLog} options={{ title: 'Update Visitor Log'}}/>
+          <Stack.Screen name="LogVisitor" component={LogVisitor} options={{ title: 'Log Visitor'}}/>
+          <Stack.Screen name="ViewVisitorLogs" component={ViewVisitorLogs} options={{ title: 'View Visitor Logs'}}/>
         </Stack.Navigator>
     );
 };
