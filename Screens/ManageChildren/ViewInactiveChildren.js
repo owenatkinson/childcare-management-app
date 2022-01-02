@@ -44,7 +44,7 @@ export default class ViewChildren extends Component {
       <ScrollView style={styles.wrapper}>
           {
             this.state.children.map((res, i) => {
-              if(res.child_is_active == 'Y' || res.child_is_active == 'y'){
+              if(res.child_is_active == 'N' || res.child_is_active == 'n'){
                 return (
                   <ListItem 
                     key={i}
