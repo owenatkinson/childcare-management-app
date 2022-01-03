@@ -1,85 +1,51 @@
-import React, { Component } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import app from '../../firebase';
+import React, { useState } from 'react';
+import { View, Button } from 'react-native';
 import "firebase/firestore";
-import { ListItem } from 'react-native-elements';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+import ListLogs from './ListLogs';
 
-export default class ViewLogs extends Component {
-  constructor() {
-    super();
-    this.docs = app.firestore().collection('attendanceRegister');
-    this.state = {
-      isLoading: true,
-      logs: []
-    };
+export default function ViewLogs({ navigation }) {
+
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const convertDate = (dateInput) => {
+    return(moment(dateInput).format('D/M/YY'));
   }
 
-  componentDidMount() {
-    this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
-  }
-
-  componentWillUnmount(){
-    this.unsubscribe();
-  }
-
-  fetchCollection = (querySnapshot) => {
-    const logs = [];
-    querySnapshot.forEach((res) => {
-      const { child_name, date_of_attendance} = res.data();
-      logs.push({
-        key: res.id,
-        child_name,
-        date_of_attendance
-      });
-    });
-    this.setState({
-      logs,
-      isLoading: false
-    });
-  }
-
-  render() {
-    return (
-      <ScrollView style={styles.wrapper}>
-          {
-            this.state.logs.map((res, i) => {
-              return (
-                <ListItem 
-                  key={i}
-                  onPress={() => {
-                    this.props.navigation.navigate("ViewLogDetails", {
-                      userkey: res.key
-                    });
-                  }}                        
-                  bottomDivider>
-                  <ListItem.Content>
-                    <ListItem.Title>{res.child_name}</ListItem.Title>
-                    <ListItem.Subtitle>Date: {res.date_of_attendance}</ListItem.Subtitle>
-                  </ListItem.Content>
-                  <ListItem.Chevron 
-                    color="black" 
-                  />
-                </ListItem>
-              );
-            })
-          }
-      </ScrollView>
-    );
-  }
+  return (
+    <View>
+      <View>
+        <Button onPress={showDatepicker} title={convertDate(date)} />
+      </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+      <ListLogs navigation={navigation} changeDate={convertDate(date)}></ListLogs>
+    </View>
+  );
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    },
-    loader: {
-      position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',    
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-    }
-})

@@ -46,7 +46,6 @@ export default function HealthSafetyChecks({ navigation }) {
         />
       )}
       <View>
-        {/* pass a prop into the below declaration and deal with it within the DailyCovidList class*/}
         <DailyCovidList navigation={navigation} changeDate={convertDate(date)}></DailyCovidList>
       </View>
       <View>
