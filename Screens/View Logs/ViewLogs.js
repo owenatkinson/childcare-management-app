@@ -25,18 +25,11 @@ export default class ViewLogs extends Component {
   fetchCollection = (querySnapshot) => {
     const logs = [];
     querySnapshot.forEach((res) => {
-      const { child_name, date_of_attendance, check_in_time, check_out_time, dropped_by, collected_by, temperature_checked, meals_, additional_notes} = res.data();
+      const { child_name, date_of_attendance} = res.data();
       logs.push({
         key: res.id,
         child_name,
-        date_of_attendance,
-        check_in_time,
-        check_out_time,
-        dropped_by,
-        collected_by,
-        temperature_checked,
-        meals_,
-        additional_notes
+        date_of_attendance
       });
     });
     this.setState({

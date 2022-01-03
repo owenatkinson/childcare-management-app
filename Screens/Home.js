@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import Date from '../Date';
 
-function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   return (
       <View>
         <Date></Date>
@@ -82,5 +82,3 @@ const styles = StyleSheet.create({
     height: 20,
   }
 });
-
-export default HomeScreen;
