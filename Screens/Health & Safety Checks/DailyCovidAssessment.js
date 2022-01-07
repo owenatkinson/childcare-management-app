@@ -214,7 +214,6 @@ export default class DailyCovidAssessment extends Component {
         <ScrollView>
           <View style={styles.space}></View>
             <Text style={styles.bold}>Children put into childminder's care at the door</Text>
-            {/* need to replace this with a checkbox which will set value to true when checked or if previously checked, will read from db and mark it as already checked */}
             <TextInput
                 style={styles.input}
                 value={this.state.dailyCovidAssessmentCheck1}

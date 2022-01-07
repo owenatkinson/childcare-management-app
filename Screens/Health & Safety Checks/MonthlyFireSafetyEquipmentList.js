@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet } from 'react-native';
 import app from '../../firebase';
 import { ListItem } from 'react-native-elements';
 
-export default class DailyRiskList extends Component {
+export default class MonthlyFireSafetyEquipmentList extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('dailyRiskAssessment');
+    this.docs = app.firestore().collection('monthlyFireSafetyEquipmentCheck');
     this.state = {
       isLoading: true,
-      dailyRiskAssessment: [],
+      monthlyFireSafetyEquipmentCheck: [],
       changeDate: ''
     };
   }
@@ -23,19 +23,19 @@ export default class DailyRiskList extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const dailyRiskAssessment = [];
+    const monthlyFireSafetyEquipmentCheck = [];
 
     querySnapshot.forEach((res) => {
-      const { daily_risk_assessment_date, daily_risk_assessment_is_completed } = res.data();
-      dailyRiskAssessment.push({
+      const { monthly_fire_safety_date, monthly_fire_safety_is_completed } = res.data();
+      monthlyFireSafetyEquipmentCheck.push({
         key: res.id,
-        daily_risk_assessment_date,
-        daily_risk_assessment_is_completed
+        monthly_fire_safety_date,
+        monthly_fire_safety_is_completed
       });
     });
     this.setState({
-        dailyRiskAssessment,
-      isLoading: false
+        monthlyFireSafetyEquipmentCheck,
+        isLoading: false
     });
   }
 
@@ -43,20 +43,20 @@ export default class DailyRiskList extends Component {
     return (
       <ScrollView>
           {
-            this.state.dailyRiskAssessment.map((res, i) => {
-                if(res.daily_risk_assessment_date == this.props.changeDate){
+            this.state.monthlyFireSafetyEquipmentCheck.map((res, i) => {
+                if(res.monthly_fire_safety_date == this.props.changeDate){
                     return (
                     <ListItem 
                         key={i}
                         onPress={() => {
-                        this.props.navigation.navigate("DailyRiskAssessment", {
+                        this.props.navigation.navigate("MonthlyFireSafetyEquipmentCheck", {
                             userkey: res.key
                         });
                         }}                        
                         bottomDivider>
                         <ListItem.Content>
-                            <ListItem.Title>Daily Risk Assessment</ListItem.Title>
-                            <ListItem.Subtitle>Is Completed: {res.daily_risk_assessment_is_completed}</ListItem.Subtitle>
+                            <ListItem.Title>Monthly Fire Safety Equipment Check</ListItem.Title>
+                            <ListItem.Subtitle>Is Completed: {res.monthly_fire_safety_is_completed}</ListItem.Subtitle>
                         </ListItem.Content>
                         <ListItem.Chevron 
                         color="black" 

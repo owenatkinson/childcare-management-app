@@ -11,7 +11,7 @@ export default function LogAccidentReport() {
 
   const fireDB = app.firestore().collection('accidentReports');
 
-  async function addAccidentReport() {
+  async function addAccidentReport({ navigation }) {
     await fireDB.add({
       child_name: childName,
       accident_date: accidentDate,

@@ -26,8 +26,7 @@ import LogAccidentReport from './Screens/Accident Report/LogAccidentReport';
 import ViewAccidentReports from './Screens/Accident Report/ViewAccidentReports';
 import UpdateAccidentReport from './Screens/Accident Report/UpdateAccidentReport';
 import ViewInactiveChildren from './Screens/ManageChildren/ViewInactiveChildren';
-import DailyRiskList from './Screens/Health & Safety Checks/DailyRiskList';
-import DailyCovidList from './Screens/Health & Safety Checks/DailyCovidList';
+import AddDailyCovidAssessment from './Screens/Health & Safety Checks/AddDailyCovidAssessment';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -46,11 +45,10 @@ const StackNavigator = () => {
           <Stack.Screen name="Planner" component={Planner} options={{ title: 'Planner'}}/>
           <Stack.Screen name="HealthSafetyChecks" component={HealthSafetyChecks} options={{ title: 'Health & Safety Checks'}}/>
           <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
+          <Stack.Screen name="AddDailyCovidAssessment" component={AddDailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
           <Stack.Screen name="DailyRiskAssessment" component={DailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
-          <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Monthlty Fire Drill'}}/>
+          <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Monthly Fire Drill'}}/>
           <Stack.Screen name="MonthlyFireSafetyEquipmentCheck" component={MonthlyFireSafetyEquipmentCheck} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
-          <Stack.Screen name="DailyRiskList" component={DailyRiskList}/>
-          <Stack.Screen name="DailyCovidList" component={DailyCovidList}/>
           <Stack.Screen name="Attendance" component={AttendanceRegister} options={{ title: 'Attendance Register'}}/>
           <Stack.Screen name="Children" component={ManageChildren} options={{ title: 'Manage Children'}}/>
           <Stack.Screen name="AddNewChild" component={AddNewChild} options={{ title: 'Add New Child'}}/>

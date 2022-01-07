@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import app from '../../firebase';
 import { ListItem } from 'react-native-elements';
 
@@ -22,6 +22,14 @@ export default class DailyCovidList extends Component {
     this.unsubscribe();
   }
 
+  search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].daily_covid_assessment_date === nameKey) {
+            return myArray[i];
+        }
+    }
+}
+
   fetchCollection = (querySnapshot) => {
     const dailyCovidAssessment = [];
 
@@ -40,34 +48,64 @@ export default class DailyCovidList extends Component {
   }
 
   render() {
-    return (
-      <ScrollView>
-          {
-            this.state.dailyCovidAssessment.map((res, i) => {
-                if(res.daily_covid_assessment_date == this.props.changeDate){
-                    return (
-                    <ListItem 
-                        key={i}
-                        onPress={() => {
-                        this.props.navigation.navigate("DailyCovidAssessment", {
-                            userkey: res.key
-                        });
-                        }}                        
-                        bottomDivider>
-                        <ListItem.Content>
-                        <ListItem.Title>Daily COVID Assessment</ListItem.Title>
-                        <ListItem.Subtitle>Date: {res.daily_covid_assessment_date}, Is Completed: {res.daily_covid_assessment_is_completed}</ListItem.Subtitle>
-                        </ListItem.Content>
-                        <ListItem.Chevron 
-                        color="black" 
-                        />
-                    </ListItem>
-                    );
-                }
-            })
-          }
-      </ScrollView>
-    );
+    if (this.state.dailyCovidAssessment === undefined || this.state.dailyCovidAssessment.length == 0) {
+      return(
+        <View></View>
+      );
+    } else {      
+      const newArray = this.state.dailyCovidAssessment.filter( x => 
+        x.daily_covid_assessment_date == this.props.changeDate
+      );
+
+      if (newArray.length == 1){
+        return (
+          <ScrollView>
+              {
+                // for each daily covid check
+                newArray.map((res, i) =>  {
+                    // if daily covid check has the selected date, display in row
+                        return (
+                          <ListItem 
+                              key={i}
+                              onPress={() => {
+                              this.props.navigation.navigate("DailyCovidAssessment", {
+                                  userkey: res.key
+                              });
+                              }}                        
+                              bottomDivider>
+                              <ListItem.Content>
+                              <ListItem.Title>Daily COVID Assessment</ListItem.Title>
+                              <ListItem.Subtitle>Is Completed: {res.daily_covid_assessment_is_completed}</ListItem.Subtitle>
+                              </ListItem.Content>
+                              <ListItem.Chevron 
+                              color="black" 
+                              />
+                          </ListItem>
+                        );
+                })
+              }
+          </ScrollView>
+        );
+      } else {
+        return (
+          <ListItem 
+              onPress={() => {
+              this.props.navigation.navigate("AddDailyCovidAssessment", {
+                  changeDate: this.props.changeDate
+              });
+              }}  
+              bottomDivider>
+              <ListItem.Content>
+              <ListItem.Title>Daily COVID Assessment</ListItem.Title>
+              <ListItem.Subtitle>Is Completed: No</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron 
+              color="black" 
+              />
+          </ListItem>
+        );
+      }
+    }
   }
 }
 

@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet } from 'react-native';
 import app from '../../firebase';
 import { ListItem } from 'react-native-elements';
 
-export default class DailyRiskList extends Component {
+export default class MonthlyDrillList extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('dailyRiskAssessment');
+    this.docs = app.firestore().collection('monthlyFireDrill');
     this.state = {
       isLoading: true,
-      dailyRiskAssessment: [],
+      monthlyFireDrill: [],
       changeDate: ''
     };
   }
@@ -23,19 +23,19 @@ export default class DailyRiskList extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const dailyRiskAssessment = [];
+    const monthlyFireDrill = [];
 
     querySnapshot.forEach((res) => {
-      const { daily_risk_assessment_date, daily_risk_assessment_is_completed } = res.data();
-      dailyRiskAssessment.push({
+      const { monthly_fire_drill_date, monthly_fire_drill_is_completed } = res.data();
+      monthlyFireDrill.push({
         key: res.id,
-        daily_risk_assessment_date,
-        daily_risk_assessment_is_completed
+        monthly_fire_drill_date,
+        monthly_fire_drill_is_completed
       });
     });
     this.setState({
-        dailyRiskAssessment,
-      isLoading: false
+        monthlyFireDrill,
+        isLoading: false
     });
   }
 
@@ -43,20 +43,20 @@ export default class DailyRiskList extends Component {
     return (
       <ScrollView>
           {
-            this.state.dailyRiskAssessment.map((res, i) => {
-                if(res.daily_risk_assessment_date == this.props.changeDate){
+            this.state.monthlyFireDrill.map((res, i) => {
+                if(res.monthly_fire_drill_date == this.props.changeDate){
                     return (
                     <ListItem 
                         key={i}
                         onPress={() => {
-                        this.props.navigation.navigate("DailyRiskAssessment", {
+                        this.props.navigation.navigate("MonthlyFireDrill", {
                             userkey: res.key
                         });
                         }}                        
                         bottomDivider>
                         <ListItem.Content>
-                            <ListItem.Title>Daily Risk Assessment</ListItem.Title>
-                            <ListItem.Subtitle>Is Completed: {res.daily_risk_assessment_is_completed}</ListItem.Subtitle>
+                            <ListItem.Title>Monthly Fire Drill</ListItem.Title>
+                            <ListItem.Subtitle>Is Completed: {res.monthly_fire_drill_is_completed}</ListItem.Subtitle>
                         </ListItem.Content>
                         <ListItem.Chevron 
                         color="black" 

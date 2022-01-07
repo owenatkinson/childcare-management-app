@@ -4,6 +4,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import DailyCovidList from './DailyCovidList';
 import DailyRiskList from './DailyRiskList';
+import MonthlyDrillList from './MonthlyDrillList';
+import MonthlyFireSafetyEquipmentList from './MonthlyFireSafetyEquipmentList';
 
 export default function HealthSafetyChecks({ navigation }) {
   
@@ -50,6 +52,12 @@ export default function HealthSafetyChecks({ navigation }) {
       </View>
       <View>
         <DailyRiskList navigation={navigation} changeDate={convertDate(date)}></DailyRiskList>
+      </View>
+      <View>
+        <MonthlyDrillList navigation={navigation} changeDate={convertDate(date)}></MonthlyDrillList>
+      </View>
+      <View>
+        <MonthlyFireSafetyEquipmentList navigation={navigation} changeDate={convertDate(date)}></MonthlyFireSafetyEquipmentList>
       </View>
     </View>
   );
