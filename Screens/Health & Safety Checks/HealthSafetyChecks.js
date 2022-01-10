@@ -29,7 +29,7 @@ export default function HealthSafetyChecks({ navigation }) {
   };
 
   const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YY'));
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   return (

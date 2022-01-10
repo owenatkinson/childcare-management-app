@@ -27,6 +27,9 @@ import ViewAccidentReports from './Screens/Accident Report/ViewAccidentReports';
 import UpdateAccidentReport from './Screens/Accident Report/UpdateAccidentReport';
 import ViewInactiveChildren from './Screens/ManageChildren/ViewInactiveChildren';
 import AddDailyCovidAssessment from './Screens/Health & Safety Checks/AddDailyCovidAssessment';
+import AddDailyRiskAssessment from './Screens/Health & Safety Checks/AddDailyRiskAssessment';
+import AddMonthlyDrillList from './Screens/Health & Safety Checks/AddMonthlyDrillList';
+import AddMonthlyFireSafetyEquipmentList from './Screens/Health & Safety Checks/AddMonthlyFireSafetyEquipmentList';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -46,6 +49,9 @@ const StackNavigator = () => {
           <Stack.Screen name="HealthSafetyChecks" component={HealthSafetyChecks} options={{ title: 'Health & Safety Checks'}}/>
           <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
           <Stack.Screen name="AddDailyCovidAssessment" component={AddDailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
+          <Stack.Screen name="AddDailyRiskAssessment" component={AddDailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
+          <Stack.Screen name="AddMonthlyDrillList" component={AddMonthlyDrillList} options={{ title: 'Monthly Fire Drill'}}/>
+          <Stack.Screen name="AddMonthlyFireSafetyEquipmentList" component={AddMonthlyFireSafetyEquipmentList} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
           <Stack.Screen name="DailyRiskAssessment" component={DailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
           <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Monthly Fire Drill'}}/>
           <Stack.Screen name="MonthlyFireSafetyEquipmentCheck" component={MonthlyFireSafetyEquipmentCheck} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>

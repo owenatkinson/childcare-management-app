@@ -28,7 +28,7 @@ export default class DailyCovidList extends Component {
             return myArray[i];
         }
     }
-}
+  }
 
   fetchCollection = (querySnapshot) => {
     const dailyCovidAssessment = [];

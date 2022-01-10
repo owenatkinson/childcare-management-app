@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 
@@ -400,25 +400,25 @@ export default class DailyRiskAssessment extends Component {
                 value={this.state.dailyRiskAssessmentCheck30}
                 onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck30')}
             />
-             <Text style={styles.bold}>Car seats - appropriate and secure</Text>
+            <Text style={styles.bold}>Car seats - appropriate and secure</Text>
             <TextInput
                 style={styles.input}
                 value={this.state.dailyRiskAssessmentCheck31}
                 onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck31')}
             />
-             <Text style={styles.bold}>Outings risk assessment</Text>
+            <Text style={styles.bold}>Outings risk assessment</Text>
             <TextInput
                 style={styles.input}
                 value={this.state.dailyRiskAssessmentCheck32}
                 onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck32')}
             />
-             <Text style={styles.bold}>Emergency contact details</Text>
+            <Text style={styles.bold}>Emergency contact details</Text>
             <TextInput
                 style={styles.input}
                 value={this.state.dailyRiskAssessmentCheck33}
                 onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck33')}
             />
-             <Text style={styles.bold}>First aid box</Text>
+            <Text style={styles.bold}>First aid box</Text>
             <TextInput
                 style={styles.input}
                 value={this.state.dailyRiskAssessmentCheck34}
