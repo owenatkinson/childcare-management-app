@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import { View, Button, Platform, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import DailyCovidList from './DailyCovidList';
-import DailyRiskList from './DailyRiskList';
-import MonthlyDrillList from './MonthlyDrillList';
-import MonthlyFireSafetyEquipmentList from './MonthlyFireSafetyEquipmentList';
+import DailyCovidList from './CheckLists/DailyCovidList';
+import DailyRiskList from './CheckLists/DailyRiskList';
+import MonthlyDrillList from './CheckLists/MonthlyDrillList';
+import MonthlyFireSafetyEquipmentList from './CheckLists/MonthlyFireSafetyEquipmentList';
 
 export default function HealthSafetyChecks({ navigation }) {
   

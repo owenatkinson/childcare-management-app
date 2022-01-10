@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import "firebase/firestore";
 
 export default function AddDailyCovidAssessment({route}) {

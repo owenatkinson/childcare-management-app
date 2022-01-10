@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import { ListItem } from 'react-native-elements';
 
 export default class DailyCovidList extends Component {
