@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
 
@@ -79,30 +80,34 @@ export default class MonthlyFireDrill extends Component {
         <Text>{this.state.monthlyFireDrillDate}</Text>
         <ScrollView>
           <View style={styles.space}></View>
-            <Text style={styles.bold}>Children put into childminder's care at the door</Text>
+            <Text style={styles.bold}>Number of People</Text>
             <TextInput
                 style={styles.input}
                 value={this.state.monthlyFireDrillNumberOfPeople}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNumberOfPeople')}
             />
-            <Text style={styles.bold}>Staggered drop off and pick up</Text>
+            <Text style={styles.bold}>Time Completed</Text>
             <TextInput
                 style={styles.input}
                 value={this.state.monthlyFireDrillTimeCompleted}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillTimeCompleted')}
             />
-            <Text style={styles.bold}>Ask if parents, children siblings have symptoms</Text>
+            <Text style={styles.bold}>Notes</Text>
             <TextInput
-                style={styles.input}
+                style={styles.multilineInput}
+                multiline
+                numberOfLines={4}
                 value={this.state.monthlyFireDrillNote}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNote')}
             />
-            <Text style={styles.bold}>Coats and shoes off</Text>
-            <TextInput
-                style={styles.input}
+            <Text style={styles.bold}>Check Completed</Text>
+            <View>
+              <CheckBox
                 value={this.state.monthlyFireDrillIsCompleted}
-                onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillIsCompleted')}
-            />
+                onValueChange={(val) => this.inputEl(val, 'monthlyFireDrillIsCompleted')}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
+              />
+            </View>
             <View style={styles.space}></View>
             <Button
               title='Update'
@@ -125,28 +130,16 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#DADADA'
   },
+  multilineInput: {
+    textAlignVertical: 'top',
+    borderWidth: 1,
+    margin: 12,
+    padding: 10,
+    backgroundColor: '#DADADA'
+  },
   container: {
     flex: 1,
     padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
   },
   bold: {
     fontWeight: 'bold'

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
 
@@ -10,7 +11,7 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
       isLoading: true,
       monthlyFireSafetyDate: '',
       monthlyFireSafetyNote: '',
-      monthlyFireDSafetyIsCompleted: ''
+      monthlyFireSafetyIsCompleted: ''
     };
   }
 
@@ -78,11 +79,13 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireSafetyNote')}
             />
             <Text style={styles.bold}>Is Completed</Text>
-            <TextInput
-                style={styles.input}
+            <View>
+              <CheckBox
                 value={this.state.monthlyFireSafetyIsCompleted}
-                onChangeText={(val) => this.inputEl(val, 'monthlyFireSafetyIsCompleted')}
-            />
+                onValueChange={(val) => this.inputEl(val, 'monthlyFireSafetyIsCompleted')}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
+              />
+            </View>
             <View style={styles.space}></View>
             <Button
               title='Update'

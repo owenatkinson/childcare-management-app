@@ -9,6 +9,7 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@react-native-community/checkbox": "^0.5.9",
     "@react-native-community/datetimepicker": "3.2.0",
     "@react-native-firebase/app": "^13.1.0",
     "@react-native-firebase/firestore": "^13.1.0",
