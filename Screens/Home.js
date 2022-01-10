@@ -24,7 +24,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.space}></View>
           <Button 
             title="Manage Children"
-            onPress={() => navigation.navigate('Children')}
+            onPress={() => navigation.navigate('ManageChildren')}
           />
           <View style={styles.space}></View>
           <Button 
@@ -44,7 +44,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.space}></View>
           <Button
             title="Accident Reports"
-            onPress={() => navigation.navigate('Accident')}
+            onPress={() => navigation.navigate('AccidentReports')}
           />
           <View style={styles.space}></View>
           <Button
@@ -54,24 +54,12 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.space}></View>
           <Button
             title="Visitor Logs"
-            onPress={() => navigation.navigate('Visitor')}
+            onPress={() => navigation.navigate('VisitorLogs')}
           />
         </View>
       </View>
   );
 }
-
-// const Buttons = (props) => {
-//   return (
-//     <View>
-//        <Button
-//           title={props.name}
-//           style={styles.button}
-//         />
-//       <View style={styles.space}></View>
-//     </View>
-//   );
-// }
 
 const styles = StyleSheet.create({
   fixToText: {

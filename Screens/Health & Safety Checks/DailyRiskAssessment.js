@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
+import { Button, View, StyleSheet, ScrollView, Text } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
 
@@ -210,219 +211,222 @@ export default class DailyRiskAssessment extends Component {
           <View style={styles.bottomBorder}>
             <Text style={styles.headerText}>All Areas</Text>
             <Text style={[styles.bold, styles.space]}>Wires, Cables & Sockets</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck1}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck1')}
+            <CheckBox
+              disabled={false}
+              value={this.state.dailyRiskAssessmentCheck1}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck1')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Floor clear - trips/spills</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck2}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck2')}
+            <CheckBox
+              disabled={false}
+              value={this.state.dailyRiskAssessmentCheck2}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck2')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Radiator/hot water temperatures</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck3}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck3')}
+            <CheckBox
+              disabled={false}
+              value={this.state.dailyRiskAssessmentCheck3}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck3')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Spare batteries out of reach</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck4}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck4')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck4}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck4')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Plastic bags stored away</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck5}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck5')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck5}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck5')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Air fresheners/candles out of reach</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck6}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck6')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck6}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck6')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Medicines/painkillers stored away</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck7}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck7')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck7}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck7')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Matches/lighters stored away</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck8}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck8')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck8}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck8')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Furniture stable/equipment safe</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck9}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck9')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck9}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck9')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Safety gates secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck10}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck10')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck10}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck10')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Escape routes clear (keys safe)</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck11}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck11')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck11}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck11')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Fire safety equipment checked/tested</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck12}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck12')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck12}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck12')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Carbon monoxide alarm checked/tested</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck13}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck13')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck13}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck13')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
           <View style={styles.bottomBorder}>
             <Text style={[styles.headerText]}>Lounge/Play areas</Text>
             <Text style={styles.bold}>Toys/equipment clean and safe</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck14}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck14')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck14}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck14')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Small toys out of reach babies/toddlers</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck15}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck15')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck15}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck15')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Safety equipment secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck16}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck16')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck16}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck16')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Window/blinds chords secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck17}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck17')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck17}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck17')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
           <View style={styles.bottomBorder}>
             <Text style={styles.headerText}>Kitchen/Eating area</Text>
             <Text style={styles.bold}>Clean and tidy</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck18}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck18')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck18}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck18')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Cleaning products/alcohol secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck19}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck19')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck19}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck19')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Knives/other hazards secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck20}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck20')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck20}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck20')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
           <View style={styles.bottomBorder}>
             <Text style={styles.headerText}>Toilet/Bathroom/Changing area</Text>
             <Text style={styles.bold}>Clean and tidy</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck21}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck21')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck21}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck21')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Toiletries out of reach</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck22}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck22')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck22}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck22')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Clean towels/paper towels</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck23}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck23')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck23}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck23')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Toilet roll/wipes/nappy bags/gloves</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck24}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck24')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck24}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck24')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
             <Text style={styles.headerText}>Garden/outdoors/outings</Text>
             <Text style={styles.bold}>Gates locked/boundaries secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck25}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck25')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck25}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck25')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Animal fouling</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck26}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck26')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck26}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck26')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Trip hazards</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck27}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck27')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck27}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck27')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Sharp objects/garden tools secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck28}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck28')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck28}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck28')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Play equipment safe</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck29}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck29')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck29}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck29')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Buggies/pushchairs/reins secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck30}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck30')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck30}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck30')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Car seats - appropriate and secure</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck31}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck31')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck31}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck31')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Outings risk assessment</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck32}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck32')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck32}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck32')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Emergency contact details</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck33}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck33')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck33}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck33')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>First aid box</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dailyRiskAssessmentCheck34}
-                onChangeText={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck34')}
+            <CheckBox
+              value={this.state.dailyRiskAssessmentCheck34}
+              onValueChange={(val) => this.inputEl(val, 'dailyRiskAssessmentCheck34')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <View style={styles.space}></View>
             <Button

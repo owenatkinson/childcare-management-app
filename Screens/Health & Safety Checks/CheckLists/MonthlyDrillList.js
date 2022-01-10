@@ -88,7 +88,7 @@ export default class MonthlyDrillList extends Component {
                             bottomDivider>
                             <ListItem.Content>
                                 <ListItem.Title>Monthly Fire Drill</ListItem.Title>
-                                <ListItem.Subtitle>Is Completed: {res.monthly_fire_drill_is_completed}</ListItem.Subtitle>
+                                <ListItem.Subtitle>Is Completed: Yes</ListItem.Subtitle>
                             </ListItem.Content>
                             <ListItem.Chevron 
                             color="black" 

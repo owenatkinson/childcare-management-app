@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
+import CheckBox from '@react-native-community/checkbox';
 
 export default class UpdateChildDetails extends Component {
   constructor() {
@@ -85,7 +86,7 @@ export default class UpdateChildDetails extends Component {
         doctorNumber: '',
         isLoading: false,
       });
-      this.props.navigation.navigate('ViewChildren');
+      this.props.navigation.navigate('ManageChildren');
     })
     .catch((error) => {
       console.error(error);
@@ -93,28 +94,6 @@ export default class UpdateChildDetails extends Component {
         isLoading: false,
       });
     });
-  }
-
-  deleteChild() {
-    const docRef = app.firestore().collection('children').doc(this.props.route.params.userkey)
-      docRef.delete().then((res) => {
-          console.log('Doc deleted.')
-          this.props.navigation.navigate('ViewChildren');
-      })
-  }
-
-  alertDialog=()=>{
-    Alert.alert(
-      'Delete',
-      'Really?',
-      [
-        {text: 'Yes', onPress: () => this.deleteChild()},
-        {text: 'No', onPress: () => console.log('Item not deleted'), style: 'cancel'},
-      ],
-      { 
-        cancelable: true 
-      }
-    );
   }
 
   render() {
@@ -150,11 +129,11 @@ export default class UpdateChildDetails extends Component {
               onChangeText={(val) => this.inputEl(val, 'allergies')}
           />
           <Text style={styles.bold}>Child Is Active?</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Is Active'}
-              value={this.state.isActive}
-              onChangeText={(val) => this.inputEl(val, 'isActive')}
+          <CheckBox
+            disabled={false}
+            value={this.state.isActive}
+            onValueChange={(val) => this.inputEl(val, 'isActive')}
+            tintColors={{ true: "#0B8FDC", false: "orange"}}
           />
           <Text style={styles.bold}>Emergency Contact Name</Text>
           <TextInput
@@ -205,11 +184,6 @@ export default class UpdateChildDetails extends Component {
             color="#0B8FDC"
           />
           <View style={styles.space}></View>
-          <Button
-            title='Delete'
-            onPress={this.alertDialog}
-            color="#EE752E"
-          />
       </ScrollView>
     );
   }

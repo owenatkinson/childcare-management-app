@@ -41,7 +41,7 @@ const StackNavigator = () => {
             headerTitleStyle: {color: '#fff', fontWeight: 'bold', fontSize: 22}}}>
           <Stack.Screen name="Home" component={Home} options={{title: 'My Childcare App'}}/>
           <Stack.Screen name="Allergy" component={AllergyDetection} options={{ title: 'Allergy Detection'}}/>
-          <Stack.Screen name="Visitor" component={VisitorLogs} options={{ title: 'Visitor Logs'}}/>
+          <Stack.Screen name="VisitorLogs" component={VisitorLogs} options={{ title: 'Visitor Logs'}}/>
           <Stack.Screen name="ViewLogs" component={ViewLogs} options={{ title: 'View Daily Logs'}}/>
           <Stack.Screen name="ViewLogDetails" component={ViewLogDetails} options={{ title: 'View Log Details'}}/>
           <Stack.Screen name="Policies" component={Policies} options={{ title: 'Policies'}}/>
@@ -56,12 +56,12 @@ const StackNavigator = () => {
           <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Monthly Fire Drill'}}/>
           <Stack.Screen name="MonthlyFireSafetyEquipmentCheck" component={MonthlyFireSafetyEquipmentCheck} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
           <Stack.Screen name="Attendance" component={AttendanceRegister} options={{ title: 'Attendance Register'}}/>
-          <Stack.Screen name="Children" component={ManageChildren} options={{ title: 'Manage Children'}}/>
+          <Stack.Screen name="ManageChildren" component={ManageChildren} options={{ title: 'Manage Children'}}/>
           <Stack.Screen name="AddNewChild" component={AddNewChild} options={{ title: 'Add New Child'}}/>
           <Stack.Screen name="ViewChildren" component={ViewChildren} options={{ title: 'View Active Children'}}/>
           <Stack.Screen name="ViewInactiveChildren" component={ViewInactiveChildren} options={{ title: 'View Inactive Children'}}/>
           <Stack.Screen name="UpdateChildDetails" component={UpdateChildDetails} options={{ title: 'Update Child Details'}}/>
-          <Stack.Screen name="Accident" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
+          <Stack.Screen name="AccidentReports" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
           <Stack.Screen name="LogAccidentReport" component={LogAccidentReport} options={{ title: 'Log Accident Reports'}}/>
           <Stack.Screen name="ViewAccidentReports" component={ViewAccidentReports} options={{ title: 'View Accident Reports'}}/>
           <Stack.Screen name="UpdateAccidentReport" component={UpdateAccidentReport} options={{ title: 'Update Accident Report'}}/>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import app from '../../../firebase';
 import "firebase/firestore";
 
@@ -129,212 +130,246 @@ export default function AddDailyRiskAssessment({route}) {
             <View style={styles.space}></View>
             <Text style={styles.headerText}>All Areas</Text>
             <Text style={[styles.bold, styles.space]}>Wires, Cables & Sockets</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck1}
-                onChangeText={setDailyRiskAssessmentCheck1}
+                onValueChange={setDailyRiskAssessmentCheck1}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Floor clear - trips/spills</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck2}
-                onChangeText={setDailyRiskAssessmentCheck2}
+                onValueChange={setDailyRiskAssessmentCheck2}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Radiator/hot water temperatures</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck3}
-                onChangeText={setDailyRiskAssessmentCheck3}
+                onValueChange={setDailyRiskAssessmentCheck3}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Spare batteries out of reach</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck4}
-                onChangeText={setDailyRiskAssessmentCheck4}
+                onValueChange={setDailyRiskAssessmentCheck4}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Plastic bags stored away</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck5}
-                onChangeText={setDailyRiskAssessmentCheck5}
+                onValueChange={setDailyRiskAssessmentCheck5}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Air fresheners/candles out of reach</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck6}
-                onChangeText={setDailyRiskAssessmentCheck6}
+                onValueChange={setDailyRiskAssessmentCheck6}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Medicines/painkillers stored away</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck7}
-                onChangeText={setDailyRiskAssessmentCheck7}
+                onValueChange={setDailyRiskAssessmentCheck7}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Matches/lighters stored away</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck8}
-                onChangeText={setDailyRiskAssessmentCheck8}
+                onValueChange={setDailyRiskAssessmentCheck8}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Furniture stable/equipment safe</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck9}
-                onChangeText={setDailyRiskAssessmentCheck9}
+                onValueChange={setDailyRiskAssessmentCheck9}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Safety gates secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck10}
-                onChangeText={setDailyRiskAssessmentCheck10}
+                onValueChange={setDailyRiskAssessmentCheck10}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Escape routes clear (keys safe)</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck11}
-                onChangeText={setDailyRiskAssessmentCheck11}
+                onValueChange={setDailyRiskAssessmentCheck11}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Fire safety equipment checked/tested</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck12}
-                onChangeText={setDailyRiskAssessmentCheck12}
+                onValueChange={setDailyRiskAssessmentCheck12}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Carbon monoxide alarm checked/tested</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck13}
-                onChangeText={setDailyRiskAssessmentCheck13}
+                onValueChange={setDailyRiskAssessmentCheck13}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={[styles.headerText]}>Lounge/Play areas</Text>
             <Text style={styles.bold}>Toys/equipment clean and safe</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck14}
-                onChangeText={setDailyRiskAssessmentCheck14}
+                onValueChange={setDailyRiskAssessmentCheck14}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Small toys out of reach babies/toddlers</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck15}
-                onChangeText={setDailyRiskAssessmentCheck15}
+                onValueChange={setDailyRiskAssessmentCheck15}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Safety equipment secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck16}
-                onChangeText={setDailyRiskAssessmentCheck16}
+                onValueChange={setDailyRiskAssessmentCheck16}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Window/blinds chords secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck17}
-                onChangeText={setDailyRiskAssessmentCheck17}
+                onValueChange={setDailyRiskAssessmentCheck17}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.headerText}>Kitchen/Eating area</Text>
             <Text style={styles.bold}>Clean and tidy</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck18}
-                onChangeText={setDailyRiskAssessmentCheck18}
+                onValueChange={setDailyRiskAssessmentCheck18}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Cleaning products/alcohol secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck19}
-                onChangeText={setDailyRiskAssessmentCheck19}
+                onValueChange={setDailyRiskAssessmentCheck19}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Knives/other hazards secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck20}
-                onChangeText={setDailyRiskAssessmentCheck20}
+                onValueChange={setDailyRiskAssessmentCheck20}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.headerText}>Toilet/Bathroom/Changing area</Text>
             <Text style={styles.bold}>Clean and tidy</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck21}
-                onChangeText={setDailyRiskAssessmentCheck21}
+                onValueChange={setDailyRiskAssessmentCheck21}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Toiletries out of reach</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck22}
-                onChangeText={setDailyRiskAssessmentCheck22}
+                onValueChange={setDailyRiskAssessmentCheck22}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Clean towels/paper towels</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck23}
-                onChangeText={setDailyRiskAssessmentCheck23}
+                onValueChange={setDailyRiskAssessmentCheck23}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Toilet roll/wipes/nappy bags/gloves</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck24}
-                onChangeText={setDailyRiskAssessmentCheck24}
+                onValueChange={setDailyRiskAssessmentCheck24}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.headerText}>Garden/outdoors/outings</Text>
             <Text style={styles.bold}>Gates locked/boundaries secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck25}
-                onChangeText={setDailyRiskAssessmentCheck25}
+                onValueChange={setDailyRiskAssessmentCheck25}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Animal fouling</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck26}
-                onChangeText={setDailyRiskAssessmentCheck26}
+                onValueChange={setDailyRiskAssessmentCheck26}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Trip hazards</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck27}
-                onChangeText={setDailyRiskAssessmentCheck27}
+                onValueChange={setDailyRiskAssessmentCheck27}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Sharp objects/garden tools secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck28}
-                onChangeText={setDailyRiskAssessmentCheck28}
+                onValueChange={setDailyRiskAssessmentCheck28}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Play equipment safe</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck29}
-                onChangeText={setDailyRiskAssessmentCheck29}
+                onValueChange={setDailyRiskAssessmentCheck29}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Buggies/pushchairs/reins secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck30}
-                onChangeText={setDailyRiskAssessmentCheck30}
+                onValueChange={setDailyRiskAssessmentCheck30}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Car seats - appropriate and secure</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck31}
-                onChangeText={setDailyRiskAssessmentCheck31}
+                onValueChange={setDailyRiskAssessmentCheck31}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Outings risk assessment</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck32}
-                onChangeText={setDailyRiskAssessmentCheck32}
+                onValueChange={setDailyRiskAssessmentCheck32}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Emergency contact details</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck33}
-                onChangeText={setDailyRiskAssessmentCheck33}
+                onValueChange={setDailyRiskAssessmentCheck33}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>First aid box</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyRiskAssessmentCheck34}
-                onChangeText={setDailyRiskAssessmentCheck34}
+                onValueChange={setDailyRiskAssessmentCheck34}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <View style={styles.space}></View>
             <Button 

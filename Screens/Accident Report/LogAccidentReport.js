@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 
-export default function LogAccidentReport() {
+export default function LogAccidentReport({ navigation }) {
   const [ childName, setChildName ] = useState('');
   const [ accidentDate, setAccidentDate ] = useState('');
   const [ accidentTime, setAccidentTime ] = useState('');
@@ -11,17 +11,14 @@ export default function LogAccidentReport() {
 
   const fireDB = app.firestore().collection('accidentReports');
 
-  async function addAccidentReport({ navigation }) {
+  async function addAccidentReport() {
     await fireDB.add({
       child_name: childName,
       accident_date: accidentDate,
       accident_time: accidentTime,
       accident_notes: accidentNotes
     });
-    setChildName('');
-    setAccidentDate('');
-    setAccidentTime('');
-    setAccidentNotes('');
+    navigation.navigate('AccidentReports');
   }
 
   return (

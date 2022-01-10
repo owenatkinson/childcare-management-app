@@ -88,7 +88,7 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
                               bottomDivider>
                               <ListItem.Content>
                                   <ListItem.Title>Monthly Fire Safety Equipment Check</ListItem.Title>
-                                  <ListItem.Subtitle>Is Completed: {res.monthly_fire_safety_is_completed}</ListItem.Subtitle>
+                                  <ListItem.Subtitle>Is Completed: Yes</ListItem.Subtitle>
                               </ListItem.Content>
                               <ListItem.Chevron 
                               color="black" 

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
+import CheckBox from '@react-native-community/checkbox';
 
-export default function AddNewChild() {
+export default function AddNewChild({ navigation }) {
   const [ childForename, setChildForename ] = useState('');
   const [ childSurname, setChildSurname ] = useState('');
   const [ childDOB, setChildDOB ] = useState('');
@@ -15,8 +16,6 @@ export default function AddNewChild() {
   const [ doctorName, setDoctorName ] = useState('');
   const [ doctorAddress, setDoctorAddress ] = useState('');
   const [ doctorNumber, setDoctorNumber ] = useState('');
-
-
   const fireDB = app.firestore().collection('children');
 
   async function addChild() {
@@ -33,17 +32,7 @@ export default function AddNewChild() {
       doctor_address: doctorAddress,
       doctor_number: doctorNumber
     });
-    setChildForename('');
-    setChildSurname('');
-    setChildDOB('');
-    setChildAllergies('');
-    setChildIsActive('');
-    setChildEmergencyContactName('');
-    setChildEmergencyNumber('');
-    setChildEmergencyRelation('');
-    setDoctorName('');
-    setDoctorAddress('');
-    setDoctorNumber('');
+    navigation.navigate('ManageChildren');
   }
 
   return (
@@ -58,7 +47,12 @@ export default function AddNewChild() {
         <Text style={styles.bold}>Child Allergies</Text>
         <TextInput style={styles.input} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
         <Text style={styles.bold}>Child Is Active?</Text>
-        <TextInput style={styles.input} label={'Child Is Active'} value={childIsActive} onChangeText={setChildIsActive}/>
+        <CheckBox
+          disabled={false}
+          value={childIsActive}
+          onValueChange={setChildIsActive}
+          tintColors={{ true: "#0B8FDC", false: "orange"}}
+        />
         <Text style={styles.bold}>Emergency Contact Name</Text>
         <TextInput style={styles.input} label={'Emergency Contact Name'} value={childEmergencyContactName} onChangeText={setChildEmergencyContactName}/>
         <Text style={styles.bold}>Emergency Contact Number</Text>

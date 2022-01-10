@@ -27,7 +27,7 @@ export default function ViewLogs({ navigation }) {
   };
 
   const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YY'));
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   return (

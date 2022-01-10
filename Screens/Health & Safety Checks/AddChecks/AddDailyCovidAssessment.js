@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import app from '../../../firebase';
 import "firebase/firestore";
 
@@ -116,184 +117,214 @@ export default function AddDailyCovidAssessment({route}) {
     <ScrollView>
       <View style={styles.space}></View>
             <Text style={styles.bold}>Children put into childminder's care at the door</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck1}
-                onChangeText={setDailyCovidAssessmentCheck1}
+                onValueChange={setDailyCovidAssessmentCheck1}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Staggered drop off and pick up</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck2}
-                onChangeText={setDailyCovidAssessmentCheck2}
+                onValueChange={setDailyCovidAssessmentCheck2}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Ask if parents, children siblings have symptoms</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck3}
-                onChangeText={setDailyCovidAssessmentCheck3}
+                onValueChange={setDailyCovidAssessmentCheck3}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Coats and shoes off</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck4}
-                onChangeText={setDailyCovidAssessmentCheck4}
+                onValueChange={setDailyCovidAssessmentCheck4}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Wash hands with soap and water</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck5}
-                onChangeText={setDailyCovidAssessmentCheck5}
+                onValueChange={setDailyCovidAssessmentCheck5}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Open windows and doors for ventilation where possible</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck6}
-                onChangeText={setDailyCovidAssessmentCheck6}
+                onValueChange={setDailyCovidAssessmentCheck6}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Review risk assessment regularly</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck7}
-                onChangeText={setDailyCovidAssessmentCheck7}
+                onValueChange={setDailyCovidAssessmentCheck7}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Extra cleaning of toilet, taps, switch and handles</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck8}
-                onChangeText={setDailyCovidAssessmentCheck8}
+                onValueChange={setDailyCovidAssessmentCheck8}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Wash hands before and after using toilet</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck9}
-                onChangeText={setDailyCovidAssessmentCheck9}
+                onValueChange={setDailyCovidAssessmentCheck9}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Individual hand towels, flannels or paper towels</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck10}
-                onChangeText={setDailyCovidAssessmentCheck10}
+                onValueChange={setDailyCovidAssessmentCheck10}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Liquid soap available and bottle cleaned regularly</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck11}
-                onChangeText={setDailyCovidAssessmentCheck11}
+                onValueChange={setDailyCovidAssessmentCheck11}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Wash hands before and after outdoor play</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck12}
-                onChangeText={setDailyCovidAssessmentCheck12}
+                onValueChange={setDailyCovidAssessmentCheck12}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Sanitiser and wipes taken on outings</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck13}
-                onChangeText={setDailyCovidAssessmentCheck13}
+                onValueChange={setDailyCovidAssessmentCheck13}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Clean outdoor equipment regularly</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck14}
-                onChangeText={setDailyCovidAssessmentCheck14}
+                onValueChange={setDailyCovidAssessmentCheck14}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Record of outings away from the childminders home</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck15}
-                onChangeText={setDailyCovidAssessmentCheck15}
+                onValueChange={setDailyCovidAssessmentCheck15}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Chairs and high chairs sanitised regularly</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck16}
-                onChangeText={setDailyCovidAssessmentCheck16}
+                onValueChange={setDailyCovidAssessmentCheck16}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Floors, surfaces, handles, light switches cleaned regularly</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck17}
-                onChangeText={setDailyCovidAssessmentCheck17}
+                onValueChange={setDailyCovidAssessmentCheck17}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Toys wiped when necessary and deep cleaned once a day</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck18}
-                onChangeText={setDailyCovidAssessmentCheck18}
+                onValueChange={setDailyCovidAssessmentCheck18}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Limit toys and rotate</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck19}
-                onChangeText={setDailyCovidAssessmentCheck19}
+                onValueChange={setDailyCovidAssessmentCheck19}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Tissues and wipes readily available</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck20}
-                onChangeText={setDailyCovidAssessmentCheck20}
+                onValueChange={setDailyCovidAssessmentCheck20}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Bedding changed daily</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck21}
-                onChangeText={setDailyCovidAssessmentCheck21}
+                onValueChange={setDailyCovidAssessmentCheck21}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Bins wiped and emptied daily</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck22}
-                onChangeText={setDailyCovidAssessmentCheck22}
+                onValueChange={setDailyCovidAssessmentCheck22}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Any temperatures taken must be recorded</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck23}
-                onChangeText={setDailyCovidAssessmentCheck23}
+                onValueChange={setDailyCovidAssessmentCheck23}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Hands washed before getting into the car</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck24}
-                onChangeText={setDailyCovidAssessmentCheck24}
+                onValueChange={setDailyCovidAssessmentCheck24}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Seatbelts, handles and car seats cleaned regularly</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck25}
-                onChangeText={setDailyCovidAssessmentCheck25}
+                onValueChange={setDailyCovidAssessmentCheck25}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Children spaced as much as possible</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck26}
-                onChangeText={setDailyCovidAssessmentCheck26}
+                onValueChange={setDailyCovidAssessmentCheck26}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Air con switched off where possible</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck27}
-                onChangeText={setDailyCovidAssessmentCheck27}
+                onValueChange={setDailyCovidAssessmentCheck27}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Windows open for ventilation</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck28}
-                onChangeText={setDailyCovidAssessmentCheck28}
+                onValueChange={setDailyCovidAssessmentCheck28}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>No food or drink consumed in car</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck29}
-                onChangeText={setDailyCovidAssessmentCheck29}
+                onValueChange={setDailyCovidAssessmentCheck29}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <Text style={styles.bold}>Wipes, tissues and hand sanitiser available</Text>
-            <TextInput
-                style={styles.input}
+            <CheckBox
+                disabled={false}
                 value={dailyCovidAssessmentCheck30}
-                onChangeText={setDailyCovidAssessmentCheck30}
+                onValueChange={setDailyCovidAssessmentCheck30}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
             <View style={styles.space}></View>
         <Button 

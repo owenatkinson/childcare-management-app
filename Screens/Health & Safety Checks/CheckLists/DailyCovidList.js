@@ -75,7 +75,7 @@ export default class DailyCovidList extends Component {
                               bottomDivider>
                               <ListItem.Content>
                               <ListItem.Title>Daily COVID Assessment</ListItem.Title>
-                              <ListItem.Subtitle>Is Completed: {res.daily_covid_assessment_is_completed}</ListItem.Subtitle>
+                              <ListItem.Subtitle>Is Completed: Yes</ListItem.Subtitle>
                               </ListItem.Content>
                               <ListItem.Chevron 
                               color="black" 
