@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
-import { CheckBox } from 'react-native-elements';
+import CheckBox from '@react-native-community/checkbox';
 
-function AttendanceRegister() {
+function AttendanceRegister({ navigation }) {
   const [ additionalNotes, setAdditionalNotes ] = useState('');
   const [ checkInTime, setCheckInTime ] = useState('');
   const [ checkOutTime, setCheckOutTime ] = useState('');
@@ -29,15 +29,7 @@ function AttendanceRegister() {
       meals_: meals,
       temperature_checked: temperatureChecked
     });
-    setAdditionalNotes('');
-    setCheckInTime('');
-    setCheckOutTime('');
-    setChildName('');
-    setCollectedBy('');
-    setDateOfAttendance('');
-    setDroppedBy('');
-    setMeals('');
-    setTemperatureChecked('');
+    navigation.navigate('Home');
   }
 
   return (
@@ -62,7 +54,12 @@ function AttendanceRegister() {
       <TextInput style={styles.input} label={'Collected By'} value={collectedBy} onChangeText={setCollectedBy}/>
       <View style={styles.space}></View>
       <Text style={styles.bold}>Temperature Checked</Text>
-      <TextInput style={styles.input} label={'Temperature Checked'} value={temperatureChecked} onChangeText={setTemperatureChecked}/>
+      <CheckBox
+        disabled={false}
+        value={temperatureChecked}
+        onValueChange={setTemperatureChecked}
+        tintColors={{ true: "#0B8FDC", false: "orange"}}
+      />
       <View style={styles.space}></View>
       <Text style={styles.bold}>Meals</Text>
       <TextInput style={styles.input} label={'Meals'} value={meals} onChangeText={setMeals}/>

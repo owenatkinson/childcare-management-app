@@ -12,8 +12,13 @@ export default function ManageChildren({ navigation }) {
         />
         <View style={styles.space}></View>
         <Button
-          title="View Children"
+          title="View Active Children"
           onPress={() => navigation.navigate('ViewChildren')}
+        />
+        <View style={styles.space}></View>
+        <Button
+          title="View Inactive Children"
+          onPress={() => navigation.navigate('ViewInactiveChildren')}
         />
     </View>
   );

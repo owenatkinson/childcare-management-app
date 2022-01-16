@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 
-export default function LogVisitor() {
+export default function LogVisitor({navigation}) {
   const [ visitorName, setVisitorName ] = useState('');
   const [ dateOfVisit, setDateOfVisit ] = useState('');
   const [ timeIn, setTimeIn ] = useState('');
@@ -20,11 +20,7 @@ export default function LogVisitor() {
       time_out: timeOut,
       visit_purpose: visitPurpose
     });
-    setVisitorName('');
-    setDateOfVisit('');
-    setTimeIn('');
-    setTimeOut('');
-    setVisitPurpose('');
+    navigation.navigate('VisitorLogs');
   }
 
   return (

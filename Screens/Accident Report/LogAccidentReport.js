@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 
-export default function LogAccidentReport() {
+export default function LogAccidentReport({ navigation }) {
   const [ childName, setChildName ] = useState('');
   const [ accidentDate, setAccidentDate ] = useState('');
   const [ accidentTime, setAccidentTime ] = useState('');
@@ -18,10 +18,7 @@ export default function LogAccidentReport() {
       accident_time: accidentTime,
       accident_notes: accidentNotes
     });
-    setChildName('');
-    setAccidentDate('');
-    setAccidentTime('');
-    setAccidentNotes('');
+    navigation.navigate('AccidentReports');
   }
 
   return (

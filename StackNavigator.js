@@ -2,24 +2,34 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Screens/Home';
 import ManageChildren from './Screens/ManageChildren/ManageChildren';
-import AllergyDetection from './Screens/AllergyDetection';
-import ViewLogs from './Screens/ViewLogs';
+import AllergyDetection from './Screens/Allergy Detection/AllergyDetection';
+import ViewLogs from './Screens/View Logs/ViewLogs';
+import ViewLogDetails from './Screens/View Logs/ViewLogDetails';
 import VisitorLogs from './Screens/Visitor Logs/VisitorLogs';
 import UpdateVisitorLog from './Screens/Visitor Logs/UpdateVisitorLog';
 import LogVisitor from './Screens/Visitor Logs/LogVisitor';
 import ViewVisitorLogs from './Screens/Visitor Logs/ViewVisitorLogs';
-import Policies from './Screens/Policies';
-import Planner from './Screens/Planner';
-import HealthSafetyChecks from './Screens/HealthSafetyChecks';
+import Policies from './Screens/Policies/Policies';
+import Planner from './Screens/Planner/Planner';
+import HealthSafetyChecks from './Screens/Health & Safety Checks/HealthSafetyChecks';
+import DailyCovidAssessment from './Screens/Health & Safety Checks/DailyCovidAssessment';
+import DailyRiskAssessment from './Screens/Health & Safety Checks/DailyRiskAssessment';
+import MonthlyFireDrill from './Screens/Health & Safety Checks/MonthlyFireDrill';
+import MonthlyFireSafetyEquipmentCheck from './Screens/Health & Safety Checks/MonthlyFireSafetyEquipmentCheck';
 import AttendanceRegister from './Screens/Attendance Register/AttendanceRegister';
 import AccidentReports from './Screens/Accident Report/AccidentReports';
-import Finances from './Screens/Finances';
+import Finances from './Screens/Finances/Finances';
 import AddNewChild from './Screens/ManageChildren/AddChildDetails';
 import ViewChildren from './Screens/ManageChildren/ViewChildren';
 import UpdateChildDetails from './Screens/ManageChildren/UpdateChildDetails';
 import LogAccidentReport from './Screens/Accident Report/LogAccidentReport';
 import ViewAccidentReports from './Screens/Accident Report/ViewAccidentReports';
 import UpdateAccidentReport from './Screens/Accident Report/UpdateAccidentReport';
+import ViewInactiveChildren from './Screens/ManageChildren/ViewInactiveChildren';
+import AddDailyCovidAssessment from './Screens/Health & Safety Checks/AddChecks/AddDailyCovidAssessment';
+import AddDailyRiskAssessment from './Screens/Health & Safety Checks/AddChecks/AddDailyRiskAssessment';
+import AddMonthlyDrillList from './Screens/Health & Safety Checks/AddChecks/AddMonthlyDrillList';
+import AddMonthlyFireSafetyEquipmentList from './Screens/Health & Safety Checks/AddChecks/AddMonthlyFireSafetyEquipmentList';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -31,17 +41,27 @@ const StackNavigator = () => {
             headerTitleStyle: {color: '#fff', fontWeight: 'bold', fontSize: 22}}}>
           <Stack.Screen name="Home" component={Home} options={{title: 'My Childcare App'}}/>
           <Stack.Screen name="Allergy" component={AllergyDetection} options={{ title: 'Allergy Detection'}}/>
-          <Stack.Screen name="Visitor" component={VisitorLogs} options={{ title: 'Visitor Logs'}}/>
+          <Stack.Screen name="VisitorLogs" component={VisitorLogs} options={{ title: 'Visitor Logs'}}/>
           <Stack.Screen name="ViewLogs" component={ViewLogs} options={{ title: 'View Daily Logs'}}/>
+          <Stack.Screen name="ViewLogDetails" component={ViewLogDetails} options={{ title: 'View Log Details'}}/>
           <Stack.Screen name="Policies" component={Policies} options={{ title: 'Policies'}}/>
           <Stack.Screen name="Planner" component={Planner} options={{ title: 'Planner'}}/>
           <Stack.Screen name="HealthSafetyChecks" component={HealthSafetyChecks} options={{ title: 'Health & Safety Checks'}}/>
+          <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
+          <Stack.Screen name="AddDailyCovidAssessment" component={AddDailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
+          <Stack.Screen name="AddDailyRiskAssessment" component={AddDailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
+          <Stack.Screen name="AddMonthlyDrillList" component={AddMonthlyDrillList} options={{ title: 'Monthly Fire Drill'}}/>
+          <Stack.Screen name="AddMonthlyFireSafetyEquipmentList" component={AddMonthlyFireSafetyEquipmentList} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
+          <Stack.Screen name="DailyRiskAssessment" component={DailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
+          <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Monthly Fire Drill'}}/>
+          <Stack.Screen name="MonthlyFireSafetyEquipmentCheck" component={MonthlyFireSafetyEquipmentCheck} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
           <Stack.Screen name="Attendance" component={AttendanceRegister} options={{ title: 'Attendance Register'}}/>
-          <Stack.Screen name="Children" component={ManageChildren} options={{ title: 'Manage Children'}}/>
+          <Stack.Screen name="ManageChildren" component={ManageChildren} options={{ title: 'Manage Children'}}/>
           <Stack.Screen name="AddNewChild" component={AddNewChild} options={{ title: 'Add New Child'}}/>
-          <Stack.Screen name="ViewChildren" component={ViewChildren} options={{ title: 'View Children'}}/>
+          <Stack.Screen name="ViewChildren" component={ViewChildren} options={{ title: 'View Active Children'}}/>
+          <Stack.Screen name="ViewInactiveChildren" component={ViewInactiveChildren} options={{ title: 'View Inactive Children'}}/>
           <Stack.Screen name="UpdateChildDetails" component={UpdateChildDetails} options={{ title: 'Update Child Details'}}/>
-          <Stack.Screen name="Accident" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
+          <Stack.Screen name="AccidentReports" component={AccidentReports} options={{ title: 'Accident Reports'}}/>
           <Stack.Screen name="LogAccidentReport" component={LogAccidentReport} options={{ title: 'Log Accident Reports'}}/>
           <Stack.Screen name="ViewAccidentReports" component={ViewAccidentReports} options={{ title: 'View Accident Reports'}}/>
           <Stack.Screen name="UpdateAccidentReport" component={UpdateAccidentReport} options={{ title: 'Update Accident Report'}}/>

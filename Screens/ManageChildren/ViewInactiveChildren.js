@@ -44,7 +44,7 @@ export default class ViewChildren extends Component {
       <ScrollView style={styles.wrapper}>
           {
             this.state.children.map((res, i) => {
-              if(res.child_is_active == true){
+              if(res.child_is_active == false || res.child_is_active == ''){
                 return (
                   <ListItem 
                     key={i}
@@ -56,7 +56,7 @@ export default class ViewChildren extends Component {
                     bottomDivider>
                     <ListItem.Content>
                       <ListItem.Title>{res.child_forename} {res.child_surname}</ListItem.Title>
-                      <ListItem.Subtitle>Active</ListItem.Subtitle>
+                      <ListItem.Subtitle>Inactive</ListItem.Subtitle>
                     </ListItem.Content>
                     <ListItem.Chevron 
                       color="black" 

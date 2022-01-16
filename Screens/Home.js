@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import Date from '../Date';
 
-function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   return (
       <View>
         <Date></Date>
@@ -24,7 +24,7 @@ function HomeScreen({ navigation }) {
           <View style={styles.space}></View>
           <Button 
             title="Manage Children"
-            onPress={() => navigation.navigate('Children')}
+            onPress={() => navigation.navigate('ManageChildren')}
           />
           <View style={styles.space}></View>
           <Button 
@@ -44,7 +44,7 @@ function HomeScreen({ navigation }) {
           <View style={styles.space}></View>
           <Button
             title="Accident Reports"
-            onPress={() => navigation.navigate('Accident')}
+            onPress={() => navigation.navigate('AccidentReports')}
           />
           <View style={styles.space}></View>
           <Button
@@ -54,24 +54,12 @@ function HomeScreen({ navigation }) {
           <View style={styles.space}></View>
           <Button
             title="Visitor Logs"
-            onPress={() => navigation.navigate('Visitor')}
+            onPress={() => navigation.navigate('VisitorLogs')}
           />
         </View>
       </View>
   );
 }
-
-// const Buttons = (props) => {
-//   return (
-//     <View>
-//        <Button
-//           title={props.name}
-//           style={styles.button}
-//         />
-//       <View style={styles.space}></View>
-//     </View>
-//   );
-// }
 
 const styles = StyleSheet.create({
   fixToText: {
@@ -82,5 +70,3 @@ const styles = StyleSheet.create({
     height: 20,
   }
 });
-
-export default HomeScreen;
