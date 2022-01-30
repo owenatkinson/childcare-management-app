@@ -65,7 +65,7 @@ function AttendanceRegister({ navigation }) {
       <TextInput style={styles.input} label={'Meals'} value={meals} onChangeText={setMeals}/>
       <View style={styles.space}></View>
       <Text style={styles.bold}>Additional Notes</Text>
-      <TextInput style={styles.input} label={'Additional Notes'} value={additionalNotes} onChangeText={setAdditionalNotes}/>
+      <TextInput style={styles.extendedInput} multiline={true} numberOfLines={4} label={'Additional Notes'} value={additionalNotes} onChangeText={setAdditionalNotes}/>
       <View style={styles.space}></View>
       <Button 
           title="Log Attendance"
@@ -82,6 +82,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: '#DADADA'
+  },
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   },
   bold: {
     fontWeight: 'bold'

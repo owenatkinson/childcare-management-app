@@ -128,7 +128,9 @@ export default class UpdateVisitorLog extends Component {
                 />
                 <Text style={styles.bold}>Purpose of Visit</Text>
                 <TextInput
-                    style={styles.input}
+                    multiline={true}
+                    numberOfLines={4}
+                    style={styles.extendedInput}
                     placeholder={'Purpose of Visit'}
                     value={this.state.visitPurpose}
                     onChangeText={(val) => this.inputEl(val, 'visitPurpose')}
@@ -157,6 +159,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: '#DADADA'
+  },
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   },
   container: {
     flex: 1,

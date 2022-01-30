@@ -3112,6 +3112,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-14.2.2.tgz"
   "version" "14.2.2"
 
+"@react-native-picker/picker@^2.2.1":
+  "integrity" "sha512-EC7yv22QLHlTfnbC1ez9IUdXTOh1W31x96Oir0PfskSGFFJMWWdLTg4VrcE2DsGLzbfjjkBk123c173vf2a5MQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.2.1.tgz"
+  "version" "2.2.1"
+
 "@react-native-windows/cli@0.66.1":
   "integrity" "sha512-lEFpn+EVphz9GkeSdQsNWBgaeXlLrml8rD2GLep/gd53wwBSXs4mqU3UXZ5XyJi7GOgLe2pD7VNYt0YIpNgK2w=="
   "resolved" "https://registry.npmjs.org/@react-native-windows/cli/-/cli-0.66.1.tgz"
@@ -8473,7 +8478,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
 
-"react-native@*", "react-native@^0.63.4", "react-native@^0.66.0", "react-native@>= 0.62", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.60", "react-native@>=0.60 <0.62", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.66.0":
+"react-native@*", "react-native@^0.63.4", "react-native@^0.66.0", "react-native@>= 0.62", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.60 <0.62", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.66.0":
   "integrity" "sha512-I4kM8kYO2mWEYUFITMcpRulcy4/jd+j9T6PbIzR0FuMcz/xwd+JwHoLPa1HmCesvR1RDOw9o4D+OFLwuXXfmGw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.4.tgz"
   "version" "0.63.4"
@@ -8511,7 +8516,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@>=16.3.0", "react@>=16.8.3", "react@>=17.0.1", "react@16.13.1", "react@16.x", "react@17.0.1", "react@17.0.2":
+"react@*", "react@^16.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@>=16.3.0", "react@>=16.8.3", "react@>=17.0.1", "react@16 || 17", "react@16.13.1", "react@16.x", "react@17.0.1", "react@17.0.2":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

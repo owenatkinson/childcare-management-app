@@ -28,7 +28,9 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
             <View style={styles.space}></View>
             <Text style={styles.bold}>Notes</Text>
             <TextInput
-                style={styles.input}
+                style={styles.extendedInput}
+                multiline={true} 
+                numberOfLines={4}
                 value={monthlyFireSafetyNote}
                 onChangeText={setMonthlyFireSafetyNote}
             />
@@ -51,12 +53,12 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
+  extendedInput: {
+    backgroundColor: '#DADADA',
     padding: 10,
-    backgroundColor: '#DADADA'
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   },
   bold: {
     fontWeight: 'bold'

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, Text, Linking } from "react-native";
+import { View, Button } from "react-native";
 import { ListItem } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 import app from '../../firebase';
 import "firebase/firestore";
 import "firebase/database";
-import PDFReader from 'rn-pdf-reader-js';
 import { ScrollView } from "react-native-gesture-handler";
 
 const Policies = (props) => {
@@ -82,7 +81,7 @@ const Policies = (props) => {
             props.navigation.navigate('FilePreview', {
               fileData: item,
             })
-          }>
+          }bottomDivider>
           <ListItem.Content>
             <ListItem.Title>{item.fileName}</ListItem.Title>
             {/* <ListItem.Subtitle>Subtitle</ListItem.Subtitle> */}

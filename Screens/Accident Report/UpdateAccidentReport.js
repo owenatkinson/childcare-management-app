@@ -96,43 +96,45 @@ export default class UpdateAccidentReport extends Component {
             <View style={styles.space}></View>
                 <Text style={styles.bold}>Child Name</Text>
                 <TextInput
-                    style={styles.input}
-                    placeholder={'Forename'}
-                    value={this.state.childName}
-                    onChangeText={(val) => this.inputEl(val, 'childName')}
+                  style={styles.input}
+                  placeholder={'Forename'}
+                  value={this.state.childName}
+                  onChangeText={(val) => this.inputEl(val, 'childName')}
                 />
                 <Text style={styles.bold}>Date of Accident</Text>
                 <TextInput
-                    style={styles.input}
-                    placeholder={'Date of Accident'}
-                    value={this.state.accidentDate}
-                    onChangeText={(val) => this.inputEl(val, 'accidentDate')}
+                  style={styles.input}
+                  placeholder={'Date of Accident'}
+                  value={this.state.accidentDate}
+                  onChangeText={(val) => this.inputEl(val, 'accidentDate')}
                 />
                 <Text style={styles.bold}>Accident Time</Text>
                 <TextInput
-                    style={styles.input}
-                    placeholder={'Accident Time'}
-                    value={this.state.accidentTime}
-                    onChangeText={(val) => this.inputEl(val, 'accidentTime')}
+                  style={styles.input}
+                  placeholder={'Accident Time'}
+                  value={this.state.accidentTime}
+                  onChangeText={(val) => this.inputEl(val, 'accidentTime')}
                 />
                 <Text style={styles.bold}>Accident Notes</Text>
                 <TextInput
-                    style={styles.input}
-                    placeholder={'Accident Notes'}
-                    value={this.state.accidentNotes}
-                    onChangeText={(val) => this.inputEl(val, 'accidentNotes')}
+                  multiline={true} 
+                  numberOfLines={4}
+                  style={styles.extendedInput}
+                  placeholder={'Accident Notes'}
+                  value={this.state.accidentNotes}
+                  onChangeText={(val) => this.inputEl(val, 'accidentNotes')}
                 />
             <View style={styles.space}></View>
             <Button
-            title='Update'
-            onPress={() => this.editAccidentReport()} 
-            color="#0B8FDC"
+              title='Update'
+              onPress={() => this.editAccidentReport()} 
+              color="#0B8FDC"
             />
             <View style={styles.space}></View>
             <Button
-            title='Delete'
-            onPress={this.alertDialog}
-            color="#EE752E"
+              title='Delete'
+              onPress={this.alertDialog}
+              color="#EE752E"
             />
         </ScrollView>
     );
@@ -146,6 +148,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: '#DADADA'
+  },
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   },
   container: {
     flex: 1,

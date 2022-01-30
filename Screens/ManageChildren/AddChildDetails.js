@@ -3,11 +3,12 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function AddNewChild({ navigation }) {
-  const [ childForename, setChildForename ] = useState('');
-  const [ childSurname, setChildSurname ] = useState('');
-  const [ childDOB, setChildDOB ] = useState('');
+  const [ childName, setChildName ] = useState('');
+  const [ childDOB, setChildDOB ] = useState(new Date());
   const [ childAllergies, setChildAllergies ] = useState('');
   const [ childIsActive, setChildIsActive ] = useState('');
   const [ childEmergencyContactName, setChildEmergencyContactName ] = useState('');
@@ -18,11 +19,28 @@ export default function AddNewChild({ navigation }) {
   const [ doctorNumber, setDoctorNumber ] = useState('');
   const fireDB = app.firestore().collection('children');
 
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || childDOB;
+    setShow(Platform.OS === 'ios');
+    setChildDOB(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+    setMode('date');
+  };
+
+  const convertDate = (dateInput) => {
+    return(moment(dateInput).format('D/M/YYYY'));
+  }
+
   async function addChild() {
     await fireDB.add({
-      child_forename: childForename,
-      child_surname: childSurname,
-      child_DOB: childDOB,
+      child_name: childName,
+      child_DOB: convertDate(childDOB),
       child_allergies: childAllergies,
       child_is_active: childIsActive,
       child_emergency_contact_name: childEmergencyContactName,
@@ -38,12 +56,22 @@ export default function AddNewChild({ navigation }) {
   return (
     <ScrollView>
       <View style={styles.space}></View>
-        <Text style={styles.bold}>Child Forename</Text>
-        <TextInput style={styles.input} label={'Child Forename'} value={childForename} onChangeText={setChildForename}/>
-        <Text style={styles.bold}>Child Surname</Text>
-        <TextInput style={styles.input} label={'Child Surname'} value={childSurname} onChangeText={setChildSurname}/>
+        <Text style={styles.bold}>Child Name</Text>
+        <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
         <Text style={styles.bold}>Child DOB</Text>
-        <TextInput style={styles.input} label={'Child DOB'} value={childDOB} onChangeText={setChildDOB}/>
+        <View>
+          <Button onPress={showDatepicker} title={convertDate(childDOB)} />
+        </View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={childDOB}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        )}
         <Text style={styles.bold}>Child Allergies</Text>
         <TextInput style={styles.input} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
         <Text style={styles.bold}>Child Is Active?</Text>

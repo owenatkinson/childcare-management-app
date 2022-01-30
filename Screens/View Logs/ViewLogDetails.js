@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
 
@@ -157,11 +158,11 @@ export default class ViewLogDetails extends Component {
               onChangeText={(val) => this.inputEl(val, 'collectedBy')}
           />
           <Text style={styles.bold}>Temperature Checked</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Temperature Checked'}
-              value={this.state.temperatureChecked}
-              onChangeText={(val) => this.inputEl(val, 'temperatureChecked')}
+          <CheckBox
+            disabled={false}
+            value={this.state.temperatureChecked}
+            onValueChange={(val) => this.inputEl(val, 'temperatureChecked')}
+            tintColors={{ true: "#0B8FDC", false: "orange"}}
           />
           <Text style={styles.bold}>Meals</Text>
           <TextInput

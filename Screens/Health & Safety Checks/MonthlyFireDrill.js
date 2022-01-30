@@ -94,8 +94,8 @@ export default class MonthlyFireDrill extends Component {
             />
             <Text style={styles.bold}>Notes</Text>
             <TextInput
-                style={styles.multilineInput}
-                multiline
+                style={styles.extendedInput}
+                multiline={true}
                 numberOfLines={4}
                 value={this.state.monthlyFireDrillNote}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNote')}
@@ -130,12 +130,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#DADADA'
   },
-  multilineInput: {
-    textAlignVertical: 'top',
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
     borderWidth: 1,
     margin: 12,
-    padding: 10,
-    backgroundColor: '#DADADA'
+    textAlignVertical: 'top'
   },
   container: {
     flex: 1,

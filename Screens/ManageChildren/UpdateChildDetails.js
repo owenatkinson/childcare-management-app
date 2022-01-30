@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
@@ -9,8 +9,7 @@ export default class UpdateChildDetails extends Component {
     super();
     this.state = {
       isLoading: true,
-      forename: '',
-      surname: '',
+      name: '',
       dob: '',
       allergies: '',
       isActive: '',
@@ -30,8 +29,7 @@ export default class UpdateChildDetails extends Component {
         const user = res.data();
         this.setState({
           key: res.id,
-          forename: user.child_forename,
-          surname: user.child_surname,
+          name: user.child_name,
           dob: user.child_DOB,
           allergies: user.child_allergies,
           isActive: user.child_is_active,
@@ -61,8 +59,7 @@ export default class UpdateChildDetails extends Component {
     });
     const docUpdate = app.firestore().collection('children').doc(this.state.key);
     docUpdate.set({
-      child_forename: this.state.forename,
-      child_surname: this.state.surname,
+      child_name: this.state.name,
       child_DOB: this.state.dob,
       child_allergies: this.state.allergies,
       child_is_active: this.state.isActive,
@@ -75,8 +72,7 @@ export default class UpdateChildDetails extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        forename: '',
-        surname: '',
+        name: '',
         isActive: '',
         emergencyName: '',
         emergencyNumber: '',
@@ -100,19 +96,12 @@ export default class UpdateChildDetails extends Component {
     return (
       <ScrollView>
         <View style={styles.space}></View>
-          <Text style={styles.bold}>Child Forename</Text>
+          <Text style={styles.bold}>Child Name</Text>
           <TextInput
               style={styles.input}
-              placeholder={'Forename'}
-              value={this.state.forename}
-              onChangeText={(val) => this.inputEl(val, 'forename')}
-          />
-          <Text style={styles.bold}>Child Surname</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Surname'}
-              value={this.state.surname}
-              onChangeText={(val) => this.inputEl(val, 'surname')}
+              placeholder={'Name'}
+              value={this.state.name}
+              onChangeText={(val) => this.inputEl(val, 'name')}
           />
           <Text style={styles.bold}>Child DOB</Text>
           <TextInput

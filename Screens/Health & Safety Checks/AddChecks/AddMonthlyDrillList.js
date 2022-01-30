@@ -46,7 +46,9 @@ export default function AddMonthlyDrillList({route}) {
             />
             <Text style={styles.bold}>Notes</Text>
             <TextInput
-                style={styles.input}
+                style={styles.extendedInput}
+                multiline={true} 
+                numberOfLines={4}
                 value={monthlyFireDrillNote}
                 onChangeText={setMonthlyFireDrillNote}
             />
@@ -75,6 +77,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: '#DADADA'
+  },
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   },
   bold: {
     fontWeight: 'bold'
