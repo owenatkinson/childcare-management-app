@@ -72,28 +72,30 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
         <Text>{this.state.monthlyFireSafetyDate}</Text>
         <ScrollView>
           <View style={styles.space}></View>
-            <Text style={styles.bold}>Notes</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.monthlyFireSafetyNote}
-                onChangeText={(val) => this.inputEl(val, 'monthlyFireSafetyNote')}
+          <Text style={styles.bold}>Notes</Text>
+          <TextInput
+              style={styles.extendedInput}
+              multiline={true} 
+              numberOfLines={4}
+              value={this.state.monthlyFireSafetyNote}
+              onChangeText={(val) => this.inputEl(val, 'monthlyFireSafetyNote')}
+          />
+          <Text style={styles.bold}>Is Completed</Text>
+          <View>
+            <CheckBox
+              value={this.state.monthlyFireSafetyIsCompleted}
+              onValueChange={(val) => this.inputEl(val, 'monthlyFireSafetyIsCompleted')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Is Completed</Text>
-            <View>
-              <CheckBox
-                value={this.state.monthlyFireSafetyIsCompleted}
-                onValueChange={(val) => this.inputEl(val, 'monthlyFireSafetyIsCompleted')}
-                tintColors={{ true: "#0B8FDC", false: "orange"}}
-              />
-            </View>
-            <View style={styles.space}></View>
-            <Button
-              title='Update'
-              onPress={() => this.editChild()} 
-              color="#0B8FDC"
-            />
-            <View style={styles.space}></View>
-            <View style={styles.space}></View>
+          </View>
+          <View style={styles.space}></View>
+          <Button
+            title='Update'
+            onPress={() => this.editChild()} 
+            color="#0B8FDC"
+          />
+          <View style={styles.space}></View>
+          <View style={styles.space}></View>
         </ScrollView>
       </View>
     );
@@ -101,12 +103,12 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
+  extendedInput: {
+    backgroundColor: '#DADADA',
     padding: 10,
-    backgroundColor: '#DADADA'
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   },
   container: {
     flex: 1,

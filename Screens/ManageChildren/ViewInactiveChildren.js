@@ -25,11 +25,10 @@ export default class ViewChildren extends Component {
   fetchCollection = (querySnapshot) => {
     const children = [];
     querySnapshot.forEach((res) => {
-      const { child_forename, child_surname, child_is_active } = res.data();
+      const { child_name, child_is_active } = res.data();
       children.push({
         key: res.id,
-        child_forename,
-        child_surname,
+        child_name,
         child_is_active
       });
     });
@@ -55,7 +54,7 @@ export default class ViewChildren extends Component {
                     }}                        
                     bottomDivider>
                     <ListItem.Content>
-                      <ListItem.Title>{res.child_forename} {res.child_surname}</ListItem.Title>
+                      <ListItem.Title>{res.child_name}</ListItem.Title>
                       <ListItem.Subtitle>Inactive</ListItem.Subtitle>
                     </ListItem.Content>
                     <ListItem.Chevron 

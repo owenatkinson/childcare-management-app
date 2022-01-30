@@ -10,6 +10,7 @@ import UpdateVisitorLog from './Screens/Visitor Logs/UpdateVisitorLog';
 import LogVisitor from './Screens/Visitor Logs/LogVisitor';
 import ViewVisitorLogs from './Screens/Visitor Logs/ViewVisitorLogs';
 import Policies from './Screens/Policies/Policies';
+import FilePreview from './Screens/Policies/FilePreview';
 import Planner from './Screens/Planner/Planner';
 import HealthSafetyChecks from './Screens/Health & Safety Checks/HealthSafetyChecks';
 import DailyCovidAssessment from './Screens/Health & Safety Checks/DailyCovidAssessment';
@@ -69,6 +70,7 @@ const StackNavigator = () => {
           <Stack.Screen name="UpdateVisitorLog" component={UpdateVisitorLog} options={{ title: 'Update Visitor Log'}}/>
           <Stack.Screen name="LogVisitor" component={LogVisitor} options={{ title: 'Log Visitor'}}/>
           <Stack.Screen name="ViewVisitorLogs" component={ViewVisitorLogs} options={{ title: 'View Visitor Logs'}}/>
+          <Stack.Screen name="FilePreview" component={FilePreview} options={{ title: 'View Policy'}}/>
         </Stack.Navigator>
     );
 };

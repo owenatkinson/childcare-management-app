@@ -3,11 +3,12 @@ import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function AddNewChild({ navigation }) {
-  const [ childForename, setChildForename ] = useState('');
-  const [ childSurname, setChildSurname ] = useState('');
-  const [ childDOB, setChildDOB ] = useState('');
+  const [ childName, setChildName ] = useState('');
+  const [ childDOB, setChildDOB ] = useState(new Date());
   const [ childAllergies, setChildAllergies ] = useState('');
   const [ childIsActive, setChildIsActive ] = useState('');
   const [ childEmergencyContactName, setChildEmergencyContactName ] = useState('');
@@ -16,13 +17,35 @@ export default function AddNewChild({ navigation }) {
   const [ doctorName, setDoctorName ] = useState('');
   const [ doctorAddress, setDoctorAddress ] = useState('');
   const [ doctorNumber, setDoctorNumber ] = useState('');
+  const [ childHomeAddress, setChildHomeAddress ] = useState('');
+  const [ parentNumber1, setParentNumber1 ] = useState('');
+  const [ parentName1, setParentName1 ] = useState('');
+  const [ parentNumber2, setParentNumber2 ] = useState('');
+  const [ parentName2, setParentName2 ] = useState('');
   const fireDB = app.firestore().collection('children');
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || childDOB;
+    setShow(Platform.OS === 'ios');
+    setChildDOB(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+    setMode('date');
+  };
+
+  const convertDate = (dateInput) => {
+    return(moment(dateInput).format('D/M/YYYY'));
+  }
 
   async function addChild() {
     await fireDB.add({
-      child_forename: childForename,
-      child_surname: childSurname,
-      child_DOB: childDOB,
+      child_name: childName,
+      child_DOB: convertDate(childDOB),
       child_allergies: childAllergies,
       child_is_active: childIsActive,
       child_emergency_contact_name: childEmergencyContactName,
@@ -30,7 +53,12 @@ export default function AddNewChild({ navigation }) {
       child_emergency_contact_relation: childEmergencyRelation,
       doctor_name: doctorName,
       doctor_address: doctorAddress,
-      doctor_number: doctorNumber
+      doctor_number: doctorNumber,
+      child_home_address: childHomeAddress,
+      parent_number_1: parentNumber1,
+      parent_name_1: parentName1,
+      parent_number_2: parentNumber2,
+      parent_name_2: parentName2
     });
     navigation.navigate('ManageChildren');
   }
@@ -38,14 +66,27 @@ export default function AddNewChild({ navigation }) {
   return (
     <ScrollView>
       <View style={styles.space}></View>
-        <Text style={styles.bold}>Child Forename</Text>
-        <TextInput style={styles.input} label={'Child Forename'} value={childForename} onChangeText={setChildForename}/>
-        <Text style={styles.bold}>Child Surname</Text>
-        <TextInput style={styles.input} label={'Child Surname'} value={childSurname} onChangeText={setChildSurname}/>
+        <Text style={styles.bold}>Child Name</Text>
+        <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Child DOB</Text>
-        <TextInput style={styles.input} label={'Child DOB'} value={childDOB} onChangeText={setChildDOB}/>
+        <View>
+          <Button onPress={showDatepicker} title={convertDate(childDOB)} />
+        </View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={childDOB}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        )}
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Child Allergies</Text>
         <TextInput style={styles.input} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Child Is Active?</Text>
         <CheckBox
           disabled={false}
@@ -53,16 +94,37 @@ export default function AddNewChild({ navigation }) {
           onValueChange={setChildIsActive}
           tintColors={{ true: "#0B8FDC", false: "orange"}}
         />
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Child Home Address</Text>
+        <TextInput style={styles.input} label={'Child Home Address'} value={childHomeAddress} onChangeText={setChildHomeAddress}/>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Parent #1 Name</Text>
+        <TextInput style={styles.input} label={'Parent #1 Name'} value={parentName1} onChangeText={setParentName1}/>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Parent #1 Phone Number</Text>
+        <TextInput style={styles.input} label={'Parent #1 Phone Number'} value={parentNumber1} onChangeText={setParentNumber1}/>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Parent #2 Name</Text>
+        <TextInput style={styles.input} label={'Parent #2 Name'} value={parentName2} onChangeText={setParentName2}/>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Parent #2 Phone Number</Text>
+        <TextInput style={styles.input} label={'Parent #2 Phone Number'} value={parentNumber2} onChangeText={setParentNumber2}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Emergency Contact Name</Text>
         <TextInput style={styles.input} label={'Emergency Contact Name'} value={childEmergencyContactName} onChangeText={setChildEmergencyContactName}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Emergency Contact Number</Text>
         <TextInput style={styles.input} label={'Emergency Contact Number'} value={childEmergencyNumber} onChangeText={setChildEmergencyNumber}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Emergency Contact Relation</Text>
         <TextInput style={styles.input} label={'Emergency Contact Relation'} value={childEmergencyRelation} onChangeText={setChildEmergencyRelation}/>
+        <View style={styles.space}></View> 
         <Text style={styles.bold}>Doctor's Name</Text>
         <TextInput style={styles.input} label={'Doctor\'s Name'} value={doctorName} onChangeText={setDoctorName}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Doctor's Address</Text>
         <TextInput style={styles.input} label={'Doctor\'s Address'} value={doctorAddress} onChangeText={setDoctorAddress}/>
+        <View style={styles.space}></View>
         <Text style={styles.bold}>Doctor's Number</Text>
         <TextInput style={styles.input} label={'Doctors\'s Number'} value={doctorNumber} onChangeText={setDoctorNumber}/>
       <View style={styles.space}></View>

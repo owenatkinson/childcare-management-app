@@ -1,5 +1,8 @@
 import firebase from "firebase";
+import storage from "@react-native-firebase/storage";
+import database from "firebase/database";
 import "firebase/firestore";
+import "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,7 +15,17 @@ const firebaseConfig = {
   appId: "1:371907641004:web:9a5fed153fff0485c02909"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+let app;
+
+if(!firebase.apps.length){
+  app = firebase.initializeApp(firebaseConfig);
+}
 
 export default app;
+// export const database;
+// export const storage;
+// export default () => {
+//   return {app, storage, database};
+// };
+
 export const fireDB = app.firestore().collection;

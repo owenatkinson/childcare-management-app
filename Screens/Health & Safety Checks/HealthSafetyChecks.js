@@ -19,13 +19,9 @@ export default function HealthSafetyChecks({ navigation }) {
     setDate(currentDate);
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
   const showDatepicker = () => {
-    showMode('date');
+    setShow(true);
+    setMode('date');
   };
 
   const convertDate = (dateInput) => {

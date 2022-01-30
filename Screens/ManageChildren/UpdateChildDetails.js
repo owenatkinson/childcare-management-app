@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
@@ -9,8 +9,7 @@ export default class UpdateChildDetails extends Component {
     super();
     this.state = {
       isLoading: true,
-      forename: '',
-      surname: '',
+      name: '',
       dob: '',
       allergies: '',
       isActive: '',
@@ -20,6 +19,11 @@ export default class UpdateChildDetails extends Component {
       doctorName: '',
       doctorAddress: '',
       doctorNumber: '',
+      childAddress: '',
+      parent1Name: '',
+      parent1Number: '',
+      parent2Name: '',
+      parent2Number: ''
     };
   }
 
@@ -30,8 +34,7 @@ export default class UpdateChildDetails extends Component {
         const user = res.data();
         this.setState({
           key: res.id,
-          forename: user.child_forename,
-          surname: user.child_surname,
+          name: user.child_name,
           dob: user.child_DOB,
           allergies: user.child_allergies,
           isActive: user.child_is_active,
@@ -41,6 +44,11 @@ export default class UpdateChildDetails extends Component {
           doctorName: user.doctor_name,
           doctorAddress: user.doctor_address,
           doctorNumber: user.doctor_number,
+          childAddress: user.child_home_address,
+          parent1Name: user.parent_name_1,
+          parent1Number: user.parent_number_1,
+          parent2Name: user.parent_name_2,
+          parent2Number: user.parent_name_2,
           isLoading: false
         });
       } else {
@@ -61,8 +69,7 @@ export default class UpdateChildDetails extends Component {
     });
     const docUpdate = app.firestore().collection('children').doc(this.state.key);
     docUpdate.set({
-      child_forename: this.state.forename,
-      child_surname: this.state.surname,
+      child_name: this.state.name,
       child_DOB: this.state.dob,
       child_allergies: this.state.allergies,
       child_is_active: this.state.isActive,
@@ -71,12 +78,16 @@ export default class UpdateChildDetails extends Component {
       child_emergency_contact_relation: this.state.emergencyRelation,
       doctor_name: this.state.doctorName,
       doctor_address: this.state.doctorAddress,
-      doctor_number: this.state.doctorNumber
+      doctor_number: this.state.doctorNumber,
+      child_home_address: this.state.childAddress,
+      parent_name_1: this.state.parent1Name,
+      parent_name_2: this.state.parent2Name,
+      parent_number_1: this.state.parent1Number,
+      parent_number_2: this.state.parent2Number
     }).then(() => {
       this.setState({
         key: '',
-        forename: '',
-        surname: '',
+        name: '',
         isActive: '',
         emergencyName: '',
         emergencyNumber: '',
@@ -84,6 +95,11 @@ export default class UpdateChildDetails extends Component {
         doctorName: '',
         doctorAddress: '',
         doctorNumber: '',
+        childAddress: '',
+        parent1Name: '',
+        parent2Name: '',
+        parent1Number: '',
+        parent2Number: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ManageChildren');
@@ -100,19 +116,12 @@ export default class UpdateChildDetails extends Component {
     return (
       <ScrollView>
         <View style={styles.space}></View>
-          <Text style={styles.bold}>Child Forename</Text>
+          <Text style={styles.bold}>Child Name</Text>
           <TextInput
               style={styles.input}
-              placeholder={'Forename'}
-              value={this.state.forename}
-              onChangeText={(val) => this.inputEl(val, 'forename')}
-          />
-          <Text style={styles.bold}>Child Surname</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Surname'}
-              value={this.state.surname}
-              onChangeText={(val) => this.inputEl(val, 'surname')}
+              placeholder={'Name'}
+              value={this.state.name}
+              onChangeText={(val) => this.inputEl(val, 'name')}
           />
           <Text style={styles.bold}>Child DOB</Text>
           <TextInput
@@ -134,6 +143,41 @@ export default class UpdateChildDetails extends Component {
             value={this.state.isActive}
             onValueChange={(val) => this.inputEl(val, 'isActive')}
             tintColors={{ true: "#0B8FDC", false: "orange"}}
+          />
+          <Text style={styles.bold}>Child Home Address</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Child Home Address'}
+              value={this.state.childAddress}
+              onChangeText={(val) => this.inputEl(val, 'childAddress')}
+          />
+          <Text style={styles.bold}>Parent #1 Name</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Parent #1 Name'}
+              value={this.state.parent1Name}
+              onChangeText={(val) => this.inputEl(val, 'parent1Name')}
+          />
+          <Text style={styles.bold}>Parent #1 Number</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Parent #1 Number'}
+              value={this.state.parent1Number}
+              onChangeText={(val) => this.inputEl(val, 'parent1Number')}
+          />
+         <Text style={styles.bold}>Parent #2 Name</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Parent #2 Name'}
+              value={this.state.parent2Name}
+              onChangeText={(val) => this.inputEl(val, 'parent2Name')}
+          />
+          <Text style={styles.bold}>Parent #2 Number</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'Parent #2 Number'}
+              value={this.state.parent2Number}
+              onChangeText={(val) => this.inputEl(val, 'parent2Number')}
           />
           <Text style={styles.bold}>Emergency Contact Name</Text>
           <TextInput
