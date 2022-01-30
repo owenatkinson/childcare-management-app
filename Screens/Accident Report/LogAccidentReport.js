@@ -8,7 +8,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 export default function LogAccidentReport({ navigation }) {
   const [ childName, setChildName ] = useState('');
   const [ accidentNotes, setAccidentNotes ] = useState('');
-
+  const [ accidentLocation, setAccidentLocation ] = useState('');
+  const [ accidentDetail, setAccidentDetail ] = useState('');
+  const [ accidentAction, setAccidentAction ] = useState('');
+  const [ accidentMedicalAttention, setAccidentMedicalAttention ] = useState('');
   const dateOfAccident = useInput(new Date());
   const timeOfAccident = useInput();
 
@@ -27,7 +30,11 @@ export default function LogAccidentReport({ navigation }) {
       child_name: childName,
       accident_date: dateOfAccident.date,
       accident_time: timeOfAccident.date,
-      accident_notes: accidentNotes
+      accident_notes: accidentNotes,
+      accident_location: accidentLocation,
+      accident_detail: accidentDetail,
+      accident_action: accidentAction,
+      accident_medical_attention: accidentMedicalAttention,
     });
     navigation.navigate('AccidentReports');
   }
@@ -72,7 +79,19 @@ export default function LogAccidentReport({ navigation }) {
               )}
         </View>
       <View style={styles.space}></View>
-        <Text style={styles.bold}>Accident Notes</Text>
+        <Text style={styles.bold}>Where did the accident occur?</Text>
+        <TextInput style={styles.input} label={'Accident Location'} value={accidentLocation} onChangeText={setAccidentLocation}/>
+      <View style={styles.space}></View>
+        <Text style={styles.bold}>What happened?</Text>
+        <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} label={'Accident Detail'} value={accidentDetail} onChangeText={setAccidentDetail}/>
+      <View style={styles.space}></View>
+        <Text style={styles.bold}>What action was taken?</Text>
+        <TextInput style={styles.input} label={'Accident Action'} value={accidentAction} onChangeText={setAccidentAction}/>
+      <View style={styles.space}></View>
+        <Text style={styles.bold}>Was medication attention required?</Text>
+        <TextInput style={styles.input} label={'Accident Medical Attention'} value={accidentMedicalAttention} onChangeText={setAccidentMedicalAttention}/>
+      <View style={styles.space}></View>
+        <Text style={styles.bold}>Additional Notes</Text>
         <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} label={'Accident Notes'} value={accidentNotes} onChangeText={setAccidentNotes}/>
       <View style={styles.space}></View>
       <Button 

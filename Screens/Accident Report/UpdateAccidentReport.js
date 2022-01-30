@@ -11,6 +11,10 @@ export default class UpdateAccidentReport extends Component {
       childName: '',
       accidentDate: '',
       accidentTime: '',
+      accidentLocation: '',
+      accidentDetail: '',
+      accidentAction: '',
+      accidentMedicalAttention: '',
       accidentNotes: ''
     };
   }
@@ -26,6 +30,10 @@ export default class UpdateAccidentReport extends Component {
           accidentDate: user.accident_date,
           accidentTime: user.accident_time,
           accidentNotes: user.accident_notes,
+          accidentLocation: user.accident_location,
+          accidentDetail: user.accident_detail,
+          accidentAction: user.accident_action,
+          accidentMedicalAttention: user.accident_medical_attention,
           isLoading: false
         });
       } else {
@@ -49,7 +57,11 @@ export default class UpdateAccidentReport extends Component {
       child_name: this.state.childName,
       accident_date: this.state.accidentDate,
       accident_time: this.state.accidentTime,
-      accident_notes: this.state.accidentNotes
+      accident_notes: this.state.accidentNotes,
+      accident_location: this.state.accidentLocation,
+      accident_detail: this.state.accidentDetail,
+      accident_action: this.state.accidentAction,
+      accident_medical_attention: this.state.accidentMedicalAttention
     }).then(() => {
       this.setState({
         key: '',
@@ -57,7 +69,11 @@ export default class UpdateAccidentReport extends Component {
         accidentDate: '',
         accidentTime: '',
         accidentNotes: '',
-        isLoading: false,
+        accidentLocation: '',
+        accidentDetail: '',
+        accidentAction: '',
+        accidentMedicalAttention: '',
+        isLoading: false
       });
       this.props.navigation.navigate('ViewAccidentReports');
     })
@@ -114,6 +130,34 @@ export default class UpdateAccidentReport extends Component {
                   placeholder={'Accident Time'}
                   value={this.state.accidentTime}
                   onChangeText={(val) => this.inputEl(val, 'accidentTime')}
+                />
+                <Text style={styles.bold}>Where did the accident occur?</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder={'Accident Location'}
+                  value={this.state.accidentLocation}
+                  onChangeText={(val) => this.inputEl(val, 'accidentLocation')}
+                />
+                <Text style={styles.bold}>What happened?</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder={'Accident Detail'}
+                  value={this.state.accidentDetail}
+                  onChangeText={(val) => this.inputEl(val, 'accidentDetail')}
+                />
+                <Text style={styles.bold}>What action was taken?</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder={'Accident Action'}
+                  value={this.state.accidentAction}
+                  onChangeText={(val) => this.inputEl(val, 'accidentAction')}
+                />
+                <Text style={styles.bold}>Was medication attention required?</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder={'Accident Medical Attention'}
+                  value={this.state.accidentMedicalAttention}
+                  onChangeText={(val) => this.inputEl(val, 'accidentMedicalAttention')}
                 />
                 <Text style={styles.bold}>Accident Notes</Text>
                 <TextInput
