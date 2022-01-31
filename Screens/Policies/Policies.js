@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Button } from "react-native";
-import { ListItem } from 'react-native-elements';
+import { View, Button, Share } from "react-native";
+import { ListItem, Icon } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 import app from '../../firebase';
 import "firebase/firestore";
 import "firebase/database";
 import { ScrollView } from "react-native-gesture-handler";
+import { FontAwesome } from '@expo/vector-icons';
 
 const Policies = (props) => {
   const [fileList, setFileList] = useState([]);
@@ -25,7 +26,8 @@ const Policies = (props) => {
       xhr.send(null);
     });
   
-    const ref = app.storage().ref(`/policies/${file.name}`);
+    let trimFileName = removeFileExtension(file.name);
+    const ref = app.storage().ref(`/policies/${trimFileName}`);
     const snapshot = ref.put(blob);
   
     snapshot.on('state_changed', 
@@ -47,11 +49,47 @@ const Policies = (props) => {
   }
 
   function saveFileToRealtimeDatabase(downloadURL, file){
-    const uniqueKey = app.database().ref().push().key;
-    app.database().ref(`policies/${uniqueKey}`).update({
+    let trimFileName = removeFileExtension(file.name);
+    app.database().ref(`policies/${trimFileName}`).update({
       fileName: file.name,
       fileURL: downloadURL,
     })
+  }
+
+  function removeFileExtension(fileWithExtension){
+    return fileWithExtension.replace(/\.[^/.]+$/, "");
+  }
+
+  const sharePolicy = async (fileShareableURL) => {
+    try {
+      const result = await Share.share({
+        message: fileShareableURL,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  function deletePolicy(fileName){
+    let trimFileName = removeFileExtension(fileName);
+    let deletePolicyDatabase = app.database().ref('policies/' + trimFileName);
+    deletePolicyDatabase.remove();
+    
+    var storage = app.storage();
+
+    var storageRef = storage.ref();
+
+    var desertRef = storageRef.child(`policies/${trimFileName}`);
+
+    desertRef.delete();
+    setFileList([]);
+    const onChildDeleted = app.database()
+      .ref(`policies`)
+      .on('child_added', (snapshot) => {
+        let helperArr=[];
+        helperArr.push(snapshot.val());
+        setFileList((files)=>[...files, ...helperArr]);
+      });
   }
 
   useEffect(() => {
@@ -75,18 +113,24 @@ const Policies = (props) => {
           />
       </View>
       {fileList.map((item, index) => (
-        <ListItem
+        <ListItem.Swipeable
+          leftContent={
+            <FontAwesome.Button name="share-alt" backgroundColor="#0b8fdc" alignItems="center" justifyContent="center" style={{height:55}} onPress={() => sharePolicy(item.fileURL)}></FontAwesome.Button>
+          }
+          rightContent={
+            <FontAwesome.Button name="trash" backgroundColor="#ee752e" alignItems="center" justifyContent="center" style={{height:55}} onPress={() => deletePolicy(item.fileName)}></FontAwesome.Button>
+          }
           key = {index}
           onPress={() =>
             props.navigation.navigate('FilePreview', {
               fileData: item,
             })
           }bottomDivider>
+          <Icon name='assignment' />
           <ListItem.Content>
             <ListItem.Title>{item.fileName}</ListItem.Title>
-            {/* <ListItem.Subtitle>Subtitle</ListItem.Subtitle> */}
           </ListItem.Content>
-        </ListItem>
+        </ListItem.Swipeable>
       ))}
     </ScrollView>
   );
