@@ -16,7 +16,9 @@ export default class ViewLogDetails extends Component {
         droppedBy: '',
         collectedBy: '',
         temperatureChecked: '',
-        meals: '',
+        breakfast: '',
+        lunch: '',
+        snack: '',
         additionalNotes: ''
     };
   }
@@ -35,7 +37,9 @@ export default class ViewLogDetails extends Component {
           droppedBy: log.dropped_by,
           collectedBy: log.collected_by,
           temperatureChecked: log.temperature_checked,
-          meals: log.meals_,
+          breakfast: log.breakfast_,
+          lunch: log.lunch_,
+          snack: log.snack_,
           additionalNotes: log.additional_notes,
           isLoading: false
         });
@@ -64,7 +68,9 @@ export default class ViewLogDetails extends Component {
         dropped_by: this.state.droppedBy,
         collected_by: this.state.collectedBy,
         temperature_checked: this.state.temperatureChecked,
-        meals_: this.state.meals,
+        breakfast_: this.state.breakfast,
+        lunch_: this.state.lunch,
+        snack_: this.state.snack,
         additional_notes: this.state.additionalNotes
     }).then(() => {
       this.setState({
@@ -76,7 +82,9 @@ export default class ViewLogDetails extends Component {
         droppedBy: '',
         collectedBy: '',
         temperatureChecked: '',
-        meals: '',
+        breakfast: '',
+        lunch: '',
+        dinner: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewLogs');
@@ -157,23 +165,52 @@ export default class ViewLogDetails extends Component {
               value={this.state.collectedBy}
               onChangeText={(val) => this.inputEl(val, 'collectedBy')}
           />
-          <Text style={styles.bold}>Temperature Checked</Text>
-          <CheckBox
-            disabled={false}
-            value={this.state.temperatureChecked}
-            onValueChange={(val) => this.inputEl(val, 'temperatureChecked')}
-            tintColors={{ true: "#0B8FDC", false: "orange"}}
-          />
-          <Text style={styles.bold}>Meals</Text>
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <Text style={styles.bold}>Temperature Checked:</Text>
+            <CheckBox
+              style={{marginTop:15}}
+              disabled={false}
+              value={this.state.temperatureChecked}
+              onValueChange={(val) => this.inputEl(val, 'temperatureChecked')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
+            />
+          </View>
+          <Text style={styles.boldUnderCheckbox}>Meals</Text>
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <Text style={styles.standard}>Breakfast:</Text>
+            <CheckBox
+              style={{marginTop:5}}
+              disabled={false}
+              value={this.state.breakfast}
+              onValueChange={(val) => this.inputEl(val, 'breakfast')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
+            />
+          </View>
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <Text style={styles.standard}>Lunch:</Text>
+            <CheckBox
+              style={{marginTop:5}}
+              disabled={false}
+              value={this.state.lunch}
+              onValueChange={(val) => this.inputEl(val, 'lunch')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
+            />
+          </View>
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <Text style={styles.standard}>Snack:</Text>
+            <CheckBox
+              style={{marginTop:5}}
+              disabled={false}
+              value={this.state.snack}
+              onValueChange={(val) => this.inputEl(val, 'snack')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
+            />
+          </View>
+          <Text style={styles.boldUnderCheckbox}>Additional Notes</Text>
           <TextInput
-              style={styles.input}
-              placeholder={'Meals'}
-              value={this.state.meals}
-              onChangeText={(val) => this.inputEl(val, 'meals')}
-          />
-          <Text style={styles.bold}>Additional Notes</Text>
-          <TextInput
-              style={styles.input}
+              style={styles.extendedInput} 
+              multiline={true} 
+              numberOfLines={4}
               placeholder={'Additional Notes'}
               value={this.state.additionalNotes}
               onChangeText={(val) => this.inputEl(val, 'additionalNotes')}
@@ -190,10 +227,10 @@ export default class ViewLogDetails extends Component {
             onPress={this.alertDialog}
             color="#EE752E"
           />
-      </ScrollView>
-    );
+        </ScrollView>
+      );
+    }
   }
-}
 
 const styles = StyleSheet.create({
   input: {
@@ -203,33 +240,29 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#DADADA'
   },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
-  },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 15
+  },
+  boldUnderCheckbox: {
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 20
   },
   space: {
     height: 20,
-  }
+  },
+  standard: {
+    padding: 10,
+    marginLeft: 12,
+    marginTop: 5
+  },
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
+  },
 })

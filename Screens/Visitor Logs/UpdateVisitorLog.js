@@ -167,31 +167,10 @@ const styles = StyleSheet.create({
     margin: 12,
     textAlignVertical: 'top'
   },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
-  },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 15
   },
   space: {
     height: 20,

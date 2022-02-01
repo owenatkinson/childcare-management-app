@@ -137,14 +137,17 @@ export default class UpdateChildDetails extends Component {
               value={this.state.allergies}
               onChangeText={(val) => this.inputEl(val, 'allergies')}
           />
-          <Text style={styles.bold}>Child Is Active?</Text>
-          <CheckBox
-            disabled={false}
-            value={this.state.isActive}
-            onValueChange={(val) => this.inputEl(val, 'isActive')}
-            tintColors={{ true: "#0B8FDC", false: "orange"}}
-          />
-          <Text style={styles.bold}>Child Home Address</Text>
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <Text style={styles.bold}>Child Is Active?</Text>
+            <CheckBox
+              style={{marginTop:15}}
+              disabled={false}
+              value={this.state.isActive}
+              onValueChange={(val) => this.inputEl(val, 'isActive')}
+              tintColors={{ true: "#0B8FDC", false: "orange"}}
+            />
+          </View>
+          <Text style={styles.boldUnderCheckbox}>Child Home Address</Text>
           <TextInput
               style={styles.input}
               placeholder={'Child Home Address'}
@@ -241,31 +244,15 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#DADADA'
   },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
-  },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 15
+  },
+  boldUnderCheckbox: {
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 20
   },
   space: {
     height: 20,
