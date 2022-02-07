@@ -133,21 +133,21 @@ export default class ViewLogDetails extends Component {
           <Text style={styles.bold}>Date of Attendance</Text>
           <TextInput
               style={styles.input}
-              placeholder={'Date of Attendance'}
+              placeholder={'01/01/2022'}
               value={this.state.dateOfAttendance}
               onChangeText={(val) => this.inputEl(val, 'dateOfAttendance')}
           />
           <Text style={styles.bold}>Check-in Time</Text>
           <TextInput
               style={styles.input}
-              placeholder={'Check-in Time'}
+              placeholder={'00:00'}
               value={this.state.checkInTime}
               onChangeText={(val) => this.inputEl(val, 'checkInTime')}
           />
           <Text style={styles.bold}>Check-out Time</Text>
           <TextInput
               style={styles.input}
-              placeholder={'Check-out Time'}
+              placeholder={'00:00'}
               value={this.state.checkOutTime}
               onChangeText={(val) => this.inputEl(val, 'checkOutTime')}
           />
@@ -211,7 +211,7 @@ export default class ViewLogDetails extends Component {
               style={styles.extendedInput} 
               multiline={true} 
               numberOfLines={4}
-              placeholder={'Additional Notes'}
+              placeholder={'Insert any additional information'}
               value={this.state.additionalNotes}
               onChangeText={(val) => this.inputEl(val, 'additionalNotes')}
           />

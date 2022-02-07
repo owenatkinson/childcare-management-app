@@ -107,21 +107,21 @@ export default class UpdateExpense extends Component {
                 <Text style={styles.bold}>Date of Expense</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Date of Expense'}
+                    placeholder={'1/1/2022'}
                     value={this.state.dateOfExpense}
                     onChangeText={(val) => this.inputEl(val, 'dateOfExpense')}
                 />
                 <Text style={styles.bold}>Expense Amount</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Expense Amount'}
+                    placeholder={'0.00'}
                     value={this.state.expenseAmount}
                     onChangeText={(val) => this.inputEl(val, 'expenseAmount')}
                 />
                 <Text style={styles.bold}>Additional Notes</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Additional Notes'}
+                    placeholder={'Insert any additional information'}
                     value={this.state.expenseNote}
                     onChangeText={(val) => this.inputEl(val, 'expenseNote')}
                 />

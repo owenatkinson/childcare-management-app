@@ -82,18 +82,21 @@ export default class MonthlyFireDrill extends Component {
           <View style={styles.space}></View>
             <Text style={styles.bold}>Number of People</Text>
             <TextInput
+                placeholder={'Number of People present'}
                 style={styles.input}
                 value={this.state.monthlyFireDrillNumberOfPeople}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNumberOfPeople')}
             />
             <Text style={styles.bold}>Time Completed</Text>
             <TextInput
+                placeholder={'00:00'}
                 style={styles.input}
                 value={this.state.monthlyFireDrillTimeCompleted}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillTimeCompleted')}
             />
             <Text style={styles.bold}>Notes</Text>
             <TextInput
+                placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
                 multiline={true}
                 numberOfLines={4}

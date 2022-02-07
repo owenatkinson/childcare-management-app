@@ -20,24 +20,7 @@ function AttendanceRegister({ navigation }) {
   const checkInTime = useInput();
   const checkOutTime = useInput();
 
-  // const [selectedLanguage, setSelectedLanguage] = useState();
-
   const fireDB = app.firestore().collection('attendanceRegister');
-  // const childDB = app.firestore().collection('children');
-
-  // let childArr = [];
-
-  // getListOfActiveChildren();
-
-  // async function getListOfActiveChildren() {
-  //   childDB.where("child_is_active", "==", true).limit(25)
-  //     .get()
-  //     .then((querySnapshot) => {
-  //         querySnapshot.forEach((doc) => {
-  //             setItems([{label: doc.data().child_name, value: doc.data().child_name}]);
-  //         });
-  //     })
-  // }
 
   const convertDate = (dateInput) => {
     return(moment(dateInput).format('D/M/YYYY'));
@@ -67,7 +50,7 @@ function AttendanceRegister({ navigation }) {
   return (
     <ScrollView>
       <Text style={styles.bold}>Child Name</Text>
-      <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
+      <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
       <Text style={styles.bold}>Date of Attendance</Text>
       <View>
         <TouchableOpacity
@@ -83,7 +66,7 @@ function AttendanceRegister({ navigation }) {
             onChange={dateOfAttendance.onChange}
             />
         )}
-          <Text>Choose a Date: {convertDate(dateOfAttendance.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfAttendance.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Check In Time</Text>
@@ -101,7 +84,7 @@ function AttendanceRegister({ navigation }) {
             onChange={checkInTime.onChange}
             />
         )}
-          <Text>Choose a Time: {convertTime(checkInTime.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Time: {convertTime(checkInTime.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Check Out Time</Text>
@@ -119,13 +102,13 @@ function AttendanceRegister({ navigation }) {
             onChange={checkOutTime.onChange}
             />
         )}
-          <Text>Choose a Time: {convertTime(checkOutTime.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Time: {convertTime(checkOutTime.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Dropped By</Text>
-      <TextInput style={styles.input} label={'Dropped By'} value={droppedBy} onChangeText={setDroppedBy}/>
+      <TextInput style={styles.input} placeholder={'Dropped By'} label={'Dropped By'} value={droppedBy} onChangeText={setDroppedBy}/>
       <Text style={styles.bold}>Collected By</Text>
-      <TextInput style={styles.input} label={'Collected By'} value={collectedBy} onChangeText={setCollectedBy}/>
+      <TextInput style={styles.input} placeholder={'Collected By'} label={'Collected By'} value={collectedBy} onChangeText={setCollectedBy}/>
       <View style={{flexDirection:"row", alignItems:"center"}}>
         <Text style={styles.bold}>Temperature Checked:</Text>
         <CheckBox
@@ -168,7 +151,7 @@ function AttendanceRegister({ navigation }) {
         />
       </View>
       <Text style={styles.bold}>Additional Notes</Text>
-      <TextInput style={styles.extendedInput} multiline={true} numberOfLines={4} label={'Additional Notes'} value={additionalNotes} onChangeText={setAdditionalNotes}/>
+      <TextInput style={styles.extendedInput} placeholder={'Insert any additional information'} multiline={true} numberOfLines={4} label={'Additional Notes'} value={additionalNotes} onChangeText={setAdditionalNotes}/>
       <View style={styles.space}></View>
       <Button 
           title="Log Attendance"
@@ -240,11 +223,14 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: '#DADADA',
+    backgroundColor: '#ee752e',
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     height: 40
+},
+  buttonText: {
+      fontWeight: 'bold',
+      color: '#FFFFFF'
   },
 });
 

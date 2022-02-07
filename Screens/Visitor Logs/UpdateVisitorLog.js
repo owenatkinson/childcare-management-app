@@ -108,21 +108,18 @@ export default class UpdateVisitorLog extends Component {
                 <Text style={styles.bold}>Date of Visit</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Date of Visit'}
                     value={this.state.dateOfVisit}
                     onChangeText={(val) => this.inputEl(val, 'dateOfVisit')}
                 />
                 <Text style={styles.bold}>Time In</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Time In'}
                     value={this.state.timeIn}
                     onChangeText={(val) => this.inputEl(val, 'timeIn')}
                 />
                 <Text style={styles.bold}>Time Out</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Time Out'}
                     value={this.state.timeOut}
                     onChangeText={(val) => this.inputEl(val, 'timeOut')}
                 />

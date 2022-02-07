@@ -37,7 +37,7 @@ export default function LogVisitor({navigation}) {
     <ScrollView>
       <View style={styles.space}></View>
         <Text style={styles.bold}>Visitor Name</Text>
-        <TextInput style={styles.input} label={'Visitor Name'} value={visitorName} onChangeText={setVisitorName}/>
+        <TextInput style={styles.input} placeholder={'Visitor Name'} label={'Visitor Name'} value={visitorName} onChangeText={setVisitorName}/>
       <Text style={styles.bold}>Date of Visit</Text>
       <View>
         <TouchableOpacity
@@ -53,7 +53,7 @@ export default function LogVisitor({navigation}) {
             onChange={dateOfVisit.onChange}
             />
         )}
-          <Text>Choose a Date: {convertDate(dateOfVisit.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfVisit.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Time In</Text>
@@ -71,7 +71,7 @@ export default function LogVisitor({navigation}) {
             onChange={timeIn.onChange}
             />
         )}
-          <Text>Choose a Time: {convertTime(timeIn.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Time: {convertTime(timeIn.date)}</Text>
         </TouchableOpacity>
       </View>
         <Text style={styles.bold}>Time Out</Text>
@@ -88,10 +88,10 @@ export default function LogVisitor({navigation}) {
             onChange={timeOut.onChange}
             />
         )}
-          <Text>Choose a Time: {convertTime(timeOut.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Time: {convertTime(timeOut.date)}</Text>
         </TouchableOpacity>
       <Text style={styles.bold}>Purpose of Visit</Text>
-      <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} label={'Purpose of Visit'} value={visitPurpose} onChangeText={setVisitPurpose}/>
+      <TextInput multiline={true} placeholder={'Purpose of Visit'} numberOfLines={4} style={styles.extendedInput} label={'Purpose of Visit'} value={visitPurpose} onChangeText={setVisitPurpose}/>
       <View style={styles.space}></View>
       <Button 
           title="Log Visitor"
@@ -158,10 +158,13 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: '#DADADA',
+    backgroundColor: '#ee752e',
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     height: 40
   },
+  buttonText: {
+      fontWeight: 'bold',
+      color: '#FFFFFF'
+  }
 });

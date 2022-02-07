@@ -7,7 +7,7 @@ import { ListItem } from 'react-native-elements';
 export default class ViewExpenses extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('expenseLogs').orderBy("date_of_expense", "desc");
+    this.docs = app.firestore().collection('expenseLogs');
     this.state = {
       isLoading: true,
       expenseLogs: []

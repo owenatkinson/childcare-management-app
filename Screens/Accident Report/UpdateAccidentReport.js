@@ -113,21 +113,21 @@ export default class UpdateAccidentReport extends Component {
                 <Text style={styles.bold}>Child Name</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={'Forename'}
+                  placeholder={'Child Name'}
                   value={this.state.childName}
                   onChangeText={(val) => this.inputEl(val, 'childName')}
                 />
                 <Text style={styles.bold}>Date of Accident</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={'Date of Accident'}
+                  placeholder={'1/1/2022'}
                   value={this.state.accidentDate}
                   onChangeText={(val) => this.inputEl(val, 'accidentDate')}
                 />
                 <Text style={styles.bold}>Accident Time</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={'Accident Time'}
+                  placeholder={'00:00'}
                   value={this.state.accidentTime}
                   onChangeText={(val) => this.inputEl(val, 'accidentTime')}
                 />
@@ -164,7 +164,7 @@ export default class UpdateAccidentReport extends Component {
                   multiline={true} 
                   numberOfLines={4}
                   style={styles.extendedInput}
-                  placeholder={'Accident Notes'}
+                  placeholder={'Insert any additional information'}
                   value={this.state.accidentNotes}
                   onChangeText={(val) => this.inputEl(val, 'accidentNotes')}
                 />

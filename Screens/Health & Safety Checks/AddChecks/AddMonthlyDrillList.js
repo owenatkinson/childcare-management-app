@@ -38,6 +38,7 @@ export default function AddMonthlyDrillList({route}) {
         <ScrollView>
             <Text style={styles.bold}>Number of People</Text>
             <TextInput
+                placeholder={'Number of People present'}
                 style={styles.input}
                 value={monthlyFireDrillNumberOfPeople}
                 onChangeText={setMonthlyFireDrillNumberOfPeople}
@@ -55,11 +56,12 @@ export default function AddMonthlyDrillList({route}) {
                   onChange={monthlyFireDrillTimeCompleted.onChange}
                   />
               )}
-              <Text>Choose a Time: {convertTime(monthlyFireDrillTimeCompleted.date)}</Text>
+              <Text style={styles.buttonText}>Choose a Time: {convertTime(monthlyFireDrillTimeCompleted.date)}</Text>
               </TouchableOpacity>
             </View>
             <Text style={styles.bold}>Notes</Text>
             <TextInput
+                placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
                 multiline={true} 
                 numberOfLines={4}
@@ -141,10 +143,13 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: '#DADADA',
+    backgroundColor: '#ee752e',
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     height: 40
   },
+  buttonText: {
+      fontWeight: 'bold',
+      color: '#FFFFFF'
+  }
 });

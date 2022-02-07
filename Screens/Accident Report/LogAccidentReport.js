@@ -43,7 +43,7 @@ export default function LogAccidentReport({ navigation }) {
     <ScrollView>
       <View style={styles.space}></View>
       <Text style={styles.bold}>Child Name</Text>
-      <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
+      <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
       <Text style={styles.bold}>Date of Accident</Text>
       <View>
         <TouchableOpacity
@@ -59,7 +59,7 @@ export default function LogAccidentReport({ navigation }) {
             onChange={dateOfAccident.onChange}
             />
         )}
-          <Text>Choose a Date: {convertDate(dateOfAccident.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfAccident.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Accident Time</Text>
@@ -77,19 +77,19 @@ export default function LogAccidentReport({ navigation }) {
             onChange={timeOfAccident.onChange}
             />
         )}
-          <Text>Choose a Date: {convertTime(timeOfAccident.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Date: {convertTime(timeOfAccident.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Where did the accident occur?</Text>
-      <TextInput style={styles.input} label={'Accident Location'} value={accidentLocation} onChangeText={setAccidentLocation}/>
+      <TextInput style={styles.input} placeholder={'Accident Location'} label={'Accident Location'} value={accidentLocation} onChangeText={setAccidentLocation}/>
       <Text style={styles.bold}>What happened?</Text>
-      <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} label={'Accident Detail'} value={accidentDetail} onChangeText={setAccidentDetail}/>
+      <TextInput multiline={true} placeholder={'Accident Detail'} numberOfLines={4} style={styles.extendedInput} label={'Accident Detail'} value={accidentDetail} onChangeText={setAccidentDetail}/>
       <Text style={styles.bold}>What action was taken?</Text>
-      <TextInput style={styles.input} label={'Accident Action'} value={accidentAction} onChangeText={setAccidentAction}/>
+      <TextInput style={styles.input} placeholder={'Accident Action'} label={'Accident Action'} value={accidentAction} onChangeText={setAccidentAction}/>
       <Text style={styles.bold}>Was medication attention required?</Text>
-      <TextInput style={styles.input} label={'Accident Medical Attention'} value={accidentMedicalAttention} onChangeText={setAccidentMedicalAttention}/>
+      <TextInput style={styles.input} placeholder={'Accident Medical Attention'} label={'Accident Medical Attention'} value={accidentMedicalAttention} onChangeText={setAccidentMedicalAttention}/>
       <Text style={styles.bold}>Additional Notes</Text>
-      <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} label={'Accident Notes'} value={accidentNotes} onChangeText={setAccidentNotes}/>
+      <TextInput multiline={true} placeholder={'Insert any additional information'} numberOfLines={4} style={styles.extendedInput} label={'Accident Notes'} value={accidentNotes} onChangeText={setAccidentNotes}/>
       <View style={styles.space}></View>
       <Button 
         title="Log Accident Report"
@@ -156,10 +156,13 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: '#DADADA',
+    backgroundColor: '#ee752e',
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     height: 40
   },
+  buttonText: {
+      fontWeight: 'bold',
+      color: '#FFFFFF'
+  }
 });

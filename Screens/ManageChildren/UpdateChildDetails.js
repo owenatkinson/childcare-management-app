@@ -161,7 +161,7 @@ export default class UpdateChildDetails extends Component {
               value={this.state.parent1Name}
               onChangeText={(val) => this.inputEl(val, 'parent1Name')}
           />
-          <Text style={styles.bold}>Parent #1 Number</Text>
+          <Text style={styles.bold}>Parent #1 Phone Number</Text>
           <TextInput
               style={styles.input}
               placeholder={'Parent #1 Number'}
@@ -175,7 +175,7 @@ export default class UpdateChildDetails extends Component {
               value={this.state.parent2Name}
               onChangeText={(val) => this.inputEl(val, 'parent2Name')}
           />
-          <Text style={styles.bold}>Parent #2 Number</Text>
+          <Text style={styles.bold}>Parent #2 Phone Number</Text>
           <TextInput
               style={styles.input}
               placeholder={'Parent #2 Number'}
@@ -189,7 +189,7 @@ export default class UpdateChildDetails extends Component {
               value={this.state.emergencyName}
               onChangeText={(val) => this.inputEl(val, 'emergencyName')}
           />
-          <Text style={styles.bold}>Emergency Contact Number</Text>
+          <Text style={styles.bold}>Emergency Contact Phone Number</Text>
           <TextInput
               style={styles.input}
               placeholder={'Emergency Contact Number'}
@@ -217,7 +217,7 @@ export default class UpdateChildDetails extends Component {
               value={this.state.doctorAddress}
               onChangeText={(val) => this.inputEl(val, 'doctorAddress')}
           />
-          <Text style={styles.bold}>Doctor's Number</Text>
+          <Text style={styles.bold}>Doctor's Phone Number</Text>
           <TextInput
               style={styles.input}
               placeholder={'Doctor\'s Number'}

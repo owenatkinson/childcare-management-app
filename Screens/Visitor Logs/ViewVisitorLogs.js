@@ -7,7 +7,7 @@ import { ListItem } from 'react-native-elements';
 export default class ViewVisitorLogs extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('visitorLogs');
+    this.docs = app.firestore().collection("visitorLogs");
     this.state = {
       isLoading: true,
       visitorLogs: []

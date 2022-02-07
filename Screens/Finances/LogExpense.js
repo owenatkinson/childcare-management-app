@@ -104,7 +104,7 @@ const LogExpense = ({navigation}) => {
         <ScrollView>
             <View style={styles.space}></View>
             <Text style={styles.bold}>Expense Title</Text>
-            <TextInput style={styles.input} label={'Expense Title'} value={expenseTitle} onChangeText={setExpenseTitle}/>
+            <TextInput style={styles.input} placeholder={'Expense Title'} label={'Expense Title'} value={expenseTitle} onChangeText={setExpenseTitle}/>
             <Text style={styles.bold}>Date of Expense</Text>
             <View>
                 <TouchableOpacity
@@ -124,9 +124,9 @@ const LogExpense = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <Text style={styles.bold}>Expense Amount (£)</Text>
-            <TextInput style={styles.input} label={'Expense Amount'} value={expenseAmount} onChangeText={setExpenseAmount}/>
+            <TextInput style={styles.input} placeholder={'0.00'} label={'Expense Amount'} value={expenseAmount} onChangeText={setExpenseAmount}/>
             <Text style={styles.bold}>Additional Notes</Text>
-            <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} label={'Additional Notes'} value={expenseNote} onChangeText={setExpenseNote}/>
+            <TextInput multiline={true} placeholder={'Insert any additional information'} numberOfLines={4} style={styles.extendedInput} label={'Additional Notes'} value={expenseNote} onChangeText={setExpenseNote}/>
             <View>
                 <TouchableOpacity
                     style={styles.button}

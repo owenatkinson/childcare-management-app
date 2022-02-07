@@ -7,7 +7,7 @@ import { ListItem } from 'react-native-elements';
 export default class ListLogs extends Component {
     constructor() {
         super();
-        this.docs = app.firestore().collection('attendanceRegister');
+        this.docs = app.firestore().collection("attendanceRegister").orderBy("child_name", "desc");
         this.state = {
             isLoading: true,
             logs: [],
