@@ -31,6 +31,9 @@ import AddDailyCovidAssessment from './Screens/Health & Safety Checks/AddChecks/
 import AddDailyRiskAssessment from './Screens/Health & Safety Checks/AddChecks/AddDailyRiskAssessment';
 import AddMonthlyDrillList from './Screens/Health & Safety Checks/AddChecks/AddMonthlyDrillList';
 import AddMonthlyFireSafetyEquipmentList from './Screens/Health & Safety Checks/AddChecks/AddMonthlyFireSafetyEquipmentList';
+import LogExpense from './Screens/Finances/LogExpense';
+import ViewExpenses from './Screens/Finances/ViewExpenses';
+import UpdateExpense from './Screens/Finances/UpdateExpense';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -71,6 +74,9 @@ const StackNavigator = () => {
           <Stack.Screen name="LogVisitor" component={LogVisitor} options={{ title: 'Log Visitor'}}/>
           <Stack.Screen name="ViewVisitorLogs" component={ViewVisitorLogs} options={{ title: 'View Visitor Logs'}}/>
           <Stack.Screen name="FilePreview" component={FilePreview} options={{ title: 'View Policy'}}/>
+          <Stack.Screen name="LogExpense" component={LogExpense} options={{ title: 'Log Expense'}}/>
+          <Stack.Screen name="ViewExpenses" component={ViewExpenses} options={{ title: 'View Expenses'}}/>
+          <Stack.Screen name="UpdateExpense" component={UpdateExpense} options={{ title: 'Update Expense'}}/>
         </Stack.Navigator>
     );
 };
