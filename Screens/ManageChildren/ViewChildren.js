@@ -7,7 +7,7 @@ import { ListItem } from 'react-native-elements';
 export default class ViewChildren extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('children');
+    this.docs = app.firestore().collection("children").orderBy("child_name", "desc");
     this.state = {
       isLoading: true,
       children: []

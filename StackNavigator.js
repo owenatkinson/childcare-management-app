@@ -31,6 +31,9 @@ import AddDailyCovidAssessment from './Screens/Health & Safety Checks/AddChecks/
 import AddDailyRiskAssessment from './Screens/Health & Safety Checks/AddChecks/AddDailyRiskAssessment';
 import AddMonthlyDrillList from './Screens/Health & Safety Checks/AddChecks/AddMonthlyDrillList';
 import AddMonthlyFireSafetyEquipmentList from './Screens/Health & Safety Checks/AddChecks/AddMonthlyFireSafetyEquipmentList';
+import LogExpense from './Screens/Finances/LogExpense';
+import ViewExpenses from './Screens/Finances/ViewExpenses';
+import UpdateExpense from './Screens/Finances/UpdateExpense';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -48,14 +51,14 @@ const StackNavigator = () => {
           <Stack.Screen name="Policies" component={Policies} options={{ title: 'Policies'}}/>
           <Stack.Screen name="Planner" component={Planner} options={{ title: 'Planner'}}/>
           <Stack.Screen name="HealthSafetyChecks" component={HealthSafetyChecks} options={{ title: 'Health & Safety Checks'}}/>
-          <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
-          <Stack.Screen name="AddDailyCovidAssessment" component={AddDailyCovidAssessment} options={{ title: 'Daily COVID Assessment'}}/>
-          <Stack.Screen name="AddDailyRiskAssessment" component={AddDailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
-          <Stack.Screen name="AddMonthlyDrillList" component={AddMonthlyDrillList} options={{ title: 'Monthly Fire Drill'}}/>
-          <Stack.Screen name="AddMonthlyFireSafetyEquipmentList" component={AddMonthlyFireSafetyEquipmentList} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
-          <Stack.Screen name="DailyRiskAssessment" component={DailyRiskAssessment} options={{ title: 'Daily Risk Assessment'}}/>
-          <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Monthly Fire Drill'}}/>
-          <Stack.Screen name="MonthlyFireSafetyEquipmentCheck" component={MonthlyFireSafetyEquipmentCheck} options={{ title: 'Monthly Fire Safety Equipment Check'}}/>
+          <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'COVID Assessment'}}/>
+          <Stack.Screen name="AddDailyCovidAssessment" component={AddDailyCovidAssessment} options={{ title: 'COVID Assessment'}}/>
+          <Stack.Screen name="AddDailyRiskAssessment" component={AddDailyRiskAssessment} options={{ title: 'Risk Assessment'}}/>
+          <Stack.Screen name="AddMonthlyDrillList" component={AddMonthlyDrillList} options={{ title: 'Fire Drill'}}/>
+          <Stack.Screen name="AddMonthlyFireSafetyEquipmentList" component={AddMonthlyFireSafetyEquipmentList} options={{ title: 'Fire Safety Equipment Check'}}/>
+          <Stack.Screen name="DailyRiskAssessment" component={DailyRiskAssessment} options={{ title: 'Risk Assessment'}}/>
+          <Stack.Screen name="MonthlyFireDrill" component={MonthlyFireDrill} options={{ title: 'Fire Drill'}}/>
+          <Stack.Screen name="MonthlyFireSafetyEquipmentCheck" component={MonthlyFireSafetyEquipmentCheck} options={{ title: 'Fire Safety Equipment Check'}}/>
           <Stack.Screen name="Attendance" component={AttendanceRegister} options={{ title: 'Attendance Register'}}/>
           <Stack.Screen name="ManageChildren" component={ManageChildren} options={{ title: 'Manage Children'}}/>
           <Stack.Screen name="AddNewChild" component={AddNewChild} options={{ title: 'Add New Child'}}/>
@@ -71,6 +74,9 @@ const StackNavigator = () => {
           <Stack.Screen name="LogVisitor" component={LogVisitor} options={{ title: 'Log Visitor'}}/>
           <Stack.Screen name="ViewVisitorLogs" component={ViewVisitorLogs} options={{ title: 'View Visitor Logs'}}/>
           <Stack.Screen name="FilePreview" component={FilePreview} options={{ title: 'View Policy'}}/>
+          <Stack.Screen name="LogExpense" component={LogExpense} options={{ title: 'Log Expense'}}/>
+          <Stack.Screen name="ViewExpenses" component={ViewExpenses} options={{ title: 'View Expenses'}}/>
+          <Stack.Screen name="UpdateExpense" component={UpdateExpense} options={{ title: 'Update Expense'}}/>
         </Stack.Navigator>
     );
 };

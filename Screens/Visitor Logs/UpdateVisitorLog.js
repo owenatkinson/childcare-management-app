@@ -108,21 +108,18 @@ export default class UpdateVisitorLog extends Component {
                 <Text style={styles.bold}>Date of Visit</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Date of Visit'}
                     value={this.state.dateOfVisit}
                     onChangeText={(val) => this.inputEl(val, 'dateOfVisit')}
                 />
                 <Text style={styles.bold}>Time In</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Time In'}
                     value={this.state.timeIn}
                     onChangeText={(val) => this.inputEl(val, 'timeIn')}
                 />
                 <Text style={styles.bold}>Time Out</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Time Out'}
                     value={this.state.timeOut}
                     onChangeText={(val) => this.inputEl(val, 'timeOut')}
                 />
@@ -167,31 +164,10 @@ const styles = StyleSheet.create({
     margin: 12,
     textAlignVertical: 'top'
   },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
-  },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 15
   },
   space: {
     height: 20,

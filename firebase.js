@@ -22,10 +22,5 @@ if(!firebase.apps.length){
 }
 
 export default app;
-// export const database;
-// export const storage;
-// export default () => {
-//   return {app, storage, database};
-// };
 
 export const fireDB = app.firestore().collection;

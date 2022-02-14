@@ -4,13 +4,13 @@ import app from '../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 
-export default class ViewVisitorLogs extends Component {
+export default class ViewExpenses extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection("visitorLogs");
+    this.docs = app.firestore().collection('expenseLogs');
     this.state = {
       isLoading: true,
-      visitorLogs: []
+      expenseLogs: []
     };
   }
 
@@ -23,21 +23,20 @@ export default class ViewVisitorLogs extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const visitorLogs = [];
+    const expenseLogs = [];
     querySnapshot.forEach((res) => {
-      const { visitor_name, date_of_visit, time_in, time_out, visit_purpose } = res.data();
-      visitorLogs.push({
-        key: res.id,
-        visitor_name,
-        date_of_visit,
-        time_in,
-        time_out,
-        visit_purpose
-      });
+        const { expense_title, expense_note, expense_amount, date_of_expense } = res.data();
+        expenseLogs.push({
+            key: res.id,
+            expense_title,
+            expense_note,
+            expense_amount,
+            date_of_expense
+        });
     });
     this.setState({
-      visitorLogs,
-      isLoading: false
+        expenseLogs,
+        isLoading: false
     });
   }
 
@@ -45,19 +44,19 @@ export default class ViewVisitorLogs extends Component {
     return (
       <ScrollView style={styles.wrapper}>
           {
-            this.state.visitorLogs.map((res, i) => {
+            this.state.expenseLogs.map((res, i) => {
               return (
                 <ListItem 
                   key={i}
                   onPress={() => {
-                    this.props.navigation.navigate("UpdateVisitorLog", {
+                    this.props.navigation.navigate("UpdateExpense", {
                       userkey: res.key
                     });
                   }}                        
                   bottomDivider>
                   <ListItem.Content>
-                    <ListItem.Title>{res.visitor_name}</ListItem.Title>
-                    <ListItem.Subtitle>Date of Visit: {res.date_of_visit}</ListItem.Subtitle>
+                    <ListItem.Title>{res.expense_title}</ListItem.Title>
+                    <ListItem.Subtitle>Date of Expense: {res.date_of_expense}</ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron 
                      color="black" 

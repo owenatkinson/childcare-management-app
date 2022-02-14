@@ -28,6 +28,7 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
             <View style={styles.space}></View>
             <Text style={styles.bold}>Notes</Text>
             <TextInput
+                placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
                 multiline={true} 
                 numberOfLines={4}

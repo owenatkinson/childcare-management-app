@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
@@ -67,11 +67,22 @@ export default function AddNewChild({ navigation }) {
     <ScrollView>
       <View style={styles.space}></View>
         <Text style={styles.bold}>Child Name</Text>
-        <TextInput style={styles.input} label={'Child Name'} value={childName} onChangeText={setChildName}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
         <Text style={styles.bold}>Child DOB</Text>
         <View>
-          <Button onPress={showDatepicker} title={convertDate(childDOB)} />
+          <TouchableOpacity style={styles.button} onPress={showDatepicker}>
+          {childDOB.show && (
+              <DateTimePicker
+              testID="dateOfAccident"
+              value={childDOB.date}
+              mode={childDOB.mode}
+              is24Hour={true}
+              display="default"
+              onChange={childDOB.onChange}
+              />
+          )}
+          <Text style={styles.buttonText}>Choose a Date: {convertDate(childDOB.date)}</Text>
+          </TouchableOpacity>
         </View>
         {show && (
           <DateTimePicker
@@ -83,50 +94,40 @@ export default function AddNewChild({ navigation }) {
             onChange={onChange}
           />
         )}
-        <View style={styles.space}></View>
         <Text style={styles.bold}>Child Allergies</Text>
-        <TextInput style={styles.input} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
-        <View style={styles.space}></View>
-        <Text style={styles.bold}>Child Is Active?</Text>
-        <CheckBox
-          disabled={false}
-          value={childIsActive}
-          onValueChange={setChildIsActive}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-        <View style={styles.space}></View>
-        <Text style={styles.bold}>Child Home Address</Text>
-        <TextInput style={styles.input} label={'Child Home Address'} value={childHomeAddress} onChangeText={setChildHomeAddress}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'List Child\'s Allergies'} label={'Child Allergies'} value={childAllergies} onChangeText={setChildAllergies}/>
+        <View style={{flexDirection:"row", alignItems:"center"}}>
+          <Text style={styles.bold}>Child Is Active?</Text>
+          <CheckBox
+            style={{marginTop:15}}
+            disabled={false}
+            value={childIsActive}
+            onValueChange={setChildIsActive}
+            tintColors={{ true: "#0B8FDC", false: "orange"}}
+          />
+        </View>
+        <Text style={styles.boldUnderCheckbox}>Child's Home Address</Text>
+        <TextInput style={styles.input} placeholder={'Child\'s Home Address'} label={'Child Home Address'} value={childHomeAddress} onChangeText={setChildHomeAddress}/>
         <Text style={styles.bold}>Parent #1 Name</Text>
-        <TextInput style={styles.input} label={'Parent #1 Name'} value={parentName1} onChangeText={setParentName1}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Parent Name'} label={'Parent #1 Name'} value={parentName1} onChangeText={setParentName1}/>
         <Text style={styles.bold}>Parent #1 Phone Number</Text>
-        <TextInput style={styles.input} label={'Parent #1 Phone Number'} value={parentNumber1} onChangeText={setParentNumber1}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Parent Phone Number'} label={'Parent #1 Phone Number'} value={parentNumber1} onChangeText={setParentNumber1}/>
         <Text style={styles.bold}>Parent #2 Name</Text>
-        <TextInput style={styles.input} label={'Parent #2 Name'} value={parentName2} onChangeText={setParentName2}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Parent Name'} label={'Parent #2 Name'} value={parentName2} onChangeText={setParentName2}/>
         <Text style={styles.bold}>Parent #2 Phone Number</Text>
-        <TextInput style={styles.input} label={'Parent #2 Phone Number'} value={parentNumber2} onChangeText={setParentNumber2}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Parent Phone Number'} label={'Parent #2 Phone Number'} value={parentNumber2} onChangeText={setParentNumber2}/>
         <Text style={styles.bold}>Emergency Contact Name</Text>
-        <TextInput style={styles.input} label={'Emergency Contact Name'} value={childEmergencyContactName} onChangeText={setChildEmergencyContactName}/>
-        <View style={styles.space}></View>
-        <Text style={styles.bold}>Emergency Contact Number</Text>
-        <TextInput style={styles.input} label={'Emergency Contact Number'} value={childEmergencyNumber} onChangeText={setChildEmergencyNumber}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Emergency Contact Name'} label={'Emergency Contact Name'} value={childEmergencyContactName} onChangeText={setChildEmergencyContactName}/>
+        <Text style={styles.bold}>Emergency Contact Phone Number</Text>
+        <TextInput style={styles.input} placeholder={'Emergency Contact Phone Number'} label={'Emergency Contact Number'} value={childEmergencyNumber} onChangeText={setChildEmergencyNumber}/>
         <Text style={styles.bold}>Emergency Contact Relation</Text>
-        <TextInput style={styles.input} label={'Emergency Contact Relation'} value={childEmergencyRelation} onChangeText={setChildEmergencyRelation}/>
-        <View style={styles.space}></View> 
+        <TextInput style={styles.input} placeholder={'Relation to Child'} label={'Emergency Contact Relation'} value={childEmergencyRelation} onChangeText={setChildEmergencyRelation}/>
         <Text style={styles.bold}>Doctor's Name</Text>
-        <TextInput style={styles.input} label={'Doctor\'s Name'} value={doctorName} onChangeText={setDoctorName}/>
-        <View style={styles.space}></View>
+        <TextInput style={styles.input} placeholder={'Name of Doctor'} label={'Doctor\'s Name'} value={doctorName} onChangeText={setDoctorName}/>
         <Text style={styles.bold}>Doctor's Address</Text>
-        <TextInput style={styles.input} label={'Doctor\'s Address'} value={doctorAddress} onChangeText={setDoctorAddress}/>
-        <View style={styles.space}></View>
-        <Text style={styles.bold}>Doctor's Number</Text>
-        <TextInput style={styles.input} label={'Doctors\'s Number'} value={doctorNumber} onChangeText={setDoctorNumber}/>
+        <TextInput style={styles.input} placeholder={'Address of Doctor\s Practice'} label={'Doctor\'s Address'} value={doctorAddress} onChangeText={setDoctorAddress}/>
+        <Text style={styles.bold}>Doctor's Phone Number</Text>
+        <TextInput style={styles.input} placeholder={'Doctor\'s Phone Number'} label={'Doctors\'s Number'} value={doctorNumber} onChangeText={setDoctorNumber}/>
       <View style={styles.space}></View>
       <Button 
           title="Add Child"
@@ -145,9 +146,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#DADADA'
   },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 15
+  },
+  boldUnderCheckbox: {
+    fontWeight: 'bold',
+    marginLeft: 12,
+    marginTop: 20
   },
   space: {
     height: 20,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: '#ee752e',
+    margin: 12,
+    padding: 10,
+    height: 40
+  },
+  buttonText: {
+      fontWeight: 'bold',
+      color: '#FFFFFF'
   }
 });

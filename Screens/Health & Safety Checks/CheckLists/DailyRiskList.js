@@ -47,8 +47,20 @@ export default class DailyRiskList extends Component {
     });
   }
 
+  isWeekday(date){
+    var myDate = date.split("/");
+    var newDate = myDate[2] + "/" + myDate[1] + "/" + myDate[0];
+    var weekendDate = new Date(newDate);
+
+    if(weekendDate.getDay() == 0 || weekendDate.getDay() == 6){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   render() {
-    if (this.state.dailyRiskAssessment === undefined || this.state.dailyRiskAssessment.length == 0) {
+    if (this.state.dailyRiskAssessment === undefined || this.state.dailyRiskAssessment.length == 0 || !this.isWeekday(this.props.changeDate)) {
       return(
         <View></View>
       );
