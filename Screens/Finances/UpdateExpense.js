@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
+import * as ImagePicker from 'expo-image-picker';
 
 export default class UpdateExpense extends Component {
   constructor() {
@@ -93,7 +94,38 @@ export default class UpdateExpense extends Component {
     );
   }
 
+  pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        quality: 1,
+    });
+
+    if (!result.cancelled) {
+        setImage(result.uri);
+    }
+
+    uploadImage(result.uri);
+};
+
   render() {
+    let receiptButton;
+    if(this.state.receiptUrl !== ""){
+      receiptButton = <Button
+        title='View Receipt'
+        onPress={() => this.props.navigation.navigate('ReceiptPreview', {
+          receiptImage: this.state.receiptUrl
+        })}
+        color="#000000"
+      />;
+    } else {
+      receiptButton = <Button
+        title='Add Receipt'
+        onPress={this.pickImage}
+        color="#000000"
+      />;
+    }
+    console.log(this.state.receiptUrl);
     return (
         <ScrollView>
             <View style={styles.space}></View>
@@ -120,24 +152,25 @@ export default class UpdateExpense extends Component {
                 />
                 <Text style={styles.bold}>Additional Notes</Text>
                 <TextInput
-                    style={styles.input}
-                    placeholder={'Insert any additional information'}
-                    value={this.state.expenseNote}
-                    onChangeText={(val) => this.inputEl(val, 'expenseNote')}
+                  style={styles.input}
+                  placeholder={'Insert any additional information'}
+                  value={this.state.expenseNote}
+                  onChangeText={(val) => this.inputEl(val, 'expenseNote')}
                 />
-                <Text style={styles.bold}>Receipt</Text>
-                <Image source={{ uri: this.state.receiptUrl }} style={{ width: 200, height: 200, alignSelf: 'center'}} />
+                <View style={styles.space}></View>
+                {receiptButton}
             <View style={styles.space}></View>
             <Button
-                title='Update'
-                onPress={() => this.editExpenseLog()} 
-                color="#0B8FDC"
+              style={styles.buttonText}
+              title='Update'
+              onPress={() => this.editExpenseLog()} 
+              color="#0B8FDC"
             />
             <View style={styles.space}></View>
             <Button
-                title='Delete'
-                onPress={this.alertDialog}
-                color="#EE752E"
+              title='Delete'
+              onPress={this.alertDialog}
+              color="#EE752E"
             />
         </ScrollView>
     );
@@ -166,5 +199,8 @@ const styles = StyleSheet.create({
   },
   space: {
     height: 20,
+  },
+  buttonText: {
+    color: '#000000'
   }
 })

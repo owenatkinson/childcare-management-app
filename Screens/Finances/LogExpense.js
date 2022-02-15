@@ -58,10 +58,6 @@ const LogExpense = ({navigation}) => {
         uploadImage(result.uri);
     };
 
-    function removeFileExtension(fileWithExtension){
-        return fileWithExtension.replace(/\.[^/.]+$/, "");
-    }
-
     async function uploadImage (file) {
         const blob = await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -92,7 +88,6 @@ const LogExpense = ({navigation}) => {
             function () {
                 snapshot.snapshot.ref.getDownloadURL().then(function(downloadURL){
                     setReceiptURL(downloadURL);
-                    // saveFileToRealtimeDatabase(downloadURL, file);
             });
             blob.close();
             return;

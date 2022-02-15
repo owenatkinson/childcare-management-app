@@ -18,8 +18,8 @@ export default function HomeScreen({ navigation }) {
           />
           <View style={styles.space}></View>
           <Button
-            title="Planner"
-            onPress={() => navigation.navigate('Planner')}
+            title="Medicine Administration"
+            onPress={() => navigation.navigate('MedicineAdministration')}
           />
           <View style={styles.space}></View>
           <Button 

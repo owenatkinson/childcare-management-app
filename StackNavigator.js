@@ -9,9 +9,13 @@ import VisitorLogs from './Screens/Visitor Logs/VisitorLogs';
 import UpdateVisitorLog from './Screens/Visitor Logs/UpdateVisitorLog';
 import LogVisitor from './Screens/Visitor Logs/LogVisitor';
 import ViewVisitorLogs from './Screens/Visitor Logs/ViewVisitorLogs';
-import Policies from './Screens/Policies/Policies';
+import MedicineAdministration from './Screens/MedicineAdministration/MedicineAdministration';
+import LogMedicine from './Screens/MedicineAdministration/LogMedicine';
+import UpdateMedicineLog from './Screens/MedicineAdministration/UpdateMedicineLog';
+import ViewMedicalInfo from './Screens/MedicineAdministration/ViewMedicalInfo';
+import ChildrenMedicine from './Screens/MedicineAdministration/ChildrenMedicine';
 import FilePreview from './Screens/Policies/FilePreview';
-import Planner from './Screens/Planner/Planner';
+import Planner from './Screens/MedicineAdministration/MedicineAdministration';
 import HealthSafetyChecks from './Screens/Health & Safety Checks/HealthSafetyChecks';
 import DailyCovidAssessment from './Screens/Health & Safety Checks/DailyCovidAssessment';
 import DailyRiskAssessment from './Screens/Health & Safety Checks/DailyRiskAssessment';
@@ -34,6 +38,7 @@ import AddMonthlyFireSafetyEquipmentList from './Screens/Health & Safety Checks/
 import LogExpense from './Screens/Finances/LogExpense';
 import ViewExpenses from './Screens/Finances/ViewExpenses';
 import UpdateExpense from './Screens/Finances/UpdateExpense';
+import ReceiptPreview from './Screens/Finances/ReceiptPreview';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -48,7 +53,11 @@ const StackNavigator = () => {
           <Stack.Screen name="VisitorLogs" component={VisitorLogs} options={{ title: 'Visitor Logs'}}/>
           <Stack.Screen name="ViewLogs" component={ViewLogs} options={{ title: 'View Daily Logs'}}/>
           <Stack.Screen name="ViewLogDetails" component={ViewLogDetails} options={{ title: 'View Log Details'}}/>
-          <Stack.Screen name="Policies" component={Policies} options={{ title: 'Policies'}}/>
+          <Stack.Screen name="MedicineAdministration" component={MedicineAdministration} options={{ title: 'Medicine Administration'}}/>
+          <Stack.Screen name="LogMedicine" component={LogMedicine} options={{ title: 'Log Medicical Info'}}/>
+          <Stack.Screen name="UpdateMedicineLog" component={UpdateMedicineLog} options={{ title: 'Update Medicine Info'}}/>
+          <Stack.Screen name="ViewMedicalInfo" component={ViewMedicalInfo} options={{ title: 'View Medicine Info'}}/>
+          <Stack.Screen name="ChildrenMedicine" component={ChildrenMedicine} options={{ title: 'Children Medicine Info'}}/>
           <Stack.Screen name="Planner" component={Planner} options={{ title: 'Planner'}}/>
           <Stack.Screen name="HealthSafetyChecks" component={HealthSafetyChecks} options={{ title: 'Health & Safety Checks'}}/>
           <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'COVID Assessment'}}/>
@@ -77,6 +86,7 @@ const StackNavigator = () => {
           <Stack.Screen name="LogExpense" component={LogExpense} options={{ title: 'Log Expense'}}/>
           <Stack.Screen name="ViewExpenses" component={ViewExpenses} options={{ title: 'View Expenses'}}/>
           <Stack.Screen name="UpdateExpense" component={UpdateExpense} options={{ title: 'Update Expense'}}/>
+          <Stack.Screen name="ReceiptPreview" component={ReceiptPreview} options={{ title: 'Receipt Preview'}}/>
         </Stack.Navigator>
     );
 };

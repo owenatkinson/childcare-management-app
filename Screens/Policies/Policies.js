@@ -90,6 +90,7 @@ const Policies = (props) => {
         helperArr.push(snapshot.val());
         setFileList((files)=>[...files, ...helperArr]);
       });
+    return () => app.database().ref(`policies`).off('child_added', onChildDeleted);
   }
 
   useEffect(() => {
