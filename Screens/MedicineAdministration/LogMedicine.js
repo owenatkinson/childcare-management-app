@@ -4,6 +4,7 @@ import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import ModalSelector from 'react-native-modal-selector'
 
 export default function LogMedicine({ navigation }) {
     const [ childName, setChildName ] = useState('');
@@ -12,6 +13,25 @@ export default function LogMedicine({ navigation }) {
     const medicineTime = useInput(new Date());
     const [ medicineReason, setMedicineReason ] = useState('');
     const [ medicineNotes, setMedicineNotes ] = useState('');
+    // const [childNames, setChildNames] = useState([]);
+
+    // function componentDidMount() {
+    //   this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
+    // }
+
+    // const fetchCollection = (querySnapshot) => {
+    //   const childNames = [];
+    //   let index = 0;
+    //   app.firestore().collection("children").where("child_is_active", "==", true).get().then((querySnapshot) => {
+    //     querySnapshot.forEach((doc) => {
+    //         childNames.push({
+    //           key: index++, label: doc.data()["child_name"]
+    //         });
+    //     });
+    //     setChildNames(childNames);
+    //     console.log("1",childNames);
+    //   });
+    // }
   
     const convertDate = (dateInput) => {
         return(moment(dateInput).format('D/M/YYYY'));
@@ -39,6 +59,12 @@ export default function LogMedicine({ navigation }) {
       <ScrollView>
         <View style={styles.space}></View>
         <Text style={styles.bold}>Child's Name</Text>
+        {/* <View>
+          <ModalSelector
+            data={childNames}
+            initValue="Select a Child"
+            onChange={(option)=>{ this.setState({activeChildName:option.label})}}/>
+          </View> */}
         <TextInput style={styles.input} placeholder={'Child\'s Name'} value={childName} onChangeText={setChildName}/>
         <Text style={styles.bold}>Medicine</Text>
         <TextInput style={styles.input} placeholder={'Medicine'} value={medicineTitle} onChangeText={setMedicineTitle}/>
