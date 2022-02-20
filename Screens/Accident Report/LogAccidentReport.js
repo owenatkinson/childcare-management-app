@@ -28,7 +28,7 @@ export default function LogAccidentReport({ navigation }) {
   async function addAccidentReport() {
     await fireDB.add({
       child_name: childName,
-      accident_date: convertDate(dateOfAccident.date),
+      accident_date: dateOfAccident.date,
       accident_time: convertTime(timeOfAccident.date),
       accident_notes: accidentNotes,
       accident_location: accidentLocation,
@@ -46,9 +46,7 @@ export default function LogAccidentReport({ navigation }) {
       <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
       <Text style={styles.bold}>Date of Accident</Text>
       <View>
-        <TouchableOpacity
-        style={styles.button}
-        onPress={dateOfAccident.showDatepicker}>
+        <TouchableOpacity style={styles.button} onPress={dateOfAccident.showDatepicker}>
         {dateOfAccident.show && (
             <DateTimePicker
             testID="dateOfAccident"
@@ -59,7 +57,7 @@ export default function LogAccidentReport({ navigation }) {
             onChange={dateOfAccident.onChange}
             />
         )}
-          <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfAccident.date)}</Text>
+        <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfAccident.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Accident Time</Text>

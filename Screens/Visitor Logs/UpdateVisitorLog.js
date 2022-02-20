@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
+import moment from 'moment';
 
 export default class UpdateVisitorLog extends Component {
   constructor() {
@@ -16,6 +17,16 @@ export default class UpdateVisitorLog extends Component {
     };
   }
 
+  convertDate(dateInput){
+    return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
+  convertToTimestamp(dateInput){
+      dateInput = dateInput.split("/");
+      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
+      return(newDate);
+  }
+
   componentDidMount() {
     const docRef = app.firestore().collection('visitorLogs').doc(this.props.route.params.userkey)
     docRef.get().then((res) => {
@@ -24,7 +35,7 @@ export default class UpdateVisitorLog extends Component {
         this.setState({
           key: res.id,
           visitorName: user.visitor_name,
-          dateOfVisit: user.date_of_visit,
+          dateOfVisit: this.convertDate(user.date_of_visit),
           timeIn: user.time_in,
           timeOut: user.time_out,
           visitPurpose: user.visit_purpose,
@@ -49,7 +60,7 @@ export default class UpdateVisitorLog extends Component {
     const docUpdate = app.firestore().collection('visitorLogs').doc(this.state.key);
     docUpdate.set({
         visitor_name: this.state.visitorName,
-        date_of_visit: this.state.dateOfVisit,
+        date_of_visit: this.convertToTimestamp(this.state.dateOfVisit),
         time_in: this.state.timeIn,
         time_out: this.state.timeOut,
         visit_purpose: this.state.visitPurpose,

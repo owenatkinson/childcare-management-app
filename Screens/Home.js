@@ -12,9 +12,9 @@ export default function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate('Attendance')}
           />
           <View style={styles.space}></View>
-          <Button 
-            title="Health & Safety Checks"
-            onPress={() => navigation.navigate('HealthSafetyChecks')}
+          <Button
+            title="View Logs"
+            onPress={() => navigation.navigate('ViewLogs')}
           />
           <View style={styles.space}></View>
           <Button
@@ -47,9 +47,9 @@ export default function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate('AccidentReports')}
           />
           <View style={styles.space}></View>
-          <Button
-            title="View Logs"
-            onPress={() => navigation.navigate('ViewLogs')}
+          <Button 
+            title="Health & Safety Checks"
+            onPress={() => navigation.navigate('HealthSafetyChecks')}
           />
           <View style={styles.space}></View>
           <Button

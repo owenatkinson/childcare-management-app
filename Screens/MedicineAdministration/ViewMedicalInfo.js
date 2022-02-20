@@ -33,7 +33,7 @@ export default class ViewMedicalInfo extends Component {
   fetchCollection = (querySnapshot) => {
     const childNames = [];
     let index = 0;
-    app.firestore().collection("children").where("child_is_active", "==", true).get().then((querySnapshot) => {
+    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           childNames.push({
             key: index++, label: doc.data()["child_name"]
@@ -59,7 +59,7 @@ export default class ViewMedicalInfo extends Component {
     });
     this.setState({
       medicineLogs,
-      isLoading: false
+      isLoading: false,
     });
   }
 
@@ -68,9 +68,9 @@ export default class ViewMedicalInfo extends Component {
       <ScrollView style={styles.wrapper}>
           <View>
           <ModalSelector
-                    data={this.state.childNames}
-                    initValue="Select a Child"
-                    onChange={(option)=>{ this.setState({activeChildName:option.label})}}/>
+            data={this.state.childNames}
+            initValue="Select a Child"
+            onChange={(option)=>{ this.setState({activeChildName:option.label})}}/>
           </View>
           {
             this.state.medicineLogs.map((res, i) => {

@@ -9,7 +9,7 @@ export default class ListLogs extends Component {
         super();
         this.docs = app.firestore().collection("attendanceRegister").orderBy("child_name", "desc");
         this.state = {
-            isLoading: true,
+        isLoading: true,
             logs: [],
             changeDate: ''
         };
@@ -26,11 +26,13 @@ export default class ListLogs extends Component {
     fetchCollection = (querySnapshot) => {
         const logs = [];
         querySnapshot.forEach((res) => {
-            const { child_name, date_of_attendance} = res.data();
+            const { child_name, date_of_attendance, check_in_time, check_out_time} = res.data();
             logs.push({
             key: res.id,
             child_name,
-            date_of_attendance
+            date_of_attendance,
+            check_in_time,
+            check_out_time
             });
         });
         this.setState({
@@ -56,7 +58,7 @@ export default class ListLogs extends Component {
                         bottomDivider>
                         <ListItem.Content>
                             <ListItem.Title>{res.child_name}</ListItem.Title>
-                            <ListItem.Subtitle>Date: {res.date_of_attendance}</ListItem.Subtitle>
+                            <ListItem.Subtitle>{res.check_in_time}-{res.check_out_time}</ListItem.Subtitle>
                         </ListItem.Content>
                         <ListItem.Chevron 
                             color="black" 

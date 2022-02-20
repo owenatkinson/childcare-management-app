@@ -19,12 +19,13 @@ export default class UpdateMedicineLog extends Component {
     }
 
     convertDate(dateInput){
-        let x = dateInput.toDate();
-        console.log(moment(x).format('D/M/YYYY'));
-        // console.log("2",moment(x).toDate().format('D/M/YYYY'));
-        // console.log(moment(dateInput, 'DD/MM/YYYY').format('D/M/YYYY'));
-        // console.log(moment(dateInput, 'DD/MM/YYYY').format('D/M/YYYY'));
-        return(moment(x).format('D/M/YYYY'));
+        return(moment(dateInput.toDate()).format('D/M/YYYY'));
+    }
+
+    convertToTimestamp(dateInput){
+        dateInput = dateInput.split("/");
+        var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
+        return(newDate);
     }
 
     componentDidMount() {
@@ -61,7 +62,7 @@ export default class UpdateMedicineLog extends Component {
     const docUpdate = app.firestore().collection('medicineAdministration').doc(this.state.key);
     docUpdate.set({
         child_name: this.state.childName,
-        medicine_date: this.state.medicineDate,
+        medicine_date: this.convertToTimestamp(this.state.medicineDate),
         medicine_title: this.state.medicineTitle,
         medicine_time: this.state.medicineTime,
         medicine_reason: this.state.medicineReason,

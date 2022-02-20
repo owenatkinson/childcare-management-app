@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
+import moment from 'moment';
 
 export default class UpdateAccidentReport extends Component {
   constructor() {
@@ -19,6 +20,16 @@ export default class UpdateAccidentReport extends Component {
     };
   }
 
+  convertDate(dateInput){
+    return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
+  convertToTimestamp(dateInput){
+      dateInput = dateInput.split("/");
+      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
+      return(newDate);
+  }
+
   componentDidMount() {
     const docRef = app.firestore().collection('accidentReports').doc(this.props.route.params.userkey)
     docRef.get().then((res) => {
@@ -27,7 +38,7 @@ export default class UpdateAccidentReport extends Component {
         this.setState({
           key: res.id,
           childName: user.child_name,
-          accidentDate: user.accident_date,
+          accidentDate: this.convertDate(user.accident_date),
           accidentTime: user.accident_time,
           accidentNotes: user.accident_notes,
           accidentLocation: user.accident_location,
@@ -55,7 +66,7 @@ export default class UpdateAccidentReport extends Component {
     const docUpdate = app.firestore().collection('accidentReports').doc(this.state.key);
     docUpdate.set({
       child_name: this.state.childName,
-      accident_date: this.state.accidentDate,
+      accident_date: this.convertToTimestamp(this.state.accidentDate),
       accident_time: this.state.accidentTime,
       accident_notes: this.state.accidentNotes,
       accident_location: this.state.accidentLocation,

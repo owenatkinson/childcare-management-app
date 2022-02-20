@@ -118,14 +118,14 @@ export default class UpdateExpense extends Component {
         })}
         color="#000000"
       />;
-    } else {
-      receiptButton = <Button
-        title='Add Receipt'
-        onPress={this.pickImage}
-        color="#000000"
-      />;
-    }
-    console.log(this.state.receiptUrl);
+    } 
+    // else {
+    //   receiptButton = <Button
+    //     title='Add Receipt'
+    //     onPress={this.pickImage}
+    //     color="#000000"
+    //   />;
+    // }
     return (
         <ScrollView>
             <View style={styles.space}></View>

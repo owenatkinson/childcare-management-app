@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
+import moment from 'moment';
 
 export default class ViewVisitorLogs extends Component {
   constructor() {
@@ -22,6 +23,10 @@ export default class ViewVisitorLogs extends Component {
     this.unsubscribe();
   }
 
+  convertDate = (dateInput) => {
+    return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
   fetchCollection = (querySnapshot) => {
     const visitorLogs = [];
     querySnapshot.forEach((res) => {
@@ -37,7 +42,7 @@ export default class ViewVisitorLogs extends Component {
     });
     this.setState({
       visitorLogs,
-      isLoading: false
+      isLoading: false,
     });
   }
 
@@ -57,7 +62,7 @@ export default class ViewVisitorLogs extends Component {
                   bottomDivider>
                   <ListItem.Content>
                     <ListItem.Title>{res.visitor_name}</ListItem.Title>
-                    <ListItem.Subtitle>Date of Visit: {res.date_of_visit}</ListItem.Subtitle>
+                    <ListItem.Subtitle>Date: {this.convertDate(res.date_of_visit)}</ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron 
                      color="black" 

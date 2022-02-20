@@ -13,8 +13,8 @@ import MedicineAdministration from './Screens/MedicineAdministration/MedicineAdm
 import LogMedicine from './Screens/MedicineAdministration/LogMedicine';
 import UpdateMedicineLog from './Screens/MedicineAdministration/UpdateMedicineLog';
 import ViewMedicalInfo from './Screens/MedicineAdministration/ViewMedicalInfo';
-import ChildrenMedicine from './Screens/MedicineAdministration/ChildrenMedicine';
 import FilePreview from './Screens/Policies/FilePreview';
+import Policies from './Screens/Policies/Policies';
 import Planner from './Screens/MedicineAdministration/MedicineAdministration';
 import HealthSafetyChecks from './Screens/Health & Safety Checks/HealthSafetyChecks';
 import DailyCovidAssessment from './Screens/Health & Safety Checks/DailyCovidAssessment';
@@ -57,7 +57,6 @@ const StackNavigator = () => {
           <Stack.Screen name="LogMedicine" component={LogMedicine} options={{ title: 'Log Medicical Info'}}/>
           <Stack.Screen name="UpdateMedicineLog" component={UpdateMedicineLog} options={{ title: 'Update Medicine Info'}}/>
           <Stack.Screen name="ViewMedicalInfo" component={ViewMedicalInfo} options={{ title: 'View Medicine Info'}}/>
-          <Stack.Screen name="ChildrenMedicine" component={ChildrenMedicine} options={{ title: 'Children Medicine Info'}}/>
           <Stack.Screen name="Planner" component={Planner} options={{ title: 'Planner'}}/>
           <Stack.Screen name="HealthSafetyChecks" component={HealthSafetyChecks} options={{ title: 'Health & Safety Checks'}}/>
           <Stack.Screen name="DailyCovidAssessment" component={DailyCovidAssessment} options={{ title: 'COVID Assessment'}}/>
@@ -82,6 +81,7 @@ const StackNavigator = () => {
           <Stack.Screen name="UpdateVisitorLog" component={UpdateVisitorLog} options={{ title: 'Update Visitor Log'}}/>
           <Stack.Screen name="LogVisitor" component={LogVisitor} options={{ title: 'Log Visitor'}}/>
           <Stack.Screen name="ViewVisitorLogs" component={ViewVisitorLogs} options={{ title: 'View Visitor Logs'}}/>
+          <Stack.Screen name="Policies" component={Policies} options={{ title: 'Policies'}}/>
           <Stack.Screen name="FilePreview" component={FilePreview} options={{ title: 'View Policy'}}/>
           <Stack.Screen name="LogExpense" component={LogExpense} options={{ title: 'Log Expense'}}/>
           <Stack.Screen name="ViewExpenses" component={ViewExpenses} options={{ title: 'View Expenses'}}/>
