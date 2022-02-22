@@ -5,6 +5,7 @@ import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
+import ModalSelector from 'react-native-modal-selector';
 
 const LogExpense = ({navigation}) => {
     const [ expenseTitle, setExpenseTitle ] = useState('');
@@ -13,6 +14,7 @@ const LogExpense = ({navigation}) => {
     const [ receiptURL, setReceiptURL ] = useState('');
     const dateOfExpense = useInput(new Date());
     const [image, setImage] = useState(null);
+    const [ category, setCategory ] = useState('');
 
     const convertDate = (dateInput) => {
         return(moment(dateInput).format('D/M/YYYY'));
@@ -25,8 +27,9 @@ const LogExpense = ({navigation}) => {
             expense_title: expenseTitle,
             expense_note: expenseNote,
             expense_amount: expenseAmount,
-            date_of_expense: convertDate(dateOfExpense.date),
-            receipt_url: receiptURL
+            date_of_expense: dateOfExpense.date,
+            receipt_url: receiptURL,
+            expense_category: category
         });
         navigation.navigate('Finances');
     }
@@ -95,11 +98,32 @@ const LogExpense = ({navigation}) => {
         );
     }
 
+    let index = 0;
+    const data = [
+        { key: index++, section: true, label: 'Categories' },
+        { key: index++, label: 'Fuel' },
+        { key: index++, label: 'Food' },
+        { key: index++, label: 'Stationary' },
+        { key: index++, label: 'Fees' },
+        { key: index++, label: 'Gifts' },
+        { key: index++, label: 'Toys' },
+        { key: index++, label: 'Miscellaneous' },
+    ];
+
     return (
         <ScrollView>
             <View style={styles.space}></View>
             <Text style={styles.bold}>Expense Title</Text>
             <TextInput style={styles.input} placeholder={'Expense Title'} label={'Expense Title'} value={expenseTitle} onChangeText={setExpenseTitle}/>
+            <Text style={styles.bold}>Expense Category</Text>
+            <ModalSelector
+                style={styles.dropdown}
+                data={data}
+                onChange={(option)=>{
+                    setCategory(option.label);
+                }}>
+                <Text style={styles.dropdown}>Category: {category}</Text>
+            </ModalSelector>
             <Text style={styles.bold}>Date of Expense</Text>
             <View>
                 <TouchableOpacity
@@ -201,6 +225,13 @@ const styles = StyleSheet.create({
         padding: 10,
         height: 40
     },
+    dropdown: {
+        margin: 12,
+        backgroundColor: '#ee752e',
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        alignItems: "center",
+    }
 });
 
 export default LogExpense;

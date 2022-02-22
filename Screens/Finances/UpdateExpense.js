@@ -3,6 +3,8 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import app from '../../firebase';
 import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
+import moment from 'moment';
+import ModalSelector from 'react-native-modal-selector';
 
 export default class UpdateExpense extends Component {
   constructor() {
@@ -13,8 +15,19 @@ export default class UpdateExpense extends Component {
       expenseAmount: '',
       expenseNote: '',
       expenseTitle: '',
-      receiptUrl: ''
+      receiptUrl: '',
+      category: ''
     };
+  }
+
+  convertDate(dateInput){
+    return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
+  convertToTimestamp(dateInput){
+      dateInput = dateInput.split("/");
+      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
+      return(newDate);
   }
 
   componentDidMount() {
@@ -24,11 +37,12 @@ export default class UpdateExpense extends Component {
         const user = res.data();
         this.setState({
           key: res.id,
-          dateOfExpense: user.date_of_expense,
+          dateOfExpense: this.convertDate(user.date_of_expense),
           expenseAmount: user.expense_amount,
           expenseNote: user.expense_note,
           expenseTitle: user.expense_title,
           receiptUrl: user.receipt_url,
+          category: user.expense_category,
           isLoading: false
         });
       } else {
@@ -49,11 +63,12 @@ export default class UpdateExpense extends Component {
     });
     const docUpdate = app.firestore().collection('expenseLogs').doc(this.state.key);
     docUpdate.set({
-        date_of_expense: this.state.dateOfExpense,
+        date_of_expense: this.convertToTimestamp(this.state.dateOfExpense),
         expense_amount: this.state.expenseAmount,
         expense_note: this.state.expenseNote,
         expense_title: this.state.expenseTitle,
-        receipt_url: this.state.receiptUrl
+        receipt_url: this.state.receiptUrl,
+        expense_category: this.state.category
     }).then(() => {
       this.setState({
         key: '',
@@ -61,6 +76,7 @@ export default class UpdateExpense extends Component {
         expenseAmount: '',
         expenseNote: '',
         expenseTitle: '',
+        category: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewExpenses');
@@ -109,6 +125,18 @@ export default class UpdateExpense extends Component {
 };
 
   render() {
+    let index = 0;
+    const data = [
+        { key: index++, section: true, label: 'Categories' },
+        { key: index++, label: 'Fuel' },
+        { key: index++, label: 'Food' },
+        { key: index++, label: 'Stationary' },
+        { key: index++, label: 'Fees' },
+        { key: index++, label: 'Gifts' },
+        { key: index++, label: 'Toys' },
+        { key: index++, label: 'Miscellaneous' },
+    ];
+
     let receiptButton;
     if(this.state.receiptUrl !== ""){
       receiptButton = <Button
@@ -136,6 +164,15 @@ export default class UpdateExpense extends Component {
                     value={this.state.expenseTitle}
                     onChangeText={(val) => this.inputEl(val, 'expenseTitle')}
                 />
+                <Text style={styles.bold}>Expense Category</Text>
+                <ModalSelector
+                    style={styles.dropdown}
+                    data={data}
+                    onChange={(option)=>{
+                      this.inputEl(option.label, 'category')
+                    }}>
+                    <Text style={styles.dropdown}>Category: {this.state.category}</Text>
+                </ModalSelector>
                 <Text style={styles.bold}>Date of Expense</Text>
                 <TextInput
                     style={styles.input}
@@ -202,5 +239,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#000000'
+  },
+  dropdown: {
+      margin: 12,
+      backgroundColor: '#ee752e',
+      color: '#FFFFFF',
+      fontWeight: 'bold',
   }
 })
