@@ -3,16 +3,16 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
-import ModalSelector from 'react-native-modal-selector';
+import ModalSelector from 'react-native-modal-selector'
 import moment from 'moment';
 
-export default class ViewAccidentReports extends Component {
+export default class ViewMedicalInfo extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection("accidentReports");
+    this.docs = app.firestore().collection("medicineAdministration").orderBy("medicine_date", "desc");
     this.state = {
       isLoading: true,
-      accidentReports: [],
+      medicineLogs: [],
       childNames: [],
       activeChildName: ''
     };
@@ -31,7 +31,6 @@ export default class ViewAccidentReports extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const accidentReports = [];
     const childNames = [];
     let index = 0;
     app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
@@ -45,18 +44,21 @@ export default class ViewAccidentReports extends Component {
       })
     });
 
+    const medicineLogs = [];
     querySnapshot.forEach((res) => {
-      const { child_name, accident_date, accident_time, accident_notes } = res.data();
-      accidentReports.push({
+      const { child_name, medicine_title, medicine_date, medicine_time, medicine_reason, medicine_notes } = res.data();
+      medicineLogs.push({
         key: res.id,
         child_name,
-        accident_date,
-        accident_time,
-        accident_notes
+        medicine_title,
+        medicine_date,
+        medicine_time,
+        medicine_reason,
+        medicine_notes
       });
     });
     this.setState({
-      accidentReports,
+      medicineLogs,
       isLoading: false,
     });
   }
@@ -64,32 +66,31 @@ export default class ViewAccidentReports extends Component {
   render() {
     return (
       <ScrollView style={styles.wrapper}>
-        <View>
+          <View>
           <ModalSelector
             data={this.state.childNames}
             initValue="Select a Child"
             onChange={(option)=>{ this.setState({activeChildName:option.label})}}/>
-        </View>
+          </View>
           {
-            this.state.accidentReports.map((res, i) => {
+            this.state.medicineLogs.map((res, i) => {
               if (res.child_name == this.state.activeChildName){
-                return (
-                  <ListItem 
-                    key={i}
-                    onPress={() => {
-                      this.props.navigation.navigate("UpdateAccidentReport", {
-                        userkey: res.key
-                      });
-                    }}                        
-                    bottomDivider>
-                    <ListItem.Content>
-                      <ListItem.Title>{res.child_name}</ListItem.Title>
-                      <ListItem.Subtitle>Date: {this.convertDate(res.accident_date)}</ListItem.Subtitle>
-                    </ListItem.Content>
-                    <ListItem.Chevron 
-                      color="black" 
-                    />
-                  </ListItem>);
+                return(<ListItem 
+                  key={i}
+                  onPress={() => {
+                    this.props.navigation.navigate("UpdateMedicineLog", {
+                      userkey: res.key
+                    });
+                  }}                        
+                  bottomDivider>
+                  <ListItem.Content>
+                    <ListItem.Title>{res.medicine_title}</ListItem.Title>
+                    <ListItem.Subtitle>Date: {this.convertDate(res.medicine_date)}</ListItem.Subtitle>
+                  </ListItem.Content>
+                  <ListItem.Chevron 
+                    color="black" 
+                  />
+                </ListItem>);
               } else {
                 return(null);
               }

@@ -13,39 +13,41 @@ const Policies = (props) => {
 
   async function uploadImage () {
     let file = await DocumentPicker.getDocumentAsync({});
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function() {
-        reject(new TypeError('Network request failed'));
-      }
-      xhr.responseType = 'blob';
-      xhr.open('GET', file.uri, true);
-      xhr.send(null);
-    });
+    if(file.uri != null){
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function() {
+          reject(new TypeError('Network request failed'));
+        }
+        xhr.responseType = 'blob';
+        xhr.open('GET', file.uri, true);
+        xhr.send(null);
+      });
   
-    let trimFileName = removeFileExtension(file.name);
-    const ref = app.storage().ref(`/policies/${trimFileName}`);
-    const snapshot = ref.put(blob);
-  
-    snapshot.on('state_changed', 
-      function (snapshot) {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      },
-      function (error) {
-        blob.close();
-        return;
-      },
-      function () {
-        snapshot.snapshot.ref.getDownloadURL().then(function(downloadURL){
-          saveFileToRealtimeDatabase(downloadURL, file);
-        });
-        blob.close();
-        return;
-      }
-    );
+      let trimFileName = removeFileExtension(file.name);
+      const ref = app.storage().ref(`/policies/${trimFileName}`);
+      const snapshot = ref.put(blob);
+    
+      snapshot.on('state_changed', 
+        function (snapshot) {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        function (error) {
+          blob.close();
+          return;
+        },
+        function () {
+          snapshot.snapshot.ref.getDownloadURL().then(function(downloadURL){
+            saveFileToRealtimeDatabase(downloadURL, file);
+          });
+          blob.close();
+          return;
+        }
+      );
+    }
   }
 
   function saveFileToRealtimeDatabase(downloadURL, file){
@@ -90,6 +92,7 @@ const Policies = (props) => {
         helperArr.push(snapshot.val());
         setFileList((files)=>[...files, ...helperArr]);
       });
+    return () => app.database().ref(`policies`).off('child_added', onChildDeleted);
   }
 
   useEffect(() => {

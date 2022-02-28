@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import ModalSelector from 'react-native-modal-selector';
 
-export default class UpdateExpense extends Component {
+export default class UpdateMiles extends Component {
   constructor() {
     super();
     this.state = {

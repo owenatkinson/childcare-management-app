@@ -12,6 +12,9 @@ export default class UpdateChildDetails extends Component {
       name: '',
       dob: '',
       allergies: '',
+      allergiesDetails: '',
+      medicalConditions: '',
+      medicalConditionsDetails: '',
       isActive: '',
       emergencyName: '',
       emergencyNumber: '',
@@ -37,6 +40,9 @@ export default class UpdateChildDetails extends Component {
           name: user.child_name,
           dob: user.child_DOB,
           allergies: user.child_allergies,
+          allergiesDetails: user.child_allergies_details,
+          medicalConditions: user.child_medical_conditions,
+          medicalConditionsDetails: user.child_medical_conditions_details,
           isActive: user.child_is_active,
           emergencyName: user.child_emergency_contact_name,
           emergencyNumber: user.child_emergency_contact_number,
@@ -72,6 +78,9 @@ export default class UpdateChildDetails extends Component {
       child_name: this.state.name,
       child_DOB: this.state.dob,
       child_allergies: this.state.allergies,
+      child_allergies_details: this.state.allergiesDetails,
+      child_medical_conditions: this.state.medicalConditions,
+      child_medical_conditions_details: this.state.medicalConditionsDetails,
       child_is_active: this.state.isActive,
       child_emergency_contact_name: this.state.emergencyName,
       child_emergency_contact_number: this.state.emergencyNumber,
@@ -133,9 +142,34 @@ export default class UpdateChildDetails extends Component {
           <Text style={styles.bold}>Child Allergies</Text>
           <TextInput
               style={styles.input}
-              placeholder={'Child Allergies'}
+              placeholder={'List Child\'s Allergies'}
               value={this.state.allergies}
               onChangeText={(val) => this.inputEl(val, 'allergies')}
+          />
+          <Text style={styles.bold}>Child Allergy Details</Text>
+          <TextInput
+              multiline={true}
+              numberOfLines={4}
+              style={styles.extendedInput}
+              placeholder={'Insert details of the child\'s allergies'}
+              value={this.state.allergiesDetails}
+              onChangeText={(val) => this.inputEl(val, 'allergiesDetails')}
+          />
+          <Text style={styles.bold}>Child Medical Conditions</Text>
+          <TextInput
+              style={styles.input}
+              placeholder={'List Child\'s Medical Conditions'}
+              value={this.state.medicalConditions}
+              onChangeText={(val) => this.inputEl(val, 'medicalConditions')}
+          />
+          <Text style={styles.bold}>Medical Condition Details</Text>
+          <TextInput
+              multiline={true}
+              numberOfLines={4}
+              style={styles.extendedInput}
+              placeholder={'Insert details of the child\'s medical conditions'}
+              value={this.state.medicalConditionsDetails}
+              onChangeText={(val) => this.inputEl(val, 'medicalConditionsDetails')}
           />
           <View style={{flexDirection:"row", alignItems:"center"}}>
             <Text style={styles.bold}>Child Is Active?</Text>
@@ -256,5 +290,12 @@ const styles = StyleSheet.create({
   },
   space: {
     height: 20,
+  },
+  extendedInput: {
+    backgroundColor: '#DADADA',
+    padding: 10,
+    borderWidth: 1,
+    margin: 12,
+    textAlignVertical: 'top'
   }
 })

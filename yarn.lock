@@ -4824,6 +4824,11 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-2.6.8.tgz"
   "version" "2.6.8"
 
+"date-fns@^2.28.0":
+  "integrity" "sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw=="
+  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.28.0.tgz"
+  "version" "2.28.0"
+
 "dayjs@^1.8.15":
   "integrity" "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz"
@@ -5252,6 +5257,14 @@
   "version" "0.2.2"
   dependencies:
     "expo-json-utils" "~0.2.0"
+
+"expo-media-library@~12.0.2":
+  "integrity" "sha512-0gi4ny4IldYg3uWHjwP+P04VRe5Ea9BYflRILpQWBzcivppzEzTSYFQKUTQEXuZsWB9PA5uTQd2UaB+4q/dcJQ=="
+  "resolved" "https://registry.npmjs.org/expo-media-library/-/expo-media-library-12.0.2.tgz"
+  "version" "12.0.2"
+  dependencies:
+    "@expo/config-plugins" "^1.0.18"
+    "unimodules-permissions-interface" "~6.1.0"
 
 "expo-modules-core@~0.4.7", "expo-modules-core@~0.4.8":
   "integrity" "sha512-PElvF9/mw8TZ0FG3cQkQHB1yZEvtSrQ9nh90pINuTwmIUrxC427rgGoPrALsMaX90h94jTkPHODXHuX+Xsl/rg=="
@@ -7486,7 +7499,7 @@
   "resolved" "https://registry.npmjs.org/mockdate/-/mockdate-3.0.5.tgz"
   "version" "3.0.5"
 
-"moment@^2.29.1":
+"moment@^2.24.0", "moment@^2.29.1":
   "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   "version" "2.29.1"
@@ -8217,7 +8230,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.2":
+"prop-types@^15.5.10", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.2":
   "integrity" "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -8383,6 +8396,21 @@
     "prop-types" "^15.6.2"
     "react-native-iphone-x-helper" "^1.0.3"
 
+"react-native-modal-selector@^2.1.0":
+  "integrity" "sha512-aXOF8tC69XXfI6kbIskRRLe8xcexiYc21GD0s8gNz/Pl1FT8921PuLz647uY2le+fsJsztX6Taaf3mij/Noc+A=="
+  "resolved" "https://registry.npmjs.org/react-native-modal-selector/-/react-native-modal-selector-2.1.0.tgz"
+  "version" "2.1.0"
+  dependencies:
+    "prop-types" "^15.5.10"
+
+"react-native-month-year-picker@^1.8.0":
+  "integrity" "sha512-3jf7KXrLTaqWvi+WALgadClnJ+f/HXtCtYMOjG5RH1r5aWWo7lfpETdlfYkRAVy4ZKLsDp65KStbkh4dyytZ8g=="
+  "resolved" "https://registry.npmjs.org/react-native-month-year-picker/-/react-native-month-year-picker-1.8.0.tgz"
+  "version" "1.8.0"
+  dependencies:
+    "invariant" "^2.2.4"
+    "moment" "^2.24.0"
+
 "react-native-paper@^4.11.1":
   "integrity" "sha512-mAQ74KUrOIcMEg1crrIsA7eXDaPk/fjvKFDLcN7gBBeV/zhhQiqc+/y6t+8STKsZutRA2U5/eB+0MBisybokmQ=="
   "resolved" "https://registry.npmjs.org/react-native-paper/-/react-native-paper-4.11.1.tgz"
@@ -8516,7 +8544,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
 
-"react-native@*", "react-native@^0.63.4", "react-native@^0.66.0", "react-native@>= 0.62", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.61.3", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.66.0":
+"react-native@*", "react-native@^0.63.4", "react-native@^0.66.0", "react-native@>= 0.60.0", "react-native@>= 0.62", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.61.3", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.66.0":
   "integrity" "sha512-I4kM8kYO2mWEYUFITMcpRulcy4/jd+j9T6PbIzR0FuMcz/xwd+JwHoLPa1HmCesvR1RDOw9o4D+OFLwuXXfmGw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.4.tgz"
   "version" "0.63.4"
@@ -8554,7 +8582,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@>=16.11.0", "react@>=16.3.0", "react@>=16.8.3", "react@>=17.0.1", "react@16 || 17", "react@16.13.1", "react@16.x", "react@17.0.1", "react@17.0.2":
+"react@*", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@>= 16.11.0", "react@>=16.11.0", "react@>=16.3.0", "react@>=16.8.3", "react@>=17.0.1", "react@16 || 17", "react@16.13.1", "react@16.x", "react@17.0.1", "react@17.0.2":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -9502,6 +9530,11 @@
   "integrity" "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   "version" "0.0.6"
+
+"typescript@~4.0.0":
+  "integrity" "sha512-oz1765PN+imfz1MlZzSZPtC/tqcwsCyIYA8L47EkRnRW97ztRk83SzMiWLrnChC0vqoYxSU1fcFUDA5gV/ZiPg=="
+  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.0.8.tgz"
+  "version" "4.0.8"
 
 "ua-parser-js@^0.7.18", "ua-parser-js@^0.7.19", "ua-parser-js@^0.7.30":
   "integrity" "sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ=="

@@ -25,7 +25,7 @@ export default function LogVisitor({navigation}) {
   async function addVisitorLog() {
     await fireDB.add({
       visitor_name: visitorName,
-      date_of_visit: convertDate(dateOfVisit.date),
+      date_of_visit: dateOfVisit.date,
       time_in: convertTime(timeIn.date),
       time_out: convertTime(timeOut.date),
       visit_purpose: visitPurpose
@@ -63,7 +63,7 @@ export default function LogVisitor({navigation}) {
         onPress={timeIn.showTimepicker}>
         {timeIn.show && (
             <DateTimePicker
-            testID="dateOfVisit"
+            testID="timeIn"
             value={timeIn.date}
             mode={timeIn.mode}
             is24Hour={true}
@@ -80,7 +80,7 @@ export default function LogVisitor({navigation}) {
         onPress={timeOut.showTimepicker}>
         {timeOut.show && (
             <DateTimePicker
-            testID="dateOfVisit"
+            testID="timeOut"
             value={timeOut.date}
             mode={timeOut.mode}
             is24Hour={true}

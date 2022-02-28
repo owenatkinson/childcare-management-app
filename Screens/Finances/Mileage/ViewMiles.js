@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
-import MonthPick from '../../MonthPick';
+import MonthPick from '../../../MonthPick';
 
-export default class ViewExpenses extends Component {
+export default class ViewMiles extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('expenseLogs').orderBy('date_of_expense', 'desc');
+    this.docs = app.firestore().collection('mileageLogs').orderBy('date_of_mileage', 'desc');
     this.state = {
       isLoading: true,
-      expenseLogs: [],
+      mileageLogs: [],
       date: new Date()
     };
   }
@@ -54,19 +54,17 @@ export default class ViewExpenses extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const expenseLogs = [];
+    const mileageLogs = [];
     querySnapshot.forEach((res) => {
-        const { expense_title, expense_note, expense_amount, date_of_expense } = res.data();
-        expenseLogs.push({
+        const { mileage_amount, date_of_mileage } = res.data();
+        mileageLogs.push({
             key: res.id,
-            expense_title,
-            expense_note,
-            expense_amount,
-            date_of_expense
+            mileage_amount,
+            date_of_mileage
         });
     });
     this.setState({
-        expenseLogs,
+        mileageLogs,
         isLoading: false
     });
   }
@@ -79,21 +77,21 @@ export default class ViewExpenses extends Component {
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
             {
-              this.state.expenseLogs.map((res, i) => {
-                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_expense))) 
-                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_expense)))) {
+              this.state.mileageLogs.map((res, i) => {
+                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_mileage))) 
+                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_mileage)))) {
                   return (
                     <ListItem 
                       key={i}
                       onPress={() => {
-                        this.props.navigation.navigate("UpdateExpense", {
+                        this.props.navigation.navigate("UpdateMiles", {
                           userkey: res.key
                         });
                       }}                        
                       bottomDivider>
                       <ListItem.Content>
-                        <ListItem.Title>{res.expense_title}</ListItem.Title>
-                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_expense)}</ListItem.Subtitle>
+                        <ListItem.Title>£{res.mileage_amount}</ListItem.Title>
+                        <ListItem.Subtitle>Date: {this.convertDate(res.date_of_mileage)}</ListItem.Subtitle>
                       </ListItem.Content>
                       <ListItem.Chevron 
                         color="black" 

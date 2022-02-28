@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
-import MonthPick from '../../MonthPick';
+import MonthPick from '../../../MonthPick';
 
-export default class ViewExpenses extends Component {
+export default class ViewInvoice extends Component {
   constructor() {
     super();
     this.docs = app.firestore().collection('expenseLogs').orderBy('date_of_expense', 'desc');
