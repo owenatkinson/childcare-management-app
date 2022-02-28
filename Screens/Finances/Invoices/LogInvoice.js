@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import ModalSelector from 'react-native-modal-selector';
 
-const LogExpense = ({navigation}) => {
+const LogInvoice = ({navigation}) => {
     const [ expenseTitle, setExpenseTitle ] = useState('');
     const [ expenseNote, setExpenseNote ] = useState('');
     const [ expenseAmount, setExpenseAmount ] = useState('');
@@ -232,4 +232,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LogExpense;
+export default LogInvoice;

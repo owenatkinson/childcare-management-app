@@ -12,13 +12,11 @@ type MonthPickerProps = {
 const MonthPick: React.FC<MonthPickerProps> = ({date, onChange}) => {
   const handlePrev = () => {
     const newDate = subMonths(date, 1);
-    console.log(newDate);
     onChange(newDate);
   };
 
   const handleNext = () => {
     const newDate = addMonths(date, 1);
-    console.log(newDate);
     onChange(newDate);
   };
 

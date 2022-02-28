@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, Button } from 'react-native';
-import * as MediaLibrary from 'expo-media-library';
 
 const ReceiptPreview = ({route}) => {
-    console.log(route.params.receiptImage);
     return(
         <View style={styles.imageView}>
             <Image source={{ uri: route.params.receiptImage }} style={styles.image} />

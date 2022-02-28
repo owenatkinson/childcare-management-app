@@ -39,6 +39,12 @@ import LogExpense from './Screens/Finances/LogExpense';
 import ViewExpenses from './Screens/Finances/ViewExpenses';
 import UpdateExpense from './Screens/Finances/UpdateExpense';
 import ReceiptPreview from './Screens/Finances/ReceiptPreview';
+import LogInvoice from './Screens/Finances/Invoices/LogInvoice';
+import UpdateInvoice from './Screens/Finances/Invoices/UpdateInvoice';
+import ViewInvoice from './Screens/Finances/Invoices/ViewInvoice';
+import LogMiles from './Screens/Finances/Mileage/LogMiles';
+import UpdateMiles from './Screens/Finances/Mileage/UpdateMiles';
+import ViewMiles from './Screens/Finances/Mileage/ViewMiles';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -87,6 +93,12 @@ const StackNavigator = () => {
           <Stack.Screen name="ViewExpenses" component={ViewExpenses} options={{ title: 'View Expenses'}}/>
           <Stack.Screen name="UpdateExpense" component={UpdateExpense} options={{ title: 'Update Expense'}}/>
           <Stack.Screen name="ReceiptPreview" component={ReceiptPreview} options={{ title: 'Receipt Preview'}}/>
+          <Stack.Screen name="LogInvoice" component={LogInvoice} options={{ title: 'Log Invoice'}}/>
+          <Stack.Screen name="ViewInvoice" component={ViewInvoice} options={{ title: 'View Invoice'}}/>
+          <Stack.Screen name="UpdateInvoice" component={UpdateInvoice} options={{ title: 'Update Invoice'}}/>
+          <Stack.Screen name="LogMiles" component={LogMiles} options={{ title: 'Log Mileage'}}/>
+          <Stack.Screen name="ViewMiles" component={ViewMiles} options={{ title: 'View Mileage Logs'}}/>
+          <Stack.Screen name="UpdateMiles" component={UpdateMiles} options={{ title: 'Update Mileage Log'}}/>
         </Stack.Navigator>
     );
 };
