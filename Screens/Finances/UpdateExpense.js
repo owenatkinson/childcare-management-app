@@ -5,6 +5,7 @@ import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import ModalSelector from 'react-native-modal-selector';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class UpdateExpense extends Component {
   constructor() {
@@ -16,15 +17,36 @@ export default class UpdateExpense extends Component {
       expenseNote: '',
       expenseTitle: '',
       receiptUrl: '',
-      category: ''
+      category: '',
+      date: new Date(),
+      show: false
     };
   }
 
-  convertDate(dateInput){
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dateOfExpense: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
+  }
+
+  convertDate(dateInput) {
     return(moment(dateInput.toDate()).format('D/M/YYYY'));
   }
 
-  convertToTimestamp(dateInput){
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
+  }
+
+  convertToTimestamp(dateInput) {
       dateInput = dateInput.split("/");
       var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
       return(newDate);
@@ -174,12 +196,20 @@ export default class UpdateExpense extends Component {
                     <Text style={styles.dropdown}>Category: {this.state.category}</Text>
                 </ModalSelector>
                 <Text style={styles.bold}>Date of Expense</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'1/1/2022'}
-                    value={this.state.dateOfExpense}
-                    onChangeText={(val) => this.inputEl(val, 'dateOfExpense')}
-                />
+                <View style={styles.dtpicker}>
+                  <View>
+                    <Button onPress={() => this.showDatepicker()} title={this.state.dateOfExpense} />
+                  </View>
+                  {this.state.show && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={this.state.date}
+                      mode='date'
+                      display="default"
+                      onChange={this.onChange}
+                    />
+                  )}
+                </View>
                 <Text style={styles.bold}>Expense Amount</Text>
                 <TextInput
                     style={styles.input}
@@ -245,5 +275,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#ee752e',
       color: '#FFFFFF',
       fontWeight: 'bold',
+  },
+  dtpicker: {
+    margin: 12,
   }
 })

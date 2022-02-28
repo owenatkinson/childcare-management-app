@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import app from '../../../firebase';
 import "firebase/firestore";
@@ -106,13 +106,6 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#DADADA'
     },
-    extendedInput: {
-        backgroundColor: '#DADADA',
-        padding: 10,
-        borderWidth: 1,
-        margin: 12,
-        textAlignVertical: 'top'
-    },
     bold: {
         fontWeight: 'bold',
         marginLeft: 12,
@@ -131,13 +124,6 @@ const styles = StyleSheet.create({
         margin: 12,
         padding: 10,
         height: 40
-    },
-    dropdown: {
-        margin: 12,
-        backgroundColor: '#ee752e',
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        alignItems: "center",
     }
 });
 

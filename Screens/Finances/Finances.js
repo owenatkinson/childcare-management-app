@@ -39,6 +39,13 @@ export default function Finances({ navigation }) {
           title="View Invoices"
           onPress={() => navigation.navigate('ViewInvoice')}
         />
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>View Summary</Text>
+        <View style={styles.space}></View>
+        <Button
+          title="View Summary"
+          onPress={() => navigation.navigate('ViewSummary')}
+        />
     </View>
   );
 }

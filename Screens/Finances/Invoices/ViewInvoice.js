@@ -9,10 +9,10 @@ import MonthPick from '../../../MonthPick';
 export default class ViewInvoice extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('expenseLogs').orderBy('date_of_expense', 'desc');
+    this.docs = app.firestore().collection('invoiceLogs').orderBy('date_of_invoice', 'desc');
     this.state = {
       isLoading: true,
-      expenseLogs: [],
+      invoiceLogs: [],
       date: new Date()
     };
   }
@@ -54,19 +54,18 @@ export default class ViewInvoice extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const expenseLogs = [];
+    const invoiceLogs = [];
     querySnapshot.forEach((res) => {
-        const { expense_title, expense_note, expense_amount, date_of_expense } = res.data();
-        expenseLogs.push({
+        const { child_name, date_of_invoice, invoice_amount } = res.data();
+        invoiceLogs.push({
             key: res.id,
-            expense_title,
-            expense_note,
-            expense_amount,
-            date_of_expense
+            child_name,
+            date_of_invoice,
+            invoice_amount
         });
     });
     this.setState({
-        expenseLogs,
+        invoiceLogs,
         isLoading: false
     });
   }
@@ -79,21 +78,21 @@ export default class ViewInvoice extends Component {
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
             {
-              this.state.expenseLogs.map((res, i) => {
-                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_expense))) 
-                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_expense)))) {
+              this.state.invoiceLogs.map((res, i) => {
+                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_invoice))) 
+                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_invoice)))) {
                   return (
                     <ListItem 
                       key={i}
                       onPress={() => {
-                        this.props.navigation.navigate("UpdateExpense", {
+                        this.props.navigation.navigate("UpdateInvoice", {
                           userkey: res.key
                         });
                       }}                        
                       bottomDivider>
                       <ListItem.Content>
-                        <ListItem.Title>{res.expense_title}</ListItem.Title>
-                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_expense)}</ListItem.Subtitle>
+                        <ListItem.Title>{res.child_name} - £{res.invoice_amount}</ListItem.Title>
+                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_invoice)}</ListItem.Subtitle>
                       </ListItem.Content>
                       <ListItem.Chevron 
                         color="black" 

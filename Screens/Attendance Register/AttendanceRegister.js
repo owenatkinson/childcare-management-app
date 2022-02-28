@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Picker} from '@react-native-picker/picker';
+import ModalSelector from 'react-native-modal-selector'
 
 function AttendanceRegister({ navigation }) {
   const [ additionalNotes, setAdditionalNotes ] = useState('');
@@ -19,6 +19,23 @@ function AttendanceRegister({ navigation }) {
   const dateOfAttendance = useInput(new Date());
   const checkInTime = useInput();
   const checkOutTime = useInput();
+  const [childNameArr, setChildNameArr] = useState([]);
+
+  useEffect(() => {
+    const childNames = [];
+    setChildNameArr([]);
+    setChildName();
+    let index = 0;
+
+    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          childNames.push({
+            key: index++, label: doc.data()["child_name"]
+          });
+      });
+      setChildNameArr(childNames);
+    });
+  },[])
 
   const fireDB = app.firestore().collection('attendanceRegister');
 
@@ -50,7 +67,16 @@ function AttendanceRegister({ navigation }) {
   return (
     <ScrollView>
       <Text style={styles.bold}>Child Name</Text>
-      <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
+      <View>
+        <ModalSelector
+            style={styles.dropdown}
+            data={childNameArr}
+            onChange={(option)=>{
+              setChildName(option.label);
+            }}>
+            <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+        </ModalSelector>
+      </View>
       <Text style={styles.bold}>Date of Attendance</Text>
       <View>
         <TouchableOpacity
@@ -227,11 +253,22 @@ const styles = StyleSheet.create({
     margin: 12,
     padding: 10,
     height: 40
-},
+  },
   buttonText: {
       fontWeight: 'bold',
       color: '#FFFFFF'
   },
+  dropdown: {
+      margin: 12,
+      backgroundColor: '#ee752e',
+      color: '#FFFFFF',
+  },
+  dropdownText: {
+      margin: 12,
+      color: '#FFFFFF',
+      fontWeight: 'bold',
+      alignSelf: "center",
+  }
 });
 
 export default AttendanceRegister;

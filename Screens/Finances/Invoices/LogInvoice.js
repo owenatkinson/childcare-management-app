@@ -1,162 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import app from '../../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import * as ImagePicker from 'expo-image-picker';
-import ModalSelector from 'react-native-modal-selector';
+import ModalSelector from 'react-native-modal-selector'
 
 const LogInvoice = ({navigation}) => {
-    const [ expenseTitle, setExpenseTitle ] = useState('');
-    const [ expenseNote, setExpenseNote ] = useState('');
-    const [ expenseAmount, setExpenseAmount ] = useState('');
-    const [ receiptURL, setReceiptURL ] = useState('');
-    const dateOfExpense = useInput(new Date());
-    const [image, setImage] = useState(null);
-    const [ category, setCategory ] = useState('');
+    const [ childName, setChildName ] = useState('');
+    const [ invoiceAmount, setInvoiceAmount ] = useState('');
+    const dateOfInvoice = useInput(new Date());
+    const [childNameArr, setChildNameArr] = useState([]);
+
+    useEffect(() => {
+        const childNames = [];
+        setChildNameArr([]);
+        setChildName();
+        let index = 0;
+  
+        app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              childNames.push({
+                key: index++, label: doc.data()["child_name"]
+              });
+          });
+          setChildNameArr(childNames);
+        });
+    },[])
 
     const convertDate = (dateInput) => {
         return(moment(dateInput).format('D/M/YYYY'));
     }
 
-    const fireDB = app.firestore().collection('expenseLogs');
+    const fireDB = app.firestore().collection('invoiceLogs');
 
-    async function addExpenseLog() {
+    async function addInvoiceLog() {
         await fireDB.add({
-            expense_title: expenseTitle,
-            expense_note: expenseNote,
-            expense_amount: expenseAmount,
-            date_of_expense: dateOfExpense.date,
-            receipt_url: receiptURL,
-            expense_category: category
+            child_name: childName,
+            invoice_amount: invoiceAmount,
+            date_of_invoice: dateOfInvoice.date,
         });
         navigation.navigate('Finances');
     }
 
-    useEffect(() => {
-        (async () => {
-            if (Platform.OS !== 'web') {
-                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                if (status !== 'granted') {
-                    alert('Sorry, we need camera roll permissions to make this work!');
-                }
-            }
-        })();
-    }, []);
-    
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            quality: 1,
-        });
-        
-        if (!result.cancelled) {
-            setImage(result.uri);
-        }
-
-        uploadImage(result.uri);
-    };
-
-    async function uploadImage (file) {
-        const blob = await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function() {
-                resolve(xhr.response);
-            };
-            xhr.onerror = function() {
-                reject(new TypeError('Network request failed'));
-            }
-            xhr.responseType = 'blob';
-            xhr.open('GET', file, true);
-            xhr.send(null);
-        });
-      
-        let trimFileName = (/[^/]*$/.exec(file)[0]);
-        console.log(trimFileName);
-        const ref = app.storage().ref(`/receipts/${trimFileName}`);
-        const snapshot = ref.put(blob);
-      
-        snapshot.on('state_changed', 
-            function (snapshot) {
-                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            },
-            function (error) {
-                blob.close();
-                return;
-            },
-            function () {
-                snapshot.snapshot.ref.getDownloadURL().then(function(downloadURL){
-                    setReceiptURL(downloadURL);
-            });
-            blob.close();
-            return;
-          }
-        );
-    }
-
-    let index = 0;
-    const data = [
-        { key: index++, section: true, label: 'Categories' },
-        { key: index++, label: 'Fuel' },
-        { key: index++, label: 'Food' },
-        { key: index++, label: 'Stationary' },
-        { key: index++, label: 'Fees' },
-        { key: index++, label: 'Gifts' },
-        { key: index++, label: 'Toys' },
-        { key: index++, label: 'Miscellaneous' },
-    ];
-
     return (
         <ScrollView>
             <View style={styles.space}></View>
-            <Text style={styles.bold}>Expense Title</Text>
-            <TextInput style={styles.input} placeholder={'Expense Title'} label={'Expense Title'} value={expenseTitle} onChangeText={setExpenseTitle}/>
-            <Text style={styles.bold}>Expense Category</Text>
-            <ModalSelector
-                style={styles.dropdown}
-                data={data}
-                onChange={(option)=>{
-                    setCategory(option.label);
-                }}>
-                <Text style={styles.dropdown}>Category: {category}</Text>
-            </ModalSelector>
-            <Text style={styles.bold}>Date of Expense</Text>
+            <Text style={styles.bold}>Child Name</Text>
+            <View>
+                <ModalSelector
+                    style={styles.dropdown}
+                    data={childNameArr}
+                    onChange={(option)=>{
+                        setChildName(option.label);
+                    }}>
+                    <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+                </ModalSelector>
+            </View>
+            <Text style={styles.bold}>Date of Invoice</Text>
             <View>
                 <TouchableOpacity
                 style={styles.button}
-                onPress={dateOfExpense.showDatepicker}>
-                {dateOfExpense.show && (
+                onPress={dateOfInvoice.showDatepicker}>
+                {dateOfInvoice.show && (
                     <DateTimePicker
                     testID="dateOfExpense"
-                    value={dateOfExpense.date}
-                    mode={dateOfExpense.mode}
+                    value={dateOfInvoice.date}
+                    mode={dateOfInvoice.mode}
                     is24Hour={true}
                     display="default"
-                    onChange={dateOfExpense.onChange}
+                    onChange={dateOfInvoice.onChange}
                     />
                 )}
-                <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfExpense.date)}</Text>
+                <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfInvoice.date)}</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.bold}>Expense Amount (£)</Text>
-            <TextInput style={styles.input} placeholder={'0.00'} label={'Expense Amount'} value={expenseAmount} onChangeText={setExpenseAmount}/>
-            <Text style={styles.bold}>Additional Notes</Text>
-            <TextInput multiline={true} placeholder={'Insert any additional information'} numberOfLines={4} style={styles.extendedInput} label={'Additional Notes'} value={expenseNote} onChangeText={setExpenseNote}/>
-            <View>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={pickImage}
-                    >
-                <Text style={styles.buttonText}>Upload a Receipt</Text>
-                </TouchableOpacity>
-            </View>
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+            <Text style={styles.bold}>Invoice Amount (£)</Text>
+            <TextInput style={styles.input} placeholder={'0.00'} label={'Expense Amount'} value={invoiceAmount} onChangeText={setInvoiceAmount}/>
             <View style={styles.space}></View>
             <Button 
-                title="Log Expense"
-                onPress={() => addExpenseLog()}
+                title="Log Invoice"
+                onPress={() => addInvoiceLog()}
             />
         </ScrollView>
     );
@@ -197,13 +121,6 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#DADADA'
     },
-    extendedInput: {
-        backgroundColor: '#DADADA',
-        padding: 10,
-        borderWidth: 1,
-        margin: 12,
-        textAlignVertical: 'top'
-    },
     bold: {
         fontWeight: 'bold',
         marginLeft: 12,
@@ -227,8 +144,12 @@ const styles = StyleSheet.create({
         margin: 12,
         backgroundColor: '#ee752e',
         color: '#FFFFFF',
+    },
+    dropdownText: {
+        margin: 12,
+        color: '#FFFFFF',
         fontWeight: 'bold',
-        alignItems: "center",
+        alignSelf: "center",
     }
 });
 

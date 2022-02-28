@@ -45,6 +45,7 @@ import ViewInvoice from './Screens/Finances/Invoices/ViewInvoice';
 import LogMiles from './Screens/Finances/Mileage/LogMiles';
 import UpdateMiles from './Screens/Finances/Mileage/UpdateMiles';
 import ViewMiles from './Screens/Finances/Mileage/ViewMiles';
+import ViewSummary from './Screens/Finances/ViewSummary';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -99,6 +100,7 @@ const StackNavigator = () => {
           <Stack.Screen name="LogMiles" component={LogMiles} options={{ title: 'Log Mileage'}}/>
           <Stack.Screen name="ViewMiles" component={ViewMiles} options={{ title: 'View Mileage Logs'}}/>
           <Stack.Screen name="UpdateMiles" component={UpdateMiles} options={{ title: 'Update Mileage Log'}}/>
+          <Stack.Screen name="ViewSummary" component={ViewSummary} options={{ title: 'View Summary'}}/>
         </Stack.Navigator>
     );
 };

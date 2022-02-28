@@ -3,6 +3,7 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
+import ModalSelector from 'react-native-modal-selector';
 
 export default class ViewLogDetails extends Component {
   constructor() {
@@ -19,12 +20,27 @@ export default class ViewLogDetails extends Component {
         breakfast: '',
         lunch: '',
         snack: '',
-        additionalNotes: ''
+        additionalNotes: '',
+        childNames: []
     };
   }
 
   componentDidMount() {
     const docRef = app.firestore().collection('attendanceRegister').doc(this.props.route.params.userkey)
+    const childNames = [];
+    let index = 0;
+
+    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          childNames.push({
+            key: index++, label: doc.data()["child_name"]
+          });
+      });
+      this.setState({
+        childNames: childNames
+      })
+    });
+
     docRef.get().then((res) => {
       if (res.exists) {
         const log = res.data();
@@ -124,12 +140,16 @@ export default class ViewLogDetails extends Component {
       <ScrollView>
         <View style={styles.space}></View>
           <Text style={styles.bold}>Child Name</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Child Name'}
-              value={this.state.childName}
-              onChangeText={(val) => this.inputEl(val, 'childName')}
-          />
+          <View>
+            <ModalSelector
+                style={styles.dropdown}
+                data={this.state.childNames}
+                onChange={(option)=>{
+                  this.setState({childName:option.label});
+                }}>
+                <Text style={styles.dropdownText}>Select a Child: {this.state.childName}</Text>
+            </ModalSelector>
+          </View>
           <Text style={styles.bold}>Date of Attendance</Text>
           <TextInput
               style={styles.input}
@@ -265,4 +285,15 @@ const styles = StyleSheet.create({
     margin: 12,
     textAlignVertical: 'top'
   },
+  dropdown: {
+      margin: 12,
+      backgroundColor: '#ee752e',
+      color: '#FFFFFF',
+  },
+  dropdownText: {
+      margin: 12,
+      color: '#FFFFFF',
+      fontWeight: 'bold',
+      alignSelf: "center",
+  }
 })

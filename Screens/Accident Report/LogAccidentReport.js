@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import ModalSelector from 'react-native-modal-selector'
 
 export default function LogAccidentReport({ navigation }) {
   const [ childName, setChildName ] = useState('');
@@ -14,6 +15,23 @@ export default function LogAccidentReport({ navigation }) {
   const [ accidentMedicalAttention, setAccidentMedicalAttention ] = useState('');
   const dateOfAccident = useInput(new Date());
   const timeOfAccident = useInput();
+  const [childNameArr, setChildNameArr] = useState([]);
+
+  useEffect(() => {
+    const childNames = [];
+    setChildNameArr([]);
+    setChildName();
+    let index = 0;
+
+    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          childNames.push({
+            key: index++, label: doc.data()["child_name"]
+          });
+      });
+      setChildNameArr(childNames);
+    });
+  },[])
 
   const convertDate = (dateInput) => {
     return(moment(dateInput).format('D/M/YYYY'));
@@ -43,7 +61,16 @@ export default function LogAccidentReport({ navigation }) {
     <ScrollView>
       <View style={styles.space}></View>
       <Text style={styles.bold}>Child Name</Text>
-      <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
+      <View>
+        <ModalSelector
+            style={styles.dropdown}
+            data={childNameArr}
+            onChange={(option)=>{
+              setChildName(option.label);
+            }}>
+            <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+        </ModalSelector>
+      </View>
       <Text style={styles.bold}>Date of Accident</Text>
       <View>
         <TouchableOpacity style={styles.button} onPress={dateOfAccident.showDatepicker}>
@@ -162,5 +189,16 @@ const styles = StyleSheet.create({
   buttonText: {
       fontWeight: 'bold',
       color: '#FFFFFF'
+  },
+  dropdown: {
+      margin: 12,
+      backgroundColor: '#ee752e',
+      color: '#FFFFFF',
+  },
+  dropdownText: {
+      margin: 12,
+      color: '#FFFFFF',
+      fontWeight: 'bold',
+      alignSelf: "center",
   }
 });

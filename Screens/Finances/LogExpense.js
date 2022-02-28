@@ -114,14 +114,16 @@ const LogExpense = ({navigation}) => {
             <Text style={styles.bold}>Expense Title</Text>
             <TextInput style={styles.input} placeholder={'Expense Title'} label={'Expense Title'} value={expenseTitle} onChangeText={setExpenseTitle}/>
             <Text style={styles.bold}>Expense Category</Text>
-            <ModalSelector
-                style={styles.dropdown}
-                data={data}
-                onChange={(option)=>{
-                    setCategory(option.label);
-                }}>
-                <Text style={styles.dropdown}>Category: {category}</Text>
-            </ModalSelector>
+            <View>
+                <ModalSelector
+                    style={styles.dropdown}
+                    data={data}
+                    onChange={(option)=>{
+                        setCategory(option.label);
+                    }}>
+                    <Text style={styles.dropdownText}>Category: {category}</Text>
+                </ModalSelector>
+            </View>
             <Text style={styles.bold}>Date of Expense</Text>
             <View>
                 <TouchableOpacity
@@ -227,8 +229,12 @@ const styles = StyleSheet.create({
         margin: 12,
         backgroundColor: '#ee752e',
         color: '#FFFFFF',
+    },
+    dropdownText: {
+        margin: 12,
+        color: '#FFFFFF',
         fontWeight: 'bold',
-        alignItems: "center",
+        alignSelf: "center",
     }
 });
 

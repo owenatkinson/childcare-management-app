@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { IconButton } from 'react-native-paper';
-// import moment from 'moment';
 import {format, subMonths, addMonths} from 'date-fns';
 
 type MonthPickerProps = {

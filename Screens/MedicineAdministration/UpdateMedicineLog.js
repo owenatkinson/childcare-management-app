@@ -111,44 +111,45 @@ export default class UpdateMedicineLog extends Component {
     render() {
     return (
         <ScrollView>
+            <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
             <View style={styles.space}></View>
-                <Text style={styles.bold}>Medicine</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Medicine'}
-                    value={this.state.medicineTitle}
-                    onChangeText={(val) => this.inputEl(val, 'medicineTitle')}
-                />
-                <Text style={styles.bold}>Date Administered</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'1/1/2022'}
-                    value={this.state.medicineDate}
-                    onChangeText={(val) => this.inputEl(val, 'medicineDate')}
-                />
-                <Text style={styles.bold}>Time Administered</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'00:00'}
-                    value={this.state.medicineTime}
-                    onChangeText={(val) => this.inputEl(val, 'medicineTime')}
-                />
-                <Text style={styles.bold}>What was the reason for administering medication?</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Reason for medicine administration'}
-                    value={this.state.medicineReason}
-                    onChangeText={(val) => this.inputEl(val, 'medicineReason')}
-                />
-                <Text style={styles.bold}>Additional Notes</Text>
-                <TextInput
-                    multiline={true} 
-                    numberOfLines={4}
-                    style={styles.extendedInput}
-                    placeholder={'Insert any additional information'}
-                    value={this.state.medicineNotes}
-                    onChangeText={(val) => this.inputEl(val, 'medicineNotes')}
-                />
+            <Text style={styles.bold}>Medicine</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'Medicine'}
+                value={this.state.medicineTitle}
+                onChangeText={(val) => this.inputEl(val, 'medicineTitle')}
+            />
+            <Text style={styles.bold}>Date Administered</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'1/1/2022'}
+                value={this.state.medicineDate}
+                onChangeText={(val) => this.inputEl(val, 'medicineDate')}
+            />
+            <Text style={styles.bold}>Time Administered</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'00:00'}
+                value={this.state.medicineTime}
+                onChangeText={(val) => this.inputEl(val, 'medicineTime')}
+            />
+            <Text style={styles.bold}>What was the reason for administering medication?</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'Reason for medicine administration'}
+                value={this.state.medicineReason}
+                onChangeText={(val) => this.inputEl(val, 'medicineReason')}
+            />
+            <Text style={styles.bold}>Additional Notes</Text>
+            <TextInput
+                multiline={true} 
+                numberOfLines={4}
+                style={styles.extendedInput}
+                placeholder={'Insert any additional information'}
+                value={this.state.medicineNotes}
+                onChangeText={(val) => this.inputEl(val, 'medicineNotes')}
+            />
             <View style={styles.space}></View>
             <Button
                 title='Update'
@@ -168,25 +169,25 @@ export default class UpdateMedicineLog extends Component {
     
 const styles = StyleSheet.create({
     input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        backgroundColor: '#DADADA'
     },
     extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
+        backgroundColor: '#DADADA',
+        padding: 10,
+        borderWidth: 1,
+        margin: 12,
+        textAlignVertical: 'top'
     },
     bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
+        fontWeight: 'bold',
+        marginLeft: 12,
+        marginTop: 15
     },
     space: {
-    height: 20,
+        height: 15,
     }
 })
