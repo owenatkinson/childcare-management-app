@@ -3,6 +3,8 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-nat
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class MonthlyFireDrill extends Component {
   constructor() {
@@ -11,10 +13,41 @@ export default class MonthlyFireDrill extends Component {
       isLoading: true,
       monthlyFireDrillDate: '',
       monthlyFireDrillNumberOfPeople: '',
-      monthlyFireDrillTimeCompleted: '',
+      monthlyFireDrillTimeCompleted: new Date(),
       monthlyFireDrillNote: '',
-      monthlyFireDrillIsCompleted: ''
+      monthlyFireDrillIsCompleted: '',
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      monthlyFireDrillTimeCompleted: currentDate,
+      show: false
+    });
+  };
+
+  convertToTime(dateInput) {
+    if (typeof dateInput !== 'string'){
+      dateInput = moment(dateInput).format('HH:mm').toString();
+    }
+    return dateInput;
+  }
+
+  convertToTimestamp(dateInput){
+    var timeConvert = dateInput.toDate().toLocaleTimeString();
+    timeConvert = timeConvert.split(":");
+    var time = timeConvert[0] + ":" + timeConvert[1];
+    return(time);
+  }
+
+  showTimepicker() {
+    this.setState({
+      show: true
+    });
   }
 
   componentDidMount() {
@@ -26,7 +59,7 @@ export default class MonthlyFireDrill extends Component {
           key: res.id,
           monthlyFireDrillDate: user.monthly_fire_drill_date,
           monthlyFireDrillNumberOfPeople: user.monthly_fire_drill_num_of_people,
-          monthlyFireDrillTimeCompleted: user.monthly_fire_drill_time_completed,
+          monthlyFireDrillTimeCompleted: this.convertToTimestamp(user.monthly_fire_drill_time_completed),
           monthlyFireDrillNote: user.monthly_fire_drill_note,
           monthlyFireDrillIsCompleted: user.monthly_fire_drill_is_completed,
           isLoading: false
@@ -88,12 +121,20 @@ export default class MonthlyFireDrill extends Component {
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNumberOfPeople')}
             />
             <Text style={styles.bold}>Time Completed</Text>
-            <TextInput
-                placeholder={'00:00'}
-                style={styles.input}
-                value={this.state.monthlyFireDrillTimeCompleted}
-                onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillTimeCompleted')}
-            />
+            <View style={styles.dtpicker}>
+              <View>
+                <Button onPress={() => this.showTimepicker()} title={this.convertToTime(this.state.monthlyFireDrillTimeCompleted)} />
+              </View>
+              {this.state.show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={this.state.date}
+                  mode='time'
+                  display="default"
+                  onChange={this.onChange}
+                />
+              )}
+            </View>
             <Text style={styles.bold}>Notes</Text>
             <TextInput
                 placeholder={'Insert any additional information'}
@@ -149,5 +190,8 @@ const styles = StyleSheet.create({
   },
   space: {
     height: 20,
+  },
+  dtpicker: {
+    margin: 12,
   }
 })

@@ -3,7 +3,8 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
-import ModalSelector from 'react-native-modal-selector';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class ViewLogDetails extends Component {
   constructor() {
@@ -21,8 +22,39 @@ export default class ViewLogDetails extends Component {
         lunch: '',
         snack: '',
         additionalNotes: '',
-        childNames: []
+        childNames: [],
+        date: new Date(),
+        show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dateOfAttendance: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+      this.setState({
+          show: true
+      });
+  }
+
+  parseDate(dateInput){
+      return(moment(dateInput).format('D/M/YYYY'));
+  }
+
+  convertDate(dateInput){
+      return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
+  convertToTimestamp(dateInput){
+      dateInput = dateInput.split("/");
+      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
+      return(newDate);
   }
 
   componentDidMount() {
@@ -139,24 +171,23 @@ export default class ViewLogDetails extends Component {
     return (
       <ScrollView>
         <View style={styles.space}></View>
-          <Text style={styles.bold}>Child Name</Text>
-          <View>
-            <ModalSelector
-                style={styles.dropdown}
-                data={this.state.childNames}
-                onChange={(option)=>{
-                  this.setState({childName:option.label});
-                }}>
-                <Text style={styles.dropdownText}>Select a Child: {this.state.childName}</Text>
-            </ModalSelector>
-          </View>
+          <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
+          <View style={styles.space}></View>
           <Text style={styles.bold}>Date of Attendance</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'01/01/2022'}
-              value={this.state.dateOfAttendance}
-              onChangeText={(val) => this.inputEl(val, 'dateOfAttendance')}
-          />
+          <View style={styles.dtpicker}>
+            <View>
+              <Button onPress={() => this.showDatepicker()} title={this.state.dateOfAttendance} />
+            </View>
+            {this.state.show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={this.state.date}
+              mode='date'
+              display="default"
+              onChange={this.onChange}
+            />
+            )}
+          </View>
           <Text style={styles.bold}>Check-in Time</Text>
           <TextInput
               style={styles.input}
@@ -295,5 +326,8 @@ const styles = StyleSheet.create({
       color: '#FFFFFF',
       fontWeight: 'bold',
       alignSelf: "center",
+  },
+  dtpicker: {
+    margin: 12,
   }
 })

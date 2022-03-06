@@ -43,9 +43,9 @@ export default class UpdateMiles extends Component {
   }
 
   convertToTimestamp(dateInput){
-      dateInput = dateInput.split("/");
-      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-      return(newDate);
+    dateInput = dateInput.split("/");
+    var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
+    return(newDate);
   }
 
   componentDidMount() {

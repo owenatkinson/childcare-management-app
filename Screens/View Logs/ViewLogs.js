@@ -12,7 +12,6 @@ export default function ViewLogs({ navigation }) {
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
-    console.log(selectedDate);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);

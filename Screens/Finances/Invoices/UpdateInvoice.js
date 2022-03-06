@@ -3,7 +3,7 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import app from '../../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
-import ModalSelector from 'react-native-modal-selector';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class UpdateInvoice extends Component {
   constructor() {
@@ -13,12 +13,33 @@ export default class UpdateInvoice extends Component {
       childName: '',
       dateOfInvoice: '',
       invoiceAmount: '',
-      childNames: []
+      childNames: [],
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dateOfInvoice: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
   }
 
   convertDate(dateInput){
     return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   convertToTimestamp(dateInput){
@@ -119,12 +140,20 @@ export default class UpdateInvoice extends Component {
             <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
             <View style={styles.space}></View>
             <Text style={styles.bold}>Date of Invoice</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={'1/1/2022'}
-                value={this.state.dateOfInvoice}
-                onChangeText={(val) => this.inputEl(val, 'dateOfInvoice')}
-            />
+            <View style={styles.dtpicker}>
+              <View>
+                <Button onPress={() => this.showDatepicker()} title={this.state.dateOfInvoice} />
+              </View>
+              {this.state.show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={this.state.date}
+                  mode='date'
+                  display="default"
+                  onChange={this.onChange}
+                />
+              )}
+            </View>
             <Text style={styles.bold}>Invoice Amount</Text>
             <TextInput
                 style={styles.input}
@@ -168,5 +197,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#000000'
+  },
+  dtpicker: {
+    margin: 12,
   }
 })

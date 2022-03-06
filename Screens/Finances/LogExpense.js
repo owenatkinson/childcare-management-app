@@ -74,7 +74,6 @@ const LogExpense = ({navigation}) => {
         });
       
         let trimFileName = (/[^/]*$/.exec(file)[0]);
-        console.log(trimFileName);
         const ref = app.storage().ref(`/receipts/${trimFileName}`);
         const snapshot = ref.put(blob);
       

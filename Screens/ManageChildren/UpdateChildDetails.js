@@ -3,6 +3,8 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-nat
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class UpdateChildDetails extends Component {
   constructor() {
@@ -26,8 +28,29 @@ export default class UpdateChildDetails extends Component {
       parent1Name: '',
       parent1Number: '',
       parent2Name: '',
-      parent2Number: ''
+      parent2Number: '',
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dob: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
+  }
+
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   componentDidMount() {
@@ -139,6 +162,20 @@ export default class UpdateChildDetails extends Component {
               value={this.state.dob}
               onChangeText={(val) => this.inputEl(val, 'dob')}
           />
+          <View style={styles.dtpicker}>
+            <View>
+              <Button onPress={() => this.showDatepicker()} title={this.state.dob} />
+            </View>
+            {this.state.show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={this.state.date}
+                mode='date'
+                display="default"
+                onChange={this.onChange}
+              />
+            )}
+          </View>
           <Text style={styles.bold}>Child Allergies</Text>
           <TextInput
               style={styles.input}
@@ -297,5 +334,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 12,
     textAlignVertical: 'top'
+  },
+  dtpicker: {
+    margin: 12,
   }
 })

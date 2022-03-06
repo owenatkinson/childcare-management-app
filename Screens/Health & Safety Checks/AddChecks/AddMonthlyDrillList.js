@@ -6,7 +6,7 @@ import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function AddMonthlyDrillList({route}) {
+export default function AddMonthlyDrillList({route, navigation}) {
     const { changeDate } = route.params;
     const [ monthlyFireDrillNumberOfPeople, setMonthlyFireDrillNumberOfPeople ] = useState('');
     const [ monthlyFireDrillNote, setMonthlyFireDrillNote ] = useState('');
@@ -23,7 +23,7 @@ export default function AddMonthlyDrillList({route}) {
         await fireDB.add({
           monthly_fire_drill_date: changeDate,
           monthly_fire_drill_num_of_people: monthlyFireDrillNumberOfPeople,
-          monthly_fire_drill_time_completed: convertTime(monthlyFireDrillTimeCompleted.date),
+          monthly_fire_drill_time_completed: monthlyFireDrillTimeCompleted.date,
           monthly_fire_drill_note: monthlyFireDrillNote,
           monthly_fire_drill_is_completed: monthlyFireDrillIsCompleted
     });

@@ -3,6 +3,7 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class UpdateVisitorLog extends Component {
   constructor() {
@@ -13,12 +14,33 @@ export default class UpdateVisitorLog extends Component {
       dateOfVisit: '',
       timeIn: '',
       timeOut: '',
-      visitPurpose: ''
+      visitPurpose: '',
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dateOfVisit: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
   }
 
   convertDate(dateInput){
     return(moment(dateInput.toDate()).format('D/M/YYYY'));
+  }
+
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   convertToTimestamp(dateInput){
@@ -117,11 +139,20 @@ export default class UpdateVisitorLog extends Component {
                     onChangeText={(val) => this.inputEl(val, 'visitorName')}
                 />
                 <Text style={styles.bold}>Date of Visit</Text>
-                <TextInput
-                    style={styles.input}
-                    value={this.state.dateOfVisit}
-                    onChangeText={(val) => this.inputEl(val, 'dateOfVisit')}
-                />
+                <View style={styles.dtpicker}>
+                  <View>
+                    <Button onPress={() => this.showDatepicker()} title={this.state.dateOfVisit} />
+                  </View>
+                  {this.state.show && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={this.state.date}
+                      mode='date'
+                      display="default"
+                      onChange={this.onChange}
+                    />
+                  )}
+                </View>
                 <Text style={styles.bold}>Time In</Text>
                 <TextInput
                     style={styles.input}
@@ -182,5 +213,8 @@ const styles = StyleSheet.create({
   },
   space: {
     height: 20,
+  },
+  dtpicker: {
+    margin: 12,
   }
 })

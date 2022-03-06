@@ -3,6 +3,7 @@ import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 're
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class UpdateAccidentReport extends Component {
   constructor() {
@@ -16,8 +17,29 @@ export default class UpdateAccidentReport extends Component {
       accidentDetail: '',
       accidentAction: '',
       accidentMedicalAttention: '',
-      accidentNotes: ''
+      accidentNotes: '',
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      accidentDate: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
+  }
+
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   convertDate(dateInput){
@@ -123,12 +145,20 @@ export default class UpdateAccidentReport extends Component {
           <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
           <View style={styles.space}></View>
           <Text style={styles.bold}>Date of Accident</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={'1/1/2022'}
-            value={this.state.accidentDate}
-            onChangeText={(val) => this.inputEl(val, 'accidentDate')}
-          />
+          <View style={styles.dtpicker}>
+            <View>
+              <Button onPress={() => this.showDatepicker()} title={this.state.accidentDate} />
+            </View>
+            {this.state.show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={this.state.date}
+                mode='date'
+                display="default"
+                onChange={this.onChange}
+              />
+            )}
+          </View>
           <Text style={styles.bold}>Accident Time</Text>
           <TextInput
             style={styles.input}
@@ -212,5 +242,8 @@ const styles = StyleSheet.create({
   },
   space: {
     height: 15,
+  },
+  dtpicker: {
+    margin: 12,
   }
 })
