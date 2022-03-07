@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
+import { ScrollView, StyleSheet, View, SafeAreaView, FlatList, Text } from 'react-native';
 import app from '../../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
@@ -13,7 +13,8 @@ export default class ViewInvoice extends Component {
     this.state = {
       isLoading: true,
       invoiceLogs: [],
-      date: new Date()
+      date: new Date(),
+      invoiceAmount: 0
     };
   }
 
@@ -54,6 +55,7 @@ export default class ViewInvoice extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
+    this.state.invoiceAmount = 0;
     const invoiceLogs = [];
     querySnapshot.forEach((res) => {
         const { child_name, date_of_invoice, invoice_amount } = res.data();
@@ -74,13 +76,14 @@ export default class ViewInvoice extends Component {
     return (
       <View style={styles.wrapper}>
         <SafeAreaView edges={['bottom', 'left', 'right']}>
-            <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => this.setState({date: newDate})}/>}/>
+          <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => {this.setState({date: newDate}); this.state.invoiceAmount = 0 }}/>}/>
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
             {
               this.state.invoiceLogs.map((res, i) => {
                 if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_invoice))) 
                 && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_invoice)))) {
+                  this.state.invoiceAmount += parseFloat(res.invoice_amount);
                   return (
                     <ListItem 
                       key={i}
@@ -103,6 +106,7 @@ export default class ViewInvoice extends Component {
               })
             }
         </ScrollView>
+        <Text style={styles.bold}>Month Total: £{parseFloat(this.state.invoiceAmount).toFixed(2)}</Text>
       </View>
     );
   }
@@ -112,5 +116,11 @@ const styles = StyleSheet.create({
     wrapper: {
      flex: 1,
      paddingBottom: 20
+    },
+    bold: {
+      fontWeight: 'bold',
+      marginLeft: 12,
+      marginTop: 15,
+      fontSize: 18
     }
 })

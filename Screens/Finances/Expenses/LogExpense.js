@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import app from '../../firebase';
+import app from '../../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
