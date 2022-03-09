@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class ViewLogDetails extends Component {
   constructor() {
@@ -18,9 +19,9 @@ export default class ViewLogDetails extends Component {
         droppedBy: '',
         collectedBy: '',
         temperatureChecked: '',
-        breakfast: '',
-        lunch: '',
-        snack: '',
+        // breakfast: '',
+        // lunch: '',
+        // snack: '',
         additionalNotes: '',
         childNames: [],
         date: new Date(),
@@ -85,9 +86,9 @@ export default class ViewLogDetails extends Component {
           droppedBy: log.dropped_by,
           collectedBy: log.collected_by,
           temperatureChecked: log.temperature_checked,
-          breakfast: log.breakfast_,
-          lunch: log.lunch_,
-          snack: log.snack_,
+          // breakfast: log.breakfast_,
+          // lunch: log.lunch_,
+          // snack: log.snack_,
           additionalNotes: log.additional_notes,
           isLoading: false
         });
@@ -116,9 +117,9 @@ export default class ViewLogDetails extends Component {
         dropped_by: this.state.droppedBy,
         collected_by: this.state.collectedBy,
         temperature_checked: this.state.temperatureChecked,
-        breakfast_: this.state.breakfast,
-        lunch_: this.state.lunch,
-        snack_: this.state.snack,
+        // breakfast_: this.state.breakfast,
+        // lunch_: this.state.lunch,
+        // snack_: this.state.snack,
         additional_notes: this.state.additionalNotes
     }).then(() => {
       this.setState({
@@ -130,9 +131,9 @@ export default class ViewLogDetails extends Component {
         droppedBy: '',
         collectedBy: '',
         temperatureChecked: '',
-        breakfast: '',
-        lunch: '',
-        dinner: '',
+        // breakfast: '',
+        // lunch: '',
+        // dinner: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewLogs');
@@ -174,19 +175,19 @@ export default class ViewLogDetails extends Component {
           <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
           <View style={styles.space}></View>
           <Text style={styles.bold}>Date of Attendance</Text>
-          <View style={styles.dtpicker}>
-            <View>
-              <Button onPress={() => this.showDatepicker()} title={this.state.dateOfAttendance} />
-            </View>
+          <View>
+            <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
             {this.state.show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={this.state.date}
-              mode='date'
-              display="default"
-              onChange={this.onChange}
-            />
+                <DateTimePicker
+                testID="dateOfAttendance"
+                value={this.state.date}
+                mode='date'
+                display="default"
+                onChange={this.onChange}
+                />
             )}
+            <Text style={styles.buttonText}>Choose a Date: {this.state.dateOfAttendance}</Text>
+            </TouchableOpacity>
           </View>
           <Text style={styles.bold}>Check-in Time</Text>
           <TextInput
@@ -226,7 +227,7 @@ export default class ViewLogDetails extends Component {
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
-          <Text style={styles.boldUnderCheckbox}>Meals</Text>
+          {/* <Text style={styles.boldUnderCheckbox}>Meals</Text>
           <View style={{flexDirection:"row", alignItems:"center"}}>
             <Text style={styles.standard}>Breakfast:</Text>
             <CheckBox
@@ -256,8 +257,8 @@ export default class ViewLogDetails extends Component {
               onValueChange={(val) => this.inputEl(val, 'snack')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-          </View>
-          <Text style={styles.boldUnderCheckbox}>Additional Notes</Text>
+          </View> */}
+          <Text style={styles.boldTextCheckbox}>Additional Notes</Text>
           <TextInput
               style={styles.extendedInput} 
               multiline={true} 
@@ -282,52 +283,3 @@ export default class ViewLogDetails extends Component {
       );
     }
   }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  boldUnderCheckbox: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 20
-  },
-  space: {
-    height: 20,
-  },
-  standard: {
-    padding: 10,
-    marginLeft: 12,
-    marginTop: 5
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  dropdown: {
-      margin: 12,
-      backgroundColor: '#ee752e',
-      color: '#FFFFFF',
-  },
-  dropdownText: {
-      margin: 12,
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-      alignSelf: "center",
-  },
-  dtpicker: {
-    margin: 12,
-  }
-})

@@ -8,7 +8,7 @@ import Nutrition from './Components/Nutrition';
 
 export default function ProductScreen({ route }) {
   const [selectedIndex, updateIndex] = useState(0);
-  const buttons = ['General', 'Ingredients','Nutrition', 'Allergens']
+  const buttons = ['General', 'Ingredients','Nutrition', 'Allergens', 'Children']
 
   return (
     <View>

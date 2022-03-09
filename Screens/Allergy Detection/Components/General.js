@@ -2,12 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { globalStyles } from "../Styles/global";
-import {
-  Entypo,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  SimpleLineIcons
-} from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export default function General({ route }) {
 
@@ -25,6 +20,7 @@ export default function General({ route }) {
           style={styles.image}
         />
         <View style={styles.space}></View>
+        {nutrient_levels.sugars != null && (
         <Text>
           <Text style={styles.text}>Sugar Levels: </Text>
           <Text style={styles.textBold}>{ nutrient_levels.sugars? `${nutrient_levels.sugars}` : '' }</Text>
@@ -36,7 +32,9 @@ export default function General({ route }) {
             )}
           </Text>
         </Text>
+        )}
         <View style={styles.space}></View>
+        {nutrient_levels.salt != null && (
         <Text>
           <Text style={styles.text}>Salt Levels: </Text>
           <Text style={styles.textBold}>{ nutrient_levels.salt? `${nutrient_levels.salt}` : '' }</Text>
@@ -48,10 +46,12 @@ export default function General({ route }) {
             )}
           </Text>
         </Text>
+        )}
         <View style={styles.space}></View>
+        {nutrient_levels.fat != null && (
         <Text>
           <Text style={styles.text}>Fat Levels: </Text>
-          <Text style={styles.textBold}>{ nutrient_levels.fat? `${nutrient_levels.fat}` : '' }</Text>
+          <Text style={styles.textBold}>{ nutrient_levels.fat ? `${nutrient_levels.fat}` : '' }</Text>
           <Text>
             {nutrient_levels.fat == 'low' ? (
                 <Entypo name={"dot-single"} size={40} color="#209E53" />
@@ -60,11 +60,13 @@ export default function General({ route }) {
             )}
           </Text>
         </Text>
+        )}
         <View style={styles.space}></View>
         <View>
+          {nutrient_levels['saturated-fat'] != null && (
           <Text>
             <Text style={styles.text}>Saturated Fat Levels: </Text>
-            <Text style={styles.textBold}>{ nutrient_levels['saturated-fat']? `${nutrient_levels['saturated-fat']}` : '' }</Text>
+            <Text style={styles.textBold}>{ nutrient_levels['saturated-fat'] ? `${nutrient_levels['saturated-fat']}` : '' }</Text>
             <Text>
               {nutrient_levels['saturated-fat'] == 'low' ? (
                   <Entypo style={styles.stylex} name={"dot-single"} size={40} color="#209E53" />
@@ -73,6 +75,7 @@ export default function General({ route }) {
               )}
             </Text>
           </Text>
+          )}
         </View>
       </View>
     );

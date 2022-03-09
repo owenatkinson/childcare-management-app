@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { FlatList, ScrollView, StyleSheet, View, SafeAreaView } from 'react-native';
+import { FlatList, ScrollView, View, SafeAreaView } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 import MonthPick from '../../MonthPick';
+const styles = require('../../Styles/general');
 
 export default class ViewVisitorLogs extends Component {
   constructor() {
@@ -107,10 +108,3 @@ export default class ViewVisitorLogs extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    }
-})

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class UpdateChildDetails extends Component {
   constructor() {
@@ -156,13 +157,21 @@ export default class UpdateChildDetails extends Component {
               onChangeText={(val) => this.inputEl(val, 'name')}
           />
           <Text style={styles.bold}>Child DOB</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Date of Birth'}
-              value={this.state.dob}
-              onChangeText={(val) => this.inputEl(val, 'dob')}
-          />
-          <View style={styles.dtpicker}>
+          <View>
+            <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
+            {this.state.show && (
+                <DateTimePicker
+                testID="dob"
+                value={this.state.dob}
+                mode='date'
+                display="default"
+                onChange={this.onChange}
+                />
+            )}
+            <Text style={styles.buttonText}>Choose a Date: {this.state.dob}</Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={styles.dtpicker}>
             <View>
               <Button onPress={() => this.showDatepicker()} title={this.state.dob} />
             </View>
@@ -175,7 +184,7 @@ export default class UpdateChildDetails extends Component {
                 onChange={this.onChange}
               />
             )}
-          </View>
+          </View> */}
           <Text style={styles.bold}>Child Allergies</Text>
           <TextInput
               style={styles.input}
@@ -218,7 +227,7 @@ export default class UpdateChildDetails extends Component {
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
-          <Text style={styles.boldUnderCheckbox}>Child Home Address</Text>
+          <Text style={styles.boldTextCheckbox}>Child Home Address</Text>
           <TextInput
               style={styles.input}
               placeholder={'Child Home Address'}
@@ -306,36 +315,3 @@ export default class UpdateChildDetails extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  boldUnderCheckbox: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 20
-  },
-  space: {
-    height: 20,
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  dtpicker: {
-    margin: 12,
-  }
-})

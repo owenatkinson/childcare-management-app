@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
-// import AddNewChildButton from '../../AddButton';
+import { View, Button } from 'react-native';
+const styles = require('../../Styles/general');
 
 export default function ManageChildren({ navigation }) {
   return (
@@ -23,12 +23,3 @@ export default function ManageChildren({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  fixToText: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  }, space: {
-    height: 20,
-  }
-})

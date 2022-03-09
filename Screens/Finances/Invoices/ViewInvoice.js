@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, SafeAreaView, FlatList, Text } from 'react-native';
+import { ScrollView, View, SafeAreaView, FlatList, Text } from 'react-native';
 import app from '../../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 import MonthPick from '../../../MonthPick';
+const styles = require('../../../Styles/general');
 
 export default class ViewInvoice extends Component {
   constructor() {
@@ -106,21 +107,8 @@ export default class ViewInvoice extends Component {
               })
             }
         </ScrollView>
-        <Text style={styles.bold}>Month Total: £{parseFloat(this.state.invoiceAmount).toFixed(2)}</Text>
+        <Text style={styles.boldLargeText}>Month Total: £{parseFloat(this.state.invoiceAmount).toFixed(2)}</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    },
-    bold: {
-      fontWeight: 'bold',
-      marginLeft: 12,
-      marginTop: 15,
-      fontSize: 18
-    }
-})

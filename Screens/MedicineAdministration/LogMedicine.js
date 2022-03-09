@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Text, ScrollView, Button } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, ScrollView, Button } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ModalSelector from 'react-native-modal-selector'
+const styles = require('../../Styles/general');
 
 export default function LogMedicine({ navigation }) {
   const [ medicineTitle, setMedicineTitle ] = useState('');
@@ -149,50 +150,3 @@ function useInput() {
       onChange
   }
 }
-  
-const styles = StyleSheet.create({
-  input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-      backgroundColor: '#DADADA',
-      padding: 10,
-      borderWidth: 1,
-      margin: 12,
-      textAlignVertical: 'top'
-  },
-  bold: {
-      fontWeight: 'bold',
-      marginLeft: 12,
-      marginTop: 15
-  },
-  space: {
-      height: 20,
-  },
-  button: {
-      alignItems: "center",
-      backgroundColor: '#ee752e',
-      margin: 12,
-      padding: 10,
-      height: 40
-  },
-  buttonText: {
-      fontWeight: 'bold',
-      color: '#FFFFFF'
-  },
-  dropdown: {
-      margin: 12,
-      backgroundColor: '#ee752e',
-      color: '#FFFFFF',
-  },
-  dropdownText: {
-      margin: 12,
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-      alignSelf: "center",
-  }
-});

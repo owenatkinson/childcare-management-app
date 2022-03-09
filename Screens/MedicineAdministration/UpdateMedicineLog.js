@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class UpdateMedicineLog extends Component {
     constructor() {
@@ -143,19 +144,19 @@ export default class UpdateMedicineLog extends Component {
                 onChangeText={(val) => this.inputEl(val, 'medicineTitle')}
             />
             <Text style={styles.bold}>Date Administered</Text>
-            <View style={styles.dtpicker}>
-                <View>
-                <Button onPress={() => this.showDatepicker()} title={this.state.medicineDate.toString()} />
-                </View>
+            <View>
+                <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
                 {this.state.show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
+                    <DateTimePicker
+                    testID="accidentDate"
                     value={this.state.date}
                     mode='date'
                     display="default"
                     onChange={this.onChange}
-                />
+                    />
                 )}
+                <Text style={styles.buttonText}>Choose a Date: {this.state.medicineDate.toString()}</Text>
+                </TouchableOpacity>
             </View>
             <Text style={styles.bold}>Time Administered</Text>
             <TextInput
@@ -196,31 +197,3 @@ export default class UpdateMedicineLog extends Component {
     );
     }
 }
-    
-const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        backgroundColor: '#DADADA'
-    },
-    extendedInput: {
-        backgroundColor: '#DADADA',
-        padding: 10,
-        borderWidth: 1,
-        margin: 12,
-        textAlignVertical: 'top'
-    },
-    bold: {
-        fontWeight: 'bold',
-        marginLeft: 12,
-        marginTop: 15
-    },
-    space: {
-        height: 15,
-    },
-    dtpicker: {
-      margin: 12,
-    }
-})

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ModalSelector from 'react-native-modal-selector'
+const styles = require('../../Styles/general');
 
 export default function LogAccidentReport({ navigation }) {
   const [ childName, setChildName ] = useState('');
@@ -59,8 +60,7 @@ export default function LogAccidentReport({ navigation }) {
 
   return (
     <ScrollView>
-      <View style={styles.space}></View>
-      <Text style={styles.bold}>Child Name</Text>
+      <Text style={styles.bold}>Child Name:</Text>
       <View>
         <ModalSelector
             style={styles.dropdown}
@@ -71,7 +71,7 @@ export default function LogAccidentReport({ navigation }) {
             <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
         </ModalSelector>
       </View>
-      <Text style={styles.bold}>Date of Accident</Text>
+      <Text style={styles.bold}>Date of Accident:</Text>
       <View>
         <TouchableOpacity style={styles.button} onPress={dateOfAccident.showDatepicker}>
         {dateOfAccident.show && (
@@ -87,7 +87,7 @@ export default function LogAccidentReport({ navigation }) {
         <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfAccident.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Accident Time</Text>
+      <Text style={styles.bold}>Accident Time:</Text>
       <View>
         <TouchableOpacity
         style={styles.button}
@@ -105,15 +105,15 @@ export default function LogAccidentReport({ navigation }) {
           <Text style={styles.buttonText}>Choose a Date: {convertTime(timeOfAccident.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Where did the accident occur?</Text>
+      <Text style={styles.bold}>Accident Location:</Text>
       <TextInput style={styles.input} placeholder={'Accident Location'} label={'Accident Location'} value={accidentLocation} onChangeText={setAccidentLocation}/>
-      <Text style={styles.bold}>What happened?</Text>
+      <Text style={styles.bold}>Accident Details:</Text>
       <TextInput multiline={true} placeholder={'Accident Detail'} numberOfLines={4} style={styles.extendedInput} label={'Accident Detail'} value={accidentDetail} onChangeText={setAccidentDetail}/>
-      <Text style={styles.bold}>What action was taken?</Text>
+      <Text style={styles.bold}>Actions Taken:</Text>
       <TextInput style={styles.input} placeholder={'Accident Action'} label={'Accident Action'} value={accidentAction} onChangeText={setAccidentAction}/>
-      <Text style={styles.bold}>Was medication attention required?</Text>
+      <Text style={styles.bold}>Medication Administered:</Text>
       <TextInput style={styles.input} placeholder={'Accident Medical Attention'} label={'Accident Medical Attention'} value={accidentMedicalAttention} onChangeText={setAccidentMedicalAttention}/>
-      <Text style={styles.bold}>Additional Notes</Text>
+      <Text style={styles.bold}>Additional Notes:</Text>
       <TextInput multiline={true} placeholder={'Insert any additional information'} numberOfLines={4} style={styles.extendedInput} label={'Accident Notes'} value={accidentNotes} onChangeText={setAccidentNotes}/>
       <View style={styles.space}></View>
       <Button 
@@ -155,50 +155,3 @@ function useInput() {
       onChange
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  space: {
-    height: 20,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: '#ee752e',
-    margin: 12,
-    padding: 10,
-    height: 40
-  },
-  buttonText: {
-      fontWeight: 'bold',
-      color: '#FFFFFF'
-  },
-  dropdown: {
-      margin: 12,
-      backgroundColor: '#ee752e',
-      color: '#FFFFFF',
-  },
-  dropdownText: {
-      margin: 12,
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-      alignSelf: "center",
-  }
-});

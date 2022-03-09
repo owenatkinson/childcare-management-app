@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import app from '../../../firebase';
 import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import ModalSelector from 'react-native-modal-selector';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../../Styles/general');
 
 export default class UpdateExpense extends Component {
   constructor() {
@@ -168,14 +169,7 @@ export default class UpdateExpense extends Component {
         })}
         color="#000000"
       />;
-    } 
-    // else {
-    //   receiptButton = <Button
-    //     title='Add Receipt'
-    //     onPress={this.pickImage}
-    //     color="#000000"
-    //   />;
-    // }
+    }
     return (
         <ScrollView>
             <View style={styles.space}></View>
@@ -193,22 +187,22 @@ export default class UpdateExpense extends Component {
                     onChange={(option)=>{
                       this.inputEl(option.label, 'category')
                     }}>
-                    <Text style={styles.dropdown}>Category: {this.state.category}</Text>
+                    <Text style={styles.dropdownBold}>Category: {this.state.category}</Text>
                 </ModalSelector>
                 <Text style={styles.bold}>Date of Expense</Text>
-                <View style={styles.dtpicker}>
-                  <View>
-                    <Button onPress={() => this.showDatepicker()} title={this.state.dateOfExpense} />
-                  </View>
+                <View>
+                  <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
                   {this.state.show && (
-                    <DateTimePicker
-                      testID="dateTimePicker"
+                      <DateTimePicker
+                      testID="dateOfExpense"
                       value={this.state.date}
                       mode='date'
                       display="default"
                       onChange={this.onChange}
-                    />
+                      />
                   )}
+                  <Text style={styles.buttonText}>Choose a Date: {this.state.dateOfExpense}</Text>
+                  </TouchableOpacity>
                 </View>
                 <Text style={styles.bold}>Expense Amount</Text>
                 <TextInput
@@ -243,40 +237,3 @@ export default class UpdateExpense extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  space: {
-    height: 20,
-  },
-  buttonText: {
-    color: '#000000'
-  },
-  dropdown: {
-      margin: 12,
-      backgroundColor: '#ee752e',
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-  },
-  dtpicker: {
-    margin: 12,
-  }
-})

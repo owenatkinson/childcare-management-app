@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import app from '../../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../../Styles/general');
 
 export default class UpdateMiles extends Component {
   constructor() {
@@ -155,19 +156,19 @@ export default class UpdateMiles extends Component {
                 <Text style={styles.bold}>Mileage Amount: £{this.state.mileageAmount}</Text>
                 <View style={styles.space}></View>
                 <Text style={styles.bold}>Date of Mileage Expense</Text>
-                <View style={styles.dtpicker}>
-                  <View>
-                    <Button onPress={() => this.showDatepicker()} title={this.state.dateOfMileage} />
-                  </View>
+                <View>
+                  <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
                   {this.state.show && (
-                    <DateTimePicker
-                      testID="dateTimePicker"
+                      <DateTimePicker
+                      testID="dateOfMileage"
                       value={this.state.date}
                       mode='date'
                       display="default"
                       onChange={this.onChange}
-                    />
+                      />
                   )}
+                  <Text style={styles.buttonText}>Choose a Date: {this.state.dateOfMileage}</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.space}></View>
             <Button
@@ -186,48 +187,3 @@ export default class UpdateMiles extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  space: {
-    height: 20,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    color: '#FFFFFF'
-  },
-  dropdown: {
-      margin: 12,
-      backgroundColor: '#ee752e',
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-  },
-  button: {
-      alignItems: "center",
-      backgroundColor: '#ee752e',
-      margin: 12,
-      padding: 10,
-      height: 40
-  },
-  dtpicker: {
-    margin: 12,
-  }
-})

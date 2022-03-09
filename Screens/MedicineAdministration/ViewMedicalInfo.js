@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import app from '../../firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import ModalSelector from 'react-native-modal-selector'
 import moment from 'moment';
+const styles = require('../../Styles/general');
 
 export default class ViewMedicalInfo extends Component {
   constructor() {
@@ -100,19 +101,3 @@ export default class ViewMedicalInfo extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    },
-    loader: {
-      position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',    
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-    }
-})
