@@ -7,6 +7,7 @@ import "firebase/firestore";
 import "firebase/database";
 import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome } from '@expo/vector-icons';
+const styles = require('../../Styles/general');
 
 const Policies = (props) => {
   const [fileList, setFileList] = useState([]);
@@ -118,10 +119,10 @@ const Policies = (props) => {
       {fileList.map((item, index) => (
         <ListItem.Swipeable
           leftContent={
-            <FontAwesome.Button name="share-alt" backgroundColor="#0b8fdc" alignItems="center" justifyContent="center" style={{height:55}} onPress={() => sharePolicy(item.fileURL)}></FontAwesome.Button>
+            <FontAwesome.Button name="share-alt" backgroundColor="#0b8fdc" alignItems="center" justifyContent="center" style={styles.swipeableItem} onPress={() => sharePolicy(item.fileURL)}></FontAwesome.Button>
           }
           rightContent={
-            <FontAwesome.Button name="trash" backgroundColor="#ee752e" alignItems="center" justifyContent="center" style={{height:55}} onPress={() => deletePolicy(item.fileName)}></FontAwesome.Button>
+            <FontAwesome.Button name="trash" backgroundColor="#ee752e" alignItems="center" justifyContent="center" style={styles.swipeableItem} onPress={() => deletePolicy(item.fileName)}></FontAwesome.Button>
           }
           key = {index}
           onPress={() =>

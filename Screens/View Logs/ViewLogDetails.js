@@ -217,10 +217,10 @@ export default class ViewLogDetails extends Component {
               value={this.state.collectedBy}
               onChangeText={(val) => this.inputEl(val, 'collectedBy')}
           />
-          <View style={{flexDirection:"row", alignItems:"center"}}>
+          <View style={styles.checkBoxPositioning}>
             <Text style={styles.bold}>Temperature Checked:</Text>
             <CheckBox
-              style={{marginTop:15}}
+              style={styles.checkBox}
               disabled={false}
               value={this.state.temperatureChecked}
               onValueChange={(val) => this.inputEl(val, 'temperatureChecked')}

@@ -77,6 +77,11 @@ module.exports = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
+    barCodeScan: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+    },
     wrapper: {
         flex: 1,
         paddingBottom: 20
@@ -103,5 +108,20 @@ module.exports = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: "center",
         fontSize: 18,
+    },
+    swipeableItem: {
+        height: 55
+    },
+    imageSize: {
+        width: 200,
+        height: 200,
+        alignSelf: 'center'
+    },
+    checkBox: {
+        marginTop: 15
+    },
+    checkBoxPositioning: {
+        flexDirection:"row", 
+        alignItems:"center"
     }
 });

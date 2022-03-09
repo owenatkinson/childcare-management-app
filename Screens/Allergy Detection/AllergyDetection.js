@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Text, View, StyleSheet, Vibration } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+const styles = require('../../Styles/general');
 
 export default function AllergyDetection({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -42,12 +43,7 @@ export default function AllergyDetection({ navigation }) {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      }}>
+    <View style={styles.barCodeScan}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}

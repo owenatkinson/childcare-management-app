@@ -136,10 +136,10 @@ function AttendanceRegister({ navigation }) {
       <TextInput style={styles.input} placeholder={'Dropped By'} label={'Dropped By'} value={droppedBy} onChangeText={setDroppedBy}/>
       <Text style={styles.bold}>Collected By:</Text>
       <TextInput style={styles.input} placeholder={'Collected By'} label={'Collected By'} value={collectedBy} onChangeText={setCollectedBy}/>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
+      <View style={styles.checkBoxPositioning}>
         <Text style={styles.bold}>Temperature Checked:</Text>
         <CheckBox
-          style={{marginTop:15}}
+          style={styles.checkBox}
           disabled={false}
           value={temperatureChecked}
           onValueChange={setTemperatureChecked}

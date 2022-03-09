@@ -154,7 +154,7 @@ const LogExpense = ({navigation}) => {
                 <Text style={styles.buttonText}>Upload a Receipt</Text>
                 </TouchableOpacity>
             </View>
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+            {image && <Image source={{ uri: image }} style={styles.imageSize} />}
             <View style={styles.space}></View>
             <Button 
                 title="Log Expense"
