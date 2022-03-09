@@ -62,7 +62,6 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
 
   render() {
     if (this.state.monthlyFireSafetyEquipmentCheck === undefined || this.state.monthlyFireSafetyEquipmentCheck.length == 0) {
-      console.log("Error occurred: Monthly Safety Checks list returning undefined")
       return(
         <View></View>
       );

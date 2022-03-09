@@ -63,7 +63,6 @@ export default class MonthlyDrillList extends Component {
 
   render() {
     if (this.state.monthlyFireDrill === undefined || this.state.monthlyFireDrill.length == 0) {
-      console.log("Error occurred: Monthly Fire Drill Checks list returning undefined")
       return(
         <View></View>
       );

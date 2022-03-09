@@ -20,6 +20,9 @@ module.exports = StyleSheet.create({
         marginLeft: 12,
         marginTop: 15
     },
+    standardText: {
+        marginLeft: 12,
+    },
     boldCentreText: {
         marginTop: 20,
         fontWeight: 'bold',
@@ -43,6 +46,11 @@ module.exports = StyleSheet.create({
     },
     space: {
         height: 20,
+    },
+    horizontalRule: {
+        height: 20,
+        borderBottomColor: 'black',
+        borderBottomWidth: 1
     },
     button: {
         alignItems: "center",
@@ -78,9 +86,7 @@ module.exports = StyleSheet.create({
         justifyContent: 'space-between',
     },
     barCodeScan: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        
     },
     wrapper: {
         flex: 1,
@@ -123,5 +129,11 @@ module.exports = StyleSheet.create({
     checkBoxPositioning: {
         flexDirection:"row", 
         alignItems:"center"
+    },
+    titleHeader: {
+        alignItems:"center",
+        justifyContent: "center",
+        height: 50,
+        backgroundColor: '#ee752e',
     }
 });

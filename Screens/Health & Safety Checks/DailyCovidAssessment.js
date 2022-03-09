@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, Alert, Text } from 'react-native';
+import { Button, View, ScrollView, Alert, Text } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
+const styles = require('../../Styles/general');
 
 export default class DailyCovidAssessment extends Component {
   constructor() {
@@ -99,7 +100,7 @@ export default class DailyCovidAssessment extends Component {
     this.setState(state);
   }
 
-  editChild() {
+  editCheck() {
     this.setState({
       isLoading: true,
     });
@@ -211,238 +212,322 @@ export default class DailyCovidAssessment extends Component {
   render() {
     return (
       <View>
-        <Button title={this.state.dailyCovidAssessmentDate} />
+        <View style={styles.titleHeader}>
+          <Text style={styles.buttonText}>{this.state.dailyCovidAssessmentDate}</Text>
+        </View>
         <ScrollView>
-          <View style={styles.space}></View>
-            <Text style={styles.bold}>Children put into childminder's care at the door</Text>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Children put into childminder's care at the door:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck1}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck1')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Staggered drop off and pick up</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Staggered drop off & pick up:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck2}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck2')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Ask if parents, children siblings have symptoms</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Ask if parents or siblings have symptoms:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck3}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck3')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Coats and shoes off</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Coats & shoes off:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck4}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck4')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Wash hands with soap and water</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Wash hands with soap & water:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck5}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck5')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Open windows and doors for ventilation where possible</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Open windows/doors for ventilation when possible:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck6}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck6')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Review risk assessment regularly</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Review Risk Assessment regularly:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck7}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck7')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Extra cleaning of toilet, taps, switch and handles</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Cleaning of toilet, taps, switch & handles:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck8}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck8')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Wash hands before and after using toilet</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Wash hands before & after using toilet:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck9}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck9')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Individual hand towels, flannels or paper towels</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Individual hand towels/flannels/paper towels used:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck10}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck10')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Liquid soap available and bottle cleaned regularly</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Liquid soap available & bottle cleaned regularly:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck11}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck11')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Wash hands before and after outdoor play</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Wash hands before & after outdoor play:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck12}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck12')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Sanitiser and wipes taken on outings</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Sanitiser & wipes taken on outings:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck13}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck13')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Clean outdoor equipment regularly</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Clean outdoor equipment regularly:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck14}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck14')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Record of outings away from the childminders home</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Record of outings away from childminder's home:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck15}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck15')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Chairs and high chairs sanitised regularly</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Chairs & high chairs sanitised regularly:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck16}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck16')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Floors, surfaces, handles, light switches cleaned regularly</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Surfaces cleaned regularly:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck17}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck17')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Toys wiped when necessary and deep cleaned once a day</Text>
+          </View>
+          <Text style={styles.standardText}>(Floors, surfaces, handles, light switches)</Text>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Toys wiped when necessary:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck18}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck18')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Limit toys and rotate</Text>
+          </View>
+          <Text style={styles.standardText}>(Deep-cleaned once per day)</Text>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Limit toys and rotate:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck19}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck19')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Tissues and wipes readily available</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Tissues & wipes readily available:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck20}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck20')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Bedding changed daily</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Bedding changed daily:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck21}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck21')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Bins wiped and emptied daily</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Bins wiped & emptied daily:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck22}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck22')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Any temperatures taken must be recorded</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Any temperatures taken must be recorded:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck23}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck23')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Hands washed before getting into the car</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Hands washed before getting into the car:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck24}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck24')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Seatbelts, handles and car seats cleaned regularly</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Seatbelts, handles & car seats cleaned regularly:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck25}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck25')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Children spaced as much as possible</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Children spaced as much as possible:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck26}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck26')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Air con switched off where possible</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Air con switched off where possible:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck27}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck27')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Windows open for ventilation</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Windows open for ventilation:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck28}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck28')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>No food or drink consumed in car</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>No food/drink consumed in car:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck29}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck29')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <Text style={styles.bold}>Wipes, tissues and hand sanitiser available</Text>
+          </View>
+          <View style={styles.horizontalRule}></View>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Wipes, tissues & hand sanitiser available:</Text>
             <CheckBox
+              style={styles.checkBox}
               value={this.state.dailyCovidAssessmentCheck30}
               onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck30')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
-            <View style={styles.space}></View>
-            <Button
-              title='Update'
-              onPress={() => this.editChild()} 
-              color="#0B8FDC"
-            />
-            <View style={styles.space}></View>
-            <View style={styles.space}></View>
+          </View>
+          <View style={styles.space}></View>
+          <Button
+            title='Update'
+            onPress={() => this.editCheck()} 
+            color="#0B8FDC"
+          />
+          <View style={styles.space}></View>
+          <View style={styles.space}></View>
+          <View style={styles.space}></View>
         </ScrollView>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  space: {
-    height: 20,
-  }
-})
