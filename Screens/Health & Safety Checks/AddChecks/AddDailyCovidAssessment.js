@@ -86,7 +86,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Children put into childminder's care at the door:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck1}
                     onValueChange={setDailyCovidAssessmentCheck1}
@@ -97,7 +97,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Staggered drop off & pick up:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck2}
                     onValueChange={setDailyCovidAssessmentCheck2}
@@ -108,7 +108,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Ask if parents or siblings have symptoms:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck3}
                     onValueChange={setDailyCovidAssessmentCheck3}
@@ -119,7 +119,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Coats & shoes off:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck4}
                     onValueChange={setDailyCovidAssessmentCheck4}
@@ -130,7 +130,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Wash hands with soap & water:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck5}
                     onValueChange={setDailyCovidAssessmentCheck5}
@@ -141,7 +141,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Open windows/doors for ventilation when possible:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck6}
                     onValueChange={setDailyCovidAssessmentCheck6}
@@ -152,7 +152,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Review Risk Assessment regularly:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck7}
                     onValueChange={setDailyCovidAssessmentCheck7}
@@ -163,7 +163,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Cleaning of toilet, taps, switch & handles:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck8}
                     onValueChange={setDailyCovidAssessmentCheck8}
@@ -174,7 +174,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Wash hands before & after using toilet:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck9}
                     onValueChange={setDailyCovidAssessmentCheck9}
@@ -185,7 +185,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Individual hand towels/flannels/paper towels used:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck10}
                     onValueChange={setDailyCovidAssessmentCheck10}
@@ -196,7 +196,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Liquid soap available & bottle cleaned regularly:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck11}
                     onValueChange={setDailyCovidAssessmentCheck11}
@@ -207,7 +207,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Wash hands before & after outdoor play:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck12}
                     onValueChange={setDailyCovidAssessmentCheck12}
@@ -218,7 +218,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Sanitiser & wipes taken on outings:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck13}
                     onValueChange={setDailyCovidAssessmentCheck13}
@@ -229,7 +229,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Clean outdoor equipment regularly:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck14}
                     onValueChange={setDailyCovidAssessmentCheck14}
@@ -240,7 +240,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Record of outings away from childminder's home:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck15}
                     onValueChange={setDailyCovidAssessmentCheck15}
@@ -251,7 +251,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Chairs & high chairs sanitised regularly:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck16}
                     onValueChange={setDailyCovidAssessmentCheck16}
@@ -262,7 +262,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Surfaces cleaned regularly:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck17}
                     onValueChange={setDailyCovidAssessmentCheck17}
@@ -274,7 +274,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Toys wiped when necessary:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck18}
                     onValueChange={setDailyCovidAssessmentCheck18}
@@ -286,7 +286,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Limit toys and rotate:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck19}
                     onValueChange={setDailyCovidAssessmentCheck19}
@@ -297,7 +297,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Tissues & wipes readily available:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck20}
                     onValueChange={setDailyCovidAssessmentCheck20}
@@ -308,7 +308,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Bedding changed daily:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck21}
                     onValueChange={setDailyCovidAssessmentCheck21}
@@ -319,7 +319,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Bins wiped & emptied daily:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck22}
                     onValueChange={setDailyCovidAssessmentCheck22}
@@ -330,7 +330,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Any temperatures taken must be recorded:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck23}
                     onValueChange={setDailyCovidAssessmentCheck23}
@@ -341,7 +341,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Hands washed before getting into the car:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck24}
                     onValueChange={setDailyCovidAssessmentCheck24}
@@ -352,7 +352,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Seatbelts, handles & car seats cleaned regularly:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck25}
                     onValueChange={setDailyCovidAssessmentCheck25}
@@ -363,7 +363,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Children spaced as much as possible:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck26}
                     onValueChange={setDailyCovidAssessmentCheck26}
@@ -374,7 +374,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Air con switched off where possible:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck27}
                     onValueChange={setDailyCovidAssessmentCheck27}
@@ -385,7 +385,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Windows open for ventilation:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck28}
                     onValueChange={setDailyCovidAssessmentCheck28}
@@ -396,7 +396,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>No food/drink consumed in car:</Text>
                 <CheckBox
-                    style={styles.checkBox}
+                    style={styles.checkBoxAlignRight}
                     disabled={false}
                     value={dailyCovidAssessmentCheck29}
                     onValueChange={setDailyCovidAssessmentCheck29}
@@ -407,7 +407,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
             <View style={styles.checkBoxPositioning}>
                 <Text style={styles.bold}>Wipes, tissues & hand sanitiser available:</Text>
                 <CheckBox
-                style={styles.checkBox}
+                style={styles.checkBoxAlignRight}
                 disabled={false}
                 value={dailyCovidAssessmentCheck30}
                 onValueChange={setDailyCovidAssessmentCheck30}

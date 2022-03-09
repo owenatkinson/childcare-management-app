@@ -124,11 +124,16 @@ module.exports = StyleSheet.create({
         alignSelf: 'center'
     },
     checkBox: {
-        marginTop: 15
+        marginTop: 15,
+    },
+    checkBoxAlignRight: {
+        marginTop: 15,
+        marginLeft: 'auto',
+        marginRight: 5
     },
     checkBoxPositioning: {
         flexDirection:"row", 
-        alignItems:"center"
+        alignItems:"center",
     },
     titleHeader: {
         alignItems:"center",

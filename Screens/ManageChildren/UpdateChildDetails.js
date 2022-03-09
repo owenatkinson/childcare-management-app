@@ -218,7 +218,7 @@ export default class UpdateChildDetails extends Component {
               onChangeText={(val) => this.inputEl(val, 'medicalConditionsDetails')}
           />
           <View style={styles.checkBoxPositioning}>
-            <Text style={styles.bold}>Child Is Active?</Text>
+            <Text style={styles.bold}>Child is actively under your care:</Text>
             <CheckBox
               style={styles.checkBox}
               disabled={false}
