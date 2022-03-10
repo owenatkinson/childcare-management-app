@@ -419,9 +419,7 @@ export default function AddDailyCovidAssessment({route, navigation}) {
                 title="Submit Check"
                 onPress={() => addCheck()}
             />
-            <View style={styles.space}></View>
-            <View style={styles.space}></View>
-            <View style={styles.space}></View>
+            <View style={styles.buttonSpace}></View>
         </ScrollView>
       </View>
     );

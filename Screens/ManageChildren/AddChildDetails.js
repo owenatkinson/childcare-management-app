@@ -86,7 +86,7 @@ export default function AddNewChild({ navigation }) {
         <Text style={styles.bold}>Medical Condition Details</Text>
         <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} placeholder={'Insert details of the child\'s medical conditions'} value={childMedicalConditionsDetails} onChangeText={setChildMedicalConditionsDetails}/>
         <View style={styles.checkBoxPositioning}>
-          <Text style={styles.bold}>Child is currently under your care?</Text>
+          <Text style={styles.bold}>Child is actively under your care:</Text>
           <CheckBox
             style={styles.checkBox}
             disabled={false}

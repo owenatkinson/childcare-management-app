@@ -28,6 +28,10 @@ module.exports = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
     },
+    boldCentre: {
+        fontWeight: 'bold',
+        alignSelf: 'center',
+    },
     boldLargeText: {
         fontWeight: 'bold',
         marginLeft: 12,
@@ -46,6 +50,9 @@ module.exports = StyleSheet.create({
     },
     space: {
         height: 20,
+    },
+    buttonSpace: {
+        height: 60,
     },
     horizontalRule: {
         height: 20,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, ScrollView, Alert, Text } from 'react-native';
+import { Button, View, ScrollView, Text } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
@@ -12,7 +12,6 @@ export default class DailyCovidAssessment extends Component {
       isLoading: true,
       dailyCovidAssessmentDate: '',
       dailyCovidAssessmentIsCompleted: '',
-      dailyCovidAssessmentNote: '',
       dailyCovidAssessmentCheck1: '',
       dailyCovidAssessmentCheck2: '',
       dailyCovidAssessmentCheck3: '',
@@ -55,7 +54,6 @@ export default class DailyCovidAssessment extends Component {
           key: res.id,
           dailyCovidAssessmentDate: user.daily_covid_assessment_date,
           dailyCovidAssessmentIsCompleted: user.daily_covid_assessment_is_completed,
-          dailyCovidAssessmentNote: user.daily_covid_assessment_note,
           dailyCovidAssessmentCheck1: user.daily_covid_assessment_check_1,
           dailyCovidAssessmentCheck2: user.daily_covid_assessment_check_2,
           dailyCovidAssessmentCheck3: user.daily_covid_assessment_check_3,
@@ -108,7 +106,6 @@ export default class DailyCovidAssessment extends Component {
     docUpdate.set({
       daily_covid_assessment_date: this.state.dailyCovidAssessmentDate,
       daily_covid_assessment_is_completed: this.state.dailyCovidAssessmentIsCompleted,
-      daily_covid_assessment_note: this.state.dailyCovidAssessmentNote,
       daily_covid_assessment_check_1: this.state.dailyCovidAssessmentCheck1,
       daily_covid_assessment_check_2: this.state.dailyCovidAssessmentCheck2,
       daily_covid_assessment_check_3: this.state.dailyCovidAssessmentCheck3,
@@ -142,39 +139,6 @@ export default class DailyCovidAssessment extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        dailyCovidAssessmentDate: '',
-        dailyCovidAssessmentIsCompleted: '',
-        dailyCovidAssessmentNote: '',
-        dailyCovidAssessmentCheck1: '',
-        dailyCovidAssessmentCheck2: '',
-        dailyCovidAssessmentCheck3: '',
-        dailyCovidAssessmentCheck4: '',
-        dailyCovidAssessmentCheck5: '',
-        dailyCovidAssessmentCheck6: '',
-        dailyCovidAssessmentCheck7: '',
-        dailyCovidAssessmentCheck8: '',
-        dailyCovidAssessmentCheck9: '',
-        dailyCovidAssessmentCheck10: '',
-        dailyCovidAssessmentCheck11: '',
-        dailyCovidAssessmentCheck12: '',
-        dailyCovidAssessmentCheck13: '',
-        dailyCovidAssessmentCheck14: '',
-        dailyCovidAssessmentCheck15: '',
-        dailyCovidAssessmentCheck16: '',
-        dailyCovidAssessmentCheck17: '',
-        dailyCovidAssessmentCheck18: '',
-        dailyCovidAssessmentCheck19: '',
-        dailyCovidAssessmentCheck20: '',
-        dailyCovidAssessmentCheck21: '',
-        dailyCovidAssessmentCheck22: '',
-        dailyCovidAssessmentCheck23: '',
-        dailyCovidAssessmentCheck24: '',
-        dailyCovidAssessmentCheck25: '',
-        dailyCovidAssessmentCheck26: '',
-        dailyCovidAssessmentCheck27: '',
-        dailyCovidAssessmentCheck28: '',
-        dailyCovidAssessmentCheck29: '',
-        dailyCovidAssessmentCheck30: '',
         isLoading: false,
       });
       this.props.navigation.navigate('HealthSafetyChecks');
@@ -185,28 +149,6 @@ export default class DailyCovidAssessment extends Component {
         isLoading: false,
       });
     });
-  }
-
-  deleteChild() {
-    const docRef = app.firestore().collection('dailyCovidAssessment').doc(this.props.route.params.userkey)
-      docRef.delete().then((res) => {
-          console.log('Doc deleted.')
-          this.props.navigation.navigate('HealthSafetyChecks');
-      })
-  }
-
-  alertDialog=()=>{
-    Alert.alert(
-      'Delete',
-      'Really?',
-      [
-        {text: 'Yes', onPress: () => this.deleteChild()},
-        {text: 'No', onPress: () => console.log('Item not deleted'), style: 'cancel'},
-      ],
-      { 
-        cancelable: true 
-      }
-    );
   }
 
   render() {
@@ -523,9 +465,7 @@ export default class DailyCovidAssessment extends Component {
             onPress={() => this.editCheck()} 
             color="#0B8FDC"
           />
-          <View style={styles.space}></View>
-          <View style={styles.space}></View>
-          <View style={styles.space}></View>
+          <View style={styles.buttonSpace}></View>
         </ScrollView>
       </View>
     );
