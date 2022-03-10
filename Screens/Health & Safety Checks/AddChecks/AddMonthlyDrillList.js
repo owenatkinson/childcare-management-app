@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../../Styles/general');
 
 export default function AddMonthlyDrillList({route, navigation}) {
     const { changeDate } = route.params;
@@ -30,20 +31,24 @@ export default function AddMonthlyDrillList({route, navigation}) {
     setMonthlyFireDrillNumberOfPeople('');
     setMonthlyFireDrillNote('');
     setMonthlyFireDrillIsCompleted('');
-    this.props.navigation.navigate('HealthSafetyChecks');
+    navigation.navigate('HealthSafetyChecks');
   }
 
   return (
     <View>
+        <View style={styles.titleHeader}>
+          <Text style={styles.buttonText}>{changeDate}</Text>
+        </View>
+        <View style={styles.space}></View>
         <ScrollView>
-            <Text style={styles.bold}>Number of People</Text>
+            <Text style={styles.bold}>Number of People:</Text>
             <TextInput
                 placeholder={'Number of People present'}
                 style={styles.input}
                 value={monthlyFireDrillNumberOfPeople}
                 onChangeText={setMonthlyFireDrillNumberOfPeople}
             />
-            <Text style={styles.bold}>Time Completed</Text>
+            <Text style={styles.bold}>Time Completed:</Text>
             <View>
               <TouchableOpacity style={styles.button} onPress={monthlyFireDrillTimeCompleted.showTimepicker}>
               {monthlyFireDrillTimeCompleted.show && (
@@ -59,7 +64,7 @@ export default function AddMonthlyDrillList({route, navigation}) {
               <Text style={styles.buttonText}>Choose a Time: {convertTime(monthlyFireDrillTimeCompleted.date)}</Text>
               </TouchableOpacity>
             </View>
-            <Text style={styles.bold}>Notes</Text>
+            <Text style={styles.bold}>Additional Notes:</Text>
             <TextInput
                 placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
@@ -68,9 +73,10 @@ export default function AddMonthlyDrillList({route, navigation}) {
                 value={monthlyFireDrillNote}
                 onChangeText={setMonthlyFireDrillNote}
             />
-            <Text style={styles.bold}>Check Completed</Text>
-            <View>
+            <View style={styles.checkBoxPositioning}>
+              <Text style={styles.bold}>Check Completed:</Text>
               <CheckBox
+                style={styles.checkBox}
                 value={monthlyFireDrillIsCompleted}
                 onValueChange={(monthlyFireDrillIsCompleted) => setMonthlyFireDrillIsCompleted(monthlyFireDrillIsCompleted)}
                 tintColors={{ true: "#0B8FDC", false: "orange"}}
@@ -113,43 +119,3 @@ function useInput() {
       onChange
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  space: {
-    height: 20,
-  },
-  headerText: {
-    fontWeight: 'bold',
-    padding: 10,
-    backgroundColor: "#DADADA",
-    textAlign: 'center',
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: '#ee752e',
-    margin: 12,
-    padding: 10,
-    height: 40
-  },
-  buttonText: {
-      fontWeight: 'bold',
-      color: '#FFFFFF'
-  }
-});

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class MonthlyFireDrill extends Component {
   constructor() {
@@ -110,32 +111,34 @@ export default class MonthlyFireDrill extends Component {
   render() {
     return (
       <View>
-        <Text>{this.state.monthlyFireDrillDate}</Text>
+        <View style={styles.titleHeader}>
+          <Text style={styles.buttonText}>{this.state.monthlyFireDrillDate}</Text>
+        </View>
         <ScrollView>
           <View style={styles.space}></View>
-            <Text style={styles.bold}>Number of People</Text>
+            <Text style={styles.bold}>Number of People:</Text>
             <TextInput
                 placeholder={'Number of People present'}
                 style={styles.input}
                 value={this.state.monthlyFireDrillNumberOfPeople}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNumberOfPeople')}
             />
-            <Text style={styles.bold}>Time Completed</Text>
-            <View style={styles.dtpicker}>
-              <View>
-                <Button onPress={() => this.showTimepicker()} title={this.convertToTime(this.state.monthlyFireDrillTimeCompleted)} />
-              </View>
+            <Text style={styles.bold}>Time Completed:</Text>
+            <View>
+              <TouchableOpacity style={styles.button} onPress={() => this.showTimepicker()}>
               {this.state.show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
+                  <DateTimePicker
+                  testID="monthlyFireDrillTimeCompleted"
                   value={this.state.date}
                   mode='time'
                   display="default"
                   onChange={this.onChange}
-                />
+                  />
               )}
+              <Text style={styles.buttonText}>Choose a Date: {this.convertToTime(this.state.monthlyFireDrillTimeCompleted)}</Text>
+              </TouchableOpacity>
             </View>
-            <Text style={styles.bold}>Notes</Text>
+            <Text style={styles.bold}>Additional Notes:</Text>
             <TextInput
                 placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
@@ -144,9 +147,10 @@ export default class MonthlyFireDrill extends Component {
                 value={this.state.monthlyFireDrillNote}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNote')}
             />
-            <Text style={styles.bold}>Check Completed</Text>
-            <View>
+            <View style={styles.checkBoxPositioning}>
+              <Text style={styles.bold}>Check Completed:</Text>
               <CheckBox
+                style={styles.checkBox}
                 value={this.state.monthlyFireDrillIsCompleted}
                 onValueChange={(val) => this.inputEl(val, 'monthlyFireDrillIsCompleted')}
                 tintColors={{ true: "#0B8FDC", false: "orange"}}
@@ -165,33 +169,3 @@ export default class MonthlyFireDrill extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  space: {
-    height: 20,
-  },
-  dtpicker: {
-    margin: 12,
-  }
-})

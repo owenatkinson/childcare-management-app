@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Button, Platform, StyleSheet } from 'react-native';
+import { View, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import DailyCovidList from './CheckLists/DailyCovidList';
@@ -58,15 +58,3 @@ export default function HealthSafetyChecks({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  }
-})
