@@ -5,14 +5,14 @@ import {
   TextInput,
   Button,
   Text,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, convertTime } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 function AttendanceRegister({ navigation }) {
@@ -51,17 +51,22 @@ function AttendanceRegister({ navigation }) {
   const fireDB = app.firestore().collection("attendanceRegister");
 
   async function addAttendanceLog() {
-    await fireDB.add({
-      additional_notes: additionalNotes,
-      check_in_time: convertTime(checkInTime.date),
-      check_out_time: convertTime(checkOutTime.date),
-      child_name: childName,
-      collected_by: collectedBy,
-      date_of_attendance: convertDate(dateOfAttendance.date),
-      dropped_by: droppedBy,
-      temperature_checked: temperatureChecked,
-    });
-    navigation.navigate("Home");
+    if (droppedBy.length == 0 || collectedBy.length == 0 || childName == undefined) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        additional_notes: additionalNotes,
+        check_in_time: convertTime(checkInTime.date),
+        check_out_time: convertTime(checkOutTime.date),
+        child_name: childName,
+        collected_by: collectedBy,
+        date_of_attendance: convertDate(dateOfAttendance.date),
+        dropped_by: droppedBy,
+        temperature_checked: temperatureChecked,
+      });
+      navigation.navigate("Home");
+    }
   }
 
   return (

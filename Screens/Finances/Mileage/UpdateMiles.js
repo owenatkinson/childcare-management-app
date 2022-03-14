@@ -1,21 +1,9 @@
 import React, { Component } from "react";
-import {
-  Button,
-  View,
-  ScrollView,
-  TextInput,
-  Alert,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {
-  parseDate,
-  convertDate,
-  convertToTimestamp,
-} from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, calculationAlert } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateMiles extends Component {
@@ -76,33 +64,40 @@ export default class UpdateMiles extends Component {
   };
 
   editMileageLog() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app
-      .firestore()
-      .collection("mileageLogs")
-      .doc(this.state.key);
-    docUpdate
-      .set({
-        date_of_mileage: convertToTimestamp(this.state.dateOfMileage),
-        mileage_amount: this.state.mileageAmount,
-        mileage_rate: this.state.mileageRate,
-        miles_travelled: this.state.milesTravelled,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewMiles");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.mileageRate.length == 0 || !isNumeric(this.state.mileageRate) || this.state.milesTravelled.length == 0 || !isNumeric(this.state.milesTravelled)) {
+      missingDataAlert();
+      return;
+    } else if (this.state.mileageAmount.length == 0 || !isNumeric(this.state.mileageAmount)) {
+      calculationAlert();
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app
+        .firestore()
+        .collection("mileageLogs")
+        .doc(this.state.key);
+      docUpdate
+        .set({
+          date_of_mileage: convertToTimestamp(this.state.dateOfMileage),
+          mileage_amount: this.state.mileageAmount,
+          mileage_rate: this.state.mileageRate,
+          miles_travelled: this.state.milesTravelled,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewMiles");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteMileageLog() {

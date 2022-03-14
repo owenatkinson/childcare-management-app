@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  TextInput,
-  Button,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate } from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogInvoice = ({ navigation }) => {
@@ -45,12 +38,17 @@ const LogInvoice = ({ navigation }) => {
   const fireDB = app.firestore().collection("invoiceLogs");
 
   async function addInvoiceLog() {
-    await fireDB.add({
-      child_name: childName,
-      invoice_amount: invoiceAmount,
-      date_of_invoice: dateOfInvoice.date,
-    });
-    navigation.navigate("Finances");
+    if (invoiceAmount.length == 0 || !isNumeric(invoiceAmount) || childName == undefined) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        child_name: childName,
+        invoice_amount: invoiceAmount,
+        date_of_invoice: dateOfInvoice.date,
+      });
+      navigation.navigate("Finances");
+    }
   }
 
   return (

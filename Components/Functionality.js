@@ -1,4 +1,5 @@
 import moment from "moment";
+import { Alert } from "react-native";
 
 export const convertDate = (dateInput) => {
   return moment(dateInput).format("D/M/YYYY");
@@ -61,3 +62,16 @@ export const getMonday = (date) => {
 
   return date == parsedDate;
 };
+
+export const missingDataAlert = () => {
+  Alert.alert('Missing information', 'There are fields that are missing information, please fill these before trying again. Use \'N/A\' if applicable.');
+}
+
+export const calculationAlert = () => {
+  Alert.alert('Calculation Required', 'Please click the calculate button to generate the Mileage Amount before proceeding.');
+}
+
+export const isNumeric = (str) => {
+  if (typeof str != "string") return false
+  return !isNaN(str) && !isNaN(parseFloat(str))
+}

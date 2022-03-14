@@ -10,7 +10,7 @@ import {
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate } from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric, calculationAlert} from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogMiles = ({ navigation }) => {
@@ -21,13 +21,20 @@ const LogMiles = ({ navigation }) => {
   const fireDB = app.firestore().collection("mileageLogs");
 
   async function addMileageLog() {
-    await fireDB.add({
-      mileage_amount: mileageAmount,
-      mileage_rate: mileageRate,
-      miles_travelled: milesTravelled,
-      date_of_mileage: dateOfMileage.date,
-    });
-    navigation.navigate("Finances");
+    if (mileageRate.length == 0 || !isNumeric(mileageRate) || milesTravelled.length == 0 || !isNumeric(milesTravelled)) {
+      missingDataAlert();
+      return;
+    } else if (mileageAmount.length == 0 || !isNumeric(mileageAmount)) {
+      calculationAlert();
+    } else {
+      await fireDB.add({
+        mileage_amount: mileageAmount,
+        mileage_rate: mileageRate,
+        miles_travelled: milesTravelled,
+        date_of_mileage: dateOfMileage.date,
+      });
+      navigation.navigate("Finances");
+    }
   }
 
   return (

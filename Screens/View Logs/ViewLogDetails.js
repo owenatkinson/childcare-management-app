@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate } from "../../Components/Functionality";
+import { convertDate, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class ViewLogDetails extends Component {
@@ -95,34 +95,39 @@ export default class ViewLogDetails extends Component {
   };
 
   editLog() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app.firestore().collection("attendanceRegister").doc(this.state.key);
-    docUpdate
-      .set({
-        child_name: this.state.childName,
-        date_of_attendance: this.state.dateOfAttendance,
-        check_in_time: this.state.checkInTime,
-        check_out_time: this.state.checkOutTime,
-        dropped_by: this.state.droppedBy,
-        collected_by: this.state.collectedBy,
-        temperature_checked: this.state.temperatureChecked,
-        additional_notes: this.state.additionalNotes,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewLogs");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.checkInTime.length == 0 || this.state.checkOutTime.length == 0 || this.state.droppedBy.length == 0 || this.state.collectedBy.length == 0) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app.firestore().collection("attendanceRegister").doc(this.state.key);
+      docUpdate
+        .set({
+          child_name: this.state.childName,
+          date_of_attendance: this.state.dateOfAttendance,
+          check_in_time: this.state.checkInTime,
+          check_out_time: this.state.checkOutTime,
+          dropped_by: this.state.droppedBy,
+          collected_by: this.state.collectedBy,
+          temperature_checked: this.state.temperatureChecked,
+          additional_notes: this.state.additionalNotes,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewLogs");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteLog() {

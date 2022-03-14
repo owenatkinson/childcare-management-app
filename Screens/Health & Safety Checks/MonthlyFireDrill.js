@@ -5,6 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { missingDataAlert, isNumeric } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class MonthlyFireDrill extends Component {
@@ -82,31 +83,36 @@ export default class MonthlyFireDrill extends Component {
   };
 
   editChild() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app.firestore().collection("monthlyFireDrill").doc(this.state.key);
-    docUpdate
-      .set({
-        monthly_fire_drill_date: this.state.monthlyFireDrillDate,
-        monthly_fire_drill_num_of_people: this.state.monthlyFireDrillNumberOfPeople,
-        monthly_fire_drill_time_completed: this.state.monthlyFireDrillTimeCompleted,
-        monthly_fire_drill_note: this.state.monthlyFireDrillNote,
-        monthly_fire_drill_is_completed: this.state.monthlyFireDrillIsCompleted,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("HealthSafetyChecks");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.monthlyFireDrillNumberOfPeople.length == 0 || !isNumeric(this.state.monthlyFireDrillNumberOfPeople) ) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app.firestore().collection("monthlyFireDrill").doc(this.state.key);
+      docUpdate
+        .set({
+          monthly_fire_drill_date: this.state.monthlyFireDrillDate,
+          monthly_fire_drill_num_of_people: this.state.monthlyFireDrillNumberOfPeople,
+          monthly_fire_drill_time_completed: this.state.monthlyFireDrillTimeCompleted,
+          monthly_fire_drill_note: this.state.monthlyFireDrillNote,
+          monthly_fire_drill_is_completed: this.state.monthlyFireDrillIsCompleted,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("HealthSafetyChecks");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   render() {

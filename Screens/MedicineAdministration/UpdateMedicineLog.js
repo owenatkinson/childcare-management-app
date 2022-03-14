@@ -3,7 +3,7 @@ import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } fr
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, parseDate, convertToTimestamp } from "../../Components/Functionality";
+import { convertDate, parseDate, convertToTimestamp, missingDataAlert } from "../../Components/Functionality";
 import ModalSelector from "react-native-modal-selector";
 const styles = require("../../Styles/general");
 
@@ -89,32 +89,37 @@ export default class UpdateMedicineLog extends Component {
   };
 
   editAccidentReport() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app.firestore().collection("medicineAdministration").doc(this.state.key);
-    docUpdate
-      .set({
-        child_name: this.state.childName,
-        medicine_date: convertToTimestamp(this.state.medicineDate),
-        medicine_title: this.state.medicineTitle,
-        medicine_time: this.state.medicineTime,
-        medicine_reason: this.state.medicineReason,
-        medicine_notes: this.state.medicineNotes,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewMedicalInfo");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.medicineTitle.length == 0 || this.state.medicineReason.length == 0 || this.state.medicineTime.length == 0 ) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app.firestore().collection("medicineAdministration").doc(this.state.key);
+      docUpdate
+        .set({
+          child_name: this.state.childName,
+          medicine_date: convertToTimestamp(this.state.medicineDate),
+          medicine_title: this.state.medicineTitle,
+          medicine_time: this.state.medicineTime,
+          medicine_reason: this.state.medicineReason,
+          medicine_notes: this.state.medicineNotes,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewMedicalInfo");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteAccidentReport() {

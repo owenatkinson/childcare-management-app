@@ -1,23 +1,11 @@
 import React, { Component } from "react";
-import {
-  Button,
-  View,
-  ScrollView,
-  TextInput,
-  Alert,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {
-  parseDate,
-  convertDate,
-  convertToTimestamp,
-} from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateExpense extends Component {
@@ -82,35 +70,40 @@ export default class UpdateExpense extends Component {
   };
 
   editExpenseLog() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app
-      .firestore()
-      .collection("expenseLogs")
-      .doc(this.state.key);
-    docUpdate
-      .set({
-        date_of_expense: convertToTimestamp(this.state.dateOfExpense),
-        expense_amount: this.state.expenseAmount,
-        expense_note: this.state.expenseNote,
-        expense_title: this.state.expenseTitle,
-        receipt_url: this.state.receiptUrl,
-        expense_category: this.state.category,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewExpenses");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.expenseTitle == 0 || this.state.category == undefined || this.state.expenseAmount.length == 0 || !isNumeric(this.state.expenseAmount) ) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app
+        .firestore()
+        .collection("expenseLogs")
+        .doc(this.state.key);
+      docUpdate
+        .set({
+          date_of_expense: convertToTimestamp(this.state.dateOfExpense),
+          expense_amount: this.state.expenseAmount,
+          expense_note: this.state.expenseNote,
+          expense_title: this.state.expenseTitle,
+          receipt_url: this.state.receiptUrl,
+          expense_category: this.state.category,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewExpenses");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteExpenseLog() {

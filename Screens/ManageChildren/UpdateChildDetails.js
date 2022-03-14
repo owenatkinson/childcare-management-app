@@ -4,7 +4,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate } from "../../Components/Functionality";
+import { convertDate, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateChildDetails extends Component {
@@ -90,44 +90,51 @@ export default class UpdateChildDetails extends Component {
   };
 
   editChild() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app.firestore().collection("children").doc(this.state.key);
-    docUpdate
-      .set({
-        child_name: this.state.name,
-        child_DOB: this.state.dob,
-        child_allergies: this.state.allergies,
-        child_allergies_details: this.state.allergiesDetails,
-        child_medical_conditions: this.state.medicalConditions,
-        child_medical_conditions_details: this.state.medicalConditionsDetails,
-        child_is_active: this.state.isActive,
-        child_emergency_contact_name: this.state.emergencyName,
-        child_emergency_contact_number: this.state.emergencyNumber,
-        child_emergency_contact_relation: this.state.emergencyRelation,
-        doctor_name: this.state.doctorName,
-        doctor_address: this.state.doctorAddress,
-        doctor_number: this.state.doctorNumber,
-        child_home_address: this.state.childAddress,
-        parent_name_1: this.state.parent1Name,
-        parent_name_2: this.state.parent2Name,
-        parent_number_1: this.state.parent1Number,
-        parent_number_2: this.state.parent2Number,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ManageChildren");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.name.length == 0 || this.state.emergencyName.length == 0 || this.state.emergencyNumber.length == 0 || this.state.emergencyRelation.length == 0 
+      || this.state.doctorName.length == 0 || this.state.doctorAddress.length == 0 || this.state.doctorNumber.length == 0 || this.state.childAddress.length == 0 
+      || this.state.parent1Name.length == 0 || this.state.parent2Name.length == 0 || this.state.parent1Number.length == 0 || this.state.parent2Number.length == 0) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app.firestore().collection("children").doc(this.state.key);
+      docUpdate
+        .set({
+          child_name: this.state.name,
+          child_DOB: this.state.dob,
+          child_allergies: this.state.allergies,
+          child_allergies_details: this.state.allergiesDetails,
+          child_medical_conditions: this.state.medicalConditions,
+          child_medical_conditions_details: this.state.medicalConditionsDetails,
+          child_is_active: this.state.isActive,
+          child_emergency_contact_name: this.state.emergencyName,
+          child_emergency_contact_number: this.state.emergencyNumber,
+          child_emergency_contact_relation: this.state.emergencyRelation,
+          doctor_name: this.state.doctorName,
+          doctor_address: this.state.doctorAddress,
+          doctor_number: this.state.doctorNumber,
+          child_home_address: this.state.childAddress,
+          parent_name_1: this.state.parent1Name,
+          parent_name_2: this.state.parent2Name,
+          parent_number_1: this.state.parent1Number,
+          parent_number_2: this.state.parent2Number,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ManageChildren");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   render() {

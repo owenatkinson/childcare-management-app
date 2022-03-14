@@ -11,7 +11,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, convertTime } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function LogAccidentReport({ navigation }) {
@@ -50,17 +50,22 @@ export default function LogAccidentReport({ navigation }) {
   const fireDB = app.firestore().collection("accidentReports");
 
   async function addAccidentReport() {
-    await fireDB.add({
-      child_name: childName,
-      accident_date: dateOfAccident.date,
-      accident_time: convertTime(timeOfAccident.date),
-      accident_notes: accidentNotes,
-      accident_location: accidentLocation,
-      accident_detail: accidentDetail,
-      accident_action: accidentAction,
-      accident_medical_attention: accidentMedicalAttention,
-    });
-    navigation.navigate("AccidentReports");
+    if (accidentLocation.length == 0 || accidentDetail.length == 0 || accidentAction.length == 0 || accidentMedicalAttention.length == 0 || childName == undefined) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        child_name: childName,
+        accident_date: dateOfAccident.date,
+        accident_time: convertTime(timeOfAccident.date),
+        accident_notes: accidentNotes,
+        accident_location: accidentLocation,
+        accident_detail: accidentDetail,
+        accident_action: accidentAction,
+        accident_medical_attention: accidentMedicalAttention,
+      });
+      navigation.navigate("AccidentReports");
+    }
   }
 
   return (

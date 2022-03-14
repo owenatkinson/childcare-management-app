@@ -4,7 +4,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, convertTime } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function LogMedicine({ navigation }) {
@@ -40,15 +40,20 @@ export default function LogMedicine({ navigation }) {
   }, []);
 
   async function addLog() {
-    await fireDB.add({
-      child_name: childName,
-      medicine_title: medicineTitle,
-      medicine_date: medicineDate.date,
-      medicine_time: convertTime(medicineTime.date),
-      medicine_reason: medicineReason,
-      medicine_notes: medicineNotes,
-    });
-    navigation.navigate("MedicineAdministration");
+    if (medicineTitle.length == 0 || medicineReason.length == 0 || childName == undefined) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        child_name: childName,
+        medicine_title: medicineTitle,
+        medicine_date: medicineDate.date,
+        medicine_time: convertTime(medicineTime.date),
+        medicine_reason: medicineReason,
+        medicine_notes: medicineNotes,
+      });
+      navigation.navigate("MedicineAdministration");
+    }
   }
 
   return (

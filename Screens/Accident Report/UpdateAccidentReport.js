@@ -12,11 +12,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {
-  convertDate,
-  parseDate,
-  convertToTimestamp,
-} from "../../Components/Functionality";
+import { convertDate, parseDate, convertToTimestamp, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateAccidentReport extends Component {
@@ -105,37 +101,42 @@ export default class UpdateAccidentReport extends Component {
   };
 
   editAccidentReport() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app
-      .firestore()
-      .collection("accidentReports")
-      .doc(this.state.key);
-    docUpdate
-      .set({
-        child_name: this.state.childName,
-        accident_date: convertToTimestamp(this.state.accidentDate),
-        accident_time: this.state.accidentTime,
-        accident_notes: this.state.accidentNotes,
-        accident_location: this.state.accidentLocation,
-        accident_detail: this.state.accidentDetail,
-        accident_action: this.state.accidentAction,
-        accident_medical_attention: this.state.accidentMedicalAttention,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewAccidentReports");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.accidentLocation.length == 0 || this.state.accidentDetail.length == 0 || this.state.accidentAction.length == 0 || this.state.accidentMedicalAttention.length == 0 ) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app
+        .firestore()
+        .collection("accidentReports")
+        .doc(this.state.key);
+      docUpdate
+        .set({
+          child_name: this.state.childName,
+          accident_date: convertToTimestamp(this.state.accidentDate),
+          accident_time: this.state.accidentTime,
+          accident_notes: this.state.accidentNotes,
+          accident_location: this.state.accidentLocation,
+          accident_detail: this.state.accidentDetail,
+          accident_action: this.state.accidentAction,
+          accident_medical_attention: this.state.accidentMedicalAttention,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewAccidentReports");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteAccidentReport() {

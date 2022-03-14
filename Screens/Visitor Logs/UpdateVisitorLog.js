@@ -3,7 +3,7 @@ import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } fr
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, parseDate } from "../../Components/Functionality";
+import { convertDate, parseDate, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateVisitorLog extends Component {
@@ -69,31 +69,36 @@ export default class UpdateVisitorLog extends Component {
   };
 
   editVisitorLog() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app.firestore().collection("visitorLogs").doc(this.state.key);
-    docUpdate
-      .set({
-        visitor_name: this.state.visitorName,
-        date_of_visit: this.convertToTimestamp(this.state.dateOfVisit),
-        time_in: this.state.timeIn,
-        time_out: this.state.timeOut,
-        visit_purpose: this.state.visitPurpose,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewVisitorLogs");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.visitorName.length == 0 || this.state.visitPurpose.length == 0) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app.firestore().collection("visitorLogs").doc(this.state.key);
+      docUpdate
+        .set({
+          visitor_name: this.state.visitorName,
+          date_of_visit: this.convertToTimestamp(this.state.dateOfVisit),
+          time_in: this.state.timeIn,
+          time_out: this.state.timeOut,
+          visit_purpose: this.state.visitPurpose,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewVisitorLogs");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteVisitorLog() {

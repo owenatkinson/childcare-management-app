@@ -4,7 +4,7 @@ import CheckBox from "@react-native-community/checkbox";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertTime } from "../../../Components/Functionality";
+import { convertTime, missingDataAlert, isNumeric } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default function AddMonthlyDrillList({ route, navigation }) {
@@ -17,14 +17,19 @@ export default function AddMonthlyDrillList({ route, navigation }) {
   const fireDB = app.firestore().collection("monthlyFireDrill");
 
   async function addCheck() {
-    await fireDB.add({
-      monthly_fire_drill_date: changeDate,
-      monthly_fire_drill_num_of_people: monthlyFireDrillNumberOfPeople,
-      monthly_fire_drill_time_completed: monthlyFireDrillTimeCompleted.date,
-      monthly_fire_drill_note: monthlyFireDrillNote,
-      monthly_fire_drill_is_completed: monthlyFireDrillIsCompleted,
-    });
-    navigation.navigate("HealthSafetyChecks");
+    if (monthlyFireDrillNumberOfPeople.length == 0 || !isNumeric(monthlyFireDrillNumberOfPeople)) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        monthly_fire_drill_date: changeDate,
+        monthly_fire_drill_num_of_people: monthlyFireDrillNumberOfPeople,
+        monthly_fire_drill_time_completed: monthlyFireDrillTimeCompleted.date,
+        monthly_fire_drill_note: monthlyFireDrillNote,
+        monthly_fire_drill_is_completed: monthlyFireDrillIsCompleted,
+      });
+      navigation.navigate("HealthSafetyChecks");
+    }
   }
 
   return (

@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  TextInput,
-  Button,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Image } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate } from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogExpense = ({ navigation }) => {
@@ -27,15 +19,20 @@ const LogExpense = ({ navigation }) => {
   const fireDB = app.firestore().collection("expenseLogs");
 
   async function addExpenseLog() {
-    await fireDB.add({
-      expense_title: expenseTitle,
-      expense_note: expenseNote,
-      expense_amount: expenseAmount,
-      date_of_expense: dateOfExpense.date,
-      receipt_url: receiptURL,
-      expense_category: category,
-    });
-    navigation.navigate("Finances");
+    if (expenseTitle.length == 0 || expenseAmount.length == 0 || !isNumeric(expenseAmount) || category == undefined) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        expense_title: expenseTitle,
+        expense_note: expenseNote,
+        expense_amount: expenseAmount,
+        date_of_expense: dateOfExpense.date,
+        receipt_url: receiptURL,
+        expense_category: category,
+      });
+      navigation.navigate("Finances");
+    }
   }
 
   useEffect(() => {

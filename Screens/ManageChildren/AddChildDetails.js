@@ -4,7 +4,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate } from "../../Components/Functionality";
+import { convertDate, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function AddNewChild({ navigation }) {
@@ -29,27 +29,34 @@ export default function AddNewChild({ navigation }) {
   const fireDB = app.firestore().collection("children");
 
   async function addChild() {
-    await fireDB.add({
-      child_name: childName,
-      child_DOB: convertDate(childDOB.date),
-      child_allergies: childAllergies,
-      child_allergies_details: childAllergiesDetails,
-      child_medical_conditions: childMedicalConditions,
-      child_medical_conditions_details: childMedicalConditionsDetails,
-      child_is_active: childIsActive,
-      child_emergency_contact_name: childEmergencyContactName,
-      child_emergency_contact_number: childEmergencyNumber,
-      child_emergency_contact_relation: childEmergencyRelation,
-      doctor_name: doctorName,
-      doctor_address: doctorAddress,
-      doctor_number: doctorNumber,
-      child_home_address: childHomeAddress,
-      parent_number_1: parentNumber1,
-      parent_name_1: parentName1,
-      parent_number_2: parentNumber2,
-      parent_name_2: parentName2,
-    });
-    navigation.navigate("ManageChildren");
+    if (doctorName.length == 0 || childHomeAddress.length == 0 || childName == undefined || childEmergencyContactName.length == 0 || childEmergencyNumber.length == 0 
+      || childEmergencyRelation.length == 0 || doctorAddress.length == 0 || doctorNumber.length == 0 || parentNumber1.length == 0 || parentName1.length == 0 
+      || parentNumber2.length == 0 || parentName2.length == 0) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        child_name: childName,
+        child_DOB: convertDate(childDOB.date),
+        child_allergies: childAllergies,
+        child_allergies_details: childAllergiesDetails,
+        child_medical_conditions: childMedicalConditions,
+        child_medical_conditions_details: childMedicalConditionsDetails,
+        child_is_active: childIsActive,
+        child_emergency_contact_name: childEmergencyContactName,
+        child_emergency_contact_number: childEmergencyNumber,
+        child_emergency_contact_relation: childEmergencyRelation,
+        doctor_name: doctorName,
+        doctor_address: doctorAddress,
+        doctor_number: doctorNumber,
+        child_home_address: childHomeAddress,
+        parent_number_1: parentNumber1,
+        parent_name_1: parentName1,
+        parent_number_2: parentNumber2,
+        parent_name_2: parentName2,
+      });
+      navigation.navigate("ManageChildren");
+    }
   }
 
   return (

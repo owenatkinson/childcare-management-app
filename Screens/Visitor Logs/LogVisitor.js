@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "rea
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, convertTime } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function LogVisitor({ navigation }) {
@@ -15,14 +15,19 @@ export default function LogVisitor({ navigation }) {
   const fireDB = app.firestore().collection("visitorLogs");
 
   async function addVisitorLog() {
-    await fireDB.add({
-      visitor_name: visitorName,
-      date_of_visit: dateOfVisit.date,
-      time_in: convertTime(timeIn.date),
-      time_out: convertTime(timeOut.date),
-      visit_purpose: visitPurpose,
-    });
-    navigation.navigate("VisitorLogs");
+    if (visitorName.length == 0 || visitPurpose.length == 0) {
+      missingDataAlert();
+      return;
+    } else {
+      await fireDB.add({
+        visitor_name: visitorName,
+        date_of_visit: dateOfVisit.date,
+        time_in: convertTime(timeIn.date),
+        time_out: convertTime(timeOut.date),
+        visit_purpose: visitPurpose,
+      });
+      navigation.navigate("VisitorLogs");
+    }
   }
 
   return (

@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-import {
-  Button,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  Alert,
-  Text,
-} from "react-native";
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {
-  parseDate,
-  convertDate,
-  convertToTimestamp,
-} from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateInvoice extends Component {
@@ -96,32 +84,37 @@ export default class UpdateInvoice extends Component {
   };
 
   editInvoiceLog() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app
-      .firestore()
-      .collection("invoiceLogs")
-      .doc(this.state.key);
-    docUpdate
-      .set({
-        date_of_invoice: convertToTimestamp(this.state.dateOfInvoice),
-        child_name: this.state.childName,
-        invoice_amount: this.state.invoiceAmount,
-      })
-      .then(() => {
-        this.setState({
-          key: "",
-          isLoading: false,
-        });
-        this.props.navigation.navigate("ViewInvoice");
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({
-          isLoading: false,
-        });
+    if (this.state.invoiceAmount.length == 0 || !isNumeric(this.state.invoiceAmount) ) {
+      missingDataAlert();
+      return;
+    } else {
+      this.setState({
+        isLoading: true,
       });
+      const docUpdate = app
+        .firestore()
+        .collection("invoiceLogs")
+        .doc(this.state.key);
+      docUpdate
+        .set({
+          date_of_invoice: convertToTimestamp(this.state.dateOfInvoice),
+          child_name: this.state.childName,
+          invoice_amount: this.state.invoiceAmount,
+        })
+        .then(() => {
+          this.setState({
+            key: "",
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewInvoice");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteInvoiceLog() {
