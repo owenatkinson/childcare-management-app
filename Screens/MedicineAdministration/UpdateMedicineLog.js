@@ -1,21 +1,44 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
-import app from '../../firebase';
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class UpdateMedicineLog extends Component {
     constructor() {
     super();
     this.state = {
-        isLoading: true,
-        childName: '',
-        medicineDate: new Date(),
-        medicineTitle: '',
-        medicineTime: '',
-        medicineReason: '',
-        medicineNotes: ''
-    };
+            isLoading: true,
+            childName: '',
+            medicineDate: new Date(),
+            medicineTitle: '',
+            medicineTime: '',
+            medicineReason: '',
+            medicineNotes: '',
+            date: new Date(),
+            show: false
+        };
+    }
+
+    onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || this.state.date;
+        this.setState({
+          date: currentDate,
+          medicineDate: this.parseDate(currentDate),
+          show: false
+        });
+      };
+    
+    showDatepicker() {
+        this.setState({
+            show: true
+        });
+    }
+    
+    parseDate(dateInput){
+        return(moment(dateInput).format('D/M/YYYY'));
     }
 
     convertDate(dateInput){
@@ -111,44 +134,53 @@ export default class UpdateMedicineLog extends Component {
     render() {
     return (
         <ScrollView>
+            <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
             <View style={styles.space}></View>
-                <Text style={styles.bold}>Medicine</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Medicine'}
-                    value={this.state.medicineTitle}
-                    onChangeText={(val) => this.inputEl(val, 'medicineTitle')}
-                />
-                <Text style={styles.bold}>Date Administered</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'1/1/2022'}
-                    value={this.state.medicineDate}
-                    onChangeText={(val) => this.inputEl(val, 'medicineDate')}
-                />
-                <Text style={styles.bold}>Time Administered</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'00:00'}
-                    value={this.state.medicineTime}
-                    onChangeText={(val) => this.inputEl(val, 'medicineTime')}
-                />
-                <Text style={styles.bold}>What was the reason for administering medication?</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Reason for medicine administration'}
-                    value={this.state.medicineReason}
-                    onChangeText={(val) => this.inputEl(val, 'medicineReason')}
-                />
-                <Text style={styles.bold}>Additional Notes</Text>
-                <TextInput
-                    multiline={true} 
-                    numberOfLines={4}
-                    style={styles.extendedInput}
-                    placeholder={'Insert any additional information'}
-                    value={this.state.medicineNotes}
-                    onChangeText={(val) => this.inputEl(val, 'medicineNotes')}
-                />
+            <Text style={styles.bold}>Medicine</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'Medicine'}
+                value={this.state.medicineTitle}
+                onChangeText={(val) => this.inputEl(val, 'medicineTitle')}
+            />
+            <Text style={styles.bold}>Date Administered</Text>
+            <View>
+                <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
+                {this.state.show && (
+                    <DateTimePicker
+                    testID="accidentDate"
+                    value={this.state.date}
+                    mode='date'
+                    display="default"
+                    onChange={this.onChange}
+                    />
+                )}
+                <Text style={styles.buttonText}>Choose a Date: {this.state.medicineDate.toString()}</Text>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.bold}>Time Administered</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'00:00'}
+                value={this.state.medicineTime}
+                onChangeText={(val) => this.inputEl(val, 'medicineTime')}
+            />
+            <Text style={styles.bold}>What was the reason for administering medication?</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={'Reason for medicine administration'}
+                value={this.state.medicineReason}
+                onChangeText={(val) => this.inputEl(val, 'medicineReason')}
+            />
+            <Text style={styles.bold}>Additional Notes</Text>
+            <TextInput
+                multiline={true} 
+                numberOfLines={4}
+                style={styles.extendedInput}
+                placeholder={'Insert any additional information'}
+                value={this.state.medicineNotes}
+                onChangeText={(val) => this.inputEl(val, 'medicineNotes')}
+            />
             <View style={styles.space}></View>
             <Button
                 title='Update'
@@ -165,28 +197,3 @@ export default class UpdateMedicineLog extends Component {
     );
     }
 }
-    
-const styles = StyleSheet.create({
-    input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-    },
-    extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-    },
-    bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-    },
-    space: {
-    height: 20,
-    }
-})

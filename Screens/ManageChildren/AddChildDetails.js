@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import app from '../../firebase';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default function AddNewChild({ navigation }) {
   const [ childName, setChildName ] = useState('');
@@ -84,17 +85,17 @@ export default function AddNewChild({ navigation }) {
         <TextInput style={styles.input} placeholder={'List Child\'s Medical Conditions'} value={childMedicalConditions} onChangeText={setChildMedicalConditions}/>
         <Text style={styles.bold}>Medical Condition Details</Text>
         <TextInput multiline={true} numberOfLines={4} style={styles.extendedInput} placeholder={'Insert details of the child\'s medical conditions'} value={childMedicalConditionsDetails} onChangeText={setChildMedicalConditionsDetails}/>
-        <View style={{flexDirection:"row", alignItems:"center"}}>
-          <Text style={styles.bold}>Child is currently under your care?</Text>
+        <View style={styles.checkBoxPositioning}>
+          <Text style={styles.bold}>Child is actively under your care:</Text>
           <CheckBox
-            style={{marginTop:15}}
+            style={styles.checkBox}
             disabled={false}
             value={childIsActive}
             onValueChange={setChildIsActive}
             tintColors={{ true: "#0B8FDC", false: "orange"}}
           />
         </View>
-        <Text style={styles.boldUnderCheckbox}>Child's Home Address</Text>
+        <Text style={styles.boldTextCheckbox}>Child's Home Address</Text>
         <TextInput style={styles.input} placeholder={'Child\'s Home Address'} value={childHomeAddress} onChangeText={setChildHomeAddress}/>
         <Text style={styles.bold}>Parent #1 Name</Text>
         <TextInput style={styles.input} placeholder={'Parent Name'} value={parentName1} onChangeText={setParentName1}/>
@@ -156,44 +157,3 @@ function useInput() {
       onChange
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  boldUnderCheckbox: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 20
-  },
-  space: {
-    height: 20,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: '#ee752e',
-    margin: 12,
-    padding: 10,
-    height: 40
-  },
-  buttonText: {
-      fontWeight: 'bold',
-      color: '#FFFFFF'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  }
-});

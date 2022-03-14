@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
-import app from '../../../firebase';
+import { ScrollView, View, SafeAreaView, FlatList, Text } from 'react-native';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
-import MonthPick from '../../../MonthPick';
+import MonthPick from '../../../Components/MonthPick';
+const styles = require('../../../Styles/general');
 
 export default class ViewInvoice extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection('expenseLogs').orderBy('date_of_expense', 'desc');
+    this.docs = app.firestore().collection('invoiceLogs').orderBy('date_of_invoice', 'desc');
     this.state = {
       isLoading: true,
-      expenseLogs: [],
-      date: new Date()
+      invoiceLogs: [],
+      date: new Date(),
+      invoiceAmount: 0
     };
   }
 
@@ -54,19 +56,19 @@ export default class ViewInvoice extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const expenseLogs = [];
+    this.state.invoiceAmount = 0;
+    const invoiceLogs = [];
     querySnapshot.forEach((res) => {
-        const { expense_title, expense_note, expense_amount, date_of_expense } = res.data();
-        expenseLogs.push({
+        const { child_name, date_of_invoice, invoice_amount } = res.data();
+        invoiceLogs.push({
             key: res.id,
-            expense_title,
-            expense_note,
-            expense_amount,
-            date_of_expense
+            child_name,
+            date_of_invoice,
+            invoice_amount
         });
     });
     this.setState({
-        expenseLogs,
+        invoiceLogs,
         isLoading: false
     });
   }
@@ -75,25 +77,26 @@ export default class ViewInvoice extends Component {
     return (
       <View style={styles.wrapper}>
         <SafeAreaView edges={['bottom', 'left', 'right']}>
-            <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => this.setState({date: newDate})}/>}/>
+          <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => {this.setState({date: newDate}); this.state.invoiceAmount = 0 }}/>}/>
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
             {
-              this.state.expenseLogs.map((res, i) => {
-                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_expense))) 
-                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_expense)))) {
+              this.state.invoiceLogs.map((res, i) => {
+                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_invoice))) 
+                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_invoice)))) {
+                  this.state.invoiceAmount += parseFloat(res.invoice_amount);
                   return (
                     <ListItem 
                       key={i}
                       onPress={() => {
-                        this.props.navigation.navigate("UpdateExpense", {
+                        this.props.navigation.navigate("UpdateInvoice", {
                           userkey: res.key
                         });
                       }}                        
                       bottomDivider>
                       <ListItem.Content>
-                        <ListItem.Title>{res.expense_title}</ListItem.Title>
-                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_expense)}</ListItem.Subtitle>
+                        <ListItem.Title>{res.child_name} - £{res.invoice_amount}</ListItem.Title>
+                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_invoice)}</ListItem.Subtitle>
                       </ListItem.Content>
                       <ListItem.Chevron 
                         color="black" 
@@ -104,14 +107,8 @@ export default class ViewInvoice extends Component {
               })
             }
         </ScrollView>
+        <Text style={styles.boldLargeText}>Month Total: £{parseFloat(this.state.invoiceAmount).toFixed(2)}</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    }
-})

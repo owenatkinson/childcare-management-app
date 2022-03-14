@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class MonthlyFireDrill extends Component {
   constructor() {
@@ -11,10 +14,41 @@ export default class MonthlyFireDrill extends Component {
       isLoading: true,
       monthlyFireDrillDate: '',
       monthlyFireDrillNumberOfPeople: '',
-      monthlyFireDrillTimeCompleted: '',
+      monthlyFireDrillTimeCompleted: new Date(),
       monthlyFireDrillNote: '',
-      monthlyFireDrillIsCompleted: ''
+      monthlyFireDrillIsCompleted: '',
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      monthlyFireDrillTimeCompleted: currentDate,
+      show: false
+    });
+  };
+
+  convertToTime(dateInput) {
+    if (typeof dateInput !== 'string'){
+      dateInput = moment(dateInput).format('HH:mm').toString();
+    }
+    return dateInput;
+  }
+
+  convertToTimestamp(dateInput){
+    var timeConvert = dateInput.toDate().toLocaleTimeString();
+    timeConvert = timeConvert.split(":");
+    var time = timeConvert[0] + ":" + timeConvert[1];
+    return(time);
+  }
+
+  showTimepicker() {
+    this.setState({
+      show: true
+    });
   }
 
   componentDidMount() {
@@ -26,7 +60,7 @@ export default class MonthlyFireDrill extends Component {
           key: res.id,
           monthlyFireDrillDate: user.monthly_fire_drill_date,
           monthlyFireDrillNumberOfPeople: user.monthly_fire_drill_num_of_people,
-          monthlyFireDrillTimeCompleted: user.monthly_fire_drill_time_completed,
+          monthlyFireDrillTimeCompleted: this.convertToTimestamp(user.monthly_fire_drill_time_completed),
           monthlyFireDrillNote: user.monthly_fire_drill_note,
           monthlyFireDrillIsCompleted: user.monthly_fire_drill_is_completed,
           isLoading: false
@@ -77,24 +111,34 @@ export default class MonthlyFireDrill extends Component {
   render() {
     return (
       <View>
-        <Text>{this.state.monthlyFireDrillDate}</Text>
+        <View style={styles.titleHeader}>
+          <Text style={styles.buttonText}>{this.state.monthlyFireDrillDate}</Text>
+        </View>
         <ScrollView>
           <View style={styles.space}></View>
-            <Text style={styles.bold}>Number of People</Text>
+            <Text style={styles.bold}>Number of People:</Text>
             <TextInput
                 placeholder={'Number of People present'}
                 style={styles.input}
                 value={this.state.monthlyFireDrillNumberOfPeople}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNumberOfPeople')}
             />
-            <Text style={styles.bold}>Time Completed</Text>
-            <TextInput
-                placeholder={'00:00'}
-                style={styles.input}
-                value={this.state.monthlyFireDrillTimeCompleted}
-                onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillTimeCompleted')}
-            />
-            <Text style={styles.bold}>Notes</Text>
+            <Text style={styles.bold}>Time Completed:</Text>
+            <View>
+              <TouchableOpacity style={styles.button} onPress={() => this.showTimepicker()}>
+              {this.state.show && (
+                  <DateTimePicker
+                  testID="monthlyFireDrillTimeCompleted"
+                  value={this.state.date}
+                  mode='time'
+                  display="default"
+                  onChange={this.onChange}
+                  />
+              )}
+              <Text style={styles.buttonText}>Choose a Date: {this.convertToTime(this.state.monthlyFireDrillTimeCompleted)}</Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.bold}>Additional Notes:</Text>
             <TextInput
                 placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
@@ -103,9 +147,10 @@ export default class MonthlyFireDrill extends Component {
                 value={this.state.monthlyFireDrillNote}
                 onChangeText={(val) => this.inputEl(val, 'monthlyFireDrillNote')}
             />
-            <Text style={styles.bold}>Check Completed</Text>
-            <View>
+            <View style={styles.checkBoxPositioning}>
+              <Text style={styles.bold}>Check Completed:</Text>
               <CheckBox
+                style={styles.checkBox}
                 value={this.state.monthlyFireDrillIsCompleted}
                 onValueChange={(val) => this.inputEl(val, 'monthlyFireDrillIsCompleted')}
                 tintColors={{ true: "#0B8FDC", false: "orange"}}
@@ -124,30 +169,3 @@ export default class MonthlyFireDrill extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  space: {
-    height: 20,
-  }
-})

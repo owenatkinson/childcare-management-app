@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Alert, Text } from 'react-native';
-import app from '../../firebase';
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import ModalSelector from 'react-native-modal-selector';
+import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../../Styles/general');
 
 export default class UpdateExpense extends Component {
   constructor() {
@@ -16,15 +18,36 @@ export default class UpdateExpense extends Component {
       expenseNote: '',
       expenseTitle: '',
       receiptUrl: '',
-      category: ''
+      category: '',
+      date: new Date(),
+      show: false
     };
   }
 
-  convertDate(dateInput){
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dateOfExpense: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
+  }
+
+  convertDate(dateInput) {
     return(moment(dateInput.toDate()).format('D/M/YYYY'));
   }
 
-  convertToTimestamp(dateInput){
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
+  }
+
+  convertToTimestamp(dateInput) {
       dateInput = dateInput.split("/");
       var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
       return(newDate);
@@ -146,14 +169,7 @@ export default class UpdateExpense extends Component {
         })}
         color="#000000"
       />;
-    } 
-    // else {
-    //   receiptButton = <Button
-    //     title='Add Receipt'
-    //     onPress={this.pickImage}
-    //     color="#000000"
-    //   />;
-    // }
+    }
     return (
         <ScrollView>
             <View style={styles.space}></View>
@@ -171,15 +187,23 @@ export default class UpdateExpense extends Component {
                     onChange={(option)=>{
                       this.inputEl(option.label, 'category')
                     }}>
-                    <Text style={styles.dropdown}>Category: {this.state.category}</Text>
+                    <Text style={styles.dropdownText}>Category: {this.state.category}</Text>
                 </ModalSelector>
                 <Text style={styles.bold}>Date of Expense</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'1/1/2022'}
-                    value={this.state.dateOfExpense}
-                    onChangeText={(val) => this.inputEl(val, 'dateOfExpense')}
-                />
+                <View>
+                  <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
+                  {this.state.show && (
+                      <DateTimePicker
+                      testID="dateOfExpense"
+                      value={this.state.date}
+                      mode='date'
+                      display="default"
+                      onChange={this.onChange}
+                      />
+                  )}
+                  <Text style={styles.buttonText}>Choose a Date: {this.state.dateOfExpense}</Text>
+                  </TouchableOpacity>
+                </View>
                 <Text style={styles.bold}>Expense Amount</Text>
                 <TextInput
                     style={styles.input}
@@ -213,37 +237,3 @@ export default class UpdateExpense extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  space: {
-    height: 20,
-  },
-  buttonText: {
-    color: '#000000'
-  },
-  dropdown: {
-      margin: 12,
-      backgroundColor: '#ee752e',
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-  }
-})

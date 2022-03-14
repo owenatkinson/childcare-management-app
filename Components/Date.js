@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import moment from 'moment';
-const styles = require('./Styles/general');
+const styles = require('../Styles/general');
 
 const date = moment().format('dddd Do MMMM YYYY');
 

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import app from '../../firebase';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Image } from 'react-native';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import ModalSelector from 'react-native-modal-selector';
+const styles = require('../../../Styles/general');
 
 const LogExpense = ({navigation}) => {
     const [ expenseTitle, setExpenseTitle ] = useState('');
@@ -74,7 +75,6 @@ const LogExpense = ({navigation}) => {
         });
       
         let trimFileName = (/[^/]*$/.exec(file)[0]);
-        console.log(trimFileName);
         const ref = app.storage().ref(`/receipts/${trimFileName}`);
         const snapshot = ref.put(blob);
       
@@ -114,14 +114,16 @@ const LogExpense = ({navigation}) => {
             <Text style={styles.bold}>Expense Title</Text>
             <TextInput style={styles.input} placeholder={'Expense Title'} label={'Expense Title'} value={expenseTitle} onChangeText={setExpenseTitle}/>
             <Text style={styles.bold}>Expense Category</Text>
-            <ModalSelector
-                style={styles.dropdown}
-                data={data}
-                onChange={(option)=>{
-                    setCategory(option.label);
-                }}>
-                <Text style={styles.dropdown}>Category: {category}</Text>
-            </ModalSelector>
+            <View>
+                <ModalSelector
+                    style={styles.dropdown}
+                    data={data}
+                    onChange={(option)=>{
+                        setCategory(option.label);
+                    }}>
+                    <Text style={styles.dropdownText}>Category: {category}</Text>
+                </ModalSelector>
+            </View>
             <Text style={styles.bold}>Date of Expense</Text>
             <View>
                 <TouchableOpacity
@@ -152,7 +154,7 @@ const LogExpense = ({navigation}) => {
                 <Text style={styles.buttonText}>Upload a Receipt</Text>
                 </TouchableOpacity>
             </View>
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+            {image && <Image source={{ uri: image }} style={styles.receiptPreview} />}
             <View style={styles.space}></View>
             <Button 
                 title="Log Expense"
@@ -188,48 +190,5 @@ function useInput() {
         onChange
     }
 }
-
-const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        backgroundColor: '#DADADA'
-    },
-    extendedInput: {
-        backgroundColor: '#DADADA',
-        padding: 10,
-        borderWidth: 1,
-        margin: 12,
-        textAlignVertical: 'top'
-    },
-    bold: {
-        fontWeight: 'bold',
-        marginLeft: 12,
-        marginTop: 15
-    },
-    buttonText: {
-        fontWeight: 'bold',
-        color: '#FFFFFF'
-    },
-    space: {
-        height: 20,
-    },
-    button: {
-        alignItems: "center",
-        backgroundColor: '#ee752e',
-        margin: 12,
-        padding: 10,
-        height: 40
-    },
-    dropdown: {
-        margin: 12,
-        backgroundColor: '#ee752e',
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        alignItems: "center",
-    }
-});
 
 export default LogExpense;

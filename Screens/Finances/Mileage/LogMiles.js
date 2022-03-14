@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import app from '../../../firebase';
+import React, { useState } from 'react';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../../Styles/general');
 
 const LogMiles = ({navigation}) => {
     const [ mileageAmount, setMileageAmount ] = useState(0);
@@ -97,48 +98,5 @@ function useInput() {
         onChange
     }
 }
-
-const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        backgroundColor: '#DADADA'
-    },
-    extendedInput: {
-        backgroundColor: '#DADADA',
-        padding: 10,
-        borderWidth: 1,
-        margin: 12,
-        textAlignVertical: 'top'
-    },
-    bold: {
-        fontWeight: 'bold',
-        marginLeft: 12,
-        marginTop: 15
-    },
-    buttonText: {
-        fontWeight: 'bold',
-        color: '#FFFFFF'
-    },
-    space: {
-        height: 20,
-    },
-    button: {
-        alignItems: "center",
-        backgroundColor: '#ee752e',
-        margin: 12,
-        padding: 10,
-        height: 40
-    },
-    dropdown: {
-        margin: 12,
-        backgroundColor: '#ee752e',
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        alignItems: "center",
-    }
-});
 
 export default LogMiles;

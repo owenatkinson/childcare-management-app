@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import app from '../../firebase';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default function LogVisitor({navigation}) {
   const [ visitorName, setVisitorName ] = useState('');
@@ -132,39 +133,3 @@ function useInput() {
       onChange
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  space: {
-    height: 20,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: '#ee752e',
-    margin: 12,
-    padding: 10,
-    height: 40
-  },
-  buttonText: {
-      fontWeight: 'bold',
-      color: '#FFFFFF'
-  }
-});

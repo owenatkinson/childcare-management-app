@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
-import app from '../../firebase';
+import { ScrollView, View, SafeAreaView, FlatList, Text } from 'react-native';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
-import MonthPick from '../../MonthPick';
+import MonthPick from '../../../Components/MonthPick';
+const styles = require('../../../Styles/general');
 
 export default class ViewExpenses extends Component {
   constructor() {
@@ -13,7 +14,8 @@ export default class ViewExpenses extends Component {
     this.state = {
       isLoading: true,
       expenseLogs: [],
-      date: new Date()
+      date: new Date(),
+      expenseTotal: 0
     };
   }
 
@@ -54,6 +56,7 @@ export default class ViewExpenses extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
+    this.state.expenseTotal = 0;
     const expenseLogs = [];
     querySnapshot.forEach((res) => {
         const { expense_title, expense_note, expense_amount, date_of_expense } = res.data();
@@ -75,13 +78,14 @@ export default class ViewExpenses extends Component {
     return (
       <View style={styles.wrapper}>
         <SafeAreaView edges={['bottom', 'left', 'right']}>
-            <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => this.setState({date: newDate})}/>}/>
+          <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => {this.setState({date: newDate}); this.state.expenseTotal = 0 }}/>}/>
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
             {
               this.state.expenseLogs.map((res, i) => {
                 if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_expense))) 
                 && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_expense)))) {
+                  this.state.expenseTotal += parseFloat(res.expense_amount);
                   return (
                     <ListItem 
                       key={i}
@@ -93,7 +97,8 @@ export default class ViewExpenses extends Component {
                       bottomDivider>
                       <ListItem.Content>
                         <ListItem.Title>{res.expense_title}</ListItem.Title>
-                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_expense)}</ListItem.Subtitle>
+                        <ListItem.Subtitle>Date: {this.convertDate(res.date_of_expense)}</ListItem.Subtitle>
+                        <ListItem.Subtitle>Amount: £{res.expense_amount}</ListItem.Subtitle>
                       </ListItem.Content>
                       <ListItem.Chevron 
                         color="black" 
@@ -104,14 +109,8 @@ export default class ViewExpenses extends Component {
               })
             }
         </ScrollView>
+        <Text style={styles.boldLargeText}>Month Total: £{parseFloat(this.state.expenseTotal).toFixed(2)}</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    }
-})

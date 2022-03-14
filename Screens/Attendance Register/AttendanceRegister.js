@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import app from '../../firebase';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Picker} from '@react-native-picker/picker';
+import ModalSelector from 'react-native-modal-selector'
+const styles = require('../../Styles/general');
 
 function AttendanceRegister({ navigation }) {
   const [ additionalNotes, setAdditionalNotes ] = useState('');
@@ -13,12 +14,26 @@ function AttendanceRegister({ navigation }) {
   const [ collectedBy, setCollectedBy ] = useState('');
   const [ droppedBy, setDroppedBy ] = useState('');
   const [ temperatureChecked, setTemperatureChecked ] = useState('');
-  const [ breakfast, setBreakfast ] = useState('');
-  const [ lunch, setLunch ] = useState('');
-  const [ snack, setSnack ] = useState('');
   const dateOfAttendance = useInput(new Date());
   const checkInTime = useInput();
   const checkOutTime = useInput();
+  const [childNameArr, setChildNameArr] = useState([]);
+
+  useEffect(() => {
+    const childNames = [];
+    setChildNameArr([]);
+    setChildName();
+    let index = 0;
+
+    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          childNames.push({
+            key: index++, label: doc.data()["child_name"]
+          });
+      });
+      setChildNameArr(childNames);
+    });
+  },[])
 
   const fireDB = app.firestore().collection('attendanceRegister');
 
@@ -39,9 +54,6 @@ function AttendanceRegister({ navigation }) {
       collected_by: collectedBy,
       date_of_attendance: convertDate(dateOfAttendance.date),
       dropped_by: droppedBy,
-      breakfast_: breakfast,
-      snack_: snack,
-      lunch_: lunch,
       temperature_checked: temperatureChecked
     });
     navigation.navigate('Home');
@@ -49,9 +61,18 @@ function AttendanceRegister({ navigation }) {
 
   return (
     <ScrollView>
-      <Text style={styles.bold}>Child Name</Text>
-      <TextInput style={styles.input} placeholder={'Child Name'} label={'Child Name'} value={childName} onChangeText={setChildName}/>
-      <Text style={styles.bold}>Date of Attendance</Text>
+      <Text style={styles.bold}>Child Name:</Text>
+      <View>
+        <ModalSelector
+            style={styles.dropdown}
+            data={childNameArr}
+            onChange={(option)=>{
+              setChildName(option.label);
+            }}>
+            <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+        </ModalSelector>
+      </View>
+      <Text style={styles.bold}>Date of Attendance:</Text>
       <View>
         <TouchableOpacity
         style={styles.button}
@@ -69,7 +90,7 @@ function AttendanceRegister({ navigation }) {
           <Text style={styles.buttonText}>Choose a Date: {convertDate(dateOfAttendance.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Check In Time</Text>
+      <Text style={styles.bold}>Check In Time:</Text>
       <View>
         <TouchableOpacity
         style={styles.button}
@@ -87,7 +108,7 @@ function AttendanceRegister({ navigation }) {
           <Text style={styles.buttonText}>Choose a Time: {convertTime(checkInTime.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Check Out Time</Text>
+      <Text style={styles.bold}>Check Out Time:</Text>
       <View>
         <TouchableOpacity
         style={styles.button}
@@ -105,48 +126,17 @@ function AttendanceRegister({ navigation }) {
           <Text style={styles.buttonText}>Choose a Time: {convertTime(checkOutTime.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Dropped By</Text>
+      <Text style={styles.bold}>Dropped By:</Text>
       <TextInput style={styles.input} placeholder={'Dropped By'} label={'Dropped By'} value={droppedBy} onChangeText={setDroppedBy}/>
-      <Text style={styles.bold}>Collected By</Text>
+      <Text style={styles.bold}>Collected By:</Text>
       <TextInput style={styles.input} placeholder={'Collected By'} label={'Collected By'} value={collectedBy} onChangeText={setCollectedBy}/>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
+      <View style={styles.checkBoxPositioning}>
         <Text style={styles.bold}>Temperature Checked:</Text>
         <CheckBox
-          style={{marginTop:15}}
+          style={styles.checkBox}
           disabled={false}
           value={temperatureChecked}
           onValueChange={setTemperatureChecked}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-      </View>
-      <Text style={styles.bold}>Meals</Text>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
-        <Text style={styles.standard}>Breakfast:</Text>
-        <CheckBox
-          style={{marginTop:5}}
-          disabled={false}
-          value={breakfast}
-          onValueChange={setBreakfast}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-      </View>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
-        <Text style={styles.standard}>Lunch:</Text>
-        <CheckBox
-          style={{marginTop:5}}
-          disabled={false}
-          value={lunch}
-          onValueChange={setLunch}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-      </View>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
-        <Text style={styles.standard}>Snack:</Text>
-        <CheckBox
-          style={{marginTop:5}}
-          disabled={false}
-          value={snack}
-          onValueChange={setSnack}
           tintColors={{ true: "#0B8FDC", false: "orange"}}
         />
       </View>
@@ -192,46 +182,5 @@ function useInput() {
       onChange
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  standard: {
-    padding: 10,
-    marginLeft: 12,
-    marginTop: 5
-  },
-  space: {
-    height: 20,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: '#ee752e',
-    margin: 12,
-    padding: 10,
-    height: 40
-},
-  buttonText: {
-      fontWeight: 'bold',
-      color: '#FFFFFF'
-  },
-});
 
 export default AttendanceRegister;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Button } from 'react-native';
-import app from '../../firebase';
+import { ScrollView } from 'react-native';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
+const styles = require('../../Styles/general');
 
 export default class ViewChildren extends Component {
   constructor() {
@@ -69,19 +70,3 @@ export default class ViewChildren extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    },
-    loader: {
-      position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',    
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-    }
-})

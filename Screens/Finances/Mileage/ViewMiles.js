@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
-import app from '../../../firebase';
+import { ScrollView, View, SafeAreaView, FlatList, Text } from 'react-native';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
-import MonthPick from '../../../MonthPick';
+import MonthPick from '../../../Components/MonthPick';
+const styles = require('../../../Styles/general');
 
 export default class ViewMiles extends Component {
   constructor() {
@@ -13,7 +14,8 @@ export default class ViewMiles extends Component {
     this.state = {
       isLoading: true,
       mileageLogs: [],
-      date: new Date()
+      date: new Date(),
+      mileageAmount: 0
     };
   }
 
@@ -54,6 +56,7 @@ export default class ViewMiles extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
+    this.state.mileageAmount = 0;
     const mileageLogs = [];
     querySnapshot.forEach((res) => {
         const { mileage_amount, date_of_mileage } = res.data();
@@ -73,13 +76,14 @@ export default class ViewMiles extends Component {
     return (
       <View style={styles.wrapper}>
         <SafeAreaView edges={['bottom', 'left', 'right']}>
-            <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => this.setState({date: newDate})}/>}/>
+          <FlatList ListHeaderComponent={<MonthPick date={this.state.date} onChange={(newDate) => {this.setState({date: newDate}); this.state.mileageAmount = 0 }}/>}/>
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
             {
               this.state.mileageLogs.map((res, i) => {
                 if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_mileage))) 
                 && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_mileage)))) {
+                  this.state.mileageAmount += parseFloat(res.mileage_amount);
                   return (
                     <ListItem 
                       key={i}
@@ -102,14 +106,8 @@ export default class ViewMiles extends Component {
               })
             }
         </ScrollView>
+        <Text style={styles.boldLargeText}>Month Total: £{parseFloat(this.state.mileageAmount).toFixed(2)}</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-     flex: 1,
-     paddingBottom: 20
-    }
-})

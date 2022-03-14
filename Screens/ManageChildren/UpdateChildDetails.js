@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
-import app from '../../firebase';
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'react-native';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
+const styles = require('../../Styles/general');
 
 export default class UpdateChildDetails extends Component {
   constructor() {
@@ -26,8 +29,29 @@ export default class UpdateChildDetails extends Component {
       parent1Name: '',
       parent1Number: '',
       parent2Name: '',
-      parent2Number: ''
+      parent2Number: '',
+      date: new Date(),
+      show: false
     };
+  }
+
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      dob: this.parseDate(currentDate),
+      show: false
+    });
+  };
+
+  showDatepicker() {
+    this.setState({
+      show: true
+    });
+  }
+
+  parseDate(dateInput){
+    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   componentDidMount() {
@@ -133,12 +157,20 @@ export default class UpdateChildDetails extends Component {
               onChangeText={(val) => this.inputEl(val, 'name')}
           />
           <Text style={styles.bold}>Child DOB</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Date of Birth'}
-              value={this.state.dob}
-              onChangeText={(val) => this.inputEl(val, 'dob')}
-          />
+          <View>
+            <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
+            {this.state.show && (
+                <DateTimePicker
+                testID="dob"
+                value={this.state.date}
+                mode='date'
+                display="default"
+                onChange={this.onChange}
+                />
+            )}
+            <Text style={styles.buttonText}>Choose a Date: {this.state.dob}</Text>
+            </TouchableOpacity>
+          </View>
           <Text style={styles.bold}>Child Allergies</Text>
           <TextInput
               style={styles.input}
@@ -171,17 +203,17 @@ export default class UpdateChildDetails extends Component {
               value={this.state.medicalConditionsDetails}
               onChangeText={(val) => this.inputEl(val, 'medicalConditionsDetails')}
           />
-          <View style={{flexDirection:"row", alignItems:"center"}}>
-            <Text style={styles.bold}>Child Is Active?</Text>
+          <View style={styles.checkBoxPositioning}>
+            <Text style={styles.bold}>Child is actively under your care:</Text>
             <CheckBox
-              style={{marginTop:15}}
+              style={styles.checkBox}
               disabled={false}
               value={this.state.isActive}
               onValueChange={(val) => this.inputEl(val, 'isActive')}
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
-          <Text style={styles.boldUnderCheckbox}>Child Home Address</Text>
+          <Text style={styles.boldTextCheckbox}>Child Home Address</Text>
           <TextInput
               style={styles.input}
               placeholder={'Child Home Address'}
@@ -269,33 +301,3 @@ export default class UpdateChildDetails extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#DADADA'
-  },
-  bold: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 15
-  },
-  boldUnderCheckbox: {
-    fontWeight: 'bold',
-    marginLeft: 12,
-    marginTop: 20
-  },
-  space: {
-    height: 20,
-  },
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  }
-})

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import {format, subMonths, addMonths} from 'date-fns';
+import * as styles from '../Styles/general';
 
 type MonthPickerProps = {
   date: Date;
@@ -27,14 +28,5 @@ const MonthPick: React.FC<MonthPickerProps> = ({date, onChange}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 25,
-    },
-});
 
 export default MonthPick;

@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, Button } from 'react-native';
+const styles = require('../../Styles/general');
 
 export default function AccidentReports({ navigation }) {
   return (
-    <View style={styles.fixToText, styles.space}>
+    <View style={styles.fitToText}>
       <View style={styles.space}></View>
       <Button 
         title="Log Accident Report"
@@ -17,13 +18,3 @@ export default function AccidentReports({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  fixToText: {
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-  },
-  space: {
-    height: 20,
-  }
-});

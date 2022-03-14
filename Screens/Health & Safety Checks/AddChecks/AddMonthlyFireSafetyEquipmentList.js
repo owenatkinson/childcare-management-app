@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, TextInput, Button, Text } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import app from '../../../firebase';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
+const styles = require('../../../Styles/general');
 
 export default function AddMonthlyFireSafetyEquipmentList({route}) {
     const { changeDate } = route.params;
@@ -24,9 +25,12 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
 
   return (
     <View>
+        <View style={styles.titleHeader}>
+          <Text style={styles.buttonText}>{changeDate}</Text>
+        </View>
         <ScrollView>
             <View style={styles.space}></View>
-            <Text style={styles.bold}>Notes</Text>
+            <Text style={styles.bold}>Notes:</Text>
             <TextInput
                 placeholder={'Insert any additional information'}
                 style={styles.extendedInput}
@@ -35,9 +39,10 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
                 value={monthlyFireSafetyNote}
                 onChangeText={setMonthlyFireSafetyNote}
             />
-            <Text style={styles.bold}>Check Completed</Text>
-            <View>
+            <View style={styles.checkBoxPositioning}>
+              <Text style={styles.bold}>Check Completed:</Text>
               <CheckBox
+                style={styles.checkBox}
                 value={monthlyFireSafetyIsCompleted}
                 onValueChange={(monthlyFireSafetyIsCompleted) => setMonthlyFireSafetyIsCompleted(monthlyFireSafetyIsCompleted)}
                 tintColors={{ true: "#0B8FDC", false: "orange"}}
@@ -52,25 +57,3 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  space: {
-    height: 20,
-  },
-  headerText: {
-    fontWeight: 'bold',
-    padding: 10,
-    backgroundColor: "#DADADA",
-    textAlign: 'center',
-  }
-});

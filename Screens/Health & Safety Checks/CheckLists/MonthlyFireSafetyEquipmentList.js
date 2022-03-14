@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import app from '../../../firebase';
+import { ScrollView, View } from 'react-native';
+import app from '../../../Components/firebase';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
@@ -62,7 +62,6 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
 
   render() {
     if (this.state.monthlyFireSafetyEquipmentCheck === undefined || this.state.monthlyFireSafetyEquipmentCheck.length == 0) {
-      console.log("Error occurred: Monthly Safety Checks list returning undefined")
       return(
         <View></View>
       );
@@ -126,15 +125,3 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  }
-})

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import app from '../../../firebase';
+import { ScrollView, View } from 'react-native';
+import app from '../../../Components/firebase';
 import { ListItem } from 'react-native-elements';
 
 export default class DailyRiskList extends Component {
@@ -120,15 +120,3 @@ export default class DailyRiskList extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  }
-})

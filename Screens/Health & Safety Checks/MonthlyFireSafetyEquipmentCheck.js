@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet, ScrollView, TextInput, Text } from 'react-native';
+import { Button, View, ScrollView, TextInput, Text } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
+const styles = require('../../Styles/general');
 
 export default class MonthlyFireSafetyEquipmentCheck extends Component {
   constructor() {
@@ -69,10 +70,12 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
   render() {
     return (
       <View>
-        <Text>{this.state.monthlyFireSafetyDate}</Text>
+        <View style={styles.titleHeader}>
+          <Text style={styles.buttonText}>{this.state.monthlyFireSafetyDate}</Text>
+        </View>
         <ScrollView>
           <View style={styles.space}></View>
-          <Text style={styles.bold}>Notes</Text>
+          <Text style={styles.bold}>Notes:</Text>
           <TextInput
               style={styles.extendedInput}
               multiline={true} 
@@ -80,13 +83,14 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
               value={this.state.monthlyFireSafetyNote}
               onChangeText={(val) => this.inputEl(val, 'monthlyFireSafetyNote')}
           />
-          <Text style={styles.bold}>Is Completed</Text>
-          <View>
-            <CheckBox
-              value={this.state.monthlyFireSafetyIsCompleted}
-              onValueChange={(val) => this.inputEl(val, 'monthlyFireSafetyIsCompleted')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
-            />
+          <View style={styles.checkBoxPositioning}>
+              <Text style={styles.bold}>Check Completed:</Text>
+              <CheckBox
+                style={styles.checkBox}
+                value={this.state.monthlyFireSafetyIsCompleted}
+                onValueChange={(val) => this.inputEl(val, 'monthlyFireSafetyIsCompleted')}
+                tintColors={{ true: "#0B8FDC", false: "orange"}}
+              />
           </View>
           <View style={styles.space}></View>
           <Button
@@ -94,49 +98,8 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
             onPress={() => this.editChild()} 
             color="#0B8FDC"
           />
-          <View style={styles.space}></View>
-          <View style={styles.space}></View>
         </ScrollView>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  extendedInput: {
-    backgroundColor: '#DADADA',
-    padding: 10,
-    borderWidth: 1,
-    margin: 12,
-    textAlignVertical: 'top'
-  },
-  container: {
-    flex: 1,
-    padding: 35
-  },
-  formEl: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-  },
-  loader: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',    
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  button: {
-    marginBottom: 8, 
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  space: {
-    height: 20,
-  }
-})
