@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
-import app from '../../Components/firebase';
+import React, { Component } from "react";
+import { ScrollView } from "react-native";
+import app from "../../Components/firebase";
 import "firebase/firestore";
-import { ListItem } from 'react-native-elements';
-const styles = require('../../Styles/general');
+import { ListItem } from "react-native-elements";
+const styles = require("../../Styles/general");
 
-export default class ViewChildren extends Component {
+export default class ViewInactiveChildren extends Component {
   constructor() {
     super();
     this.docs = app.firestore().collection("children").orderBy("child_name", "asc");
     this.state = {
       isLoading: true,
-      children: []
+      children: [],
     };
   }
 
@@ -19,7 +19,7 @@ export default class ViewChildren extends Component {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unsubscribe();
   }
 
@@ -30,42 +30,39 @@ export default class ViewChildren extends Component {
       children.push({
         key: res.id,
         child_name,
-        child_is_active
+        child_is_active,
       });
     });
     this.setState({
       children,
-      isLoading: false
+      isLoading: false,
     });
-  }
+  };
 
   render() {
     return (
       <ScrollView style={styles.wrapper}>
-          {
-            this.state.children.map((res, i) => {
-              if(res.child_is_active == false || res.child_is_active == ''){
-                return (
-                  <ListItem 
-                    key={i}
-                    onPress={() => {
-                      this.props.navigation.navigate("UpdateChildDetails", {
-                        userkey: res.key
-                      });
-                    }}                        
-                    bottomDivider>
-                    <ListItem.Content>
-                      <ListItem.Title>{res.child_name}</ListItem.Title>
-                      <ListItem.Subtitle>Inactive</ListItem.Subtitle>
-                    </ListItem.Content>
-                    <ListItem.Chevron 
-                      color="black" 
-                    />
-                  </ListItem>
-                );
-              }
-            })
+        {this.state.children.map((res, i) => {
+          if (res.child_is_active == false || res.child_is_active == "") {
+            return (
+              <ListItem
+                key={i}
+                onPress={() => {
+                  this.props.navigation.navigate("UpdateChildDetails", {
+                    userkey: res.key,
+                  });
+                }}
+                bottomDivider
+              >
+                <ListItem.Content>
+                  <ListItem.Title>{res.child_name}</ListItem.Title>
+                  <ListItem.Subtitle>Inactive</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron color="black" />
+              </ListItem>
+            );
           }
+        })}
       </ScrollView>
     );
   }

@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { View, Button, Share } from "react-native";
-import { ListItem, Icon } from 'react-native-elements';
-import * as DocumentPicker from 'expo-document-picker';
-import app from '../../Components/firebase';
+import { ListItem, Icon } from "react-native-elements";
+import * as DocumentPicker from "expo-document-picker";
+import app from "../../Components/firebase";
 import "firebase/firestore";
 import "firebase/database";
 import { ScrollView } from "react-native-gesture-handler";
-import { FontAwesome } from '@expo/vector-icons';
-const styles = require('../../Styles/general');
+import { FontAwesome } from "@expo/vector-icons";
+const styles = require("../../Styles/general");
 
 const Policies = (props) => {
   const [fileList, setFileList] = useState([]);
 
-  async function uploadImage () {
+  async function uploadImage() {
     let file = await DocumentPicker.getDocumentAsync({});
-    if(file.uri != null){
+    if (file.uri != null) {
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.onload = function() {
+        xhr.onload = function () {
           resolve(xhr.response);
         };
-        xhr.onerror = function() {
-          reject(new TypeError('Network request failed'));
-        }
-        xhr.responseType = 'blob';
-        xhr.open('GET', file.uri, true);
+        xhr.onerror = function () {
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", file.uri, true);
         xhr.send(null);
       });
-  
+
       let trimFileName = removeFileExtension(file.name);
       const ref = app.storage().ref(`/policies/${trimFileName}`);
       const snapshot = ref.put(blob);
-    
-      snapshot.on('state_changed', 
+
+      snapshot.on(
+        "state_changed",
         function (snapshot) {
           var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
@@ -41,7 +42,7 @@ const Policies = (props) => {
           return;
         },
         function () {
-          snapshot.snapshot.ref.getDownloadURL().then(function(downloadURL){
+          snapshot.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             saveFileToRealtimeDatabase(downloadURL, file);
           });
           blob.close();
@@ -51,15 +52,15 @@ const Policies = (props) => {
     }
   }
 
-  function saveFileToRealtimeDatabase(downloadURL, file){
+  function saveFileToRealtimeDatabase(downloadURL, file) {
     let trimFileName = removeFileExtension(file.name);
     app.database().ref(`policies/${trimFileName}`).update({
       fileName: file.name,
       fileURL: downloadURL,
-    })
+    });
   }
 
-  function removeFileExtension(fileWithExtension){
+  function removeFileExtension(fileWithExtension) {
     return fileWithExtension.replace(/\.[^/.]+$/, "");
   }
 
@@ -73,11 +74,11 @@ const Policies = (props) => {
     }
   };
 
-  function deletePolicy(fileName){
+  function deletePolicy(fileName) {
     let trimFileName = removeFileExtension(fileName);
-    let deletePolicyDatabase = app.database().ref('policies/' + trimFileName);
+    let deletePolicyDatabase = app.database().ref("policies/" + trimFileName);
     deletePolicyDatabase.remove();
-    
+
     var storage = app.storage();
 
     var storageRef = storage.ref();
@@ -86,51 +87,66 @@ const Policies = (props) => {
 
     desertRef.delete();
     setFileList([]);
-    const onChildDeleted = app.database()
+    const onChildDeleted = app
+      .database()
       .ref(`policies`)
-      .on('child_added', (snapshot) => {
-        let helperArr=[];
+      .on("child_added", (snapshot) => {
+        let helperArr = [];
         helperArr.push(snapshot.val());
-        setFileList((files)=>[...files, ...helperArr]);
+        setFileList((files) => [...files, ...helperArr]);
       });
-    return () => app.database().ref(`policies`).off('child_added', onChildDeleted);
+    return () => app.database().ref(`policies`).off("child_added", onChildDeleted);
   }
 
   useEffect(() => {
     setFileList([]);
-    const onChildAdded = app.database()
+    const onChildAdded = app
+      .database()
       .ref(`policies`)
-      .on('child_added', (snapshot) => {
-        let helperArr=[];
+      .on("child_added", (snapshot) => {
+        let helperArr = [];
         helperArr.push(snapshot.val());
-        setFileList((files)=>[...files, ...helperArr]);
+        setFileList((files) => [...files, ...helperArr]);
       });
-    return () => app.database().ref(`policies`).off('child_added', onChildAdded);
-  },[])
+    return () => app.database().ref(`policies`).off("child_added", onChildAdded);
+  }, []);
 
   return (
     <ScrollView>
       <View>
-          <Button 
-            title="Upload Policy"
-            onPress={uploadImage}
-          />
+        <Button title="Upload Policy" onPress={uploadImage} />
       </View>
       {fileList.map((item, index) => (
         <ListItem.Swipeable
           leftContent={
-            <FontAwesome.Button name="share-alt" backgroundColor="#0b8fdc" alignItems="center" justifyContent="center" style={styles.swipeableItem} onPress={() => sharePolicy(item.fileURL)}></FontAwesome.Button>
+            <FontAwesome.Button
+              name="share-alt"
+              backgroundColor="#0b8fdc"
+              alignItems="center"
+              justifyContent="center"
+              style={styles.swipeableItem}
+              onPress={() => sharePolicy(item.fileURL)}
+            ></FontAwesome.Button>
           }
           rightContent={
-            <FontAwesome.Button name="trash" backgroundColor="#ee752e" alignItems="center" justifyContent="center" style={styles.swipeableItem} onPress={() => deletePolicy(item.fileName)}></FontAwesome.Button>
+            <FontAwesome.Button
+              name="trash"
+              backgroundColor="#ee752e"
+              alignItems="center"
+              justifyContent="center"
+              style={styles.swipeableItem}
+              onPress={() => deletePolicy(item.fileName)}
+            ></FontAwesome.Button>
           }
-          key = {index}
+          key={index}
           onPress={() =>
-            props.navigation.navigate('FilePreview', {
+            props.navigation.navigate("FilePreview", {
               fileData: item,
             })
-          }bottomDivider>
-          <Icon name='assignment' />
+          }
+          bottomDivider
+        >
+          <Icon name="assignment" />
           <ListItem.Content>
             <ListItem.Title>{item.fileName}</ListItem.Title>
           </ListItem.Content>

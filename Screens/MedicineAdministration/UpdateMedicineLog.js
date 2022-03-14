@@ -1,180 +1,182 @@
-import React, { Component } from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
-import app from '../../Components/firebase';
+import React, { Component } from "react";
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import app from "../../Components/firebase";
 import "firebase/firestore";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { convertDate, parseDate, convertToTimestamp } from '../../Components/Functionality';
-const styles = require('../../Styles/general');
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { convertDate, parseDate, convertToTimestamp } from "../../Components/Functionality";
+const styles = require("../../Styles/general");
 
 export default class UpdateMedicineLog extends Component {
-    constructor() {
+  constructor() {
     super();
     this.state = {
-            isLoading: true,
-            childName: '',
-            medicineDate: new Date(),
-            medicineTitle: '',
-            medicineTime: '',
-            medicineReason: '',
-            medicineNotes: '',
-            date: new Date(),
-            show: false
-        };
-    }
+      isLoading: true,
+      childName: "",
+      medicineDate: new Date(),
+      medicineTitle: "",
+      medicineTime: "",
+      medicineReason: "",
+      medicineNotes: "",
+      date: new Date(),
+      show: false,
+    };
+  }
 
-    onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || this.state.date;
-        this.setState({
-          date: currentDate,
-          medicineDate: convertDate(currentDate),
-          show: false
-        });
-      };
-    
-    showDatepicker() {
-        this.setState({
-            show: true
-        });
-    }
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({
+      date: currentDate,
+      medicineDate: convertDate(currentDate),
+      show: false,
+    });
+  };
 
-    componentDidMount() {
-    const docRef = app.firestore().collection('medicineAdministration').doc(this.props.route.params.userkey)
+  showDatepicker() {
+    this.setState({
+      show: true,
+    });
+  }
+
+  componentDidMount() {
+    const docRef = app
+      .firestore()
+      .collection("medicineAdministration")
+      .doc(this.props.route.params.userkey);
     docRef.get().then((res) => {
-        if (res.exists) {
+      if (res.exists) {
         const user = res.data();
         this.setState({
-            key: res.id,
-            childName: user.child_name,
-            medicineDate: parseDate(user.medicine_date),
-            medicineTitle: user.medicine_title,
-            medicineTime: user.medicine_time,
-            medicineReason: user.medicine_reason,
-            medicineNotes: user.medicine_notes,
-            isLoading: false
+          key: res.id,
+          childName: user.child_name,
+          medicineDate: parseDate(user.medicine_date),
+          medicineTitle: user.medicine_title,
+          medicineTime: user.medicine_time,
+          medicineReason: user.medicine_reason,
+          medicineNotes: user.medicine_notes,
+          isLoading: false,
         });
-        } else {
+      } else {
         console.log("No document found.");
-        }
+      }
     });
-    }
+  }
 
-    inputEl = (val, prop) => {
+  inputEl = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
-    }
+  };
 
-    editAccidentReport() {
+  editAccidentReport() {
     this.setState({
-        isLoading: true,
+      isLoading: true,
     });
-    const docUpdate = app.firestore().collection('medicineAdministration').doc(this.state.key);
-    docUpdate.set({
+    const docUpdate = app.firestore().collection("medicineAdministration").doc(this.state.key);
+    docUpdate
+      .set({
         child_name: this.state.childName,
         medicine_date: convertToTimestamp(this.state.medicineDate),
         medicine_title: this.state.medicineTitle,
         medicine_time: this.state.medicineTime,
         medicine_reason: this.state.medicineReason,
-        medicine_notes: this.state.medicineNotes
-    }).then(() => {
+        medicine_notes: this.state.medicineNotes,
+      })
+      .then(() => {
         this.setState({
-        key: '',
-        isLoading: false
+          key: "",
+          isLoading: false,
         });
-        this.props.navigation.navigate('ViewMedicalInfo');
-    })
-    .catch((error) => {
+        this.props.navigation.navigate("ViewMedicalInfo");
+      })
+      .catch((error) => {
         console.error(error);
         this.setState({
-        isLoading: false,
+          isLoading: false,
         });
+      });
+  }
+
+  deleteAccidentReport() {
+    const docRef = app
+      .firestore()
+      .collection("medicineAdministration")
+      .doc(this.props.route.params.userkey);
+    docRef.delete().then((res) => {
+      this.props.navigation.navigate("ViewMedicalInfo");
     });
-    }
+  }
 
-    deleteAccidentReport() {
-    const docRef = app.firestore().collection('medicineAdministration').doc(this.props.route.params.userkey)
-        docRef.delete().then((res) => {
-            this.props.navigation.navigate('ViewMedicalInfo');
-        })
-    }
-
-    alertDialog=()=>{
+  alertDialog = () => {
     Alert.alert(
-        'Delete',
-        'Really?',
-        [
-        {text: 'Yes', onPress: () => this.deleteAccidentReport()},
-        {text: 'No', onPress: () => console.log('Item not deleted'), style: 'cancel'},
-        ],
-        { 
-        cancelable: true 
-        }
+      "Delete",
+      "Really?",
+      [
+        { text: "Yes", onPress: () => this.deleteAccidentReport() },
+        { text: "No", onPress: () => console.log("Item not deleted"), style: "cancel" },
+      ],
+      {
+        cancelable: true,
+      }
     );
-    }
+  };
 
-    render() {
+  render() {
     return (
-        <ScrollView>
-            <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
-            <View style={styles.space}></View>
-            <Text style={styles.bold}>Medicine</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={'Medicine'}
-                value={this.state.medicineTitle}
-                onChangeText={(val) => this.inputEl(val, 'medicineTitle')}
-            />
-            <Text style={styles.bold}>Date Administered</Text>
-            <View>
-                <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
-                {this.state.show && (
-                    <DateTimePicker
-                    testID="accidentDate"
-                    value={this.state.date}
-                    mode='date'
-                    display="default"
-                    onChange={this.onChange}
-                    />
-                )}
-                <Text style={styles.buttonText}>Choose a Date: {this.state.medicineDate.toString()}</Text>
-                </TouchableOpacity>
-            </View>
-            <Text style={styles.bold}>Time Administered</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={'00:00'}
-                value={this.state.medicineTime}
-                onChangeText={(val) => this.inputEl(val, 'medicineTime')}
-            />
-            <Text style={styles.bold}>What was the reason for administering medication?</Text>
-            <TextInput
-                style={styles.input}
-                placeholder={'Reason for medicine administration'}
-                value={this.state.medicineReason}
-                onChangeText={(val) => this.inputEl(val, 'medicineReason')}
-            />
-            <Text style={styles.bold}>Additional Notes</Text>
-            <TextInput
-                multiline={true} 
-                numberOfLines={4}
-                style={styles.extendedInput}
-                placeholder={'Insert any additional information'}
-                value={this.state.medicineNotes}
-                onChangeText={(val) => this.inputEl(val, 'medicineNotes')}
-            />
-            <View style={styles.space}></View>
-            <Button
-                title='Update'
-                onPress={() => this.editAccidentReport()} 
-                color="#0B8FDC"
-            />
-            <View style={styles.space}></View>
-            <Button
-                title='Delete'
-                onPress={this.alertDialog}
-                color="#EE752E"
-            />
-        </ScrollView>
+      <ScrollView>
+        <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Medicine</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Medicine"}
+          value={this.state.medicineTitle}
+          onChangeText={(val) => this.inputEl(val, "medicineTitle")}
+        />
+        <Text style={styles.bold}>Date Administered</Text>
+        <View>
+          <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
+            {this.state.show && (
+              <DateTimePicker
+                testID="accidentDate"
+                value={this.state.date}
+                mode="date"
+                display="default"
+                onChange={this.onChange}
+              />
+            )}
+            <Text style={styles.buttonText}>
+              Choose a Date: {this.state.medicineDate.toString()}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.bold}>Time Administered</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"00:00"}
+          value={this.state.medicineTime}
+          onChangeText={(val) => this.inputEl(val, "medicineTime")}
+        />
+        <Text style={styles.bold}>What was the reason for administering medication?</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Reason for medicine administration"}
+          value={this.state.medicineReason}
+          onChangeText={(val) => this.inputEl(val, "medicineReason")}
+        />
+        <Text style={styles.bold}>Additional Notes</Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={4}
+          style={styles.extendedInput}
+          placeholder={"Insert any additional information"}
+          value={this.state.medicineNotes}
+          onChangeText={(val) => this.inputEl(val, "medicineNotes")}
+        />
+        <View style={styles.space}></View>
+        <Button title="Update" onPress={() => this.editAccidentReport()} color="#0B8FDC" />
+        <View style={styles.space}></View>
+        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+      </ScrollView>
     );
-    }
+  }
 }

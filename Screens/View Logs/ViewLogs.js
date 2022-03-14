@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import React, { useState } from "react";
+import { View, Button } from "react-native";
 import "firebase/firestore";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import ListLogs from './ListLogs';
-import { convertDate } from '../../Components/Functionality';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import ListLogs from "./ListLogs";
+import { convertDate } from "../../Components/Functionality";
 
 export default function ViewLogs({ navigation }) {
-
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(Platform.OS === "ios");
     setDate(currentDate);
   };
 
@@ -23,7 +22,7 @@ export default function ViewLogs({ navigation }) {
   };
 
   const showDatepicker = () => {
-    showMode('date');
+    showMode("date");
   };
 
   return (

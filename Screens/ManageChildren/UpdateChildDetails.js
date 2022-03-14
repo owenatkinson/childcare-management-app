@@ -1,37 +1,37 @@
-import React, { Component } from 'react';
-import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'react-native';
-import app from '../../Components/firebase';
+import React, { Component } from "react";
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from "react-native";
+import app from "../../Components/firebase";
 import "firebase/firestore";
-import CheckBox from '@react-native-community/checkbox';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { convertDate } from '../../Components/Functionality';
-const styles = require('../../Styles/general');
+import CheckBox from "@react-native-community/checkbox";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { convertDate } from "../../Components/Functionality";
+const styles = require("../../Styles/general");
 
 export default class UpdateChildDetails extends Component {
   constructor() {
     super();
     this.state = {
       isLoading: true,
-      name: '',
-      dob: '',
-      allergies: '',
-      allergiesDetails: '',
-      medicalConditions: '',
-      medicalConditionsDetails: '',
-      isActive: '',
-      emergencyName: '',
-      emergencyNumber: '',
-      emergencyRelation: '',
-      doctorName: '',
-      doctorAddress: '',
-      doctorNumber: '',
-      childAddress: '',
-      parent1Name: '',
-      parent1Number: '',
-      parent2Name: '',
-      parent2Number: '',
+      name: "",
+      dob: "",
+      allergies: "",
+      allergiesDetails: "",
+      medicalConditions: "",
+      medicalConditionsDetails: "",
+      isActive: "",
+      emergencyName: "",
+      emergencyNumber: "",
+      emergencyRelation: "",
+      doctorName: "",
+      doctorAddress: "",
+      doctorNumber: "",
+      childAddress: "",
+      parent1Name: "",
+      parent1Number: "",
+      parent2Name: "",
+      parent2Number: "",
       date: new Date(),
-      show: false
+      show: false,
     };
   }
 
@@ -40,18 +40,18 @@ export default class UpdateChildDetails extends Component {
     this.setState({
       date: currentDate,
       dob: convertDate(currentDate),
-      show: false
+      show: false,
     });
   };
 
   showDatepicker() {
     this.setState({
-      show: true
+      show: true,
     });
   }
 
   componentDidMount() {
-    const docRef = app.firestore().collection('children').doc(this.props.route.params.userkey)
+    const docRef = app.firestore().collection("children").doc(this.props.route.params.userkey);
     docRef.get().then((res) => {
       if (res.exists) {
         const user = res.data();
@@ -75,7 +75,7 @@ export default class UpdateChildDetails extends Component {
           parent1Number: user.parent_number_1,
           parent2Name: user.parent_name_2,
           parent2Number: user.parent_name_2,
-          isLoading: false
+          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -87,199 +87,197 @@ export default class UpdateChildDetails extends Component {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
-  }
+  };
 
   editChild() {
     this.setState({
       isLoading: true,
     });
-    const docUpdate = app.firestore().collection('children').doc(this.state.key);
-    docUpdate.set({
-      child_name: this.state.name,
-      child_DOB: this.state.dob,
-      child_allergies: this.state.allergies,
-      child_allergies_details: this.state.allergiesDetails,
-      child_medical_conditions: this.state.medicalConditions,
-      child_medical_conditions_details: this.state.medicalConditionsDetails,
-      child_is_active: this.state.isActive,
-      child_emergency_contact_name: this.state.emergencyName,
-      child_emergency_contact_number: this.state.emergencyNumber,
-      child_emergency_contact_relation: this.state.emergencyRelation,
-      doctor_name: this.state.doctorName,
-      doctor_address: this.state.doctorAddress,
-      doctor_number: this.state.doctorNumber,
-      child_home_address: this.state.childAddress,
-      parent_name_1: this.state.parent1Name,
-      parent_name_2: this.state.parent2Name,
-      parent_number_1: this.state.parent1Number,
-      parent_number_2: this.state.parent2Number
-    }).then(() => {
-      this.setState({
-        key: '',
-        isLoading: false,
+    const docUpdate = app.firestore().collection("children").doc(this.state.key);
+    docUpdate
+      .set({
+        child_name: this.state.name,
+        child_DOB: this.state.dob,
+        child_allergies: this.state.allergies,
+        child_allergies_details: this.state.allergiesDetails,
+        child_medical_conditions: this.state.medicalConditions,
+        child_medical_conditions_details: this.state.medicalConditionsDetails,
+        child_is_active: this.state.isActive,
+        child_emergency_contact_name: this.state.emergencyName,
+        child_emergency_contact_number: this.state.emergencyNumber,
+        child_emergency_contact_relation: this.state.emergencyRelation,
+        doctor_name: this.state.doctorName,
+        doctor_address: this.state.doctorAddress,
+        doctor_number: this.state.doctorNumber,
+        child_home_address: this.state.childAddress,
+        parent_name_1: this.state.parent1Name,
+        parent_name_2: this.state.parent2Name,
+        parent_number_1: this.state.parent1Number,
+        parent_number_2: this.state.parent2Number,
+      })
+      .then(() => {
+        this.setState({
+          key: "",
+          isLoading: false,
+        });
+        this.props.navigation.navigate("ManageChildren");
+      })
+      .catch((error) => {
+        console.error(error);
+        this.setState({
+          isLoading: false,
+        });
       });
-      this.props.navigation.navigate('ManageChildren');
-    })
-    .catch((error) => {
-      console.error(error);
-      this.setState({
-        isLoading: false,
-      });
-    });
   }
 
   render() {
     return (
       <ScrollView>
         <View style={styles.space}></View>
-          <Text style={styles.bold}>Child Name</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Name'}
-              value={this.state.name}
-              onChangeText={(val) => this.inputEl(val, 'name')}
-          />
-          <Text style={styles.bold}>Child DOB</Text>
-          <View>
-            <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
+        <Text style={styles.bold}>Child Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Name"}
+          value={this.state.name}
+          onChangeText={(val) => this.inputEl(val, "name")}
+        />
+        <Text style={styles.bold}>Child DOB</Text>
+        <View>
+          <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
             {this.state.show && (
-                <DateTimePicker
+              <DateTimePicker
                 testID="dob"
                 value={this.state.date}
-                mode='date'
+                mode="date"
                 display="default"
                 onChange={this.onChange}
-                />
+              />
             )}
             <Text style={styles.buttonText}>Choose a Date: {this.state.dob}</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.bold}>Child Allergies</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'List Child\'s Allergies'}
-              value={this.state.allergies}
-              onChangeText={(val) => this.inputEl(val, 'allergies')}
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.bold}>Child Allergies</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"List Child's Allergies"}
+          value={this.state.allergies}
+          onChangeText={(val) => this.inputEl(val, "allergies")}
+        />
+        <Text style={styles.bold}>Child Allergy Details</Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={4}
+          style={styles.extendedInput}
+          placeholder={"Insert details of the child's allergies"}
+          value={this.state.allergiesDetails}
+          onChangeText={(val) => this.inputEl(val, "allergiesDetails")}
+        />
+        <Text style={styles.bold}>Child Medical Conditions</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"List Child's Medical Conditions"}
+          value={this.state.medicalConditions}
+          onChangeText={(val) => this.inputEl(val, "medicalConditions")}
+        />
+        <Text style={styles.bold}>Medical Condition Details</Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={4}
+          style={styles.extendedInput}
+          placeholder={"Insert details of the child's medical conditions"}
+          value={this.state.medicalConditionsDetails}
+          onChangeText={(val) => this.inputEl(val, "medicalConditionsDetails")}
+        />
+        <View style={styles.checkBoxPositioning}>
+          <Text style={styles.bold}>Child is actively under your care:</Text>
+          <CheckBox
+            style={styles.checkBox}
+            disabled={false}
+            value={this.state.isActive}
+            onValueChange={(val) => this.inputEl(val, "isActive")}
+            tintColors={{ true: "#0B8FDC", false: "orange" }}
           />
-          <Text style={styles.bold}>Child Allergy Details</Text>
-          <TextInput
-              multiline={true}
-              numberOfLines={4}
-              style={styles.extendedInput}
-              placeholder={'Insert details of the child\'s allergies'}
-              value={this.state.allergiesDetails}
-              onChangeText={(val) => this.inputEl(val, 'allergiesDetails')}
-          />
-          <Text style={styles.bold}>Child Medical Conditions</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'List Child\'s Medical Conditions'}
-              value={this.state.medicalConditions}
-              onChangeText={(val) => this.inputEl(val, 'medicalConditions')}
-          />
-          <Text style={styles.bold}>Medical Condition Details</Text>
-          <TextInput
-              multiline={true}
-              numberOfLines={4}
-              style={styles.extendedInput}
-              placeholder={'Insert details of the child\'s medical conditions'}
-              value={this.state.medicalConditionsDetails}
-              onChangeText={(val) => this.inputEl(val, 'medicalConditionsDetails')}
-          />
-          <View style={styles.checkBoxPositioning}>
-            <Text style={styles.bold}>Child is actively under your care:</Text>
-            <CheckBox
-              style={styles.checkBox}
-              disabled={false}
-              value={this.state.isActive}
-              onValueChange={(val) => this.inputEl(val, 'isActive')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
-            />
-          </View>
-          <Text style={styles.boldTextCheckbox}>Child Home Address</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Child Home Address'}
-              value={this.state.childAddress}
-              onChangeText={(val) => this.inputEl(val, 'childAddress')}
-          />
-          <Text style={styles.bold}>Parent #1 Name</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Parent #1 Name'}
-              value={this.state.parent1Name}
-              onChangeText={(val) => this.inputEl(val, 'parent1Name')}
-          />
-          <Text style={styles.bold}>Parent #1 Phone Number</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Parent #1 Number'}
-              value={this.state.parent1Number}
-              onChangeText={(val) => this.inputEl(val, 'parent1Number')}
-          />
-         <Text style={styles.bold}>Parent #2 Name</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Parent #2 Name'}
-              value={this.state.parent2Name}
-              onChangeText={(val) => this.inputEl(val, 'parent2Name')}
-          />
-          <Text style={styles.bold}>Parent #2 Phone Number</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Parent #2 Number'}
-              value={this.state.parent2Number}
-              onChangeText={(val) => this.inputEl(val, 'parent2Number')}
-          />
-          <Text style={styles.bold}>Emergency Contact Name</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Emergency Contact Name'}
-              value={this.state.emergencyName}
-              onChangeText={(val) => this.inputEl(val, 'emergencyName')}
-          />
-          <Text style={styles.bold}>Emergency Contact Phone Number</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Emergency Contact Number'}
-              value={this.state.emergencyNumber}
-              onChangeText={(val) => this.inputEl(val, 'emergencyNumber')}
-          />
-          <Text style={styles.bold}>Emergency Contact Relation</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Emergency Contact Relation'}
-              value={this.state.emergencyRelation}
-              onChangeText={(val) => this.inputEl(val, 'emergencyRelation')}
-          />
-          <Text style={styles.bold}>Doctor's Name</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Doctor\'s Name'}
-              value={this.state.doctorName}
-              onChangeText={(val) => this.inputEl(val, 'doctorName')}
-          />
-          <Text style={styles.bold}>Doctor's Address</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Doctor\'s Address'}
-              value={this.state.doctorAddress}
-              onChangeText={(val) => this.inputEl(val, 'doctorAddress')}
-          />
-          <Text style={styles.bold}>Doctor's Phone Number</Text>
-          <TextInput
-              style={styles.input}
-              placeholder={'Doctor\'s Number'}
-              value={this.state.doctorNumber}
-              onChangeText={(val) => this.inputEl(val, 'doctorNumber')}
-          />
-          <View style={styles.space}></View>
-          <Button
-            title='Update'
-            onPress={() => this.editChild()} 
-            color="#0B8FDC"
-          />
-          <View style={styles.space}></View>
+        </View>
+        <Text style={styles.boldTextCheckbox}>Child Home Address</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Child Home Address"}
+          value={this.state.childAddress}
+          onChangeText={(val) => this.inputEl(val, "childAddress")}
+        />
+        <Text style={styles.bold}>Parent #1 Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Parent #1 Name"}
+          value={this.state.parent1Name}
+          onChangeText={(val) => this.inputEl(val, "parent1Name")}
+        />
+        <Text style={styles.bold}>Parent #1 Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Parent #1 Number"}
+          value={this.state.parent1Number}
+          onChangeText={(val) => this.inputEl(val, "parent1Number")}
+        />
+        <Text style={styles.bold}>Parent #2 Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Parent #2 Name"}
+          value={this.state.parent2Name}
+          onChangeText={(val) => this.inputEl(val, "parent2Name")}
+        />
+        <Text style={styles.bold}>Parent #2 Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Parent #2 Number"}
+          value={this.state.parent2Number}
+          onChangeText={(val) => this.inputEl(val, "parent2Number")}
+        />
+        <Text style={styles.bold}>Emergency Contact Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Emergency Contact Name"}
+          value={this.state.emergencyName}
+          onChangeText={(val) => this.inputEl(val, "emergencyName")}
+        />
+        <Text style={styles.bold}>Emergency Contact Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Emergency Contact Number"}
+          value={this.state.emergencyNumber}
+          onChangeText={(val) => this.inputEl(val, "emergencyNumber")}
+        />
+        <Text style={styles.bold}>Emergency Contact Relation</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Emergency Contact Relation"}
+          value={this.state.emergencyRelation}
+          onChangeText={(val) => this.inputEl(val, "emergencyRelation")}
+        />
+        <Text style={styles.bold}>Doctor's Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Doctor's Name"}
+          value={this.state.doctorName}
+          onChangeText={(val) => this.inputEl(val, "doctorName")}
+        />
+        <Text style={styles.bold}>Doctor's Address</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Doctor's Address"}
+          value={this.state.doctorAddress}
+          onChangeText={(val) => this.inputEl(val, "doctorAddress")}
+        />
+        <Text style={styles.bold}>Doctor's Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Doctor's Number"}
+          value={this.state.doctorNumber}
+          onChangeText={(val) => this.inputEl(val, "doctorNumber")}
+        />
+        <View style={styles.space}></View>
+        <Button title="Update" onPress={() => this.editChild()} color="#0B8FDC" />
+        <View style={styles.space}></View>
       </ScrollView>
     );
   }

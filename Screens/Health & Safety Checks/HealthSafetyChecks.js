@@ -1,27 +1,26 @@
-import React, {useState} from 'react';
-import { View, Button, Platform } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DailyCovidList from './CheckLists/DailyCovidList';
-import DailyRiskList from './CheckLists/DailyRiskList';
-import MonthlyDrillList from './CheckLists/MonthlyDrillList';
-import MonthlyFireSafetyEquipmentList from './CheckLists/MonthlyFireSafetyEquipmentList';
-import { convertDate } from '../../Components/Functionality';
+import React, { useState } from "react";
+import { View, Button, Platform } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import DailyCovidList from "./CheckLists/DailyCovidList";
+import DailyRiskList from "./CheckLists/DailyRiskList";
+import MonthlyDrillList from "./CheckLists/MonthlyDrillList";
+import MonthlyFireSafetyEquipmentList from "./CheckLists/MonthlyFireSafetyEquipmentList";
+import { convertDate } from "../../Components/Functionality";
 
 export default function HealthSafetyChecks({ navigation }) {
-  
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(Platform.OS === "ios");
     setDate(currentDate);
   };
 
   const showDatepicker = () => {
     setShow(true);
-    setMode('date');
+    setMode("date");
   };
 
   return (
@@ -49,7 +48,10 @@ export default function HealthSafetyChecks({ navigation }) {
         <MonthlyDrillList navigation={navigation} changeDate={convertDate(date)}></MonthlyDrillList>
       </View>
       <View>
-        <MonthlyFireSafetyEquipmentList navigation={navigation} changeDate={convertDate(date)}></MonthlyFireSafetyEquipmentList>
+        <MonthlyFireSafetyEquipmentList
+          navigation={navigation}
+          changeDate={convertDate(date)}
+        ></MonthlyFireSafetyEquipmentList>
       </View>
     </View>
   );
