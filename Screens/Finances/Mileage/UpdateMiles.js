@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import app from '../../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { parseDate, convertDate, convertToTimestamp } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 export default class UpdateMiles extends Component {
@@ -24,7 +24,7 @@ export default class UpdateMiles extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dateOfMileage: this.parseDate(currentDate),
+      dateOfMileage: convertDate(currentDate),
       show: false
     });
   };
@@ -35,20 +35,6 @@ export default class UpdateMiles extends Component {
     });
   }
 
-  convertDate(dateInput){
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate(dateInput){
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  convertToTimestamp(dateInput){
-    dateInput = dateInput.split("/");
-    var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-    return(newDate);
-  }
-
   componentDidMount() {
     const docRef = app.firestore().collection('mileageLogs').doc(this.props.route.params.userkey)
     docRef.get().then((res) => {
@@ -56,7 +42,7 @@ export default class UpdateMiles extends Component {
         const user = res.data();
         this.setState({
           key: res.id,
-          dateOfMileage: this.convertDate(user.date_of_mileage),
+          dateOfMileage: parseDate(user.date_of_mileage),
           mileageAmount: user.mileage_amount,
           mileageRate: user.mileage_rate,
           milesTravelled: user.miles_travelled,
@@ -80,17 +66,13 @@ export default class UpdateMiles extends Component {
     });
     const docUpdate = app.firestore().collection('mileageLogs').doc(this.state.key);
     docUpdate.set({
-        date_of_mileage: this.convertToTimestamp(this.state.dateOfMileage),
+        date_of_mileage: convertToTimestamp(this.state.dateOfMileage),
         mileage_amount: this.state.mileageAmount,
         mileage_rate: this.state.mileageRate,
         miles_travelled: this.state.milesTravelled
     }).then(() => {
       this.setState({
         key: '',
-        dateOfMileage: '',
-        mileageAmount: '',
-        mileageRate: '',
-        milesTravelled: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewMiles');
@@ -155,7 +137,7 @@ export default class UpdateMiles extends Component {
                 </View>
                 <Text style={styles.bold}>Mileage Amount: £{this.state.mileageAmount}</Text>
                 <View style={styles.space}></View>
-                <Text style={styles.bold}>Date of Mileage Expense</Text>
+                <Text style={styles.bold}>Date of Mileage Expense:</Text>
                 <View>
                   <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
                   {this.state.show && (

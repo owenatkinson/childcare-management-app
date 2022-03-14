@@ -48,7 +48,6 @@ export default function AllergyDetection({ navigation }) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-
       {scanned && <Button title={'Scan code'} onPress={() => setScanned(false)} />}
     </View>
   );

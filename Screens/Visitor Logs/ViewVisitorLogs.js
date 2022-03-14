@@ -3,8 +3,8 @@ import { FlatList, ScrollView, View, SafeAreaView } from 'react-native';
 import app from '../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
-import moment from 'moment';
 import MonthPick from '../../Components/MonthPick';
+import { getMonth, getYear, doNumbersMatch, convertDateCheckType } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default class ViewVisitorLogs extends Component {
@@ -24,30 +24,6 @@ export default class ViewVisitorLogs extends Component {
 
   componentWillUnmount(){
     this.unsubscribe();
-  }
-
-  convertDate = (dateInput) => {
-    if(dateInput instanceof Date){
-      return(moment(dateInput).format('D/M/YYYY'));
-    } else {
-      return(moment(dateInput.toDate()).format('D/M/YYYY'));
-    }
-  }
-
-  getMonth(dateInput){
-    dateInput = dateInput.split("/");
-    var month = dateInput[1];
-    return(month);
-  }
-
-  getYear(dateInput){
-    dateInput = dateInput.split("/");
-    var year = dateInput[2];
-    return(year);
-  }
-
-  doNumbersMatch(num1, num2){
-    return (num1 == num2);
   }
 
   fetchCollection = (querySnapshot) => {
@@ -78,8 +54,8 @@ export default class ViewVisitorLogs extends Component {
         <ScrollView>
           {
             this.state.visitorLogs.map((res, i) => {
-              if(this.doNumbersMatch(this.getMonth(this.convertDate(this.state.date)), this.getMonth(this.convertDate(res.date_of_visit))) 
-              && this.doNumbersMatch(this.getYear(this.convertDate(this.state.date)), this.getYear(this.convertDate(res.date_of_visit)))) {
+              if(doNumbersMatch(getMonth(convertDateCheckType(this.state.date)), getMonth(convertDateCheckType(res.date_of_visit))) 
+              && doNumbersMatch(getYear(convertDateCheckType(this.state.date)), getYear(convertDateCheckType(res.date_of_visit)))) {
                 return (
                   <ListItem 
                     key={i}
@@ -91,7 +67,7 @@ export default class ViewVisitorLogs extends Component {
                     bottomDivider>
                     <ListItem.Content>
                       <ListItem.Title>{res.visitor_name}</ListItem.Title>
-                      <ListItem.Subtitle>Date: {this.convertDate(res.date_of_visit)}</ListItem.Subtitle>
+                      <ListItem.Subtitle>Date: {convertDateCheckType(res.date_of_visit)}</ListItem.Subtitle>
                     </ListItem.Content>
                     <ListItem.Chevron 
                       color="black" 

@@ -3,9 +3,9 @@ import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'rea
 import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ModalSelector from 'react-native-modal-selector'
+import ModalSelector from 'react-native-modal-selector';
+import { convertDate, convertTime } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 function AttendanceRegister({ navigation }) {
@@ -36,14 +36,6 @@ function AttendanceRegister({ navigation }) {
   },[])
 
   const fireDB = app.firestore().collection('attendanceRegister');
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  const convertTime = (dateInput) => {
-    return(moment(dateInput).format('HH:mm'));
-  }
 
   async function addAttendanceLog() {
     await fireDB.add({

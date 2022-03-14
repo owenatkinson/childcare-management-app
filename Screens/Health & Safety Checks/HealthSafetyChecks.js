@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import { View, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
 import DailyCovidList from './CheckLists/DailyCovidList';
 import DailyRiskList from './CheckLists/DailyRiskList';
 import MonthlyDrillList from './CheckLists/MonthlyDrillList';
 import MonthlyFireSafetyEquipmentList from './CheckLists/MonthlyFireSafetyEquipmentList';
+import { convertDate } from '../../Components/Functionality';
 
 export default function HealthSafetyChecks({ navigation }) {
   
@@ -23,10 +23,6 @@ export default function HealthSafetyChecks({ navigation }) {
     setShow(true);
     setMode('date');
   };
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
 
   return (
     <View>

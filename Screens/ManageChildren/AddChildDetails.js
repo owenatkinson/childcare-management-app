@@ -3,8 +3,8 @@ import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'rea
 import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertDate } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default function AddNewChild({ navigation }) {
@@ -27,10 +27,6 @@ export default function AddNewChild({ navigation }) {
   const [ parentNumber2, setParentNumber2 ] = useState('');
   const [ parentName2, setParentName2 ] = useState('');
   const fireDB = app.firestore().collection('children');
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
 
   async function addChild() {
     await fireDB.add({

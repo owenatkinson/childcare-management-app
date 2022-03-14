@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
 import app from '../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ModalSelector from 'react-native-modal-selector'
+import ModalSelector from 'react-native-modal-selector';
+import { convertDate, convertTime } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default function LogAccidentReport({ navigation }) {
@@ -33,14 +33,6 @@ export default function LogAccidentReport({ navigation }) {
       setChildNameArr(childNames);
     });
   },[])
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  const convertTime = (dateInput) => {
-    return(moment(dateInput).format('HH:mm'));
-  }
 
   const fireDB = app.firestore().collection('accidentReports');
 
@@ -102,7 +94,7 @@ export default function LogAccidentReport({ navigation }) {
             onChange={timeOfAccident.onChange}
             />
         )}
-          <Text style={styles.buttonText}>Choose a Date: {convertTime(timeOfAccident.date)}</Text>
+          <Text style={styles.buttonText}>Choose a Time: {convertTime(timeOfAccident.date)}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bold}>Accident Location:</Text>

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertDate, parseDate } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default class UpdateVisitorLog extends Component {
@@ -25,7 +25,7 @@ export default class UpdateVisitorLog extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dateOfVisit: this.parseDate(currentDate),
+      dateOfVisit: convertDate(currentDate),
       show: false
     });
   };
@@ -34,14 +34,6 @@ export default class UpdateVisitorLog extends Component {
     this.setState({
       show: true
     });
-  }
-
-  convertDate(dateInput){
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate(dateInput){
-    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   convertToTimestamp(dateInput){
@@ -58,7 +50,7 @@ export default class UpdateVisitorLog extends Component {
         this.setState({
           key: res.id,
           visitorName: user.visitor_name,
-          dateOfVisit: this.convertDate(user.date_of_visit),
+          dateOfVisit: parseDate(user.date_of_visit),
           timeIn: user.time_in,
           timeOut: user.time_out,
           visitPurpose: user.visit_purpose,
@@ -90,11 +82,6 @@ export default class UpdateVisitorLog extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        visitorName: '',
-        dateOfVisit: '',
-        timeIn: '',
-        timeOut: '',
-        visitPurpose: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewVisitorLogs');

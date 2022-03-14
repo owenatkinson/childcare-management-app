@@ -5,7 +5,6 @@ const styles = require('../../../Styles/general');
 
 export default function Nutrition({ route }) {
     const { nutriments } = route.params.item;
-
     return (
         <View>
             <View style={styles.space}></View>
@@ -25,9 +24,7 @@ export default function Nutrition({ route }) {
                     </View>
                 </View>
             )}
-
             <View style={styles.space}></View>
-
             {nutriments.fat_100g != null && (
                 <View style={styles.allNutrients}>
                     <MaterialIcons
@@ -42,9 +39,7 @@ export default function Nutrition({ route }) {
                     </View>
                 </View>
             )}
-
             <View style={styles.space}></View>
-
             {nutriments['saturated-fat_100g'] != null && (
                 <View style={styles.allNutrients}>
                     <SimpleLineIcons
@@ -59,9 +54,7 @@ export default function Nutrition({ route }) {
                     </View>
                 </View>
             )}
-
             <View style={styles.space}></View>
-
             {nutriments.carbohydrates_100g != null && (
                 <View style={styles.allNutrients}>
                     <MaterialCommunityIcons
@@ -76,9 +69,7 @@ export default function Nutrition({ route }) {
                     </View>
                 </View>
             )}
-
             <View style={styles.space}></View>
-
             {nutriments.sugars_100g != null && (
                 <View style={styles.allNutrients}>
                     <MaterialCommunityIcons
@@ -93,9 +84,7 @@ export default function Nutrition({ route }) {
                     </View>
                 </View>
             )}
-
             <View style={styles.space}></View>
-
             {nutriments.fiber_100g != null && (
             <View style={styles.allNutrients}>
                 <MaterialCommunityIcons
@@ -110,9 +99,7 @@ export default function Nutrition({ route }) {
                 </View>
             </View>
             )}
-
             <View style={styles.space}></View>
-
             {nutriments.proteins_100g != null && (                
             <View style={styles.allNutrients}>
                 <MaterialCommunityIcons
@@ -127,9 +114,7 @@ export default function Nutrition({ route }) {
                 </View>
             </View>
             )}
-
             <View style={styles.space}></View>   
-
             {nutriments.salt_100g != null && (
                 <View style={styles.allNutrients}>
                     <MaterialCommunityIcons

@@ -18,8 +18,6 @@ export default function AddMonthlyFireSafetyEquipmentList({route}) {
           monthly_fire_safety_note: monthlyFireSafetyNote,
           monthly_fire_safety_is_completed: monthlyFireSafetyIsCompleted
     });
-    setMonthlyFireSafetyNote('');
-    setMonthlyFireSafetyIsCompleted('');
     this.props.navigation.navigate('HealthSafetyChecks');
   }
 

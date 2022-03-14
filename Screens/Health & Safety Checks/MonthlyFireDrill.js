@@ -41,8 +41,7 @@ export default class MonthlyFireDrill extends Component {
   convertToTimestamp(dateInput){
     var timeConvert = dateInput.toDate().toLocaleTimeString();
     timeConvert = timeConvert.split(":");
-    var time = timeConvert[0] + ":" + timeConvert[1];
-    return(time);
+    return(timeConvert[0] + ":" + timeConvert[1]);
   }
 
   showTimepicker() {
@@ -91,11 +90,6 @@ export default class MonthlyFireDrill extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        monthlyFireDrillDate: '',
-        monthlyFireDrillNumberOfPeople: '',
-        monthlyFireDrillTimeCompleted: '',
-        monthlyFireDrillNote: '',
-        monthlyFireDrillIsCompleted: '',
         isLoading: false,
       });
       this.props.navigation.navigate('HealthSafetyChecks');

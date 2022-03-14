@@ -3,8 +3,8 @@ import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } fr
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertDate } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default class ViewLogDetails extends Component {
@@ -30,7 +30,7 @@ export default class ViewLogDetails extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dateOfAttendance: this.parseDate(currentDate),
+      dateOfAttendance: convertDate(currentDate),
       show: false
     });
   };
@@ -39,20 +39,6 @@ export default class ViewLogDetails extends Component {
       this.setState({
           show: true
       });
-  }
-
-  parseDate(dateInput){
-      return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  convertDate(dateInput){
-      return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  convertToTimestamp(dateInput){
-      dateInput = dateInput.split("/");
-      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-      return(newDate);
   }
 
   componentDidMount() {
@@ -115,13 +101,6 @@ export default class ViewLogDetails extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        childName: '',
-        dateOfAttendance: '',
-        checkInTime: '',
-        checkOutTime: '',
-        droppedBy: '',
-        collectedBy: '',
-        temperatureChecked: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewLogs');

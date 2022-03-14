@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
 import app from '../../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ModalSelector from 'react-native-modal-selector'
+import ModalSelector from 'react-native-modal-selector';
+import { convertDate } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 const LogInvoice = ({navigation}) => {
@@ -28,10 +28,6 @@ const LogInvoice = ({navigation}) => {
           setChildNameArr(childNames);
         });
     },[])
-
-    const convertDate = (dateInput) => {
-        return(moment(dateInput).format('D/M/YYYY'));
-    }
 
     const fireDB = app.firestore().collection('invoiceLogs');
 

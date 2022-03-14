@@ -5,6 +5,7 @@ import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 import MonthPick from '../../../Components/MonthPick';
+import { parseDate, doNumbersMatch, getMonth, getYear, convertDateCheckType } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 export default class ViewInvoice extends Component {
@@ -25,34 +26,6 @@ export default class ViewInvoice extends Component {
 
   componentWillUnmount(){
     this.unsubscribe();
-  }
-
-  convertDate = (dateInput) => {
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate = (dateInput) => {
-    if(dateInput instanceof Date){
-      return(moment(dateInput).format('D/M/YYYY'));
-    } else {
-      return(moment(dateInput.toDate()).format('D/M/YYYY'));
-    }
-  }
-
-  getMonth(dateInput){
-    dateInput = dateInput.split("/");
-    var month = dateInput[1];
-    return(month);
-  }
-
-  getYear(dateInput){
-    dateInput = dateInput.split("/");
-    var year = dateInput[2];
-    return(year);
-  }
-
-  doNumbersMatch(num1, num2){
-    return (num1 == num2);
   }
 
   fetchCollection = (querySnapshot) => {
@@ -82,8 +55,8 @@ export default class ViewInvoice extends Component {
         <ScrollView style={styles.wrapper}>
             {
               this.state.invoiceLogs.map((res, i) => {
-                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_invoice))) 
-                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_invoice)))) {
+                if(doNumbersMatch(getMonth(convertDateCheckType(this.state.date)), getMonth(convertDateCheckType(res.date_of_invoice))) 
+                && doNumbersMatch(getYear(convertDateCheckType(this.state.date)), getYear(convertDateCheckType(res.date_of_invoice)))) {
                   this.state.invoiceAmount += parseFloat(res.invoice_amount);
                   return (
                     <ListItem 
@@ -95,8 +68,8 @@ export default class ViewInvoice extends Component {
                       }}                        
                       bottomDivider>
                       <ListItem.Content>
-                        <ListItem.Title>{res.child_name} - £{res.invoice_amount}</ListItem.Title>
-                        <ListItem.Subtitle>Date of Expense: {this.convertDate(res.date_of_invoice)}</ListItem.Subtitle>
+                        <ListItem.Title>{res.child_name} - £{parseFloat(res.invoice_amount).toFixed(2)}</ListItem.Title>
+                        <ListItem.Subtitle>Date of Expense: {parseDate(res.date_of_invoice)}</ListItem.Subtitle>
                       </ListItem.Content>
                       <ListItem.Chevron 
                         color="black" 

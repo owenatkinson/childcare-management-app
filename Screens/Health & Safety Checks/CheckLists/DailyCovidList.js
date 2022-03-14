@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView, View } from 'react-native';
 import app from '../../../Components/firebase';
 import { ListItem } from 'react-native-elements';
+import { isWeekday } from '../../../Components/Functionality';
 
 export default class DailyCovidList extends Component {
   constructor() {
@@ -22,14 +23,6 @@ export default class DailyCovidList extends Component {
     this.unsubscribe();
   }
 
-  search(nameKey, myArray){
-    for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].daily_covid_assessment_date === nameKey) {
-            return myArray[i];
-        }
-    }
-  }
-
   fetchCollection = (querySnapshot) => {
     const dailyCovidAssessment = [];
 
@@ -47,20 +40,8 @@ export default class DailyCovidList extends Component {
     });
   }
 
-  isWeekday(date){
-    var myDate = date.split("/");
-    var newDate = myDate[2] + "/" + myDate[1] + "/" + myDate[0];
-    var weekendDate = new Date(newDate);
-
-    if(weekendDate.getDay() == 0 || weekendDate.getDay() == 6){
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   render() {
-    if (this.state.dailyCovidAssessment === undefined || this.state.dailyCovidAssessment.length == 0 || !this.isWeekday(this.props.changeDate)) {
+    if (this.state.dailyCovidAssessment === undefined || this.state.dailyCovidAssessment.length == 0 || isWeekday(this.props.changeDate)) {
       return(
         <View></View>
       );

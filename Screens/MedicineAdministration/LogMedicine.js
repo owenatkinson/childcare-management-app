@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, ScrollView, Button } from 'react-native';
 import app from '../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ModalSelector from 'react-native-modal-selector'
+import ModalSelector from 'react-native-modal-selector';
+import { convertDate, convertTime } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default function LogMedicine({ navigation }) {
@@ -15,6 +15,7 @@ export default function LogMedicine({ navigation }) {
   const [ medicineNotes, setMedicineNotes ] = useState('');
   const [childNameArr, setChildNameArr] = useState([]);
   const [childName, setChildName] = useState('');
+  const fireDB = app.firestore().collection('medicineAdministration');
 
   useEffect(() => {
     const childNames = [];
@@ -31,16 +32,6 @@ export default function LogMedicine({ navigation }) {
       setChildNameArr(childNames);
     });
   },[])
-  
-  const convertDate = (dateInput) => {
-      return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  const convertTime = (dateInput) => {
-    return(moment(dateInput).format('HH:mm'));
-  }
-
-  const fireDB = app.firestore().collection('medicineAdministration');
 
   async function addLog() {
     await fireDB.add({

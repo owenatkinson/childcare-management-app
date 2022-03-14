@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import app from '../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertDate, parseDate, convertToTimestamp } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default class UpdateMedicineLog extends Component {
@@ -26,7 +26,7 @@ export default class UpdateMedicineLog extends Component {
         const currentDate = selectedDate || this.state.date;
         this.setState({
           date: currentDate,
-          medicineDate: this.parseDate(currentDate),
+          medicineDate: convertDate(currentDate),
           show: false
         });
       };
@@ -35,20 +35,6 @@ export default class UpdateMedicineLog extends Component {
         this.setState({
             show: true
         });
-    }
-    
-    parseDate(dateInput){
-        return(moment(dateInput).format('D/M/YYYY'));
-    }
-
-    convertDate(dateInput){
-        return(moment(dateInput.toDate()).format('D/M/YYYY'));
-    }
-
-    convertToTimestamp(dateInput){
-        dateInput = dateInput.split("/");
-        var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-        return(newDate);
     }
 
     componentDidMount() {
@@ -59,7 +45,7 @@ export default class UpdateMedicineLog extends Component {
         this.setState({
             key: res.id,
             childName: user.child_name,
-            medicineDate: this.convertDate(user.medicine_date),
+            medicineDate: parseDate(user.medicine_date),
             medicineTitle: user.medicine_title,
             medicineTime: user.medicine_time,
             medicineReason: user.medicine_reason,
@@ -85,7 +71,7 @@ export default class UpdateMedicineLog extends Component {
     const docUpdate = app.firestore().collection('medicineAdministration').doc(this.state.key);
     docUpdate.set({
         child_name: this.state.childName,
-        medicine_date: this.convertToTimestamp(this.state.medicineDate),
+        medicine_date: convertToTimestamp(this.state.medicineDate),
         medicine_title: this.state.medicineTitle,
         medicine_time: this.state.medicineTime,
         medicine_reason: this.state.medicineReason,
@@ -93,11 +79,6 @@ export default class UpdateMedicineLog extends Component {
     }).then(() => {
         this.setState({
         key: '',
-        childName: '',
-        medicineTitle: '',
-        medicineTime: '',
-        medicineReason: '',
-        medicineNotes: '',
         isLoading: false
         });
         this.props.navigation.navigate('ViewMedicalInfo');

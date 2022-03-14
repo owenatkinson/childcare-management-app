@@ -3,8 +3,8 @@ import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'rea
 import CheckBox from '@react-native-community/checkbox';
 import app from '../../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertTime } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 export default function AddMonthlyDrillList({route, navigation}) {
@@ -16,10 +16,6 @@ export default function AddMonthlyDrillList({route, navigation}) {
 
     const fireDB = app.firestore().collection('monthlyFireDrill');
 
-    const convertTime = (dateInput) => {
-      return(moment(dateInput).format('HH:mm'));
-    }
-
     async function addCheck() {
         await fireDB.add({
           monthly_fire_drill_date: changeDate,
@@ -28,9 +24,6 @@ export default function AddMonthlyDrillList({route, navigation}) {
           monthly_fire_drill_note: monthlyFireDrillNote,
           monthly_fire_drill_is_completed: monthlyFireDrillIsCompleted
     });
-    setMonthlyFireDrillNumberOfPeople('');
-    setMonthlyFireDrillNote('');
-    setMonthlyFireDrillIsCompleted('');
     navigation.navigate('HealthSafetyChecks');
   }
 

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from 'react-native';
 import app from '../../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { parseDate, convertDate, convertToTimestamp } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 export default class UpdateInvoice extends Component {
@@ -24,7 +24,7 @@ export default class UpdateInvoice extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dateOfInvoice: this.parseDate(currentDate),
+      dateOfInvoice: convertDate(currentDate),
       show: false
     });
   };
@@ -33,20 +33,6 @@ export default class UpdateInvoice extends Component {
     this.setState({
       show: true
     });
-  }
-
-  convertDate(dateInput){
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate(dateInput){
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  convertToTimestamp(dateInput){
-      dateInput = dateInput.split("/");
-      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-      return(newDate);
   }
 
   componentDidMount() {
@@ -70,7 +56,7 @@ export default class UpdateInvoice extends Component {
         const user = res.data();
         this.setState({
           key: res.id,
-          dateOfInvoice: this.convertDate(user.date_of_invoice),
+          dateOfInvoice: parseDate(user.date_of_invoice),
           childName: user.child_name,
           invoiceAmount: user.invoice_amount,
           isLoading: false
@@ -93,15 +79,12 @@ export default class UpdateInvoice extends Component {
     });
     const docUpdate = app.firestore().collection('invoiceLogs').doc(this.state.key);
     docUpdate.set({
-        date_of_invoice: this.convertToTimestamp(this.state.dateOfInvoice),
+        date_of_invoice: convertToTimestamp(this.state.dateOfInvoice),
         child_name: this.state.childName,
         invoice_amount: this.state.invoiceAmount
     }).then(() => {
       this.setState({
         key: '',
-        dateOfInvoice: '',
-        childName: '',
-        invoiceAmount: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewInvoice');

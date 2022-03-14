@@ -3,9 +3,9 @@ import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } fr
 import app from '../../../Components/firebase';
 import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
-import moment from 'moment';
 import ModalSelector from 'react-native-modal-selector';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { parseDate, convertDate, convertToTimestamp } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 export default class UpdateExpense extends Component {
@@ -28,7 +28,7 @@ export default class UpdateExpense extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dateOfExpense: this.parseDate(currentDate),
+      dateOfExpense: convertDate(currentDate),
       show: false
     });
   };
@@ -39,20 +39,6 @@ export default class UpdateExpense extends Component {
     });
   }
 
-  convertDate(dateInput) {
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate(dateInput){
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  convertToTimestamp(dateInput) {
-      dateInput = dateInput.split("/");
-      var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-      return(newDate);
-  }
-
   componentDidMount() {
     const docRef = app.firestore().collection('expenseLogs').doc(this.props.route.params.userkey)
     docRef.get().then((res) => {
@@ -60,7 +46,7 @@ export default class UpdateExpense extends Component {
         const user = res.data();
         this.setState({
           key: res.id,
-          dateOfExpense: this.convertDate(user.date_of_expense),
+          dateOfExpense: parseDate(user.date_of_expense),
           expenseAmount: user.expense_amount,
           expenseNote: user.expense_note,
           expenseTitle: user.expense_title,
@@ -86,7 +72,7 @@ export default class UpdateExpense extends Component {
     });
     const docUpdate = app.firestore().collection('expenseLogs').doc(this.state.key);
     docUpdate.set({
-        date_of_expense: this.convertToTimestamp(this.state.dateOfExpense),
+        date_of_expense: convertToTimestamp(this.state.dateOfExpense),
         expense_amount: this.state.expenseAmount,
         expense_note: this.state.expenseNote,
         expense_title: this.state.expenseTitle,
@@ -95,11 +81,6 @@ export default class UpdateExpense extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        dateOfExpense: '',
-        expenseAmount: '',
-        expenseNote: '',
-        expenseTitle: '',
-        category: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewExpenses');

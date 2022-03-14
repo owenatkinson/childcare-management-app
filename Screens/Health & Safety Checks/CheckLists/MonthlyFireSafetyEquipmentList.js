@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { ScrollView, View } from 'react-native';
 import app from '../../../Components/firebase';
 import { ListItem } from 'react-native-elements';
-import moment from 'moment';
+import { getMonday } from '../../../Components/Functionality';
 
 export default class MonthlyFireSafetyEquipmentList extends Component {
   constructor() {
@@ -40,26 +40,6 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
     });
   }
 
-  getMonday(date){
-    var myDate = date.split("/");
-    var newDate = myDate[2] + "/" + myDate[1] + "/" + myDate[0];
-    var mondayDate = new Date(newDate);
-
-    mondayDate.setDate(1);
-
-    while (mondayDate.getDay() !== 1) {
-      mondayDate.setDate(mondayDate.getDate() + 1);
-    }
-
-    var parsedDate = moment(mondayDate).format('D/M/YYYY')
-
-    if (date !== parsedDate){
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   render() {
     if (this.state.monthlyFireSafetyEquipmentCheck === undefined || this.state.monthlyFireSafetyEquipmentCheck.length == 0) {
       return(
@@ -75,7 +55,7 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
             <ScrollView>
                 {
                   this.state.monthlyFireSafetyEquipmentCheck.map((res, i) => {
-                      if(this.getMonday(this.props.changeDate) && res.monthly_fire_safety_date == this.props.changeDate){
+                      if(getMonday(this.props.changeDate) && res.monthly_fire_safety_date == this.props.changeDate){
                           return (
                           <ListItem 
                               key={i}
@@ -99,7 +79,7 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
                 }
             </ScrollView>
           );
-        } else if (this.getMonday(this.props.changeDate)) {
+        } else if (getMonday(this.props.changeDate)) {
           return (
             <ListItem 
                 onPress={() => {

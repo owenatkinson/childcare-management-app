@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
 import app from '../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertDate, convertTime } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default function LogVisitor({navigation}) {
@@ -12,15 +12,6 @@ export default function LogVisitor({navigation}) {
   const dateOfVisit = useInput(new Date());
   const timeIn = useInput();
   const timeOut = useInput();
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  const convertTime = (dateInput) => {
-    return(moment(dateInput).format('HH:mm'));
-  }
-
   const fireDB = app.firestore().collection('visitorLogs');
 
   async function addVisitorLog() {

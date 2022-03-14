@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Image } from 'react-native';
 import app from '../../../Components/firebase';
 import "firebase/firestore";
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import ModalSelector from 'react-native-modal-selector';
+import { convertDate } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 const LogExpense = ({navigation}) => {
@@ -16,11 +16,6 @@ const LogExpense = ({navigation}) => {
     const dateOfExpense = useInput(new Date());
     const [image, setImage] = useState(null);
     const [ category, setCategory ] = useState('');
-
-    const convertDate = (dateInput) => {
-        return(moment(dateInput).format('D/M/YYYY'));
-    }
-
     const fireDB = app.firestore().collection('expenseLogs');
 
     async function addExpenseLog() {

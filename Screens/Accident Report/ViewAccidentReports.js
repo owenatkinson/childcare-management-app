@@ -4,7 +4,7 @@ import app from '../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import ModalSelector from 'react-native-modal-selector';
-import moment from 'moment';
+import { parseDate } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default class ViewAccidentReports extends Component {
@@ -25,10 +25,6 @@ export default class ViewAccidentReports extends Component {
 
   componentWillUnmount(){
     this.unsubscribe();
-  }
-
-  convertDate = (dateInput) => {
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
   }
 
   fetchCollection = (querySnapshot) => {
@@ -85,7 +81,7 @@ export default class ViewAccidentReports extends Component {
                     bottomDivider>
                     <ListItem.Content>
                       <ListItem.Title>{res.child_name}</ListItem.Title>
-                      <ListItem.Subtitle>Date: {this.convertDate(res.accident_date)}</ListItem.Subtitle>
+                      <ListItem.Subtitle>Date: {parseDate(res.accident_date)}</ListItem.Subtitle>
                     </ListItem.Content>
                     <ListItem.Chevron 
                       color="black" 

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import "firebase/firestore";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
 import ListLogs from './ListLogs';
+import { convertDate } from '../../Components/Functionality';
 
 export default function ViewLogs({ navigation }) {
 
@@ -25,10 +25,6 @@ export default function ViewLogs({ navigation }) {
   const showDatepicker = () => {
     showMode('date');
   };
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
 
   return (
     <View>

@@ -3,8 +3,8 @@ import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'rea
 import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
-import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { convertDate } from '../../Components/Functionality';
 const styles = require('../../Styles/general');
 
 export default class UpdateChildDetails extends Component {
@@ -39,7 +39,7 @@ export default class UpdateChildDetails extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dob: this.parseDate(currentDate),
+      dob: convertDate(currentDate),
       show: false
     });
   };
@@ -48,10 +48,6 @@ export default class UpdateChildDetails extends Component {
     this.setState({
       show: true
     });
-  }
-
-  parseDate(dateInput){
-    return(moment(dateInput).format('D/M/YYYY'));
   }
 
   componentDidMount() {
@@ -120,19 +116,6 @@ export default class UpdateChildDetails extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        name: '',
-        isActive: '',
-        emergencyName: '',
-        emergencyNumber: '',
-        emergencyRelation: '',
-        doctorName: '',
-        doctorAddress: '',
-        doctorNumber: '',
-        childAddress: '',
-        parent1Name: '',
-        parent2Name: '',
-        parent1Number: '',
-        parent2Number: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ManageChildren');

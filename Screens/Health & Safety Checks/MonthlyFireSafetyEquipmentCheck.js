@@ -52,9 +52,6 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
     }).then(() => {
       this.setState({
         key: '',
-        monthlyFireSafetyDate: '',
-        monthlyFireSafetyNote: '',
-        monthlyFireSafetyIsCompleted: '',
         isLoading: false,
       });
       this.props.navigation.navigate('HealthSafetyChecks');

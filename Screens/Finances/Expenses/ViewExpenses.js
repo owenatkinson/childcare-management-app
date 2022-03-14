@@ -3,8 +3,8 @@ import { ScrollView, View, SafeAreaView, FlatList, Text } from 'react-native';
 import app from '../../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
-import moment from 'moment';
 import MonthPick from '../../../Components/MonthPick';
+import { parseDate, getMonth, getYear, doNumbersMatch, convertDateCheckType } from '../../../Components/Functionality';
 const styles = require('../../../Styles/general');
 
 export default class ViewExpenses extends Component {
@@ -25,34 +25,6 @@ export default class ViewExpenses extends Component {
 
   componentWillUnmount(){
     this.unsubscribe();
-  }
-
-  convertDate = (dateInput) => {
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate = (dateInput) => {
-    if(dateInput instanceof Date){
-      return(moment(dateInput).format('D/M/YYYY'));
-    } else {
-      return(moment(dateInput.toDate()).format('D/M/YYYY'));
-    }
-  }
-
-  getMonth(dateInput){
-    dateInput = dateInput.split("/");
-    var month = dateInput[1];
-    return(month);
-  }
-
-  getYear(dateInput){
-    dateInput = dateInput.split("/");
-    var year = dateInput[2];
-    return(year);
-  }
-
-  doNumbersMatch(num1, num2){
-    return (num1 == num2);
   }
 
   fetchCollection = (querySnapshot) => {
@@ -83,8 +55,8 @@ export default class ViewExpenses extends Component {
         <ScrollView style={styles.wrapper}>
             {
               this.state.expenseLogs.map((res, i) => {
-                if(this.doNumbersMatch(this.getMonth(this.parseDate(this.state.date)), this.getMonth(this.parseDate(res.date_of_expense))) 
-                && this.doNumbersMatch(this.getYear(this.parseDate(this.state.date)), this.getYear(this.parseDate(res.date_of_expense)))) {
+                if(doNumbersMatch(getMonth(convertDateCheckType(this.state.date)), getMonth(convertDateCheckType(res.date_of_expense))) 
+                && doNumbersMatch(getYear(convertDateCheckType(this.state.date)), getYear(convertDateCheckType(res.date_of_expense)))) {
                   this.state.expenseTotal += parseFloat(res.expense_amount);
                   return (
                     <ListItem 
@@ -97,7 +69,7 @@ export default class ViewExpenses extends Component {
                       bottomDivider>
                       <ListItem.Content>
                         <ListItem.Title>{res.expense_title}</ListItem.Title>
-                        <ListItem.Subtitle>Date: {this.convertDate(res.date_of_expense)}</ListItem.Subtitle>
+                        <ListItem.Subtitle>Date: {parseDate(res.date_of_expense)}</ListItem.Subtitle>
                         <ListItem.Subtitle>Amount: £{res.expense_amount}</ListItem.Subtitle>
                       </ListItem.Content>
                       <ListItem.Chevron 
