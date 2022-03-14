@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
-import app from '../../../firebase';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
@@ -187,7 +187,7 @@ export default class UpdateExpense extends Component {
                     onChange={(option)=>{
                       this.inputEl(option.label, 'category')
                     }}>
-                    <Text style={styles.dropdownBold}>Category: {this.state.category}</Text>
+                    <Text style={styles.dropdownText}>Category: {this.state.category}</Text>
                 </ModalSelector>
                 <Text style={styles.bold}>Date of Expense</Text>
                 <View>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';
@@ -14,9 +14,6 @@ function AttendanceRegister({ navigation }) {
   const [ collectedBy, setCollectedBy ] = useState('');
   const [ droppedBy, setDroppedBy ] = useState('');
   const [ temperatureChecked, setTemperatureChecked ] = useState('');
-  // const [ breakfast, setBreakfast ] = useState('');
-  // const [ lunch, setLunch ] = useState('');
-  // const [ snack, setSnack ] = useState('');
   const dateOfAttendance = useInput(new Date());
   const checkInTime = useInput();
   const checkOutTime = useInput();
@@ -57,9 +54,6 @@ function AttendanceRegister({ navigation }) {
       collected_by: collectedBy,
       date_of_attendance: convertDate(dateOfAttendance.date),
       dropped_by: droppedBy,
-      // breakfast_: breakfast,
-      // snack_: snack,
-      // lunch_: lunch,
       temperature_checked: temperatureChecked
     });
     navigation.navigate('Home');
@@ -146,37 +140,6 @@ function AttendanceRegister({ navigation }) {
           tintColors={{ true: "#0B8FDC", false: "orange"}}
         />
       </View>
-      {/* <Text style={styles.bold}>Meals</Text>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
-        <Text style={styles.standard}>Breakfast:</Text>
-        <CheckBox
-          style={{marginTop:5}}
-          disabled={false}
-          value={breakfast}
-          onValueChange={setBreakfast}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-      </View>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
-        <Text style={styles.standard}>Lunch:</Text>
-        <CheckBox
-          style={{marginTop:5}}
-          disabled={false}
-          value={lunch}
-          onValueChange={setLunch}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-      </View>
-      <View style={{flexDirection:"row", alignItems:"center"}}>
-        <Text style={styles.standard}>Snack:</Text>
-        <CheckBox
-          style={{marginTop:5}}
-          disabled={false}
-          value={snack}
-          onValueChange={setSnack}
-          tintColors={{ true: "#0B8FDC", false: "orange"}}
-        />
-      </View> */}
       <Text style={styles.bold}>Additional Notes</Text>
       <TextInput style={styles.extendedInput} placeholder={'Insert any additional information'} multiline={true} numberOfLines={4} label={'Additional Notes'} value={additionalNotes} onChangeText={setAdditionalNotes}/>
       <View style={styles.space}></View>

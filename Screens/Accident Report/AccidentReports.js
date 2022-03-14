@@ -4,7 +4,7 @@ const styles = require('../../Styles/general');
 
 export default function AccidentReports({ navigation }) {
   return (
-    <View style={styles.fixToText}>
+    <View style={styles.fitToText}>
       <View style={styles.space}></View>
       <Button 
         title="Log Accident Report"

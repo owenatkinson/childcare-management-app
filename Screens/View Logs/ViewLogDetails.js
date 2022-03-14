@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -19,9 +19,6 @@ export default class ViewLogDetails extends Component {
         droppedBy: '',
         collectedBy: '',
         temperatureChecked: '',
-        // breakfast: '',
-        // lunch: '',
-        // snack: '',
         additionalNotes: '',
         childNames: [],
         date: new Date(),
@@ -86,9 +83,6 @@ export default class ViewLogDetails extends Component {
           droppedBy: log.dropped_by,
           collectedBy: log.collected_by,
           temperatureChecked: log.temperature_checked,
-          // breakfast: log.breakfast_,
-          // lunch: log.lunch_,
-          // snack: log.snack_,
           additionalNotes: log.additional_notes,
           isLoading: false
         });
@@ -117,9 +111,6 @@ export default class ViewLogDetails extends Component {
         dropped_by: this.state.droppedBy,
         collected_by: this.state.collectedBy,
         temperature_checked: this.state.temperatureChecked,
-        // breakfast_: this.state.breakfast,
-        // lunch_: this.state.lunch,
-        // snack_: this.state.snack,
         additional_notes: this.state.additionalNotes
     }).then(() => {
       this.setState({
@@ -131,9 +122,6 @@ export default class ViewLogDetails extends Component {
         droppedBy: '',
         collectedBy: '',
         temperatureChecked: '',
-        // breakfast: '',
-        // lunch: '',
-        // dinner: '',
         isLoading: false,
       });
       this.props.navigation.navigate('ViewLogs');
@@ -227,37 +215,6 @@ export default class ViewLogDetails extends Component {
               tintColors={{ true: "#0B8FDC", false: "orange"}}
             />
           </View>
-          {/* <Text style={styles.boldUnderCheckbox}>Meals</Text>
-          <View style={{flexDirection:"row", alignItems:"center"}}>
-            <Text style={styles.standard}>Breakfast:</Text>
-            <CheckBox
-              style={{marginTop:5}}
-              disabled={false}
-              value={this.state.breakfast}
-              onValueChange={(val) => this.inputEl(val, 'breakfast')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
-            />
-          </View>
-          <View style={{flexDirection:"row", alignItems:"center"}}>
-            <Text style={styles.standard}>Lunch:</Text>
-            <CheckBox
-              style={{marginTop:5}}
-              disabled={false}
-              value={this.state.lunch}
-              onValueChange={(val) => this.inputEl(val, 'lunch')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
-            />
-          </View>
-          <View style={{flexDirection:"row", alignItems:"center"}}>
-            <Text style={styles.standard}>Snack:</Text>
-            <CheckBox
-              style={{marginTop:5}}
-              disabled={false}
-              value={this.state.snack}
-              onValueChange={(val) => this.inputEl(val, 'snack')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
-            />
-          </View> */}
           <Text style={styles.boldTextCheckbox}>Additional Notes</Text>
           <TextInput
               style={styles.extendedInput} 

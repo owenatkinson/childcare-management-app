@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Button, Share } from "react-native";
 import { ListItem, Icon } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import "firebase/database";
 import { ScrollView } from "react-native-gesture-handler";

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { ScrollView, View, SafeAreaView, FlatList, Text } from 'react-native';
-import app from '../../../firebase';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
-import MonthPick from '../../../MonthPick';
+import MonthPick from '../../../Components/MonthPick';
 const styles = require('../../../Styles/general');
 
 export default class ViewInvoice extends Component {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';

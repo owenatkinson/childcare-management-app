@@ -4,7 +4,7 @@ const styles = require('../../Styles/general');
 
 export default function Finances({ navigation }) {
   return (
-    <View style={styles.fixToText}>
+    <View style={styles.fitToText}>
         <Text style={styles.boldCentreText}>Expenses</Text>
         <View style={styles.space}></View>
         <Button

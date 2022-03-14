@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Button } from 'react-native';
-import Date from '../Date';
+import Date from '../Components/Date';
 const styles = require('../Styles/general');
 
 export default function HomeScreen({ navigation }) {
   return (
     <View>
       <Date></Date>
-      <View style={styles.fixToText}>
+      <View style={styles.fitToText}>
         <Button 
           title="Attendance Register"
           onPress={() => navigation.navigate('Attendance')}

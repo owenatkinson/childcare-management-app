@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import app from '../../../firebase';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';

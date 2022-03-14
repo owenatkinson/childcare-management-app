@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { globalStyles } from '../Styles/global';
+const styles = require('../../../Styles/general');
 
 export default function Allergens({ route }) {
 
@@ -12,11 +12,11 @@ export default function Allergens({ route }) {
   }
 
   return (
-    <View style={globalStyles.productContainer}>
-      <Text style={globalStyles.paddingCenter} h1>Allergens:</Text>
-      { allergens_tags && allergens_tags.length > 0? allergens_tags.map( (allergen, id) => <Text key={id} style={{ fontSize : 16}} >{trimString(allergen)}</Text> ) : <Text h4>N/A</Text> }
-      <Text style={globalStyles.paddingCenter} h1>Additives:</Text>
-      { additives_tags && additives_tags.length > 0? additives_tags.map( (additive, id) => <Text key={id} style={{ fontSize : 16}} >{trimString(additive)}</Text> ) : <Text h4>N/A</Text> }
+    <View>
+      <Text style={styles.paddingCenter} h1>Allergens:</Text>
+      { allergens_tags && allergens_tags.length > 0? allergens_tags.map( (allergen, id) => <Text key={id} style={styles.title} >{trimString(allergen)}</Text> ) : <Text h4>N/A</Text> }
+      <Text style={styles.paddingCenter} h1>Additives:</Text>
+      { additives_tags && additives_tags.length > 0? additives_tags.map( (additive, id) => <Text key={id} style={styles.title} >{trimString(additive)}</Text> ) : <Text h4>N/A</Text> }
     </View>
   );
 }

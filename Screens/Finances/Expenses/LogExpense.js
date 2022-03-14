@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Image } from 'react-native';
-import app from '../../../firebase';
+import app from '../../../Components/firebase';
 import "firebase/firestore";
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -154,7 +154,7 @@ const LogExpense = ({navigation}) => {
                 <Text style={styles.buttonText}>Upload a Receipt</Text>
                 </TouchableOpacity>
             </View>
-            {image && <Image source={{ uri: image }} style={styles.imageSize} />}
+            {image && <Image source={{ uri: image }} style={styles.receiptPreview} />}
             <View style={styles.space}></View>
             <Button 
                 title="Log Expense"

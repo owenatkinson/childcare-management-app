@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from 'react-native';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import CheckBox from '@react-native-community/checkbox';
 import moment from 'moment';
@@ -162,7 +162,7 @@ export default class UpdateChildDetails extends Component {
             {this.state.show && (
                 <DateTimePicker
                 testID="dob"
-                value={this.state.dob}
+                value={this.state.date}
                 mode='date'
                 display="default"
                 onChange={this.onChange}
@@ -171,20 +171,6 @@ export default class UpdateChildDetails extends Component {
             <Text style={styles.buttonText}>Choose a Date: {this.state.dob}</Text>
             </TouchableOpacity>
           </View>
-          {/* <View style={styles.dtpicker}>
-            <View>
-              <Button onPress={() => this.showDatepicker()} title={this.state.dob} />
-            </View>
-            {this.state.show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={this.state.date}
-                mode='date'
-                display="default"
-                onChange={this.onChange}
-              />
-            )}
-          </View> */}
           <Text style={styles.bold}>Child Allergies</Text>
           <TextInput
               style={styles.input}

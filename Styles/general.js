@@ -75,25 +75,20 @@ module.exports = StyleSheet.create({
         backgroundColor: '#ee752e',
         color: '#FFFFFF',
     },
-    dropdownBold: {
-        margin: 12,
-        backgroundColor: '#ee752e',
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        alignSelf: "center",
-    },
     dropdownText: {
         margin: 12,
         color: '#FFFFFF',
         fontWeight: 'bold',
         alignSelf: "center",
     },
-    fixToText: {
+    fitToText: {
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
     barCodeScan: {
-        
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
     },
     wrapper: {
         flex: 1,
@@ -105,12 +100,18 @@ module.exports = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#696969'
     },
-    image: {
+    receiptImage: {
         width: 400, 
         height: 700, 
         resizeMode: 'contain',
         borderColor: '#000000',
         borderWidth: 2
+    },
+    foodItemImage: {
+      flex: 0, 
+      width: 350, 
+      height: 200,
+      alignSelf: 'center'
     },
     container: {
         backgroundColor: '#FFFFFF',
@@ -122,10 +123,18 @@ module.exports = StyleSheet.create({
         textAlign: "center",
         fontSize: 18,
     },
+    paddedText: {
+        fontSize: 18,
+        paddingLeft: 15
+    },
+    quantityText: {
+      fontSize: 18,
+      alignSelf: 'center'
+    },
     swipeableItem: {
         height: 55
     },
-    imageSize: {
+    receiptPreview: {
         width: 200,
         height: 200,
         alignSelf: 'center'
@@ -140,12 +149,60 @@ module.exports = StyleSheet.create({
     },
     checkBoxPositioning: {
         flexDirection:"row", 
-        alignItems:"center",
+        alignItems:"center"
     },
     titleHeader: {
         alignItems:"center",
         justifyContent: "center",
         height: 50,
-        backgroundColor: '#ee752e',
+        backgroundColor: '#ee752e'
+    },
+    paddingCenter: {
+        padding: 30,
+        alignSelf: 'center'
+    },
+    textBold: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingLeft: 15
+    },
+    productName: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        alignSelf: 'center'
+    },
+    allNutrients: {
+        flexDirection: "row"
+    },
+    nutrientsDot: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+    },
+    ingredientsList: {
+        padding:30,
+        alignItems: 'center' ,
+        fontSize: 16,
+    },
+    inlineDisplay: {
+        flexDirection: "row"
+    },
+    icons: {
+        marginLeft: 5
+    },
+    nutritionText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 12
+    },
+    nutritionDetail: {
+        fontSize: 20,
+        marginLeft: 12
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 25,
     }
 });

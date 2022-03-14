@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, View } from 'react-native';
-import app from '../../firebase';
+import app from '../../Components/firebase';
 import "firebase/firestore";
 import { ListItem } from 'react-native-elements';
 import ModalSelector from 'react-native-modal-selector'
