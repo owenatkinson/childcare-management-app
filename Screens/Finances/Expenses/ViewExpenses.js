@@ -111,7 +111,7 @@ export default class ViewExpenses extends Component {
           })}
         </ScrollView>
         <Text style={styles.boldLargeText}>
-          Month Total: £{parseFloat(this.state.expenseTotal).toFixed(2)}
+          Monthly Total: £{parseFloat(this.state.expenseTotal).toFixed(2)}
         </Text>
       </View>
     );

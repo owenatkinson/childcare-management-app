@@ -4,6 +4,7 @@ import CheckBox from "@react-native-community/checkbox";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import ModalSelector from "react-native-modal-selector";
 import { convertDate } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
@@ -22,7 +23,7 @@ export default class ViewLogDetails extends Component {
       additionalNotes: "",
       childNames: [],
       date: new Date(),
-      show: false,
+      show: false
     };
   }
 
@@ -153,17 +154,26 @@ export default class ViewLogDetails extends Component {
     return (
       <ScrollView>
         <View style={styles.space}></View>
-        <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
-        <View style={styles.space}></View>
+        <Text style={styles.bold}>Child Name</Text>
+        <View>
+          <ModalSelector
+            style={styles.dropdown}
+            data={this.state.childNames}
+            onChange={(option) => {
+              this.setState({ childName: option.label });
+            }}
+          >
+          <Text style={styles.dropdownText}>Select Child: {this.state.childName}</Text>
+          </ModalSelector>
+        </View>
         <Text style={styles.bold}>Date of Attendance</Text>
         <View>
           <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
             {this.state.show && (
               <DateTimePicker
-                testID="dateOfAttendance"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}

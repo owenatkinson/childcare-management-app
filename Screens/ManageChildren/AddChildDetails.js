@@ -68,11 +68,10 @@ export default function AddNewChild({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={childDOB.showDatepicker}>
           {childDOB.show && (
             <DateTimePicker
-              testID="childDOB"
+              maximumDate={new Date()}
               value={childDOB.date}
               mode={childDOB.mode}
               is24Hour={true}
-              display="default"
               onChange={childDOB.onChange}
             />
           )}
@@ -128,6 +127,7 @@ export default function AddNewChild({ navigation }) {
         value={childHomeAddress}
         onChangeText={setChildHomeAddress}
       />
+      <View style={styles.horizontalRule}></View>
       <Text style={styles.bold}>Parent #1 Name</Text>
       <TextInput
         style={styles.input}
@@ -142,6 +142,7 @@ export default function AddNewChild({ navigation }) {
         value={parentNumber1}
         onChangeText={setParentNumber1}
       />
+      <View style={styles.horizontalRule}></View>
       <Text style={styles.bold}>Parent #2 Name</Text>
       <TextInput
         style={styles.input}
@@ -156,6 +157,7 @@ export default function AddNewChild({ navigation }) {
         value={parentNumber2}
         onChangeText={setParentNumber2}
       />
+      <View style={styles.horizontalRule}></View>
       <Text style={styles.bold}>Emergency Contact Name</Text>
       <TextInput
         style={styles.input}
@@ -177,6 +179,7 @@ export default function AddNewChild({ navigation }) {
         value={childEmergencyRelation}
         onChangeText={setChildEmergencyRelation}
       />
+      <View style={styles.horizontalRule}></View>
       <Text style={styles.bold}>Doctor's Name</Text>
       <TextInput
         style={styles.input}

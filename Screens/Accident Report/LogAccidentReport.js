@@ -74,7 +74,7 @@ export default function LogAccidentReport({ navigation }) {
             setChildName(option.label);
           }}
         >
-          <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+          <Text style={styles.dropdownText}>Select Child: {childName}</Text>
         </ModalSelector>
       </View>
       <Text style={styles.bold}>Date of Accident:</Text>
@@ -85,11 +85,10 @@ export default function LogAccidentReport({ navigation }) {
         >
           {dateOfAccident.show && (
             <DateTimePicker
-              testID="dateOfAccident"
+              maximumDate={new Date()}
               value={dateOfAccident.date}
               mode={dateOfAccident.mode}
               is24Hour={true}
-              display="default"
               onChange={dateOfAccident.onChange}
             />
           )}
@@ -106,11 +105,9 @@ export default function LogAccidentReport({ navigation }) {
         >
           {timeOfAccident.show && (
             <DateTimePicker
-              testID="timeOfAccident"
               value={timeOfAccident.date}
               mode={timeOfAccident.mode}
               is24Hour={true}
-              display="default"
               onChange={timeOfAccident.onChange}
             />
           )}

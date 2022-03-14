@@ -133,10 +133,9 @@ export default class UpdateVisitorLog extends Component {
           <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
             {this.state.show && (
               <DateTimePicker
-                testID="dateOfVisit"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}

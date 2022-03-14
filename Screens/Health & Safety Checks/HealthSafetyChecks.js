@@ -30,11 +30,10 @@ export default function HealthSafetyChecks({ navigation }) {
       </View>
       {show && (
         <DateTimePicker
-          testID="dateTimePicker"
+          maximumDate={new Date()}
           value={date}
           mode="date"
           is24Hour={true}
-          display="default"
           onChange={onChange}
         />
       )}

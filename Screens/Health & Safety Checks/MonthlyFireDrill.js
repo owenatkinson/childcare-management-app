@@ -129,10 +129,8 @@ export default class MonthlyFireDrill extends Component {
             <TouchableOpacity style={styles.button} onPress={() => this.showTimepicker()}>
               {this.state.show && (
                 <DateTimePicker
-                  testID="monthlyFireDrillTimeCompleted"
                   value={this.state.date}
                   mode="time"
-                  display="default"
                   onChange={this.onChange}
                 />
               )}

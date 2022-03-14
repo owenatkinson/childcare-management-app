@@ -75,7 +75,7 @@ function AttendanceRegister({ navigation }) {
             setChildName(option.label);
           }}
         >
-          <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+          <Text style={styles.dropdownText}>Select Child: {childName}</Text>
         </ModalSelector>
       </View>
       <Text style={styles.bold}>Date of Attendance:</Text>
@@ -86,11 +86,10 @@ function AttendanceRegister({ navigation }) {
         >
           {dateOfAttendance.show && (
             <DateTimePicker
-              testID="dateOfAttendance"
+              maximumDate={new Date()}
               value={dateOfAttendance.date}
               mode={dateOfAttendance.mode}
               is24Hour={true}
-              display="default"
               onChange={dateOfAttendance.onChange}
             />
           )}
@@ -107,11 +106,9 @@ function AttendanceRegister({ navigation }) {
         >
           {checkInTime.show && (
             <DateTimePicker
-              testID="checkInTime"
               value={checkInTime.date}
               mode={checkInTime.mode}
               is24Hour={true}
-              display="default"
               onChange={checkInTime.onChange}
             />
           )}
@@ -128,11 +125,9 @@ function AttendanceRegister({ navigation }) {
         >
           {checkOutTime.show && (
             <DateTimePicker
-              testID="checkOutTime"
               value={checkOutTime.date}
               mode={checkOutTime.mode}
               is24Hour={true}
-              display="default"
               onChange={checkOutTime.onChange}
             />
           )}

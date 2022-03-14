@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import app from "../../Components/firebase";
 import "firebase/firestore";
+import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   convertDate,
@@ -33,6 +34,7 @@ export default class UpdateAccidentReport extends Component {
       accidentNotes: "",
       date: new Date(),
       show: false,
+      childNames: [],
     };
   }
 
@@ -56,6 +58,25 @@ export default class UpdateAccidentReport extends Component {
       .firestore()
       .collection("accidentReports")
       .doc(this.props.route.params.userkey);
+    const childNames = [];
+    let index = 0;
+
+    app
+      .firestore()
+      .collection("children")
+      .orderBy("child_name", "asc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          childNames.push({
+            key: index++,
+            label: doc.data()["child_name"],
+          });
+        });
+        this.setState({
+          childNames: childNames,
+        });
+      });
     docRef.get().then((res) => {
       if (res.exists) {
         const user = res.data();
@@ -148,8 +169,18 @@ export default class UpdateAccidentReport extends Component {
   render() {
     return (
       <ScrollView>
-        <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
-        <View style={styles.space}></View>
+        <Text style={styles.bold}>Child Name</Text>
+        <View>
+          <ModalSelector
+            style={styles.dropdown}
+            data={this.state.childNames}
+            onChange={(option) => {
+              this.setState({ childName: option.label });
+            }}
+          >
+          <Text style={styles.dropdownText}>Select Child: {this.state.childName}</Text>
+          </ModalSelector>
+        </View>
         <Text style={styles.bold}>Date of Accident:</Text>
         <View>
           <TouchableOpacity
@@ -158,10 +189,9 @@ export default class UpdateAccidentReport extends Component {
           >
             {this.state.show && (
               <DateTimePicker
-                testID="accidentDate"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}

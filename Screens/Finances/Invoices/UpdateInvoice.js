@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
+import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   parseDate,
@@ -154,8 +155,18 @@ export default class UpdateInvoice extends Component {
   render() {
     return (
       <ScrollView>
-        <Text style={styles.bold}>Child Name: {this.state.childName}</Text>
-        <View style={styles.space}></View>
+        <Text style={styles.bold}>Child Name</Text>
+        <View>
+          <ModalSelector
+            style={styles.dropdown}
+            data={this.state.childNames}
+            onChange={(option) => {
+              this.setState({ childName: option.label });
+            }}
+          >
+          <Text style={styles.dropdownText}>Select Child: {this.state.childName}</Text>
+          </ModalSelector>
+        </View>
         <Text style={styles.bold}>Date of Invoice</Text>
         <View>
           <TouchableOpacity
@@ -164,10 +175,9 @@ export default class UpdateInvoice extends Component {
           >
             {this.state.show && (
               <DateTimePicker
-                testID="dateOfInvoice"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}

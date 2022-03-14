@@ -133,7 +133,7 @@ const LogExpense = ({ navigation }) => {
             setCategory(option.label);
           }}
         >
-          <Text style={styles.dropdownText}>Category: {category}</Text>
+        <Text style={styles.dropdownText}>Category: {category}</Text>
         </ModalSelector>
       </View>
       <Text style={styles.bold}>Date of Expense</Text>
@@ -144,11 +144,10 @@ const LogExpense = ({ navigation }) => {
         >
           {dateOfExpense.show && (
             <DateTimePicker
-              testID="dateOfExpense"
+              maximumDate={new Date()}
               value={dateOfExpense.date}
               mode={dateOfExpense.mode}
               is24Hour={true}
-              display="default"
               onChange={dateOfExpense.onChange}
             />
           )}

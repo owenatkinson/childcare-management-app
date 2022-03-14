@@ -212,10 +212,9 @@ export default class UpdateExpense extends Component {
           >
             {this.state.show && (
               <DateTimePicker
-                testID="dateOfExpense"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}

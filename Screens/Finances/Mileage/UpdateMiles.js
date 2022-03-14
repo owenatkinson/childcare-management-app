@@ -177,10 +177,9 @@ export default class UpdateMiles extends Component {
           >
             {this.state.show && (
               <DateTimePicker
-                testID="dateOfMileage"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}

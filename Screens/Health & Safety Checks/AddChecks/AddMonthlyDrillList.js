@@ -49,11 +49,9 @@ export default function AddMonthlyDrillList({ route, navigation }) {
           >
             {monthlyFireDrillTimeCompleted.show && (
               <DateTimePicker
-                testID="dateOfAccident"
                 value={monthlyFireDrillTimeCompleted.date}
                 mode={monthlyFireDrillTimeCompleted.mode}
                 is24Hour={true}
-                display="default"
                 onChange={monthlyFireDrillTimeCompleted.onChange}
               />
             )}

@@ -69,11 +69,10 @@ const LogMiles = ({ navigation }) => {
         >
           {dateOfMileage.show && (
             <DateTimePicker
-              testID="dateOfExpense"
+              maximumDate={new Date()}
               value={dateOfMileage.date}
               mode={dateOfMileage.mode}
               is24Hour={true}
-              display="default"
               onChange={dateOfMileage.onChange}
             />
           )}

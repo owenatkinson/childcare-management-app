@@ -105,7 +105,7 @@ export default class ViewMiles extends Component {
           })}
         </ScrollView>
         <Text style={styles.boldLargeText}>
-          Month Total: £{parseFloat(this.state.mileageAmount).toFixed(2)}
+          Monthly Total: £{parseFloat(this.state.mileageAmount).toFixed(2)}
         </Text>
       </View>
     );

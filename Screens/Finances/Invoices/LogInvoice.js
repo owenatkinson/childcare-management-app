@@ -65,7 +65,7 @@ const LogInvoice = ({ navigation }) => {
             setChildName(option.label);
           }}
         >
-          <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+          <Text style={styles.dropdownText}>Select Child: {childName}</Text>
         </ModalSelector>
       </View>
       <Text style={styles.bold}>Date of Invoice</Text>
@@ -76,11 +76,10 @@ const LogInvoice = ({ navigation }) => {
         >
           {dateOfInvoice.show && (
             <DateTimePicker
-              testID="dateOfExpense"
+              maximumDate={new Date()}
               value={dateOfInvoice.date}
               mode={dateOfInvoice.mode}
               is24Hour={true}
-              display="default"
               onChange={dateOfInvoice.onChange}
             />
           )}

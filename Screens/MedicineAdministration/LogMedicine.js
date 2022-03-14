@@ -63,7 +63,7 @@ export default function LogMedicine({ navigation }) {
             setChildName(option.label);
           }}
         >
-          <Text style={styles.dropdownText}>Select a Child: {childName}</Text>
+          <Text style={styles.dropdownText}>Select Child: {childName}</Text>
         </ModalSelector>
       </View>
       <Text style={styles.bold}>Medicine</Text>
@@ -78,11 +78,10 @@ export default function LogMedicine({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={medicineDate.showDatepicker}>
           {medicineDate.show && (
             <DateTimePicker
-              testID="medicineDate"
+              maximumDate={new Date()}
               value={medicineDate.date}
               mode={medicineDate.mode}
               is24Hour={true}
-              display="default"
               onChange={medicineDate.onChange}
             />
           )}
@@ -94,11 +93,9 @@ export default function LogMedicine({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={medicineTime.showTimepicker}>
           {medicineTime.show && (
             <DateTimePicker
-              testID="medicineTime"
               value={medicineTime.date}
               mode={medicineTime.mode}
               is24Hour={true}
-              display="default"
               onChange={medicineTime.onChange}
             />
           )}

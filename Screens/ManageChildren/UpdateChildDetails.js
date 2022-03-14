@@ -146,10 +146,9 @@ export default class UpdateChildDetails extends Component {
           <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
             {this.state.show && (
               <DateTimePicker
-                testID="dob"
+                maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                display="default"
                 onChange={this.onChange}
               />
             )}
@@ -205,6 +204,7 @@ export default class UpdateChildDetails extends Component {
           value={this.state.childAddress}
           onChangeText={(val) => this.inputEl(val, "childAddress")}
         />
+        <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Parent #1 Name</Text>
         <TextInput
           style={styles.input}
@@ -219,6 +219,7 @@ export default class UpdateChildDetails extends Component {
           value={this.state.parent1Number}
           onChangeText={(val) => this.inputEl(val, "parent1Number")}
         />
+        <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Parent #2 Name</Text>
         <TextInput
           style={styles.input}
@@ -233,6 +234,7 @@ export default class UpdateChildDetails extends Component {
           value={this.state.parent2Number}
           onChangeText={(val) => this.inputEl(val, "parent2Number")}
         />
+        <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Emergency Contact Name</Text>
         <TextInput
           style={styles.input}
@@ -254,6 +256,7 @@ export default class UpdateChildDetails extends Component {
           value={this.state.emergencyRelation}
           onChangeText={(val) => this.inputEl(val, "emergencyRelation")}
         />
+        <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Doctor's Name</Text>
         <TextInput
           style={styles.input}

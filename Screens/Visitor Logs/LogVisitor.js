@@ -41,11 +41,10 @@ export default function LogVisitor({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={dateOfVisit.showDatepicker}>
           {dateOfVisit.show && (
             <DateTimePicker
-              testID="dateOfVisit"
+              maximumDate={new Date()}
               value={dateOfVisit.date}
               mode={dateOfVisit.mode}
               is24Hour={true}
-              display="default"
               onChange={dateOfVisit.onChange}
             />
           )}
@@ -57,11 +56,9 @@ export default function LogVisitor({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={timeIn.showTimepicker}>
           {timeIn.show && (
             <DateTimePicker
-              testID="timeIn"
               value={timeIn.date}
               mode={timeIn.mode}
               is24Hour={true}
-              display="default"
               onChange={timeIn.onChange}
             />
           )}
@@ -72,11 +69,9 @@ export default function LogVisitor({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={timeOut.showTimepicker}>
         {timeOut.show && (
           <DateTimePicker
-            testID="timeOut"
             value={timeOut.date}
             mode={timeOut.mode}
             is24Hour={true}
-            display="default"
             onChange={timeOut.onChange}
           />
         )}

@@ -74,7 +74,7 @@ export default class ViewAccidentReports extends Component {
         <View>
           <ModalSelector
             data={this.state.childNames}
-            initValue="Select a Child"
+            initValue="Select Child"
             onChange={(option) => {
               this.setState({ activeChildName: option.label });
             }}
