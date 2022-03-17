@@ -75,3 +75,7 @@ export const isNumeric = (str) => {
   if (typeof str != "string") return false
   return !isNaN(str) && !isNaN(parseFloat(str))
 }
+
+export const trimAllergyString = (input) => {
+  return input.replace("en:", "");
+}

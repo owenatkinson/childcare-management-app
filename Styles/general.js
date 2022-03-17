@@ -184,7 +184,7 @@ module.exports = StyleSheet.create({
   ingredientsList: {
     padding: 30,
     alignItems: "center",
-    fontSize: 16,
+    fontSize: 20,
   },
   inlineDisplay: {
     flexDirection: "row",

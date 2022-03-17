@@ -5,18 +5,13 @@ import { Entypo } from "@expo/vector-icons";
 const styles = require("../../../Styles/general");
 
 export default function General({ route }) {
-  const { product_name, image_front_url, quantity, nutrient_levels } =
-    route.params.item;
+  const { product_name, image_front_url, nutrient_levels } = route.params.item;
 
   return (
     <View>
       <View style={styles.space}></View>
       <Text style={styles.productName}>
-        {product_name ? `${product_name}` : ""}
-      </Text>
-      <View style={styles.space}></View>
-      <Text style={styles.title}>
-        {quantity ? `Quantity: ${quantity}` : "Quantity: N/A"}
+        {product_name ? `${product_name}` : null}
       </Text>
       <View style={styles.space}></View>
       <Image source={{ uri: image_front_url }} style={styles.foodItemImage} />
@@ -28,7 +23,7 @@ export default function General({ route }) {
           <View>
             <Text style={styles.paddedText}>Sugar Levels: </Text>
             <Text style={styles.textBold}>
-              {nutrient_levels.sugars ? `${nutrient_levels.sugars}` : ""}
+              {nutrient_levels.sugars ? `${nutrient_levels.sugars}`.toUpperCase() : null}
             </Text>
           </View>
           <View style={styles.nutrientsDot}>
@@ -49,7 +44,7 @@ export default function General({ route }) {
           <View>
             <Text style={styles.paddedText}>Salt Levels: </Text>
             <Text style={styles.textBold}>
-              {nutrient_levels.salt ? `${nutrient_levels.salt}` : ""}
+              {nutrient_levels.salt ? `${nutrient_levels.salt}`.toUpperCase() : null}
             </Text>
           </View>
           <View style={styles.nutrientsDot}>
@@ -69,7 +64,7 @@ export default function General({ route }) {
           <View>
             <Text style={styles.paddedText}>Fat Levels: </Text>
             <Text style={styles.textBold}>
-              {nutrient_levels.fat ? `${nutrient_levels.fat}` : ""}
+              {nutrient_levels.fat ? `${nutrient_levels.fat}`.toUpperCase() : null}
             </Text>
           </View>
           <View style={styles.nutrientsDot}>
@@ -91,8 +86,8 @@ export default function General({ route }) {
             <Text style={styles.paddedText}>Saturated Fat Levels: </Text>
             <Text style={styles.textBold}>
               {nutrient_levels["saturated-fat"]
-                ? `${nutrient_levels["saturated-fat"]}`
-                : ""}
+                ? `${nutrient_levels["saturated-fat"]}`.toUpperCase()
+                : null}
             </Text>
           </View>
           <View style={styles.nutrientsDot}>

@@ -5,6 +5,7 @@ import General from "./Components/General";
 import Ingredients from "./Components/Ingredients";
 import Allergens from "./Components/Allergens";
 import Nutrition from "./Components/Nutrition";
+import ChildAllergies from "./Components/ChildAllergies";
 
 export default function ProductScreen({ route }) {
   const [selectedIndex, updateIndex] = useState(0);
@@ -32,6 +33,7 @@ export default function ProductScreen({ route }) {
         {selectedIndex === 1 ? <Ingredients route={route} /> : false}
         {selectedIndex === 2 ? <Nutrition route={route} /> : false}
         {selectedIndex === 3 ? <Allergens route={route} /> : false}
+        {selectedIndex === 4 ? <ChildAllergies route={route} /> : false}
       </View>
     </View>
   );

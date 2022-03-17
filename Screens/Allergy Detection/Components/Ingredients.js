@@ -8,7 +8,7 @@ export default function Ingredients({ route }) {
   return (
     <View>
       <Text style={styles.ingredientsList}>
-        {ingredients_text ? ingredients_text : "N/A"}
+        {ingredients_text ? ingredients_text : "Information Unavailable"}
       </Text>
     </View>
   );
