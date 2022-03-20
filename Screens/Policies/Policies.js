@@ -7,43 +7,52 @@ import "firebase/firestore";
 import "firebase/database";
 import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
+import * as Progress from 'react-native-progress';
 const styles = require("../../Styles/general");
 
 const Policies = (props) => {
   const [fileList, setFileList] = useState([]);
+  const [progress, setProgress] = useState(-1);
 
   async function uploadImage() {
     let file = await DocumentPicker.getDocumentAsync({});
     if (file.uri != null) {
       const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-          resolve(xhr.response);
+        const xml = new XMLHttpRequest();
+        xml.onload = function () {
+          resolve(xml.response);
         };
-        xhr.onerror = function () {
+        xml.onerror = function () {
           reject(new TypeError("Network request failed"));
         };
-        xhr.responseType = "blob";
-        xhr.open("GET", file.uri, true);
-        xhr.send(null);
+        xml.responseType = "blob";
+        xml.open("GET", file.uri, true);
+        xml.send(null);
       });
 
-      let trimFileName = removeFileExtension(file.name);
-      const ref = app.storage().ref(`/policies/${trimFileName}`);
+      const ref = app.storage().ref(`/policies/${removeFileExtension(file.name)}`);
       const snapshot = ref.put(blob);
 
       snapshot.on(
         "state_changed",
         function (snapshot) {
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes);
+          setProgress(progress);
+          if(progress == 1) {
+            setProgress(-1);
+          }
         },
         function (error) {
+          console.log(error.message);
           blob.close();
           return;
         },
         function () {
           snapshot.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             saveFileToRealtimeDatabase(downloadURL, file);
+            props.navigation.navigate("FilePreview", {
+              fileData: { fileURL: downloadURL}
+            })
           });
           blob.close();
           return;
@@ -75,17 +84,12 @@ const Policies = (props) => {
   };
 
   function deletePolicy(fileName) {
-    let trimFileName = removeFileExtension(fileName);
-    let deletePolicyDatabase = app.database().ref("policies/" + trimFileName);
-    deletePolicyDatabase.remove();
-
+    let deletePolicyDatabase = app.database().ref("policies/" + removeFileExtension(fileName));
     var storage = app.storage();
-
     var storageRef = storage.ref();
-
-    var desertRef = storageRef.child(`policies/${trimFileName}`);
-
-    desertRef.delete();
+    var policyRef = storageRef.child(`policies/${trimFileName}`);
+    deletePolicyDatabase.remove();
+    policyRef.delete();
     setFileList([]);
     const onChildDeleted = app
       .database()
@@ -108,7 +112,7 @@ const Policies = (props) => {
         helperArr.push(snapshot.val());
         setFileList((files) => [...files, ...helperArr]);
       });
-    return () => app.database().ref(`policies`).off("child_added", onChildAdded);
+    return () => app.database().ref(`policies`).off("child_added", onChildAdded)
   }, []);
 
   return (
@@ -116,6 +120,12 @@ const Policies = (props) => {
       <View>
         <Button title="Upload Policy" onPress={uploadImage} />
       </View>
+      {progress >= 0 || progress == 1 ?
+      <Progress.Bar
+        width={412}
+        progress={progress}
+        borderRadius={0}
+      /> : (null)}
       {fileList.map((item, index) => (
         <ListItem.Swipeable
           leftContent={
