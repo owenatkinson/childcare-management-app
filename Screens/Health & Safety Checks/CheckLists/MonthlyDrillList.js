@@ -25,11 +25,10 @@ export default class MonthlyDrillList extends Component {
 
   fetchCollection = (querySnapshot) => {
     const monthlyFireDrill = [];
-
-    querySnapshot.forEach((res) => {
-      const { monthly_fire_drill_date, monthly_fire_drill_is_completed } = res.data();
+    querySnapshot.forEach((result) => {
+      const { monthly_fire_drill_date, monthly_fire_drill_is_completed } = result.data();
       monthlyFireDrill.push({
-        key: res.id,
+        key: result.id,
         monthly_fire_drill_date,
         monthly_fire_drill_is_completed,
       });
@@ -50,14 +49,14 @@ export default class MonthlyDrillList extends Component {
       if (newArray.length == 1) {
         return (
           <ScrollView>
-            {this.state.monthlyFireDrill.map((res, i) => {
-              if (res.monthly_fire_drill_date == this.props.changeDate) {
+            {this.state.monthlyFireDrill.map((result, id) => {
+              if (result.monthly_fire_drill_date == this.props.changeDate) {
                 return (
                   <ListItem
-                    key={i}
+                    key={id}
                     onPress={() => {
                       this.props.navigation.navigate("MonthlyFireDrill", {
-                        userkey: res.key,
+                        userkey: result.key,
                       });
                     }}
                     bottomDivider

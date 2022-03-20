@@ -39,10 +39,10 @@ export default class ViewMedicalInfo extends Component {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            label: doc.data()["child_name"],
+            label: document.data()["child_name"],
           });
         });
         this.setState({
@@ -51,7 +51,7 @@ export default class ViewMedicalInfo extends Component {
       });
 
     const medicineLogs = [];
-    querySnapshot.forEach((res) => {
+    querySnapshot.forEach((result) => {
       const {
         child_name,
         medicine_title,
@@ -59,9 +59,9 @@ export default class ViewMedicalInfo extends Component {
         medicine_time,
         medicine_reason,
         medicine_notes,
-      } = res.data();
+      } = result.data();
       medicineLogs.push({
-        key: res.id,
+        key: result.id,
         child_name,
         medicine_title,
         medicine_date,
@@ -88,21 +88,21 @@ export default class ViewMedicalInfo extends Component {
             }}
           />
         </View>
-        {this.state.medicineLogs.map((res, i) => {
-          if (res.child_name == this.state.activeChildName) {
+        {this.state.medicineLogs.map((result, id) => {
+          if (result.child_name == this.state.activeChildName) {
             return (
               <ListItem
-                key={i}
+                key={id}
                 onPress={() => {
                   this.props.navigation.navigate("UpdateMedicineLog", {
-                    userkey: res.key,
+                    userkey: result.key,
                   });
                 }}
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{res.medicine_title}</ListItem.Title>
-                  <ListItem.Subtitle>Date: {parseDate(res.medicine_date)}</ListItem.Subtitle>
+                  <ListItem.Title>{result.medicine_title}</ListItem.Title>
+                  <ListItem.Subtitle>Date: {parseDate(result.medicine_date)}</ListItem.Subtitle>
                 </ListItem.Content>
                 <ListItem.Chevron color="black" />
               </ListItem>

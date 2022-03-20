@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  ScrollView,
-  TextInput,
-  Button,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -109,7 +102,7 @@ function useInput() {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
+    setShow(false);
     setDate(currentDate);
   };
   return {

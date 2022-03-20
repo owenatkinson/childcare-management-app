@@ -25,11 +25,10 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
 
   fetchCollection = (querySnapshot) => {
     const monthlyFireSafetyEquipmentCheck = [];
-
-    querySnapshot.forEach((res) => {
-      const { monthly_fire_safety_date, monthly_fire_safety_is_completed } = res.data();
+    querySnapshot.forEach((result) => {
+      const { monthly_fire_safety_date, monthly_fire_safety_is_completed } = result.data();
       monthlyFireSafetyEquipmentCheck.push({
-        key: res.id,
+        key: result.id,
         monthly_fire_safety_date,
         monthly_fire_safety_is_completed,
       });
@@ -54,17 +53,17 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
       if (newArray.length == 1) {
         return (
           <ScrollView>
-            {this.state.monthlyFireSafetyEquipmentCheck.map((res, i) => {
+            {this.state.monthlyFireSafetyEquipmentCheck.map((result, id) => {
               if (
                 getMonday(this.props.changeDate) &&
-                res.monthly_fire_safety_date == this.props.changeDate
+                result.monthly_fire_safety_date == this.props.changeDate
               ) {
                 return (
                   <ListItem
-                    key={i}
+                    key={id}
                     onPress={() => {
                       this.props.navigation.navigate("MonthlyFireSafetyEquipmentCheck", {
-                        userkey: res.key,
+                        userkey: result.key,
                       });
                     }}
                     bottomDivider

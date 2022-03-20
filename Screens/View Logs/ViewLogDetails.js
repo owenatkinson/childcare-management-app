@@ -43,7 +43,7 @@ export default class ViewLogDetails extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("attendanceRegister")
       .doc(this.props.route.params.userkey);
@@ -56,10 +56,10 @@ export default class ViewLogDetails extends Component {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            label: doc.data()["child_name"],
+            label: document.data()["child_name"],
           });
         });
         this.setState({
@@ -67,11 +67,11 @@ export default class ViewLogDetails extends Component {
         });
       });
 
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const log = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const log = result.data();
         this.setState({
-          key: res.id,
+          key: result.id,
           childName: log.child_name,
           dateOfAttendance: log.date_of_attendance,
           checkInTime: log.check_in_time,
@@ -88,9 +88,9 @@ export default class ViewLogDetails extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
@@ -102,8 +102,8 @@ export default class ViewLogDetails extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app.firestore().collection("attendanceRegister").doc(this.state.key);
-      docUpdate
+      const documentUpdate = app.firestore().collection("attendanceRegister").doc(this.state.key);
+      documentUpdate
         .set({
           child_name: this.state.childName,
           date_of_attendance: this.state.dateOfAttendance,
@@ -116,7 +116,6 @@ export default class ViewLogDetails extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewLogs");
@@ -131,11 +130,11 @@ export default class ViewLogDetails extends Component {
   }
 
   deleteLog() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("attendanceRegister")
       .doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    documentReference.delete().then(() => {
       console.log("Doc deleted.");
       this.props.navigation.navigate("ViewLogs");
     });
@@ -190,28 +189,28 @@ export default class ViewLogDetails extends Component {
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.checkInTime}
-          onChangeText={(val) => this.inputEl(val, "checkInTime")}
+          onChangeText={(value) => this.inputEl(value, "checkInTime")}
         />
         <Text style={styles.bold}>Check-out Time</Text>
         <TextInput
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.checkOutTime}
-          onChangeText={(val) => this.inputEl(val, "checkOutTime")}
+          onChangeText={(value) => this.inputEl(value, "checkOutTime")}
         />
         <Text style={styles.bold}>Dropped By</Text>
         <TextInput
           style={styles.input}
           placeholder={"Dropped By"}
           value={this.state.droppedBy}
-          onChangeText={(val) => this.inputEl(val, "droppedBy")}
+          onChangeText={(value) => this.inputEl(value, "droppedBy")}
         />
         <Text style={styles.bold}>Collected By</Text>
         <TextInput
           style={styles.input}
           placeholder={"Collected By"}
           value={this.state.collectedBy}
-          onChangeText={(val) => this.inputEl(val, "collectedBy")}
+          onChangeText={(value) => this.inputEl(value, "collectedBy")}
         />
         <View style={styles.checkBoxPositioning}>
           <Text style={styles.bold}>Temperature Checked:</Text>
@@ -219,7 +218,7 @@ export default class ViewLogDetails extends Component {
             style={styles.checkBox}
             disabled={false}
             value={this.state.temperatureChecked}
-            onValueChange={(val) => this.inputEl(val, "temperatureChecked")}
+            onValueChange={(value) => this.inputEl(value, "temperatureChecked")}
             tintColors={{ true: "#0B8FDC", false: "orange" }}
           />
         </View>
@@ -230,7 +229,7 @@ export default class ViewLogDetails extends Component {
           numberOfLines={4}
           placeholder={"Insert any additional information"}
           value={this.state.additionalNotes}
-          onChangeText={(val) => this.inputEl(val, "additionalNotes")}
+          onChangeText={(value) => this.inputEl(value, "additionalNotes")}
         />
         <View style={styles.space}></View>
         <Button title="Update" onPress={() => this.editLog()} color="#0B8FDC" />

@@ -36,19 +36,19 @@ export default class UpdateMiles extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("mileageLogs")
       .doc(this.props.route.params.userkey);
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          dateOfMileage: parseDate(user.date_of_mileage),
-          mileageAmount: user.mileage_amount,
-          mileageRate: user.mileage_rate,
-          milesTravelled: user.miles_travelled,
+          key: result.id,
+          dateOfMileage: parseDate(data.date_of_mileage),
+          mileageAmount: data.mileage_amount,
+          mileageRate: data.mileage_rate,
+          milesTravelled: data.miles_travelled,
           isLoading: false,
         });
       } else {
@@ -57,9 +57,9 @@ export default class UpdateMiles extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
@@ -73,11 +73,11 @@ export default class UpdateMiles extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app
+      const documentUpdate = app
         .firestore()
         .collection("mileageLogs")
         .doc(this.state.key);
-      docUpdate
+      documentUpdate
         .set({
           date_of_mileage: convertToTimestamp(this.state.dateOfMileage),
           mileage_amount: this.state.mileageAmount,
@@ -86,7 +86,6 @@ export default class UpdateMiles extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewMiles");
@@ -101,11 +100,11 @@ export default class UpdateMiles extends Component {
   }
 
   deleteMileageLog() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("mileageLogs")
       .doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewMiles");
     });
   }
@@ -137,14 +136,14 @@ export default class UpdateMiles extends Component {
           style={styles.input}
           placeholder={"Miles Travelled"}
           value={this.state.milesTravelled}
-          onChangeText={(val) => this.inputEl(val, "milesTravelled")}
+          onChangeText={(value) => this.inputEl(value, "milesTravelled")}
         />
         <Text style={styles.bold}>Rate (pence per mile)</Text>
         <TextInput
           style={styles.input}
           placeholder={"0.00"}
           value={this.state.mileageRate}
-          onChangeText={(val) => this.inputEl(val, "mileageRate")}
+          onChangeText={(value) => this.inputEl(value, "mileageRate")}
         />
         <View>
           <TouchableOpacity

@@ -40,21 +40,21 @@ export default class UpdateExpense extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("expenseLogs")
       .doc(this.props.route.params.userkey);
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          dateOfExpense: parseDate(user.date_of_expense),
-          expenseAmount: user.expense_amount,
-          expenseNote: user.expense_note,
-          expenseTitle: user.expense_title,
-          receiptUrl: user.receipt_url,
-          category: user.expense_category,
+          key: result.id,
+          dateOfExpense: parseDate(data.date_of_expense),
+          expenseAmount: data.expense_amount,
+          expenseNote: data.expense_note,
+          expenseTitle: data.expense_title,
+          receiptUrl: data.receipt_url,
+          category: data.expense_category,
           isLoading: false,
         });
       } else {
@@ -63,9 +63,9 @@ export default class UpdateExpense extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
@@ -77,11 +77,11 @@ export default class UpdateExpense extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app
+      const documentUpdate = app
         .firestore()
         .collection("expenseLogs")
         .doc(this.state.key);
-      docUpdate
+      documentUpdate
         .set({
           date_of_expense: convertToTimestamp(this.state.dateOfExpense),
           expense_amount: this.state.expenseAmount,
@@ -92,7 +92,6 @@ export default class UpdateExpense extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewExpenses");
@@ -107,11 +106,11 @@ export default class UpdateExpense extends Component {
   }
 
   deleteExpenseLog() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("expenseLogs")
       .doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewExpenses");
     });
   }
@@ -183,7 +182,7 @@ export default class UpdateExpense extends Component {
           style={styles.input}
           placeholder={"Expense Title"}
           value={this.state.expenseTitle}
-          onChangeText={(val) => this.inputEl(val, "expenseTitle")}
+          onChangeText={(value) => this.inputEl(value, "expenseTitle")}
         />
         <Text style={styles.bold}>Expense Category</Text>
         <ModalSelector
@@ -221,14 +220,14 @@ export default class UpdateExpense extends Component {
           style={styles.input}
           placeholder={"0.00"}
           value={this.state.expenseAmount}
-          onChangeText={(val) => this.inputEl(val, "expenseAmount")}
+          onChangeText={(value) => this.inputEl(value, "expenseAmount")}
         />
         <Text style={styles.bold}>Additional Notes</Text>
         <TextInput
           style={styles.input}
           placeholder={"Insert any additional information"}
           value={this.state.expenseNote}
-          onChangeText={(val) => this.inputEl(val, "expenseNote")}
+          onChangeText={(value) => this.inputEl(value, "expenseNote")}
         />
         <View style={styles.space}></View>
         {receiptButton}

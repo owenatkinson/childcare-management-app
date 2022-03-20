@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  TextInput,
-  Button,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
@@ -25,6 +18,7 @@ function AttendanceRegister({ navigation }) {
   const checkInTime = useInput();
   const checkOutTime = useInput();
   const [childNameArr, setChildNameArr] = useState([]);
+  const fireDB = app.firestore().collection("attendanceRegister");
 
   useEffect(() => {
     const childNames = [];
@@ -38,17 +32,15 @@ function AttendanceRegister({ navigation }) {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            label: doc.data()["child_name"],
+            label: document.data()["child_name"],
           });
         });
         setChildNameArr(childNames);
       });
   }, []);
-
-  const fireDB = app.firestore().collection("attendanceRegister");
 
   async function addAttendanceLog() {
     if (droppedBy.length == 0 || collectedBy.length == 0 || childName == undefined) {
@@ -202,7 +194,7 @@ function useInput() {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
+    setShow(false);
     setDate(currentDate);
   };
   return {

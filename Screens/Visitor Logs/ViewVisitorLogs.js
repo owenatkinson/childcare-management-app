@@ -4,12 +4,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import { ListItem } from "react-native-elements";
 import MonthPick from "../../Components/MonthPick";
-import {
-  getMonth,
-  getYear,
-  doNumbersMatch,
-  convertDateCheckType,
-} from "../../Components/Functionality";
+import { getMonth, getYear, doNumbersMatch, convertDateCheckType } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class ViewVisitorLogs extends Component {
@@ -33,10 +28,10 @@ export default class ViewVisitorLogs extends Component {
 
   fetchCollection = (querySnapshot) => {
     const visitorLogs = [];
-    querySnapshot.forEach((res) => {
-      const { visitor_name, date_of_visit, time_in, time_out, visit_purpose } = res.data();
+    querySnapshot.forEach((result) => {
+      const { visitor_name, date_of_visit, time_in, time_out, visit_purpose } = result.data();
       visitorLogs.push({
-        key: res.id,
+        key: result.id,
         visitor_name,
         date_of_visit,
         time_in,
@@ -64,31 +59,31 @@ export default class ViewVisitorLogs extends Component {
           />
         </SafeAreaView>
         <ScrollView>
-          {this.state.visitorLogs.map((res, i) => {
+          {this.state.visitorLogs.map((result, id) => {
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
-                getMonth(convertDateCheckType(res.date_of_visit))
+                getMonth(convertDateCheckType(result.date_of_visit))
               ) &&
               doNumbersMatch(
                 getYear(convertDateCheckType(this.state.date)),
-                getYear(convertDateCheckType(res.date_of_visit))
+                getYear(convertDateCheckType(result.date_of_visit))
               )
             ) {
               return (
                 <ListItem
-                  key={i}
+                  key={id}
                   onPress={() => {
                     this.props.navigation.navigate("UpdateVisitorLog", {
-                      userkey: res.key,
+                      userkey: result.key,
                     });
                   }}
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>{res.visitor_name}</ListItem.Title>
+                    <ListItem.Title>{result.visitor_name}</ListItem.Title>
                     <ListItem.Subtitle>
-                      Date: {convertDateCheckType(res.date_of_visit)}
+                      Date: {convertDateCheckType(result.date_of_visit)}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron color="black" />

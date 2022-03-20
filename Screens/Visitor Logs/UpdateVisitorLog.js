@@ -43,17 +43,17 @@ export default class UpdateVisitorLog extends Component {
   }
 
   componentDidMount() {
-    const docRef = app.firestore().collection("visitorLogs").doc(this.props.route.params.userkey);
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    const documentReference = app.firestore().collection("visitorLogs").doc(this.props.route.params.userkey);
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          visitorName: user.visitor_name,
-          dateOfVisit: parseDate(user.date_of_visit),
-          timeIn: user.time_in,
-          timeOut: user.time_out,
-          visitPurpose: user.visit_purpose,
+          key: result.id,
+          visitorName: data.visitor_name,
+          dateOfVisit: parseDate(data.date_of_visit),
+          timeIn: data.time_in,
+          timeOut: data.time_out,
+          visitPurpose: data.visit_purpose,
           isLoading: false,
         });
       } else {
@@ -62,9 +62,9 @@ export default class UpdateVisitorLog extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
@@ -76,8 +76,8 @@ export default class UpdateVisitorLog extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app.firestore().collection("visitorLogs").doc(this.state.key);
-      docUpdate
+      const documentUpdate = app.firestore().collection("visitorLogs").doc(this.state.key);
+      documentUpdate
         .set({
           visitor_name: this.state.visitorName,
           date_of_visit: this.convertToTimestamp(this.state.dateOfVisit),
@@ -87,7 +87,6 @@ export default class UpdateVisitorLog extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewVisitorLogs");
@@ -102,8 +101,8 @@ export default class UpdateVisitorLog extends Component {
   }
 
   deleteVisitorLog() {
-    const docRef = app.firestore().collection("visitorLogs").doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    const documentReference = app.firestore().collection("visitorLogs").doc(this.props.route.params.userkey);
+    documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewVisitorLogs");
     });
   }
@@ -131,7 +130,7 @@ export default class UpdateVisitorLog extends Component {
           style={styles.input}
           placeholder={"Visitor Name"}
           value={this.state.visitorName}
-          onChangeText={(val) => this.inputEl(val, "visitorName")}
+          onChangeText={(value) => this.inputEl(value, "visitorName")}
         />
         <Text style={styles.bold}>Date of Visit</Text>
         <View>
@@ -151,13 +150,13 @@ export default class UpdateVisitorLog extends Component {
         <TextInput
           style={styles.input}
           value={this.state.timeIn}
-          onChangeText={(val) => this.inputEl(val, "timeIn")}
+          onChangeText={(value) => this.inputEl(value, "timeIn")}
         />
         <Text style={styles.bold}>Time Out</Text>
         <TextInput
           style={styles.input}
           value={this.state.timeOut}
-          onChangeText={(val) => this.inputEl(val, "timeOut")}
+          onChangeText={(value) => this.inputEl(value, "timeOut")}
         />
         <Text style={styles.bold}>Purpose of Visit</Text>
         <TextInput
@@ -166,7 +165,7 @@ export default class UpdateVisitorLog extends Component {
           style={styles.extendedInput}
           placeholder={"Purpose of Visit"}
           value={this.state.visitPurpose}
-          onChangeText={(val) => this.inputEl(val, "visitPurpose")}
+          onChangeText={(value) => this.inputEl(value, "visitPurpose")}
         />
         <View style={styles.space}></View>
         <Button title="Update" onPress={() => this.editVisitorLog()} color="#0B8FDC" />

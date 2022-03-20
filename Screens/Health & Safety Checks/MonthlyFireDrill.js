@@ -52,22 +52,20 @@ export default class MonthlyFireDrill extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("monthlyFireDrill")
       .doc(this.props.route.params.userkey);
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          monthlyFireDrillDate: user.monthly_fire_drill_date,
-          monthlyFireDrillNumberOfPeople: user.monthly_fire_drill_num_of_people,
-          monthlyFireDrillTimeCompleted: this.convertToTimestamp(
-            user.monthly_fire_drill_time_completed
-          ),
-          monthlyFireDrillNote: user.monthly_fire_drill_note,
-          monthlyFireDrillIsCompleted: user.monthly_fire_drill_is_completed,
+          key: result.id,
+          monthlyFireDrillDate: data.monthly_fire_drill_date,
+          monthlyFireDrillNumberOfPeople: data.monthly_fire_drill_num_of_people,
+          monthlyFireDrillTimeCompleted: this.convertToTimestamp(data.monthly_fire_drill_time_completed),
+          monthlyFireDrillNote: data.monthly_fire_drill_note,
+          monthlyFireDrillIsCompleted: data.monthly_fire_drill_is_completed,
           isLoading: false,
         });
       } else {
@@ -76,13 +74,13 @@ export default class MonthlyFireDrill extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
-  editChild() {
+  editCheck() {
     if (this.state.monthlyFireDrillNumberOfPeople.length == 0 || !isNumeric(this.state.monthlyFireDrillNumberOfPeople) ) {
       missingDataAlert();
       return;
@@ -90,8 +88,8 @@ export default class MonthlyFireDrill extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app.firestore().collection("monthlyFireDrill").doc(this.state.key);
-      docUpdate
+      const documentUpdate = app.firestore().collection("monthlyFireDrill").doc(this.state.key);
+      documentUpdate
         .set({
           monthly_fire_drill_date: this.state.monthlyFireDrillDate,
           monthly_fire_drill_num_of_people: this.state.monthlyFireDrillNumberOfPeople,
@@ -101,7 +99,6 @@ export default class MonthlyFireDrill extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("HealthSafetyChecks");
@@ -128,7 +125,7 @@ export default class MonthlyFireDrill extends Component {
             placeholder={"Number of People present"}
             style={styles.input}
             value={this.state.monthlyFireDrillNumberOfPeople}
-            onChangeText={(val) => this.inputEl(val, "monthlyFireDrillNumberOfPeople")}
+            onChangeText={(value) => this.inputEl(value, "monthlyFireDrillNumberOfPeople")}
           />
           <Text style={styles.bold}>Time Completed:</Text>
           <View>
@@ -152,19 +149,19 @@ export default class MonthlyFireDrill extends Component {
             multiline={true}
             numberOfLines={4}
             value={this.state.monthlyFireDrillNote}
-            onChangeText={(val) => this.inputEl(val, "monthlyFireDrillNote")}
+            onChangeText={(value) => this.inputEl(value, "monthlyFireDrillNote")}
           />
           <View style={styles.checkBoxPositioning}>
             <Text style={styles.bold}>Check Completed:</Text>
             <CheckBox
               style={styles.checkBox}
               value={this.state.monthlyFireDrillIsCompleted}
-              onValueChange={(val) => this.inputEl(val, "monthlyFireDrillIsCompleted")}
+              onValueChange={(value) => this.inputEl(value, "monthlyFireDrillIsCompleted")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.space}></View>
-          <Button title="Update" onPress={() => this.editChild()} color="#0B8FDC" />
+          <Button title="Update" onPress={() => this.editCheck()} color="#0B8FDC" />
           <View style={styles.space}></View>
           <View style={styles.space}></View>
         </ScrollView>

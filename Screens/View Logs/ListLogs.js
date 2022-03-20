@@ -10,7 +10,7 @@ export default class ListLogs extends Component {
     this.docs = app.firestore().collection("attendanceRegister").orderBy("child_name", "desc");
     this.state = {
       isLoading: true,
-      logs: [],
+      attendanceLogs: [],
       changeDate: "",
     };
   }
@@ -24,11 +24,11 @@ export default class ListLogs extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const logs = [];
-    querySnapshot.forEach((res) => {
-      const { child_name, date_of_attendance, check_in_time, check_out_time } = res.data();
-      logs.push({
-        key: res.id,
+    const attendanceLogs = [];
+    querySnapshot.forEach((result) => {
+      const { child_name, date_of_attendance, check_in_time, check_out_time } = result.data();
+      attendanceLogs.push({
+        key: result.id,
         child_name,
         date_of_attendance,
         check_in_time,
@@ -36,7 +36,7 @@ export default class ListLogs extends Component {
       });
     });
     this.setState({
-      logs,
+      attendanceLogs,
       isLoading: false,
     });
   };
@@ -44,22 +44,22 @@ export default class ListLogs extends Component {
   render() {
     return (
       <ScrollView>
-        {this.state.logs.map((res, i) => {
-          if (res.date_of_attendance == this.props.changeDate) {
+        {this.state.attendanceLogs.map((result, id) => {
+          if (result.date_of_attendance == this.props.changeDate) {
             return (
               <ListItem
-                key={i}
+                key={id}
                 onPress={() => {
                   this.props.navigation.navigate("ViewLogDetails", {
-                    userkey: res.key,
+                    userkey: result.key,
                   });
                 }}
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{res.child_name}</ListItem.Title>
+                  <ListItem.Title>{result.child_name}</ListItem.Title>
                   <ListItem.Subtitle>
-                    {res.check_in_time}-{res.check_out_time}
+                    {result.check_in_time}-{result.check_out_time}
                   </ListItem.Subtitle>
                 </ListItem.Content>
                 <ListItem.Chevron color="black" />

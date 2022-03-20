@@ -4,13 +4,7 @@ import app from "../../../Components/firebase";
 import "firebase/firestore";
 import { ListItem } from "react-native-elements";
 import MonthPick from "../../../Components/MonthPick";
-import {
-  parseDate,
-  getMonth,
-  getYear,
-  doNumbersMatch,
-  convertDateCheckType,
-} from "../../../Components/Functionality";
+import { parseDate, getMonth, getYear, doNumbersMatch, convertDateCheckType } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class ViewExpenses extends Component {
@@ -39,11 +33,11 @@ export default class ViewExpenses extends Component {
   fetchCollection = (querySnapshot) => {
     this.state.expenseTotal = 0;
     const expenseLogs = [];
-    querySnapshot.forEach((res) => {
+    querySnapshot.forEach((result) => {
       const { expense_title, expense_note, expense_amount, date_of_expense } =
-        res.data();
+        result.data();
       expenseLogs.push({
-        key: res.id,
+        key: result.id,
         expense_title,
         expense_note,
         expense_amount,
@@ -73,35 +67,35 @@ export default class ViewExpenses extends Component {
           />
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
-          {this.state.expenseLogs.map((res, i) => {
+          {this.state.expenseLogs.map((result, id) => {
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
-                getMonth(convertDateCheckType(res.date_of_expense))
+                getMonth(convertDateCheckType(result.date_of_expense))
               ) &&
               doNumbersMatch(
                 getYear(convertDateCheckType(this.state.date)),
-                getYear(convertDateCheckType(res.date_of_expense))
+                getYear(convertDateCheckType(result.date_of_expense))
               )
             ) {
-              this.state.expenseTotal += parseFloat(res.expense_amount);
+              this.state.expenseTotal += parseFloat(result.expense_amount);
               return (
                 <ListItem
-                  key={i}
+                  key={id}
                   onPress={() => {
                     this.props.navigation.navigate("UpdateExpense", {
-                      userkey: res.key,
+                      userkey: result.key,
                     });
                   }}
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>{res.expense_title}</ListItem.Title>
+                    <ListItem.Title>{result.expense_title}</ListItem.Title>
                     <ListItem.Subtitle>
-                      Date: {parseDate(res.date_of_expense)}
+                      Date: {parseDate(result.date_of_expense)}
                     </ListItem.Subtitle>
                     <ListItem.Subtitle>
-                      Amount: £{res.expense_amount}
+                      Amount: £{result.expense_amount}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron color="black" />

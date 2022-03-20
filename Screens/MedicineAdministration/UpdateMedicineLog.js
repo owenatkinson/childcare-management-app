@@ -40,7 +40,7 @@ export default class UpdateMedicineLog extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("medicineAdministration")
       .doc(this.props.route.params.userkey);
@@ -52,10 +52,10 @@ export default class UpdateMedicineLog extends Component {
     .orderBy("child_name", "asc")
     .get()
     .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach((document) => {
         childNames.push({
           key: index++,
-          label: doc.data()["child_name"],
+          label: document.data()["child_name"],
         });
       });
       this.setState({
@@ -63,17 +63,17 @@ export default class UpdateMedicineLog extends Component {
       });
     });
     
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          childName: user.child_name,
-          medicineDate: parseDate(user.medicine_date),
-          medicineTitle: user.medicine_title,
-          medicineTime: user.medicine_time,
-          medicineReason: user.medicine_reason,
-          medicineNotes: user.medicine_notes,
+          key: result.id,
+          childName: data.child_name,
+          medicineDate: parseDate(data.medicine_date),
+          medicineTitle: data.medicine_title,
+          medicineTime: data.medicine_time,
+          medicineReason: data.medicine_reason,
+          medicineNotes: data.medicine_notes,
           isLoading: false,
         });
       } else {
@@ -82,13 +82,13 @@ export default class UpdateMedicineLog extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
-  editAccidentReport() {
+  editMedicineLog() {
     if (this.state.medicineTitle.length == 0 || this.state.medicineReason.length == 0 || this.state.medicineTime.length == 0 ) {
       missingDataAlert();
       return;
@@ -96,8 +96,8 @@ export default class UpdateMedicineLog extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app.firestore().collection("medicineAdministration").doc(this.state.key);
-      docUpdate
+      const documentUpdate = app.firestore().collection("medicineAdministration").doc(this.state.key);
+      documentUpdate
         .set({
           child_name: this.state.childName,
           medicine_date: convertToTimestamp(this.state.medicineDate),
@@ -108,7 +108,6 @@ export default class UpdateMedicineLog extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewMedicalInfo");
@@ -122,12 +121,12 @@ export default class UpdateMedicineLog extends Component {
     }
   }
 
-  deleteAccidentReport() {
-    const docRef = app
+  deleteMedicineLog() {
+    const documentReference = app
       .firestore()
       .collection("medicineAdministration")
       .doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewMedicalInfo");
     });
   }
@@ -137,7 +136,7 @@ export default class UpdateMedicineLog extends Component {
       "Delete",
       "Really?",
       [
-        { text: "Yes", onPress: () => this.deleteAccidentReport() },
+        { text: "Yes", onPress: () => this.deleteMedicineLog() },
         { text: "No", onPress: () => console.log("Item not deleted"), style: "cancel" },
       ],
       {
@@ -166,7 +165,7 @@ export default class UpdateMedicineLog extends Component {
           style={styles.input}
           placeholder={"Medicine"}
           value={this.state.medicineTitle}
-          onChangeText={(val) => this.inputEl(val, "medicineTitle")}
+          onChangeText={(value) => this.inputEl(value, "medicineTitle")}
         />
         <Text style={styles.bold}>Date Administered</Text>
         <View>
@@ -189,14 +188,14 @@ export default class UpdateMedicineLog extends Component {
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.medicineTime}
-          onChangeText={(val) => this.inputEl(val, "medicineTime")}
+          onChangeText={(value) => this.inputEl(value, "medicineTime")}
         />
         <Text style={styles.bold}>What was the reason for administering medication?</Text>
         <TextInput
           style={styles.input}
           placeholder={"Reason for medicine administration"}
           value={this.state.medicineReason}
-          onChangeText={(val) => this.inputEl(val, "medicineReason")}
+          onChangeText={(value) => this.inputEl(value, "medicineReason")}
         />
         <Text style={styles.bold}>Additional Notes</Text>
         <TextInput
@@ -205,10 +204,10 @@ export default class UpdateMedicineLog extends Component {
           style={styles.extendedInput}
           placeholder={"Insert any additional information"}
           value={this.state.medicineNotes}
-          onChangeText={(val) => this.inputEl(val, "medicineNotes")}
+          onChangeText={(value) => this.inputEl(value, "medicineNotes")}
         />
         <View style={styles.space}></View>
-        <Button title="Update" onPress={() => this.editAccidentReport()} color="#0B8FDC" />
+        <Button title="Update" onPress={() => this.editMedicineLog()} color="#0B8FDC" />
         <View style={styles.space}></View>
         <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
       </ScrollView>

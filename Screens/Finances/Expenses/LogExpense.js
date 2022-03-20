@@ -37,12 +37,9 @@ const LogExpense = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
       }
     })();
   }, []);
@@ -63,16 +60,16 @@ const LogExpense = ({ navigation }) => {
 
   async function uploadImage(file) {
     const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
+      const xml = new XMLHttpRequest();
+      xml.onload = function () {
+        resolve(xml.response);
       };
-      xhr.onerror = function () {
+      xml.onerror = function () {
         reject(new TypeError("Network request failed"));
       };
-      xhr.responseType = "blob";
-      xhr.open("GET", file, true);
-      xhr.send(null);
+      xml.responseType = "blob";
+      xml.open("GET", file, true);
+      xml.send(null);
     });
 
     let trimFileName = /[^/]*$/.exec(file)[0];
@@ -81,10 +78,10 @@ const LogExpense = ({ navigation }) => {
 
     snapshot.on(
       "state_changed",
-      function (snapshot) {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      function () {
       },
       function (error) {
+        console.log(error);
         blob.close();
         return;
       },
@@ -99,7 +96,7 @@ const LogExpense = ({ navigation }) => {
   }
 
   let index = 0;
-  const data = [
+  const selectorData = [
     { key: index++, section: true, label: "Categories" },
     { key: index++, label: "Fuel" },
     { key: index++, label: "Food" },
@@ -125,7 +122,7 @@ const LogExpense = ({ navigation }) => {
       <View>
         <ModalSelector
           style={styles.dropdown}
-          data={data}
+          data={selectorData}
           onChange={(option) => {
             setCategory(option.label);
           }}
@@ -198,7 +195,7 @@ function useInput() {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
+    setShow(false);
     setDate(currentDate);
   };
   return {

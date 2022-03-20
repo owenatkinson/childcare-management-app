@@ -14,7 +14,7 @@ export default function AllergyDetection({ navigation }) {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ _, data }) => {
+  const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
     Vibration.vibrate();
 

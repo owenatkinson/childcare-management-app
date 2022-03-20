@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  Alert,
-  Text,
-} from "react-native";
+import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from "react-native";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
@@ -50,7 +42,7 @@ export default class UpdateAccidentReport extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("accidentReports")
       .doc(this.props.route.params.userkey);
@@ -63,21 +55,21 @@ export default class UpdateAccidentReport extends Component {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            label: doc.data()["child_name"],
+            label: document.data()["child_name"],
           });
         });
         this.setState({
           childNames: childNames,
         });
       });
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
+          key: result.id,
           childName: user.child_name,
           accidentDate: parseDate(user.accident_date),
           accidentTime: user.accident_time,
@@ -94,9 +86,9 @@ export default class UpdateAccidentReport extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
@@ -108,11 +100,11 @@ export default class UpdateAccidentReport extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app
+      const documentUpdate = app
         .firestore()
         .collection("accidentReports")
         .doc(this.state.key);
-      docUpdate
+      documentUpdate
         .set({
           child_name: this.state.childName,
           accident_date: convertToTimestamp(this.state.accidentDate),
@@ -125,7 +117,6 @@ export default class UpdateAccidentReport extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewAccidentReports");
@@ -140,11 +131,11 @@ export default class UpdateAccidentReport extends Component {
   }
 
   deleteAccidentReport() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("accidentReports")
       .doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewAccidentReports");
     });
   }
@@ -206,35 +197,35 @@ export default class UpdateAccidentReport extends Component {
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.accidentTime}
-          onChangeText={(val) => this.inputEl(val, "accidentTime")}
+          onChangeText={(value) => this.inputEl(value, "accidentTime")}
         />
         <Text style={styles.bold}>Accident Location:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Location"}
           value={this.state.accidentLocation}
-          onChangeText={(val) => this.inputEl(val, "accidentLocation")}
+          onChangeText={(value) => this.inputEl(value, "accidentLocation")}
         />
         <Text style={styles.bold}>Accident Details:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Detail"}
           value={this.state.accidentDetail}
-          onChangeText={(val) => this.inputEl(val, "accidentDetail")}
+          onChangeText={(value) => this.inputEl(value, "accidentDetail")}
         />
         <Text style={styles.bold}>Actions Taken:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Action"}
           value={this.state.accidentAction}
-          onChangeText={(val) => this.inputEl(val, "accidentAction")}
+          onChangeText={(value) => this.inputEl(value, "accidentAction")}
         />
         <Text style={styles.bold}>Medication Administered:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Medical Attention"}
           value={this.state.accidentMedicalAttention}
-          onChangeText={(val) => this.inputEl(val, "accidentMedicalAttention")}
+          onChangeText={(value) => this.inputEl(value, "accidentMedicalAttention")}
         />
         <Text style={styles.bold}>Accident Notes:</Text>
         <TextInput
@@ -243,7 +234,7 @@ export default class UpdateAccidentReport extends Component {
           style={styles.extendedInput}
           placeholder={"Insert any additional information"}
           value={this.state.accidentNotes}
-          onChangeText={(val) => this.inputEl(val, "accidentNotes")}
+          onChangeText={(value) => this.inputEl(value, "accidentNotes")}
         />
         <View style={styles.space}></View>
         <Button

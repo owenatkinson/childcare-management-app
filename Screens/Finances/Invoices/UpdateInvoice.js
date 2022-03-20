@@ -37,7 +37,7 @@ export default class UpdateInvoice extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("invoiceLogs")
       .doc(this.props.route.params.userkey);
@@ -50,10 +50,10 @@ export default class UpdateInvoice extends Component {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            label: doc.data()["child_name"],
+            label: document.data()["child_name"],
           });
         });
         this.setState({
@@ -61,14 +61,14 @@ export default class UpdateInvoice extends Component {
         });
       });
 
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          dateOfInvoice: parseDate(user.date_of_invoice),
-          childName: user.child_name,
-          invoiceAmount: user.invoice_amount,
+          key: result.id,
+          dateOfInvoice: parseDate(data.date_of_invoice),
+          childName: data.child_name,
+          invoiceAmount: data.invoice_amount,
           isLoading: false,
         });
       } else {
@@ -77,9 +77,9 @@ export default class UpdateInvoice extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
@@ -91,11 +91,11 @@ export default class UpdateInvoice extends Component {
       this.setState({
         isLoading: true,
       });
-      const docUpdate = app
+      const documentUpdate = app
         .firestore()
         .collection("invoiceLogs")
         .doc(this.state.key);
-      docUpdate
+      documentUpdate
         .set({
           date_of_invoice: convertToTimestamp(this.state.dateOfInvoice),
           child_name: this.state.childName,
@@ -103,7 +103,6 @@ export default class UpdateInvoice extends Component {
         })
         .then(() => {
           this.setState({
-            key: "",
             isLoading: false,
           });
           this.props.navigation.navigate("ViewInvoice");
@@ -118,11 +117,11 @@ export default class UpdateInvoice extends Component {
   }
 
   deleteInvoiceLog() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("invoiceLogs")
       .doc(this.props.route.params.userkey);
-    docRef.delete().then((res) => {
+    documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewInvoice");
     });
   }
@@ -184,7 +183,7 @@ export default class UpdateInvoice extends Component {
           style={styles.input}
           placeholder={"0.00"}
           value={this.state.invoiceAmount}
-          onChangeText={(val) => this.inputEl(val, "invoiceAmount")}
+          onChangeText={(value) => this.inputEl(value, "invoiceAmount")}
         />
         <View style={styles.space}></View>
         <Button

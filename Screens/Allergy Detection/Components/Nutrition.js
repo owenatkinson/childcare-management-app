@@ -1,10 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  SimpleLineIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 const styles = require("../../../Styles/general");
 
 export default function Nutrition({ route }) {

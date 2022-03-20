@@ -43,7 +43,7 @@ const Policies = (props) => {
           }
         },
         function (error) {
-          console.log(error.message);
+          console.log(error);
           blob.close();
           return;
         },
@@ -79,7 +79,7 @@ const Policies = (props) => {
         message: fileShareableURL,
       });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 
@@ -87,7 +87,7 @@ const Policies = (props) => {
     let deletePolicyDatabase = app.database().ref("policies/" + removeFileExtension(fileName));
     var storage = app.storage();
     var storageRef = storage.ref();
-    var policyRef = storageRef.child(`policies/${trimFileName}`);
+    var policyRef = storageRef.child(`policies/${removeFileExtension(fileName)}`);
     deletePolicyDatabase.remove();
     policyRef.delete();
     setFileList([]);

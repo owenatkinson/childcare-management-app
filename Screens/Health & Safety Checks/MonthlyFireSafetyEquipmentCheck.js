@@ -17,18 +17,18 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
   }
 
   componentDidMount() {
-    const docRef = app
+    const documentReference = app
       .firestore()
       .collection("monthlyFireSafetyEquipmentCheck")
       .doc(this.props.route.params.userkey);
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          monthlyFireSafetyDate: user.monthly_fire_safety_date,
-          monthlyFireSafetyNote: user.monthly_fire_safety_note,
-          monthlyFireSafetyIsCompleted: user.monthly_fire_safety_is_completed,
+          key: result.id,
+          monthlyFireSafetyDate: data.monthly_fire_safety_date,
+          monthlyFireSafetyNote: data.monthly_fire_safety_note,
+          monthlyFireSafetyIsCompleted: data.monthly_fire_safety_is_completed,
           isLoading: false,
         });
       } else {
@@ -37,21 +37,21 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   };
 
-  editChild() {
+  editCheck() {
     this.setState({
       isLoading: true,
     });
-    const docUpdate = app
+    const documentUpdate = app
       .firestore()
       .collection("monthlyFireSafetyEquipmentCheck")
       .doc(this.state.key);
-    docUpdate
+    documentUpdate
       .set({
         monthly_fire_safety_date: this.state.monthlyFireSafetyDate,
         monthly_fire_safety_note: this.state.monthlyFireSafetyNote,
@@ -59,7 +59,6 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
       })
       .then(() => {
         this.setState({
-          key: "",
           isLoading: false,
         });
         this.props.navigation.navigate("HealthSafetyChecks");
@@ -86,19 +85,19 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
             multiline={true}
             numberOfLines={4}
             value={this.state.monthlyFireSafetyNote}
-            onChangeText={(val) => this.inputEl(val, "monthlyFireSafetyNote")}
+            onChangeText={(value) => this.inputEl(value, "monthlyFireSafetyNote")}
           />
           <View style={styles.checkBoxPositioning}>
             <Text style={styles.bold}>Check Completed:</Text>
             <CheckBox
               style={styles.checkBox}
               value={this.state.monthlyFireSafetyIsCompleted}
-              onValueChange={(val) => this.inputEl(val, "monthlyFireSafetyIsCompleted")}
+              onValueChange={(value) => this.inputEl(value, "monthlyFireSafetyIsCompleted")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.space}></View>
-          <Button title="Update" onPress={() => this.editChild()} color="#0B8FDC" />
+          <Button title="Update" onPress={() => this.editCheck()} color="#0B8FDC" />
         </ScrollView>
       </View>
     );

@@ -21,11 +21,11 @@ export default function ChildAllergies({ route }) {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            name: doc.data()["child_name"],
-            allergies: doc.data()["child_allergies"],
+            name: document.data()["child_name"],
+            allergies: document.data()["child_allergies"],
           });
         });
         setChildNameArr(childNames);

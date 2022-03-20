@@ -27,7 +27,6 @@ export default function ProductScreen({ route }) {
           height: 75,
         }}
       />
-
       <View>
         {selectedIndex === 0 ? <General route={route} /> : false}
         {selectedIndex === 1 ? <Ingredients route={route} /> : false}

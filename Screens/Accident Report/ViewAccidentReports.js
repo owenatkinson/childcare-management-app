@@ -40,10 +40,10 @@ export default class ViewAccidentReports extends Component {
       .orderBy("child_name", "asc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
             key: index++,
-            label: doc.data()["child_name"],
+            label: document.data()["child_name"],
           });
         });
         this.setState({
@@ -51,11 +51,10 @@ export default class ViewAccidentReports extends Component {
         });
       });
 
-    querySnapshot.forEach((res) => {
-      const { child_name, accident_date, accident_time, accident_notes } =
-        res.data();
+    querySnapshot.forEach((result) => {
+      const { child_name, accident_date, accident_time, accident_notes } = result.data();
       accidentReports.push({
-        key: res.id,
+        key: result.id,
         child_name,
         accident_date,
         accident_time,
@@ -80,29 +79,29 @@ export default class ViewAccidentReports extends Component {
             }}
           />
         </View>
-        {this.state.accidentReports.map((res, i) => {
-          if (res.child_name == this.state.activeChildName) {
+        {this.state.accidentReports.map((report, id) => {
+          if (report.child_name == this.state.activeChildName) {
             return (
               <ListItem
-                key={i}
+                key={id}
                 onPress={() => {
                   this.props.navigation.navigate("UpdateAccidentReport", {
-                    userkey: res.key,
+                    userkey: report.key,
                   });
                 }}
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{res.child_name}</ListItem.Title>
+                  <ListItem.Title>{report.child_name}</ListItem.Title>
                   <ListItem.Subtitle>
-                    Date: {parseDate(res.accident_date)}
+                    Date: {parseDate(report.accident_date)}
                   </ListItem.Subtitle>
                 </ListItem.Content>
                 <ListItem.Chevron color="black" />
               </ListItem>
             );
           } else {
-            return null;
+            null;
           }
         })}
       </ScrollView>

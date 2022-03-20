@@ -4,13 +4,7 @@ import app from "../../../Components/firebase";
 import "firebase/firestore";
 import { ListItem } from "react-native-elements";
 import MonthPick from "../../../Components/MonthPick";
-import {
-  parseDate,
-  getMonth,
-  getYear,
-  doNumbersMatch,
-  convertDateCheckType,
-} from "../../../Components/Functionality";
+import { parseDate, getMonth, getYear, doNumbersMatch, convertDateCheckType } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class ViewMiles extends Component {
@@ -39,10 +33,10 @@ export default class ViewMiles extends Component {
   fetchCollection = (querySnapshot) => {
     this.state.mileageAmount = 0;
     const mileageLogs = [];
-    querySnapshot.forEach((res) => {
-      const { mileage_amount, date_of_mileage } = res.data();
+    querySnapshot.forEach((result) => {
+      const { mileage_amount, date_of_mileage } = result.data();
       mileageLogs.push({
-        key: res.id,
+        key: result.id,
         mileage_amount,
         date_of_mileage,
       });
@@ -70,32 +64,32 @@ export default class ViewMiles extends Component {
           />
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
-          {this.state.mileageLogs.map((res, i) => {
+          {this.state.mileageLogs.map((result, id) => {
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
-                getMonth(convertDateCheckType(res.date_of_mileage))
+                getMonth(convertDateCheckType(result.date_of_mileage))
               ) &&
               doNumbersMatch(
                 getYear(convertDateCheckType(this.state.date)),
-                getYear(convertDateCheckType(res.date_of_mileage))
+                getYear(convertDateCheckType(result.date_of_mileage))
               )
             ) {
-              this.state.mileageAmount += parseFloat(res.mileage_amount);
+              this.state.mileageAmount += parseFloat(result.mileage_amount);
               return (
                 <ListItem
-                  key={i}
+                  key={id}
                   onPress={() => {
                     this.props.navigation.navigate("UpdateMiles", {
-                      userkey: res.key,
+                      userkey: result.key,
                     });
                   }}
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>£{res.mileage_amount}</ListItem.Title>
+                    <ListItem.Title>£{result.mileage_amount}</ListItem.Title>
                     <ListItem.Subtitle>
-                      Date: {parseDate(res.date_of_mileage)}
+                      Date: {parseDate(result.date_of_mileage)}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron color="black" />

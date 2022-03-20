@@ -13,7 +13,6 @@ export default function AddMonthlyDrillList({ route, navigation }) {
   const [monthlyFireDrillNote, setMonthlyFireDrillNote] = useState("");
   const [monthlyFireDrillIsCompleted, setMonthlyFireDrillIsCompleted] = useState("");
   const monthlyFireDrillTimeCompleted = useInput();
-
   const fireDB = app.firestore().collection("monthlyFireDrill");
 
   async function addCheck() {
@@ -108,7 +107,7 @@ function useInput() {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
+    setShow(false);
     setDate(currentDate);
   };
   return {

@@ -25,11 +25,10 @@ export default class DailyRiskList extends Component {
 
   fetchCollection = (querySnapshot) => {
     const dailyRiskAssessment = [];
-
-    querySnapshot.forEach((res) => {
-      const { daily_risk_assessment_date, daily_risk_assessment_is_completed } = res.data();
+    querySnapshot.forEach((result) => {
+      const { daily_risk_assessment_date, daily_risk_assessment_is_completed } = result.data();
       dailyRiskAssessment.push({
-        key: res.id,
+        key: result.id,
         daily_risk_assessment_date,
         daily_risk_assessment_is_completed,
       });
@@ -57,14 +56,14 @@ export default class DailyRiskList extends Component {
           <ScrollView>
             {
               // for each daily covid check
-              newArray.map((res, i) => {
+              newArray.map((result, id) => {
                 // if daily covid check has the selected date, display in row
                 return (
                   <ListItem
-                    key={i}
+                    key={id}
                     onPress={() => {
                       this.props.navigation.navigate("DailyRiskAssessment", {
-                        userkey: res.key,
+                        userkey: result.key,
                       });
                     }}
                     bottomDivider

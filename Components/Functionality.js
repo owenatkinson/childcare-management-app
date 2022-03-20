@@ -71,9 +71,9 @@ export const calculationAlert = () => {
   Alert.alert('Calculation Required', 'Please click the calculate button to generate the Mileage Amount before proceeding.');
 }
 
-export const isNumeric = (str) => {
-  if (typeof str != "string") return false
-  return !isNaN(str) && !isNaN(parseFloat(str))
+export const isNumeric = (input) => {
+  if (typeof input != "string") return false
+  return !isNaN(input) && !isNaN(parseFloat(input))
 }
 
 export const trimAllergyString = (input) => {

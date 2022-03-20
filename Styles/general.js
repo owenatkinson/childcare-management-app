@@ -206,9 +206,5 @@ module.exports = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
-  },
-  // progressBar: {
-  //   width: "100%",
-  //   animationType: "timing"
-  // },
+  }
 });

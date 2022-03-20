@@ -9,7 +9,6 @@ export default function AddMonthlyFireSafetyEquipmentList({ route }) {
   const { changeDate } = route.params;
   const [monthlyFireSafetyNote, setMonthlyFireSafetyNote] = useState("");
   const [monthlyFireSafetyIsCompleted, setMonthlyFireSafetyIsCompleted] = useState("");
-
   const fireDB = app.firestore().collection("monthlyFireSafetyEquipmentCheck");
 
   async function addCheck() {

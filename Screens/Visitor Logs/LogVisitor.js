@@ -117,7 +117,7 @@ function useInput() {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
+    setShow(false);
     setDate(currentDate);
   };
   return {

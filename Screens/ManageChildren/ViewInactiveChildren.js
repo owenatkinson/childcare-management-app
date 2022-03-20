@@ -25,10 +25,10 @@ export default class ViewInactiveChildren extends Component {
 
   fetchCollection = (querySnapshot) => {
     const children = [];
-    querySnapshot.forEach((res) => {
-      const { child_name, child_is_active } = res.data();
+    querySnapshot.forEach((result) => {
+      const { child_name, child_is_active } = result.data();
       children.push({
-        key: res.id,
+        key: result.id,
         child_name,
         child_is_active,
       });
@@ -42,20 +42,20 @@ export default class ViewInactiveChildren extends Component {
   render() {
     return (
       <ScrollView style={styles.wrapper}>
-        {this.state.children.map((res, i) => {
-          if (res.child_is_active == false || res.child_is_active == "") {
+        {this.state.children.map((result, id) => {
+          if (result.child_is_active == false || result.child_is_active == "") {
             return (
               <ListItem
-                key={i}
+                key={id}
                 onPress={() => {
                   this.props.navigation.navigate("UpdateChildDetails", {
-                    userkey: res.key,
+                    userkey: result.key,
                   });
                 }}
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{res.child_name}</ListItem.Title>
+                  <ListItem.Title>{result.child_name}</ListItem.Title>
                   <ListItem.Subtitle>Inactive</ListItem.Subtitle>
                 </ListItem.Content>
                 <ListItem.Chevron color="black" />

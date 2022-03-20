@@ -3,15 +3,8 @@ import { ScrollView, View, SafeAreaView, FlatList, Text } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import { ListItem } from "react-native-elements";
-import moment from "moment";
 import MonthPick from "../../../Components/MonthPick";
-import {
-  parseDate,
-  doNumbersMatch,
-  getMonth,
-  getYear,
-  convertDateCheckType,
-} from "../../../Components/Functionality";
+import { parseDate, doNumbersMatch, getMonth, getYear, convertDateCheckType } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class ViewInvoice extends Component {
@@ -40,10 +33,10 @@ export default class ViewInvoice extends Component {
   fetchCollection = (querySnapshot) => {
     this.state.invoiceAmount = 0;
     const invoiceLogs = [];
-    querySnapshot.forEach((res) => {
-      const { child_name, date_of_invoice, invoice_amount } = res.data();
+    querySnapshot.forEach((result) => {
+      const { child_name, date_of_invoice, invoice_amount } = result.data();
       invoiceLogs.push({
-        key: res.id,
+        key: result.id,
         child_name,
         date_of_invoice,
         invoice_amount,
@@ -72,35 +65,35 @@ export default class ViewInvoice extends Component {
           />
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
-          {this.state.invoiceLogs.map((res, i) => {
+          {this.state.invoiceLogs.map((result, id) => {
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
-                getMonth(convertDateCheckType(res.date_of_invoice))
+                getMonth(convertDateCheckType(result.date_of_invoice))
               ) &&
               doNumbersMatch(
                 getYear(convertDateCheckType(this.state.date)),
-                getYear(convertDateCheckType(res.date_of_invoice))
+                getYear(convertDateCheckType(result.date_of_invoice))
               )
             ) {
-              this.state.invoiceAmount += parseFloat(res.invoice_amount);
+              this.state.invoiceAmount += parseFloat(result.invoice_amount);
               return (
                 <ListItem
-                  key={i}
+                  key={id}
                   onPress={() => {
                     this.props.navigation.navigate("UpdateInvoice", {
-                      userkey: res.key,
+                      userkey: result.key,
                     });
                   }}
                   bottomDivider
                 >
                   <ListItem.Content>
                     <ListItem.Title>
-                      {res.child_name} - £
-                      {parseFloat(res.invoice_amount).toFixed(2)}
+                      {result.child_name} - £
+                      {parseFloat(result.invoice_amount).toFixed(2)}
                     </ListItem.Title>
                     <ListItem.Subtitle>
-                      Date of Expense: {parseDate(res.date_of_invoice)}
+                      Date of Expense: {parseDate(result.date_of_invoice)}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                   <ListItem.Chevron color="black" />
