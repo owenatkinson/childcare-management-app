@@ -12,12 +12,12 @@ const firebaseConfig = {
   projectId: "childcaremanagementapp",
   storageBucket: "childcaremanagementapp.appspot.com",
   messagingSenderId: "371907641004",
-  appId: "1:371907641004:web:9a5fed153fff0485c02909"
+  appId: "1:371907641004:web:9a5fed153fff0485c02909",
 };
 
 let app;
 
-if(!firebase.apps.length){
+if (!firebase.apps.length) {
   app = firebase.initializeApp(firebaseConfig);
 }
 

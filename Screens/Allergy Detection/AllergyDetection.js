@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Text, View, StyleSheet, Vibration } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
-const styles = require('../../Styles/general');
+import React, { useState, useEffect } from "react";
+import { Button, Text, View, StyleSheet, Vibration } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+const styles = require("../../Styles/general");
 
 export default function AllergyDetection({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -10,25 +10,22 @@ export default function AllergyDetection({ navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ _, data }) => {
+  const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
-    Vibration.vibrate()
+    Vibration.vibrate();
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`)
       .then((response) => response.json())
       .then((json) => {
-        if (json.status_verbose === 'product found'){
-          navigation.navigate('ProductScreen',
-          {
-            item: json.product
-          })
-        }
-        else alert('Product not found')
-
+        if (json.status_verbose === "product found") {
+          navigation.navigate("ProductScreen", {
+            item: json.product,
+          });
+        } else alert("Product not found");
       })
       .catch((error) => {
         console.error(error);
@@ -48,8 +45,9 @@ export default function AllergyDetection({ navigation }) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-
-      {scanned && <Button title={'Scan code'} onPress={() => setScanned(false)} />}
+      {scanned && (
+        <Button title={"Scan code"} onPress={() => setScanned(false)} />
+      )}
     </View>
   );
 }

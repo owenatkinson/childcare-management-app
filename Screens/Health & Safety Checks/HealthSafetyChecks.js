@@ -1,32 +1,27 @@
-import React, {useState} from 'react';
-import { View, Button, Platform } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
-import DailyCovidList from './CheckLists/DailyCovidList';
-import DailyRiskList from './CheckLists/DailyRiskList';
-import MonthlyDrillList from './CheckLists/MonthlyDrillList';
-import MonthlyFireSafetyEquipmentList from './CheckLists/MonthlyFireSafetyEquipmentList';
+import React, { useState } from "react";
+import { View, Button, Platform } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import DailyCovidList from "./CheckLists/DailyCovidList";
+import DailyRiskList from "./CheckLists/DailyRiskList";
+import MonthlyDrillList from "./CheckLists/MonthlyDrillList";
+import MonthlyFireSafetyEquipmentList from "./CheckLists/MonthlyFireSafetyEquipmentList";
+import { convertDate } from "../../Components/Functionality";
 
 export default function HealthSafetyChecks({ navigation }) {
-  
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(false);
     setDate(currentDate);
   };
 
   const showDatepicker = () => {
     setShow(true);
-    setMode('date');
+    setMode("date");
   };
-
-  const convertDate = (dateInput) => {
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
 
   return (
     <View>
@@ -35,11 +30,10 @@ export default function HealthSafetyChecks({ navigation }) {
       </View>
       {show && (
         <DateTimePicker
-          testID="dateTimePicker"
+          maximumDate={new Date()}
           value={date}
           mode="date"
           is24Hour={true}
-          display="default"
           onChange={onChange}
         />
       )}
@@ -53,7 +47,10 @@ export default function HealthSafetyChecks({ navigation }) {
         <MonthlyDrillList navigation={navigation} changeDate={convertDate(date)}></MonthlyDrillList>
       </View>
       <View>
-        <MonthlyFireSafetyEquipmentList navigation={navigation} changeDate={convertDate(date)}></MonthlyFireSafetyEquipmentList>
+        <MonthlyFireSafetyEquipmentList
+          navigation={navigation}
+          changeDate={convertDate(date)}
+        ></MonthlyFireSafetyEquipmentList>
       </View>
     </View>
   );

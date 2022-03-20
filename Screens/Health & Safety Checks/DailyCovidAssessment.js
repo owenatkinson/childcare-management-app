@@ -1,90 +1,93 @@
-import React, { Component } from 'react';
-import { Button, View, ScrollView, Text } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
-import app from '../../Components/firebase';
+import React, { Component } from "react";
+import { Button, View, ScrollView, Text } from "react-native";
+import CheckBox from "@react-native-community/checkbox";
+import app from "../../Components/firebase";
 import "firebase/firestore";
-const styles = require('../../Styles/general');
+const styles = require("../../Styles/general");
 
 export default class DailyCovidAssessment extends Component {
   constructor() {
     super();
     this.state = {
       isLoading: true,
-      dailyCovidAssessmentDate: '',
-      dailyCovidAssessmentIsCompleted: '',
-      dailyCovidAssessmentCheck1: '',
-      dailyCovidAssessmentCheck2: '',
-      dailyCovidAssessmentCheck3: '',
-      dailyCovidAssessmentCheck4: '',
-      dailyCovidAssessmentCheck5: '',
-      dailyCovidAssessmentCheck6: '',
-      dailyCovidAssessmentCheck7: '',
-      dailyCovidAssessmentCheck8: '',
-      dailyCovidAssessmentCheck9: '',
-      dailyCovidAssessmentCheck10: '',
-      dailyCovidAssessmentCheck11: '',
-      dailyCovidAssessmentCheck12: '',
-      dailyCovidAssessmentCheck13: '',
-      dailyCovidAssessmentCheck14: '',
-      dailyCovidAssessmentCheck15: '',
-      dailyCovidAssessmentCheck16: '',
-      dailyCovidAssessmentCheck17: '',
-      dailyCovidAssessmentCheck18: '',
-      dailyCovidAssessmentCheck19: '',
-      dailyCovidAssessmentCheck20: '',
-      dailyCovidAssessmentCheck21: '',
-      dailyCovidAssessmentCheck22: '',
-      dailyCovidAssessmentCheck23: '',
-      dailyCovidAssessmentCheck24: '',
-      dailyCovidAssessmentCheck25: '',
-      dailyCovidAssessmentCheck26: '',
-      dailyCovidAssessmentCheck27: '',
-      dailyCovidAssessmentCheck28: '',
-      dailyCovidAssessmentCheck29: '',
-      dailyCovidAssessmentCheck30: ''
+      dailyCovidAssessmentDate: "",
+      dailyCovidAssessmentIsCompleted: "",
+      dailyCovidAssessmentCheck1: "",
+      dailyCovidAssessmentCheck2: "",
+      dailyCovidAssessmentCheck3: "",
+      dailyCovidAssessmentCheck4: "",
+      dailyCovidAssessmentCheck5: "",
+      dailyCovidAssessmentCheck6: "",
+      dailyCovidAssessmentCheck7: "",
+      dailyCovidAssessmentCheck8: "",
+      dailyCovidAssessmentCheck9: "",
+      dailyCovidAssessmentCheck10: "",
+      dailyCovidAssessmentCheck11: "",
+      dailyCovidAssessmentCheck12: "",
+      dailyCovidAssessmentCheck13: "",
+      dailyCovidAssessmentCheck14: "",
+      dailyCovidAssessmentCheck15: "",
+      dailyCovidAssessmentCheck16: "",
+      dailyCovidAssessmentCheck17: "",
+      dailyCovidAssessmentCheck18: "",
+      dailyCovidAssessmentCheck19: "",
+      dailyCovidAssessmentCheck20: "",
+      dailyCovidAssessmentCheck21: "",
+      dailyCovidAssessmentCheck22: "",
+      dailyCovidAssessmentCheck23: "",
+      dailyCovidAssessmentCheck24: "",
+      dailyCovidAssessmentCheck25: "",
+      dailyCovidAssessmentCheck26: "",
+      dailyCovidAssessmentCheck27: "",
+      dailyCovidAssessmentCheck28: "",
+      dailyCovidAssessmentCheck29: "",
+      dailyCovidAssessmentCheck30: "",
     };
   }
 
   componentDidMount() {
-    const docRef = app.firestore().collection('dailyCovidAssessment').doc(this.props.route.params.userkey)
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    const documentReference = app
+      .firestore()
+      .collection("dailyCovidAssessment")
+      .doc(this.props.route.params.userkey);
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          dailyCovidAssessmentDate: user.daily_covid_assessment_date,
-          dailyCovidAssessmentIsCompleted: user.daily_covid_assessment_is_completed,
-          dailyCovidAssessmentCheck1: user.daily_covid_assessment_check_1,
-          dailyCovidAssessmentCheck2: user.daily_covid_assessment_check_2,
-          dailyCovidAssessmentCheck3: user.daily_covid_assessment_check_3,
-          dailyCovidAssessmentCheck4: user.daily_covid_assessment_check_4,
-          dailyCovidAssessmentCheck5: user.daily_covid_assessment_check_5,
-          dailyCovidAssessmentCheck6: user.daily_covid_assessment_check_6,
-          dailyCovidAssessmentCheck7: user.daily_covid_assessment_check_7,
-          dailyCovidAssessmentCheck8: user.daily_covid_assessment_check_8,
-          dailyCovidAssessmentCheck9: user.daily_covid_assessment_check_9,
-          dailyCovidAssessmentCheck10: user.daily_covid_assessment_check_10,
-          dailyCovidAssessmentCheck11: user.daily_covid_assessment_check_11,
-          dailyCovidAssessmentCheck12: user.daily_covid_assessment_check_12,
-          dailyCovidAssessmentCheck13: user.daily_covid_assessment_check_13,
-          dailyCovidAssessmentCheck14: user.daily_covid_assessment_check_14,
-          dailyCovidAssessmentCheck15: user.daily_covid_assessment_check_15,
-          dailyCovidAssessmentCheck16: user.daily_covid_assessment_check_16,
-          dailyCovidAssessmentCheck17: user.daily_covid_assessment_check_17,
-          dailyCovidAssessmentCheck18: user.daily_covid_assessment_check_18,
-          dailyCovidAssessmentCheck19: user.daily_covid_assessment_check_19,
-          dailyCovidAssessmentCheck20: user.daily_covid_assessment_check_20,
-          dailyCovidAssessmentCheck21: user.daily_covid_assessment_check_21,
-          dailyCovidAssessmentCheck22: user.daily_covid_assessment_check_22,
-          dailyCovidAssessmentCheck23: user.daily_covid_assessment_check_23,
-          dailyCovidAssessmentCheck24: user.daily_covid_assessment_check_24,
-          dailyCovidAssessmentCheck25: user.daily_covid_assessment_check_25,
-          dailyCovidAssessmentCheck26: user.daily_covid_assessment_check_26,
-          dailyCovidAssessmentCheck27: user.daily_covid_assessment_check_27,
-          dailyCovidAssessmentCheck28: user.daily_covid_assessment_check_28,
-          dailyCovidAssessmentCheck29: user.daily_covid_assessment_check_29,
-          dailyCovidAssessmentCheck30: user.daily_covid_assessment_check_30,
-          isLoading: false
+          key: result.id,
+          dailyCovidAssessmentDate: data.daily_covid_assessment_date,
+          dailyCovidAssessmentIsCompleted: data.daily_covid_assessment_is_completed,
+          dailyCovidAssessmentCheck1: data.daily_covid_assessment_check_1,
+          dailyCovidAssessmentCheck2: data.daily_covid_assessment_check_2,
+          dailyCovidAssessmentCheck3: data.daily_covid_assessment_check_3,
+          dailyCovidAssessmentCheck4: data.daily_covid_assessment_check_4,
+          dailyCovidAssessmentCheck5: data.daily_covid_assessment_check_5,
+          dailyCovidAssessmentCheck6: data.daily_covid_assessment_check_6,
+          dailyCovidAssessmentCheck7: data.daily_covid_assessment_check_7,
+          dailyCovidAssessmentCheck8: data.daily_covid_assessment_check_8,
+          dailyCovidAssessmentCheck9: data.daily_covid_assessment_check_9,
+          dailyCovidAssessmentCheck10: data.daily_covid_assessment_check_10,
+          dailyCovidAssessmentCheck11: data.daily_covid_assessment_check_11,
+          dailyCovidAssessmentCheck12: data.daily_covid_assessment_check_12,
+          dailyCovidAssessmentCheck13: data.daily_covid_assessment_check_13,
+          dailyCovidAssessmentCheck14: data.daily_covid_assessment_check_14,
+          dailyCovidAssessmentCheck15: data.daily_covid_assessment_check_15,
+          dailyCovidAssessmentCheck16: data.daily_covid_assessment_check_16,
+          dailyCovidAssessmentCheck17: data.daily_covid_assessment_check_17,
+          dailyCovidAssessmentCheck18: data.daily_covid_assessment_check_18,
+          dailyCovidAssessmentCheck19: data.daily_covid_assessment_check_19,
+          dailyCovidAssessmentCheck20: data.daily_covid_assessment_check_20,
+          dailyCovidAssessmentCheck21: data.daily_covid_assessment_check_21,
+          dailyCovidAssessmentCheck22: data.daily_covid_assessment_check_22,
+          dailyCovidAssessmentCheck23: data.daily_covid_assessment_check_23,
+          dailyCovidAssessmentCheck24: data.daily_covid_assessment_check_24,
+          dailyCovidAssessmentCheck25: data.daily_covid_assessment_check_25,
+          dailyCovidAssessmentCheck26: data.daily_covid_assessment_check_26,
+          dailyCovidAssessmentCheck27: data.daily_covid_assessment_check_27,
+          dailyCovidAssessmentCheck28: data.daily_covid_assessment_check_28,
+          dailyCovidAssessmentCheck29: data.daily_covid_assessment_check_29,
+          dailyCovidAssessmentCheck30: data.daily_covid_assessment_check_30,
+          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -92,63 +95,64 @@ export default class DailyCovidAssessment extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
-  }
+  };
 
   editCheck() {
     this.setState({
       isLoading: true,
     });
-    const docUpdate = app.firestore().collection('dailyCovidAssessment').doc(this.state.key);
-    docUpdate.set({
-      daily_covid_assessment_date: this.state.dailyCovidAssessmentDate,
-      daily_covid_assessment_is_completed: this.state.dailyCovidAssessmentIsCompleted,
-      daily_covid_assessment_check_1: this.state.dailyCovidAssessmentCheck1,
-      daily_covid_assessment_check_2: this.state.dailyCovidAssessmentCheck2,
-      daily_covid_assessment_check_3: this.state.dailyCovidAssessmentCheck3,
-      daily_covid_assessment_check_4: this.state.dailyCovidAssessmentCheck4,
-      daily_covid_assessment_check_5: this.state.dailyCovidAssessmentCheck5,
-      daily_covid_assessment_check_6: this.state.dailyCovidAssessmentCheck6,
-      daily_covid_assessment_check_7: this.state.dailyCovidAssessmentCheck7,
-      daily_covid_assessment_check_8: this.state.dailyCovidAssessmentCheck8,
-      daily_covid_assessment_check_9: this.state.dailyCovidAssessmentCheck9,
-      daily_covid_assessment_check_10: this.state.dailyCovidAssessmentCheck10,
-      daily_covid_assessment_check_11: this.state.dailyCovidAssessmentCheck11,
-      daily_covid_assessment_check_12: this.state.dailyCovidAssessmentCheck12,
-      daily_covid_assessment_check_13: this.state.dailyCovidAssessmentCheck13,
-      daily_covid_assessment_check_14: this.state.dailyCovidAssessmentCheck14,
-      daily_covid_assessment_check_15: this.state.dailyCovidAssessmentCheck15,
-      daily_covid_assessment_check_16: this.state.dailyCovidAssessmentCheck16,
-      daily_covid_assessment_check_17: this.state.dailyCovidAssessmentCheck17,
-      daily_covid_assessment_check_18: this.state.dailyCovidAssessmentCheck18,
-      daily_covid_assessment_check_19: this.state.dailyCovidAssessmentCheck19,
-      daily_covid_assessment_check_20: this.state.dailyCovidAssessmentCheck20,
-      daily_covid_assessment_check_21: this.state.dailyCovidAssessmentCheck21,
-      daily_covid_assessment_check_22: this.state.dailyCovidAssessmentCheck22,
-      daily_covid_assessment_check_23: this.state.dailyCovidAssessmentCheck23,
-      daily_covid_assessment_check_24: this.state.dailyCovidAssessmentCheck24,
-      daily_covid_assessment_check_25: this.state.dailyCovidAssessmentCheck25,
-      daily_covid_assessment_check_26: this.state.dailyCovidAssessmentCheck26,
-      daily_covid_assessment_check_27: this.state.dailyCovidAssessmentCheck27,
-      daily_covid_assessment_check_28: this.state.dailyCovidAssessmentCheck28,
-      daily_covid_assessment_check_29: this.state.dailyCovidAssessmentCheck29,
-      daily_covid_assessment_check_30: this.state.dailyCovidAssessmentCheck30,
-    }).then(() => {
-      this.setState({
-        key: '',
-        isLoading: false,
+    const documentUpdate = app.firestore().collection("dailyCovidAssessment").doc(this.state.key);
+    documentUpdate
+      .set({
+        daily_covid_assessment_date: this.state.dailyCovidAssessmentDate,
+        daily_covid_assessment_is_completed: this.state.dailyCovidAssessmentIsCompleted,
+        daily_covid_assessment_check_1: this.state.dailyCovidAssessmentCheck1,
+        daily_covid_assessment_check_2: this.state.dailyCovidAssessmentCheck2,
+        daily_covid_assessment_check_3: this.state.dailyCovidAssessmentCheck3,
+        daily_covid_assessment_check_4: this.state.dailyCovidAssessmentCheck4,
+        daily_covid_assessment_check_5: this.state.dailyCovidAssessmentCheck5,
+        daily_covid_assessment_check_6: this.state.dailyCovidAssessmentCheck6,
+        daily_covid_assessment_check_7: this.state.dailyCovidAssessmentCheck7,
+        daily_covid_assessment_check_8: this.state.dailyCovidAssessmentCheck8,
+        daily_covid_assessment_check_9: this.state.dailyCovidAssessmentCheck9,
+        daily_covid_assessment_check_10: this.state.dailyCovidAssessmentCheck10,
+        daily_covid_assessment_check_11: this.state.dailyCovidAssessmentCheck11,
+        daily_covid_assessment_check_12: this.state.dailyCovidAssessmentCheck12,
+        daily_covid_assessment_check_13: this.state.dailyCovidAssessmentCheck13,
+        daily_covid_assessment_check_14: this.state.dailyCovidAssessmentCheck14,
+        daily_covid_assessment_check_15: this.state.dailyCovidAssessmentCheck15,
+        daily_covid_assessment_check_16: this.state.dailyCovidAssessmentCheck16,
+        daily_covid_assessment_check_17: this.state.dailyCovidAssessmentCheck17,
+        daily_covid_assessment_check_18: this.state.dailyCovidAssessmentCheck18,
+        daily_covid_assessment_check_19: this.state.dailyCovidAssessmentCheck19,
+        daily_covid_assessment_check_20: this.state.dailyCovidAssessmentCheck20,
+        daily_covid_assessment_check_21: this.state.dailyCovidAssessmentCheck21,
+        daily_covid_assessment_check_22: this.state.dailyCovidAssessmentCheck22,
+        daily_covid_assessment_check_23: this.state.dailyCovidAssessmentCheck23,
+        daily_covid_assessment_check_24: this.state.dailyCovidAssessmentCheck24,
+        daily_covid_assessment_check_25: this.state.dailyCovidAssessmentCheck25,
+        daily_covid_assessment_check_26: this.state.dailyCovidAssessmentCheck26,
+        daily_covid_assessment_check_27: this.state.dailyCovidAssessmentCheck27,
+        daily_covid_assessment_check_28: this.state.dailyCovidAssessmentCheck28,
+        daily_covid_assessment_check_29: this.state.dailyCovidAssessmentCheck29,
+        daily_covid_assessment_check_30: this.state.dailyCovidAssessmentCheck30,
+      })
+      .then(() => {
+        this.setState({
+          isLoading: false,
+        });
+        this.props.navigation.navigate("HealthSafetyChecks");
+      })
+      .catch((error) => {
+        console.error(error);
+        this.setState({
+          isLoading: false,
+        });
       });
-      this.props.navigation.navigate('HealthSafetyChecks');
-    })
-    .catch((error) => {
-      console.error(error);
-      this.setState({
-        isLoading: false,
-      });
-    });
   }
 
   render() {
@@ -163,8 +167,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck1}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck1')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck1")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -173,8 +177,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck2}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck2')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck2")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -183,8 +187,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck3}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck3')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck3")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -193,8 +197,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck4}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck4')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck4")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -203,8 +207,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck5}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck5')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck5")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -213,8 +217,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck6}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck6')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck6")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -223,8 +227,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck7}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck7')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck7")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -233,8 +237,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck8}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck8')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck8")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -243,8 +247,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck9}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck9')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck9")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -253,8 +257,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck10}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck10')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck10")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -263,8 +267,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck11}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck11')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck11")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -273,8 +277,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck12}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck12')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck12")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -283,8 +287,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck13}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck13')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck13")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -293,8 +297,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck14}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck14')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck14")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -303,8 +307,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck15}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck15')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck15")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -313,8 +317,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck16}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck16')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck16")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -323,8 +327,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck17}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck17')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck17")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <Text style={styles.standardText}>(Floors, surfaces, handles, light switches)</Text>
@@ -334,8 +338,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck18}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck18')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck18")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <Text style={styles.standardText}>(Deep-cleaned once per day)</Text>
@@ -345,8 +349,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck19}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck19')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck19")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -355,8 +359,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck20}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck20')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck20")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -365,8 +369,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck21}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck21')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck21")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -375,8 +379,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck22}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck22')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck22")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -385,8 +389,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck23}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck23')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck23")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -395,8 +399,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck24}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck24')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck24")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -405,8 +409,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck25}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck25')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck25")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -415,8 +419,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck26}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck26')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck26")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -425,8 +429,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck27}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck27')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck27")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -435,8 +439,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck28}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck28')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck28")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -445,8 +449,8 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck29}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck29')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck29")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.horizontalRule}></View>
@@ -455,16 +459,12 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck30}
-              onValueChange={(val) => this.inputEl(val, 'dailyCovidAssessmentCheck30')}
-              tintColors={{ true: "#0B8FDC", false: "orange"}}
+              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck30")}
+              tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
           <View style={styles.space}></View>
-          <Button
-            title='Update'
-            onPress={() => this.editCheck()} 
-            color="#0B8FDC"
-          />
+          <Button title="Update" onPress={() => this.editCheck()} color="#0B8FDC" />
           <View style={styles.buttonSpace}></View>
         </ScrollView>
       </View>

@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from 'react-native';
-import app from '../../../Components/firebase';
+import React, { Component } from "react";
+import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import app from "../../../Components/firebase";
 import "firebase/firestore";
-import moment from 'moment';
-import DateTimePicker from '@react-native-community/datetimepicker';
-const styles = require('../../../Styles/general');
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, calculationAlert } from "../../../Components/Functionality";
+const styles = require("../../../Styles/general");
 
 export default class UpdateMiles extends Component {
   constructor() {
     super();
     this.state = {
       isLoading: true,
-      dateOfMileage: '',
-      mileageAmount: '',
-      mileageRate: '',
-      milesTravelled: '',
+      dateOfMileage: "",
+      mileageAmount: "",
+      mileageRate: "",
+      milesTravelled: "",
       date: new Date(),
-      show: false
+      show: false,
     };
   }
 
@@ -24,43 +24,32 @@ export default class UpdateMiles extends Component {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
-      dateOfMileage: this.parseDate(currentDate),
-      show: false
+      dateOfMileage: convertDate(currentDate),
+      show: false,
     });
   };
 
   showDatepicker() {
     this.setState({
-      show: true
+      show: true,
     });
   }
 
-  convertDate(dateInput){
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
-  }
-
-  parseDate(dateInput){
-    return(moment(dateInput).format('D/M/YYYY'));
-  }
-
-  convertToTimestamp(dateInput){
-    dateInput = dateInput.split("/");
-    var newDate = new Date( dateInput[2], dateInput[1] - 1, dateInput[0]);
-    return(newDate);
-  }
-
   componentDidMount() {
-    const docRef = app.firestore().collection('mileageLogs').doc(this.props.route.params.userkey)
-    docRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
+    const documentReference = app
+      .firestore()
+      .collection("mileageLogs")
+      .doc(this.props.route.params.userkey);
+    documentReference.get().then((result) => {
+      if (result.exists) {
+        const data = result.data();
         this.setState({
-          key: res.id,
-          dateOfMileage: this.convertDate(user.date_of_mileage),
-          mileageAmount: user.mileage_amount,
-          mileageRate: user.mileage_rate,
-          milesTravelled: user.miles_travelled,
-          isLoading: false
+          key: result.id,
+          dateOfMileage: parseDate(data.date_of_mileage),
+          mileageAmount: data.mileage_amount,
+          mileageRate: data.mileage_rate,
+          milesTravelled: data.miles_travelled,
+          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -68,122 +57,141 @@ export default class UpdateMiles extends Component {
     });
   }
 
-  inputEl = (val, prop) => {
+  inputEl = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
-  }
+  };
 
   editMileageLog() {
-    this.setState({
-      isLoading: true,
-    });
-    const docUpdate = app.firestore().collection('mileageLogs').doc(this.state.key);
-    docUpdate.set({
-        date_of_mileage: this.convertToTimestamp(this.state.dateOfMileage),
-        mileage_amount: this.state.mileageAmount,
-        mileage_rate: this.state.mileageRate,
-        miles_travelled: this.state.milesTravelled
-    }).then(() => {
+    if (this.state.mileageRate.length == 0 || !isNumeric(this.state.mileageRate) || this.state.milesTravelled.length == 0 || !isNumeric(this.state.milesTravelled)) {
+      missingDataAlert();
+      return;
+    } else if (this.state.mileageAmount.length == 0 || !isNumeric(this.state.mileageAmount)) {
+      calculationAlert();
+    } else {
       this.setState({
-        key: '',
-        dateOfMileage: '',
-        mileageAmount: '',
-        mileageRate: '',
-        milesTravelled: '',
-        isLoading: false,
+        isLoading: true,
       });
-      this.props.navigation.navigate('ViewMiles');
-    })
-    .catch((error) => {
-      console.error(error);
-      this.setState({
-        isLoading: false,
-      });
-    });
+      const documentUpdate = app
+        .firestore()
+        .collection("mileageLogs")
+        .doc(this.state.key);
+      documentUpdate
+        .set({
+          date_of_mileage: convertToTimestamp(this.state.dateOfMileage),
+          mileage_amount: this.state.mileageAmount,
+          mileage_rate: this.state.mileageRate,
+          miles_travelled: this.state.milesTravelled,
+        })
+        .then(() => {
+          this.setState({
+            isLoading: false,
+          });
+          this.props.navigation.navigate("ViewMiles");
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
   }
 
   deleteMileageLog() {
-    const docRef = app.firestore().collection('mileageLogs').doc(this.props.route.params.userkey)
-      docRef.delete().then((res) => {
-          this.props.navigation.navigate('ViewMiles');
-      })
+    const documentReference = app
+      .firestore()
+      .collection("mileageLogs")
+      .doc(this.props.route.params.userkey);
+    documentReference.delete().then(() => {
+      this.props.navigation.navigate("ViewMiles");
+    });
   }
 
-  alertDialog=()=>{
+  alertDialog = () => {
     Alert.alert(
-      'Delete',
-      'Really?',
+      "Delete",
+      "Really?",
       [
-        {text: 'Yes', onPress: () => this.deleteMileageLog()},
-        {text: 'No', onPress: () => console.log('Item not deleted'), style: 'cancel'},
+        { text: "Yes", onPress: () => this.deleteMileageLog() },
+        {
+          text: "No",
+          onPress: () => console.log("Item not deleted"),
+          style: "cancel",
+        },
       ],
-      { 
-        cancelable: true 
+      {
+        cancelable: true,
       }
     );
-  }
+  };
 
   render() {
     return (
-        <ScrollView>
-            <View style={styles.space}></View>
-                <Text style={styles.bold}>Miles Travelled</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Miles Travelled'}
-                    value={this.state.milesTravelled}
-                    onChangeText={(val) => this.inputEl(val, 'milesTravelled')}
-                />
-                <Text style={styles.bold}>Rate (pence per mile)</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'0.00'}
-                    value={this.state.mileageRate}
-                    onChangeText={(val) => this.inputEl(val, 'mileageRate')}
-                />
-                <View>
-                    <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        this.setState({
-                            mileageAmount: parseFloat((this.state.milesTravelled) * parseFloat(this.state.mileageRate)).toFixed(2)
-                        });
-                    }}>
-                    <Text style={styles.buttonText}>Calculate</Text>
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.bold}>Mileage Amount: £{this.state.mileageAmount}</Text>
-                <View style={styles.space}></View>
-                <Text style={styles.bold}>Date of Mileage Expense</Text>
-                <View>
-                  <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
-                  {this.state.show && (
-                      <DateTimePicker
-                      testID="dateOfMileage"
-                      value={this.state.date}
-                      mode='date'
-                      display="default"
-                      onChange={this.onChange}
-                      />
-                  )}
-                  <Text style={styles.buttonText}>Choose a Date: {this.state.dateOfMileage}</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.space}></View>
-            <Button
-              style={styles.buttonText}
-              title='Update'
-              onPress={() => this.editMileageLog()} 
-              color="#0B8FDC"
-            />
-            <View style={styles.space}></View>
-            <Button
-              title='Delete'
-              onPress={this.alertDialog}
-              color="#EE752E"
-            />
-        </ScrollView>
+      <ScrollView>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Miles Travelled</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"Miles Travelled"}
+          value={this.state.milesTravelled}
+          onChangeText={(value) => this.inputEl(value, "milesTravelled")}
+        />
+        <Text style={styles.bold}>Rate (pence per mile)</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={"0.00"}
+          value={this.state.mileageRate}
+          onChangeText={(value) => this.inputEl(value, "mileageRate")}
+        />
+        <View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              this.setState({
+                mileageAmount: parseFloat(
+                  this.state.milesTravelled * parseFloat(this.state.mileageRate)
+                ).toFixed(2),
+              });
+            }}
+          >
+            <Text style={styles.buttonText}>Calculate</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.bold}>
+          Mileage Amount: £{this.state.mileageAmount}
+        </Text>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Date of Mileage Expense:</Text>
+        <View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.showDatepicker()}
+          >
+            {this.state.show && (
+              <DateTimePicker
+                maximumDate={new Date()}
+                value={this.state.date}
+                mode="date"
+                onChange={this.onChange}
+              />
+            )}
+            <Text style={styles.buttonText}>
+              Choose a Date: {this.state.dateOfMileage}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.space}></View>
+        <Button
+          style={styles.buttonText}
+          title="Update"
+          onPress={() => this.editMileageLog()}
+          color="#0B8FDC"
+        />
+        <View style={styles.space}></View>
+        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+      </ScrollView>
     );
   }
 }

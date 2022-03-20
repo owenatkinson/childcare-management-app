@@ -1,48 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { View, Button, Share } from "react-native";
-import { ListItem, Icon } from 'react-native-elements';
-import * as DocumentPicker from 'expo-document-picker';
-import app from '../../Components/firebase';
+import { ListItem, Icon } from "react-native-elements";
+import * as DocumentPicker from "expo-document-picker";
+import app from "../../Components/firebase";
 import "firebase/firestore";
 import "firebase/database";
 import { ScrollView } from "react-native-gesture-handler";
-import { FontAwesome } from '@expo/vector-icons';
-const styles = require('../../Styles/general');
+import { FontAwesome } from "@expo/vector-icons";
+import * as Progress from 'react-native-progress';
+const styles = require("../../Styles/general");
 
 const Policies = (props) => {
   const [fileList, setFileList] = useState([]);
+  const [progress, setProgress] = useState(-1);
 
-  async function uploadImage () {
+  async function uploadImage() {
     let file = await DocumentPicker.getDocumentAsync({});
-    if(file.uri != null){
+    if (file.uri != null) {
       const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-          resolve(xhr.response);
+        const xml = new XMLHttpRequest();
+        xml.onload = function () {
+          resolve(xml.response);
         };
-        xhr.onerror = function() {
-          reject(new TypeError('Network request failed'));
-        }
-        xhr.responseType = 'blob';
-        xhr.open('GET', file.uri, true);
-        xhr.send(null);
+        xml.onerror = function () {
+          reject(new TypeError("Network request failed"));
+        };
+        xml.responseType = "blob";
+        xml.open("GET", file.uri, true);
+        xml.send(null);
       });
-  
-      let trimFileName = removeFileExtension(file.name);
-      const ref = app.storage().ref(`/policies/${trimFileName}`);
+
+      const ref = app.storage().ref(`/policies/${removeFileExtension(file.name)}`);
       const snapshot = ref.put(blob);
-    
-      snapshot.on('state_changed', 
+
+      snapshot.on(
+        "state_changed",
         function (snapshot) {
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes);
+          setProgress(progress);
+          if(progress == 1) {
+            setProgress(-1);
+          }
         },
         function (error) {
+          console.log(error);
           blob.close();
           return;
         },
         function () {
-          snapshot.snapshot.ref.getDownloadURL().then(function(downloadURL){
+          snapshot.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             saveFileToRealtimeDatabase(downloadURL, file);
+            props.navigation.navigate("FilePreview", {
+              fileData: { fileURL: downloadURL}
+            })
           });
           blob.close();
           return;
@@ -51,15 +61,15 @@ const Policies = (props) => {
     }
   }
 
-  function saveFileToRealtimeDatabase(downloadURL, file){
+  function saveFileToRealtimeDatabase(downloadURL, file) {
     let trimFileName = removeFileExtension(file.name);
     app.database().ref(`policies/${trimFileName}`).update({
       fileName: file.name,
       fileURL: downloadURL,
-    })
+    });
   }
 
-  function removeFileExtension(fileWithExtension){
+  function removeFileExtension(fileWithExtension) {
     return fileWithExtension.replace(/\.[^/.]+$/, "");
   }
 
@@ -69,68 +79,84 @@ const Policies = (props) => {
         message: fileShareableURL,
       });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 
-  function deletePolicy(fileName){
-    let trimFileName = removeFileExtension(fileName);
-    let deletePolicyDatabase = app.database().ref('policies/' + trimFileName);
-    deletePolicyDatabase.remove();
-    
+  function deletePolicy(fileName) {
+    let deletePolicyDatabase = app.database().ref("policies/" + removeFileExtension(fileName));
     var storage = app.storage();
-
     var storageRef = storage.ref();
-
-    var desertRef = storageRef.child(`policies/${trimFileName}`);
-
-    desertRef.delete();
+    var policyRef = storageRef.child(`policies/${removeFileExtension(fileName)}`);
+    deletePolicyDatabase.remove();
+    policyRef.delete();
     setFileList([]);
-    const onChildDeleted = app.database()
+    const onChildDeleted = app
+      .database()
       .ref(`policies`)
-      .on('child_added', (snapshot) => {
-        let helperArr=[];
+      .on("child_added", (snapshot) => {
+        let helperArr = [];
         helperArr.push(snapshot.val());
-        setFileList((files)=>[...files, ...helperArr]);
+        setFileList((files) => [...files, ...helperArr]);
       });
-    return () => app.database().ref(`policies`).off('child_added', onChildDeleted);
+    return () => app.database().ref(`policies`).off("child_added", onChildDeleted);
   }
 
   useEffect(() => {
     setFileList([]);
-    const onChildAdded = app.database()
+    const onChildAdded = app
+      .database()
       .ref(`policies`)
-      .on('child_added', (snapshot) => {
-        let helperArr=[];
+      .on("child_added", (snapshot) => {
+        let helperArr = [];
         helperArr.push(snapshot.val());
-        setFileList((files)=>[...files, ...helperArr]);
+        setFileList((files) => [...files, ...helperArr]);
       });
-    return () => app.database().ref(`policies`).off('child_added', onChildAdded);
-  },[])
+    return () => app.database().ref(`policies`).off("child_added", onChildAdded)
+  }, []);
 
   return (
     <ScrollView>
       <View>
-          <Button 
-            title="Upload Policy"
-            onPress={uploadImage}
-          />
+        <Button title="Upload Policy" onPress={uploadImage} />
       </View>
+      {progress >= 0 || progress == 1 ?
+      <Progress.Bar
+        width={412}
+        progress={progress}
+        borderRadius={0}
+      /> : (null)}
       {fileList.map((item, index) => (
         <ListItem.Swipeable
           leftContent={
-            <FontAwesome.Button name="share-alt" backgroundColor="#0b8fdc" alignItems="center" justifyContent="center" style={styles.swipeableItem} onPress={() => sharePolicy(item.fileURL)}></FontAwesome.Button>
+            <FontAwesome.Button
+              name="share-alt"
+              backgroundColor="#0b8fdc"
+              alignItems="center"
+              justifyContent="center"
+              style={styles.swipeableItem}
+              onPress={() => sharePolicy(item.fileURL)}
+            ></FontAwesome.Button>
           }
           rightContent={
-            <FontAwesome.Button name="trash" backgroundColor="#ee752e" alignItems="center" justifyContent="center" style={styles.swipeableItem} onPress={() => deletePolicy(item.fileName)}></FontAwesome.Button>
+            <FontAwesome.Button
+              name="trash"
+              backgroundColor="#ee752e"
+              alignItems="center"
+              justifyContent="center"
+              style={styles.swipeableItem}
+              onPress={() => deletePolicy(item.fileName)}
+            ></FontAwesome.Button>
           }
-          key = {index}
+          key={index}
           onPress={() =>
-            props.navigation.navigate('FilePreview', {
+            props.navigation.navigate("FilePreview", {
               fileData: item,
             })
-          }bottomDivider>
-          <Icon name='assignment' />
+          }
+          bottomDivider
+        >
+          <Icon name="assignment" />
           <ListItem.Content>
             <ListItem.Title>{item.fileName}</ListItem.Title>
           </ListItem.Content>

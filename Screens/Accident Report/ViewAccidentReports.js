@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import { ScrollView, View } from 'react-native';
-import app from '../../Components/firebase';
+import React, { Component } from "react";
+import { ScrollView, View } from "react-native";
+import app from "../../Components/firebase";
 import "firebase/firestore";
-import { ListItem } from 'react-native-elements';
-import ModalSelector from 'react-native-modal-selector';
-import moment from 'moment';
-const styles = require('../../Styles/general');
+import { ListItem } from "react-native-elements";
+import ModalSelector from "react-native-modal-selector";
+import { parseDate } from "../../Components/Functionality";
+const styles = require("../../Styles/general");
 
 export default class ViewAccidentReports extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection("accidentReports").orderBy("accident_date", "desc");
+    this.docs = app
+      .firestore()
+      .collection("accidentReports")
+      .orderBy("accident_date", "desc");
     this.state = {
       isLoading: true,
       accidentReports: [],
       childNames: [],
-      activeChildName: ''
+      activeChildName: "",
     };
   }
 
@@ -23,44 +26,46 @@ export default class ViewAccidentReports extends Component {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unsubscribe();
-  }
-
-  convertDate = (dateInput) => {
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
   }
 
   fetchCollection = (querySnapshot) => {
     const accidentReports = [];
     const childNames = [];
     let index = 0;
-    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
+    app
+      .firestore()
+      .collection("children")
+      .orderBy("child_name", "asc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
-            key: index++, label: doc.data()["child_name"]
+            key: index++,
+            label: document.data()["child_name"],
           });
+        });
+        this.setState({
+          childNames: childNames,
+        });
       });
-      this.setState({
-        childNames: childNames
-      })
-    });
 
-    querySnapshot.forEach((res) => {
-      const { child_name, accident_date, accident_time, accident_notes } = res.data();
+    querySnapshot.forEach((result) => {
+      const { child_name, accident_date, accident_time, accident_notes } = result.data();
       accidentReports.push({
-        key: res.id,
+        key: result.id,
         child_name,
         accident_date,
         accident_time,
-        accident_notes
+        accident_notes,
       });
     });
     this.setState({
       accidentReports,
       isLoading: false,
     });
-  }
+  };
 
   render() {
     return (
@@ -68,34 +73,37 @@ export default class ViewAccidentReports extends Component {
         <View>
           <ModalSelector
             data={this.state.childNames}
-            initValue="Select a Child"
-            onChange={(option)=>{ this.setState({activeChildName:option.label})}}/>
+            initValue="Select Child"
+            onChange={(option) => {
+              this.setState({ activeChildName: option.label });
+            }}
+          />
         </View>
-          {
-            this.state.accidentReports.map((res, i) => {
-              if (res.child_name == this.state.activeChildName){
-                return (
-                  <ListItem 
-                    key={i}
-                    onPress={() => {
-                      this.props.navigation.navigate("UpdateAccidentReport", {
-                        userkey: res.key
-                      });
-                    }}                        
-                    bottomDivider>
-                    <ListItem.Content>
-                      <ListItem.Title>{res.child_name}</ListItem.Title>
-                      <ListItem.Subtitle>Date: {this.convertDate(res.accident_date)}</ListItem.Subtitle>
-                    </ListItem.Content>
-                    <ListItem.Chevron 
-                      color="black" 
-                    />
-                  </ListItem>);
-              } else {
-                return(null);
-              }
-            })
+        {this.state.accidentReports.map((report, id) => {
+          if (report.child_name == this.state.activeChildName) {
+            return (
+              <ListItem
+                key={id}
+                onPress={() => {
+                  this.props.navigation.navigate("UpdateAccidentReport", {
+                    userkey: report.key,
+                  });
+                }}
+                bottomDivider
+              >
+                <ListItem.Content>
+                  <ListItem.Title>{report.child_name}</ListItem.Title>
+                  <ListItem.Subtitle>
+                    Date: {parseDate(report.accident_date)}
+                  </ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron color="black" />
+              </ListItem>
+            );
+          } else {
+            null;
           }
+        })}
       </ScrollView>
     );
   }

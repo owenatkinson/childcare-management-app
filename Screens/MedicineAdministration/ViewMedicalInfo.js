@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import { ScrollView, View } from 'react-native';
-import app from '../../Components/firebase';
+import React, { Component } from "react";
+import { ScrollView, View } from "react-native";
+import app from "../../Components/firebase";
 import "firebase/firestore";
-import { ListItem } from 'react-native-elements';
-import ModalSelector from 'react-native-modal-selector'
-import moment from 'moment';
-const styles = require('../../Styles/general');
+import { ListItem } from "react-native-elements";
+import ModalSelector from "react-native-modal-selector";
+import { parseDate } from "../../Components/Functionality";
+const styles = require("../../Styles/general");
 
 export default class ViewMedicalInfo extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection("medicineAdministration").orderBy("medicine_date", "desc");
+    this.docs = app
+      .firestore()
+      .collection("medicineAdministration")
+      .orderBy("medicine_date", "desc");
     this.state = {
       isLoading: true,
       medicineLogs: [],
       childNames: [],
-      activeChildName: ''
+      activeChildName: "",
     };
   }
 
@@ -23,80 +26,91 @@ export default class ViewMedicalInfo extends Component {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unsubscribe();
-  }
-
-  convertDate = (dateInput) => {
-    return(moment(dateInput.toDate()).format('D/M/YYYY'));
   }
 
   fetchCollection = (querySnapshot) => {
     const childNames = [];
     let index = 0;
-    app.firestore().collection("children").orderBy("child_name", "asc").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
+    app
+      .firestore()
+      .collection("children")
+      .orderBy("child_name", "asc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((document) => {
           childNames.push({
-            key: index++, label: doc.data()["child_name"]
+            key: index++,
+            label: document.data()["child_name"],
           });
+        });
+        this.setState({
+          childNames: childNames,
+        });
       });
-      this.setState({
-        childNames: childNames
-      })
-    });
 
     const medicineLogs = [];
-    querySnapshot.forEach((res) => {
-      const { child_name, medicine_title, medicine_date, medicine_time, medicine_reason, medicine_notes } = res.data();
-      medicineLogs.push({
-        key: res.id,
+    querySnapshot.forEach((result) => {
+      const {
         child_name,
         medicine_title,
         medicine_date,
         medicine_time,
         medicine_reason,
-        medicine_notes
+        medicine_notes,
+      } = result.data();
+      medicineLogs.push({
+        key: result.id,
+        child_name,
+        medicine_title,
+        medicine_date,
+        medicine_time,
+        medicine_reason,
+        medicine_notes,
       });
     });
     this.setState({
       medicineLogs,
       isLoading: false,
     });
-  }
+  };
 
   render() {
     return (
       <ScrollView style={styles.wrapper}>
-          <View>
+        <View>
           <ModalSelector
             data={this.state.childNames}
-            initValue="Select a Child"
-            onChange={(option)=>{ this.setState({activeChildName:option.label})}}/>
-          </View>
-          {
-            this.state.medicineLogs.map((res, i) => {
-              if (res.child_name == this.state.activeChildName){
-                return(<ListItem 
-                  key={i}
-                  onPress={() => {
-                    this.props.navigation.navigate("UpdateMedicineLog", {
-                      userkey: res.key
-                    });
-                  }}                        
-                  bottomDivider>
-                  <ListItem.Content>
-                    <ListItem.Title>{res.medicine_title}</ListItem.Title>
-                    <ListItem.Subtitle>Date: {this.convertDate(res.medicine_date)}</ListItem.Subtitle>
-                  </ListItem.Content>
-                  <ListItem.Chevron 
-                    color="black" 
-                  />
-                </ListItem>);
-              } else {
-                return(null);
-              }
-            })
+            initValue="Select Child"
+            onChange={(option) => {
+              this.setState({ activeChildName: option.label });
+            }}
+          />
+        </View>
+        {this.state.medicineLogs.map((result, id) => {
+          if (result.child_name == this.state.activeChildName) {
+            return (
+              <ListItem
+                key={id}
+                onPress={() => {
+                  this.props.navigation.navigate("UpdateMedicineLog", {
+                    userkey: result.key,
+                  });
+                }}
+                bottomDivider
+              >
+                <ListItem.Content>
+                  <ListItem.Title>{result.medicine_title}</ListItem.Title>
+                  <ListItem.Subtitle>Date: {parseDate(result.medicine_date)}</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron color="black" />
+              </ListItem>
+            );
+          } else {
+            return null;
           }
+        })}
       </ScrollView>
     );
   }

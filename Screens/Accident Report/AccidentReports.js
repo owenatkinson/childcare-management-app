@@ -1,19 +1,19 @@
-import React from 'react';
-import { View, Button } from 'react-native';
-const styles = require('../../Styles/general');
+import React from "react";
+import { View, Button } from "react-native";
+const styles = require("../../Styles/general");
 
 export default function AccidentReports({ navigation }) {
   return (
     <View style={styles.fitToText}>
       <View style={styles.space}></View>
-      <Button 
+      <Button
         title="Log Accident Report"
-        onPress={() => navigation.navigate('LogAccidentReport')}
+        onPress={() => navigation.navigate("LogAccidentReport")}
       />
       <View style={styles.space}></View>
       <Button
         title="View Accident Reports"
-        onPress={() => navigation.navigate('ViewAccidentReports')}
+        onPress={() => navigation.navigate("ViewAccidentReports")}
       />
     </View>
   );
