@@ -206,5 +206,22 @@ module.exports = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
+  },
+  boldBlueText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 12,
+    color: "#0B64A9"
+  },
+  standardBlackText: {
+    fontSize: 18,
+    marginLeft: 12,
+  },
+  phoneIcon: {
+    marginRight: 15,
+  },
+  iconPadding: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
   }
 });

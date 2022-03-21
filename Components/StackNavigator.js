@@ -46,6 +46,7 @@ import LogMiles from "../Screens/Finances/Mileage/LogMiles";
 import UpdateMiles from "../Screens/Finances/Mileage/UpdateMiles";
 import ViewMiles from "../Screens/Finances/Mileage/ViewMiles";
 import ProductScreen from "../Screens/Allergy Detection/ProductScreen";
+import ViewEmergencyContacts from "../Screens/Emergency Contacts/ViewEmergencyContacts";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -248,6 +249,11 @@ const StackNavigator = () => {
         name="ProductScreen"
         component={ProductScreen}
         options={{ title: "Product Information" }}
+      />
+      <Stack.Screen
+        name="ViewEmergencyContacts"
+        component={ViewEmergencyContacts}
+        options={{ title: "Emergency Contacts" }}
       />
     </Stack.Navigator>
   );
