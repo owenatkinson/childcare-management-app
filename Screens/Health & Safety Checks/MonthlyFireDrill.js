@@ -81,9 +81,11 @@ export default class MonthlyFireDrill extends Component {
   };
 
   editCheck() {
-    if (this.state.monthlyFireDrillNumberOfPeople.length == 0 || !isNumeric(this.state.monthlyFireDrillNumberOfPeople) ) {
+    if (this.state.monthlyFireDrillNumberOfPeople.length == 0) {
       missingDataAlert();
       return;
+    } else if (!isNumeric(this.state.monthlyFireDrillNumberOfPeople)){
+      numericDataAlert();
     } else {
       this.setState({
         isLoading: true,

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, Share } from "react-native";
+import { View, Button, Share, Alert, ScrollView } from "react-native";
 import { ListItem, Icon } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import "firebase/database";
-import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Progress from 'react-native-progress';
 const styles = require("../../Styles/general");
@@ -83,6 +82,24 @@ const Policies = (props) => {
     }
   };
 
+  const alertDialog = (file) => {
+    Alert.alert(
+      "Delete Policy",
+      "Really?",
+      [
+        { text: "Yes", onPress: () => deletePolicy(file) },
+        {
+          text: "No",
+          onPress: () => console.log("Item not deleted"),
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
   function deletePolicy(fileName) {
     let deletePolicyDatabase = app.database().ref("policies/" + removeFileExtension(fileName));
     var storage = app.storage();
@@ -145,7 +162,8 @@ const Policies = (props) => {
               alignItems="center"
               justifyContent="center"
               style={styles.swipeableItem}
-              onPress={() => deletePolicy(item.fileName)}
+              alertDialog
+              onPress={() => alertDialog(item.fileName)}
             ></FontAwesome.Button>
           }
           key={index}

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Alert } from "react-native";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, missingDataAlert, isNumeric, calculationAlert} from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric, numericDataAlert} from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogMiles = ({ navigation }) => {
@@ -14,12 +14,13 @@ const LogMiles = ({ navigation }) => {
   const fireDB = app.firestore().collection("mileageLogs");
 
   async function addMileageLog() {
-    if (mileageRate.length == 0 || !isNumeric(mileageRate) || milesTravelled.length == 0 || !isNumeric(milesTravelled)) {
+    if (mileageRate.length == 0 || milesTravelled.length == 0) {
       missingDataAlert();
       return;
-    } else if (mileageAmount.length == 0 || !isNumeric(mileageAmount)) {
-      calculationAlert();
-    } else {
+    } else if (!isNumeric(mileageRate) || !isNumeric(milesTravelled)){
+      numericDataAlert();
+    }
+    else {
       await fireDB.add({
         mileage_amount: mileageAmount,
         mileage_rate: mileageRate,
@@ -28,6 +29,32 @@ const LogMiles = ({ navigation }) => {
       });
       navigation.navigate("Finances");
     }
+  }
+
+  const alertDialog = () => {
+    Alert.alert(
+      "Log Mileage",
+      "Confirm",
+      [
+        { text: "Log", onPress: () => addMileageLog() }
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  function calculateMileage(){
+    setMileageAmount(
+      parseFloat(milesTravelled * parseFloat(mileageRate)).toFixed(2)
+    );
+  }
+
+  function calculateAndAlert(){
+    setMileageAmount(
+      parseFloat(milesTravelled * parseFloat(mileageRate)).toFixed(2)
+    );
+    alertDialog();
   }
 
   return (
@@ -51,9 +78,7 @@ const LogMiles = ({ navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            setMileageAmount(
-              parseFloat(milesTravelled * parseFloat(mileageRate)).toFixed(2)
-            );
+            calculateMileage();
           }}
         >
           <Text style={styles.buttonText}>Calculate</Text>
@@ -82,7 +107,7 @@ const LogMiles = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.space}></View>
-      <Button title="Log Mileage" onPress={() => addMileageLog()} />
+      <Button title="Log Mileage" onPress={() => calculateAndAlert()} />
     </ScrollView>
   );
 };

@@ -70,14 +70,14 @@ export default class UpdateAccidentReport extends Component {
         const data = result.data();
         this.setState({
           key: result.id,
-          childName: user.child_name,
-          accidentDate: parseDate(user.accident_date),
-          accidentTime: user.accident_time,
-          accidentNotes: user.accident_notes,
-          accidentLocation: user.accident_location,
-          accidentDetail: user.accident_detail,
-          accidentAction: user.accident_action,
-          accidentMedicalAttention: user.accident_medical_attention,
+          childName: data.child_name,
+          accidentDate: parseDate(data.accident_date),
+          accidentTime: data.accident_time,
+          accidentNotes: data.accident_notes,
+          accidentLocation: data.accident_location,
+          accidentDetail: data.accident_detail,
+          accidentAction: data.accident_action,
+          accidentMedicalAttention: data.accident_medical_attention,
           isLoading: false,
         });
       } else {

@@ -8,7 +8,7 @@ import Nutrition from "./Components/Nutrition";
 import ChildAllergies from "./Components/ChildAllergies";
 
 export default function ProductScreen({ route }) {
-  const [selectedIndex, updateIndex] = useState(0);
+  const [selectedIndex, setIndex] = useState(0);
   const buttons = [
     "General",
     "Ingredients",
@@ -20,11 +20,11 @@ export default function ProductScreen({ route }) {
   return (
     <View>
       <ButtonGroup
-        onPress={updateIndex}
+        onPress={setIndex}
         selectedIndex={selectedIndex}
         buttons={buttons}
         containerStyle={{
-          height: 75,
+          height: 50,
         }}
       />
       <View>

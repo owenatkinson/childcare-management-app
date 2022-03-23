@@ -16,9 +16,11 @@ export default function AddMonthlyDrillList({ route, navigation }) {
   const fireDB = app.firestore().collection("monthlyFireDrill");
 
   async function addCheck() {
-    if (monthlyFireDrillNumberOfPeople.length == 0 || !isNumeric(monthlyFireDrillNumberOfPeople)) {
+    if (monthlyFireDrillNumberOfPeople.length == 0) {
       missingDataAlert();
       return;
+    } else if (!isNumeric(monthlyFireDrillNumberOfPeople)){
+      numericDataAlert();
     } else {
       await fireDB.add({
         monthly_fire_drill_date: changeDate,

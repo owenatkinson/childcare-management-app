@@ -27,6 +27,7 @@ module.exports = StyleSheet.create({
     marginTop: 20,
     fontWeight: "bold",
     alignSelf: "center",
+    fontSize: 20
   },
   boldCentre: {
     fontWeight: "bold",
@@ -221,7 +222,42 @@ module.exports = StyleSheet.create({
     marginRight: 15,
   },
   iconPadding: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between'
-  }
+    flexDirection: "row", 
+    justifyContent: "space-between"
+  },
+  alignItemsCenter:{
+    alignItems: "center"
+  },
+  menuShapes: {
+    marginVertical: 15,
+    marginHorizontal: 40,
+    backgroundColor: "#DADADA",
+    width: 90,
+    height: 90,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  menuImage: {
+    height: 50,
+    width: 50
+  },
+  menuTitle: {
+    marginBottom: 10,
+    justifyContent: "center"
+  },
+  menuBackground: {
+    flex: 1,
+  },
+  menuText: {
+    fontSize: 16,
+    color: "#696969",
+    fontWeight: "bold",
+    color: "#02314D"
+  },
+  buttonTextMenu: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    alignSelf: "center"
+  },
 });
