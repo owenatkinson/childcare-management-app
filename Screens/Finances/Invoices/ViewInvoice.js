@@ -88,15 +88,15 @@ export default class ViewInvoice extends Component {
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>
+                    <ListItem.Title style={styles.navyBoldText}>
                       {result.child_name} - £
                       {parseFloat(result.invoice_amount).toFixed(2)}
                     </ListItem.Title>
-                    <ListItem.Subtitle>
+                    <ListItem.Subtitle style={styles.navynavyStandardTextText}>
                       Date of Expense: {parseDate(result.date_of_invoice)}
                     </ListItem.Subtitle>
                   </ListItem.Content>
-                  <ListItem.Chevron color="black" />
+                  <ListItem.Chevron color="#02314D" />
                 </ListItem>
               );
             }

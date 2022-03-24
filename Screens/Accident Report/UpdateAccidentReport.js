@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from "react-native";
+import { View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
@@ -161,7 +162,7 @@ export default class UpdateAccidentReport extends Component {
   render() {
     return (
       <ScrollView>
-        <Text style={styles.bold}>Child Name</Text>
+        <Text style={styles.bold}>Child Name:</Text>
         <View>
           <ModalSelector
             style={styles.dropdown}
@@ -237,13 +238,22 @@ export default class UpdateAccidentReport extends Component {
           onChangeText={(value) => this.inputEl(value, "accidentNotes")}
         />
         <View style={styles.space}></View>
-        <Button
-          title="Update"
-          onPress={() => this.editAccidentReport()}
+        <Button 
+          mode="contained"
+          uppercase={false}
           color="#0B8FDC"
-        />
+          onPress={() => this.editAccidentReport()}>
+          <Text style={styles.buttonTextMenu}>Update</Text>
+        </Button>
         <View style={styles.space}></View>
-        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#EE752E"
+          onPress={this.alertDialog}>
+          <Text style={styles.buttonTextMenu}>Delete</Text>
+        </Button>
+        <View style={styles.submitButtonSpace}></View>
       </ScrollView>
     );
   }

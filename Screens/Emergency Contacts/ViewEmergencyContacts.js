@@ -78,6 +78,7 @@ export default class ViewEmergencyContacts extends Component {
         <View>
           <ModalSelector
             data={this.state.childNames}
+            style={styles.navyText}
             initValue="Select Child"
             onChange={(option) => {
               this.setState({ activeChildName: option.label });
@@ -90,11 +91,11 @@ export default class ViewEmergencyContacts extends Component {
               <View key={id}>
                 <View style={styles.space}></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={styles.standardBlackText}>Name: {contact.child_emergency_contact_name_1} ({contact.child_emergency_contact_relation_1})</Text>
+                  <Text style={styles.navyTextWithLeftMargin}>Name: {contact.child_emergency_contact_name_1} ({contact.child_emergency_contact_relation_1})</Text>
                   <MaterialIcons
                     name={"phone"}
                     size={30}
-                    color="#0B64A9"
+                    color="#EE752E"
                     style={styles.phoneIcon}
                     onPress={() => {
                       Linking.openURL(`tel:${contact.child_emergency_contact_number_1}`);
@@ -109,11 +110,11 @@ export default class ViewEmergencyContacts extends Component {
                 <View style={styles.horizontalRule}></View>
                 <View style={styles.space}></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={styles.standardBlackText}>Name: {contact.child_emergency_contact_name_2} ({contact.child_emergency_contact_relation_2})</Text>
+                  <Text style={styles.navyTextWithLeftMargin}>Name: {contact.child_emergency_contact_name_2} ({contact.child_emergency_contact_relation_2})</Text>
                   <MaterialIcons
                     name={"phone"}
                     size={30}
-                    color="#0B64A9"
+                    color="#EE752E"
                     style={styles.phoneIcon}
                     onPress={() => {
                       Linking.openURL(`tel:${contact.child_emergency_contact_number_2}`);
@@ -128,11 +129,11 @@ export default class ViewEmergencyContacts extends Component {
                 <View style={styles.horizontalRule}></View>
                 <View style={styles.space}></View>
                 <View style={styles.iconPadding}>
-                  <Text style={styles.standardBlackText}>Name: {contact.child_emergency_contact_name_3} ({contact.child_emergency_contact_relation_3})</Text>
+                  <Text style={styles.navyTextWithLeftMargin}>Name: {contact.child_emergency_contact_name_3} ({contact.child_emergency_contact_relation_3})</Text>
                   <MaterialIcons
                     name={"phone"}
                     size={30}
-                    color="#0B64A9"
+                    color="#EE752E"
                     style={styles.phoneIcon}
                     onPress={() => {
                       Linking.openURL(`tel:${contact.child_emergency_contact_number_3}`);

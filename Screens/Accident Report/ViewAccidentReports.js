@@ -74,6 +74,7 @@ export default class ViewAccidentReports extends Component {
           <ModalSelector
             data={this.state.childNames}
             initValue="Select Child"
+            style={styles.navyText}
             onChange={(option) => {
               this.setState({ activeChildName: option.label });
             }}
@@ -92,12 +93,12 @@ export default class ViewAccidentReports extends Component {
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{report.child_name}</ListItem.Title>
-                  <ListItem.Subtitle>
+                  <ListItem.Title style={styles.navyBoldText}>{report.child_name}</ListItem.Title>
+                  <ListItem.Subtitle style={styles.navyStandardText}>
                     Date: {parseDate(report.accident_date)}
                   </ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron color="black" />
+                <ListItem.Chevron color="#02314D" />
               </ListItem>
             );
           } else {

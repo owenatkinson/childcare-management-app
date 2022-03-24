@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Image } from "react-native";
+import { View, ScrollView, TextInput, Text, TouchableOpacity, Image } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -177,7 +178,14 @@ const LogExpense = ({ navigation }) => {
       </View>
       {image && <Image source={{ uri: image }} style={styles.receiptPreview} />}
       <View style={styles.space}></View>
-      <Button title="Log Expense" onPress={() => addExpenseLog()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addExpenseLog()}>
+        <Text style={styles.buttonTextMenu}>Log Expense</Text>
+      </Button>
+      <View style={styles.submitButtonSpace}></View>
     </ScrollView>
   );
 };

@@ -90,15 +90,15 @@ export default class ViewExpenses extends Component {
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>{result.expense_title}</ListItem.Title>
+                    <ListItem.Title style={styles.navyBoldText}>{result.expense_title}</ListItem.Title>
                     <ListItem.Subtitle>
                       Date: {parseDate(result.date_of_expense)}
                     </ListItem.Subtitle>
-                    <ListItem.Subtitle>
+                    <ListItem.Subtitle style={styles.navyStandardText}>
                       Amount: £{result.expense_amount}
                     </ListItem.Subtitle>
                   </ListItem.Content>
-                  <ListItem.Chevron color="black" />
+                  <ListItem.Chevron color="#02314D" />
                 </ListItem>
               );
             }

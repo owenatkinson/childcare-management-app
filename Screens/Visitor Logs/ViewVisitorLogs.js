@@ -52,6 +52,7 @@ export default class ViewVisitorLogs extends Component {
           <FlatList
             ListHeaderComponent={
               <MonthPick
+                style={styles.navyStandardText}
                 date={this.state.date}
                 onChange={(newDate) => this.setState({ date: newDate })}
               />
@@ -81,12 +82,12 @@ export default class ViewVisitorLogs extends Component {
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>{result.visitor_name}</ListItem.Title>
-                    <ListItem.Subtitle>
+                    <ListItem.Title style={styles.navyBoldText}>{result.visitor_name}</ListItem.Title>
+                    <ListItem.Subtitle style={styles.navyStandardText}>
                       Date: {convertDateCheckType(result.date_of_visit)}
                     </ListItem.Subtitle>
                   </ListItem.Content>
-                  <ListItem.Chevron color="black" />
+                  <ListItem.Chevron color="#02314D" />
                 </ListItem>
               );
             } else {

@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, Button, Text } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
+import { View, ScrollView, TextInput, Text } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 const styles = require("../../../Styles/general");
 
-export default function AddMonthlyFireSafetyEquipmentList({ route }) {
+export default function AddMonthlyFireSafetyEquipmentList({ route, navigation }) {
   const { changeDate } = route.params;
   const [monthlyFireSafetyNote, setMonthlyFireSafetyNote] = useState("");
-  const [monthlyFireSafetyIsCompleted, setMonthlyFireSafetyIsCompleted] = useState("");
   const fireDB = app.firestore().collection("monthlyFireSafetyEquipmentCheck");
 
   async function addCheck() {
     await fireDB.add({
       monthly_fire_safety_date: changeDate,
-      monthly_fire_safety_note: monthlyFireSafetyNote,
-      monthly_fire_safety_is_completed: monthlyFireSafetyIsCompleted,
+      monthly_fire_safety_note: monthlyFireSafetyNote
     });
-    this.props.navigation.navigate("HealthSafetyChecks");
+    navigation.navigate("HealthSafetyChecks");
   }
 
   return (
@@ -36,19 +34,14 @@ export default function AddMonthlyFireSafetyEquipmentList({ route }) {
           value={monthlyFireSafetyNote}
           onChangeText={setMonthlyFireSafetyNote}
         />
-        <View style={styles.checkBoxPositioning}>
-          <Text style={styles.bold}>Check Completed:</Text>
-          <CheckBox
-            style={styles.checkBox}
-            value={monthlyFireSafetyIsCompleted}
-            onValueChange={(monthlyFireSafetyIsCompleted) =>
-              setMonthlyFireSafetyIsCompleted(monthlyFireSafetyIsCompleted)
-            }
-            tintColors={{ true: "#0B8FDC", false: "orange" }}
-          />
-        </View>
         <View style={styles.space}></View>
-        <Button title="Submit Check" onPress={() => addCheck()} />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={() => addCheck()}>
+          <Text style={styles.buttonTextMenu}>Submit Check</Text>
+        </Button>
       </ScrollView>
     </View>
   );

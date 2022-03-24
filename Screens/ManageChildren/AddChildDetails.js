@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
@@ -74,7 +75,7 @@ export default function AddNewChild({ navigation }) {
         value={childName}
         onChangeText={setChildName}
       />
-      <Text style={styles.bold}>Child DOB</Text>
+      <Text style={styles.bold}>Child's Date of Birth</Text>
       <View>
         <TouchableOpacity style={styles.button} onPress={childDOB.showDatepicker}>
           {childDOB.show && (
@@ -89,7 +90,7 @@ export default function AddNewChild({ navigation }) {
           <Text style={styles.buttonText}>Choose a Date: {convertDate(childDOB.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Child Allergies</Text>
+      <Text style={styles.bold}>Child's Allergies</Text>
       <TextInput
         style={styles.input}
         placeholder={"List Child's Allergies"}
@@ -105,7 +106,7 @@ export default function AddNewChild({ navigation }) {
         value={childAllergiesDetails}
         onChangeText={setChildAllergiesDetails}
       />
-      <Text style={styles.bold}>Child Medical Conditions</Text>
+      <Text style={styles.bold}>Child's Medical Conditions</Text>
       <TextInput
         style={styles.input}
         placeholder={"List Child's Medical Conditions"}
@@ -230,7 +231,14 @@ export default function AddNewChild({ navigation }) {
         onChangeText={setDoctorNumber}
       />
       <View style={styles.space}></View>
-      <Button title="Add Child" onPress={() => addChild()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addChild()}>
+        <Text style={styles.buttonTextMenu}>Add Child</Text>
+      </Button>
+      <View style={styles.submitButtonSpace}></View>
     </ScrollView>
   );
 }

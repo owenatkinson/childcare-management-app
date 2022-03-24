@@ -55,10 +55,10 @@ export default class ViewInactiveChildren extends Component {
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{result.child_name}</ListItem.Title>
-                  <ListItem.Subtitle>Inactive</ListItem.Subtitle>
+                  <ListItem.Title style={styles.navyBoldText}>{result.child_name}</ListItem.Title>
+                  <ListItem.Subtitle style={styles.navyStandardText}>Inactive</ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron color="black" />
+                <ListItem.Chevron color="#02314D" />
               </ListItem>
             );
           }

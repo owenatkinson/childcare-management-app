@@ -15,7 +15,7 @@ export default function Nutrition({ route }) {
           <MaterialCommunityIcons
             name={"fire"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -32,7 +32,7 @@ export default function Nutrition({ route }) {
           <MaterialIcons
             name={"grain"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -47,7 +47,7 @@ export default function Nutrition({ route }) {
           <SimpleLineIcons
             name={"drop"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -64,7 +64,7 @@ export default function Nutrition({ route }) {
           <MaterialCommunityIcons
             name={"corn"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -81,7 +81,7 @@ export default function Nutrition({ route }) {
           <MaterialCommunityIcons
             name={"spoon-sugar"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -98,7 +98,7 @@ export default function Nutrition({ route }) {
           <MaterialCommunityIcons
             name={"corn"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -113,7 +113,7 @@ export default function Nutrition({ route }) {
           <MaterialCommunityIcons
             name={"cow"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>
@@ -130,7 +130,7 @@ export default function Nutrition({ route }) {
           <MaterialCommunityIcons
             name={"cube-outline"}
             size={30}
-            color="#787878"
+            color="#02314D"
             style={styles.icons}
           />
           <View style={styles.inlineDisplay}>

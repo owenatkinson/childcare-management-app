@@ -3,7 +3,6 @@ import { View } from "react-native";
 import { ButtonGroup } from "react-native-elements";
 import General from "./Components/General";
 import Ingredients from "./Components/Ingredients";
-import Allergens from "./Components/Allergens";
 import Nutrition from "./Components/Nutrition";
 import ChildAllergies from "./Components/ChildAllergies";
 
@@ -13,7 +12,6 @@ export default function ProductScreen({ route }) {
     "General",
     "Ingredients",
     "Nutrition",
-    "Allergens",
     "Children",
   ];
 
@@ -31,8 +29,7 @@ export default function ProductScreen({ route }) {
         {selectedIndex === 0 ? <General route={route} /> : false}
         {selectedIndex === 1 ? <Ingredients route={route} /> : false}
         {selectedIndex === 2 ? <Nutrition route={route} /> : false}
-        {selectedIndex === 3 ? <Allergens route={route} /> : false}
-        {selectedIndex === 4 ? <ChildAllergies route={route} /> : false}
+        {selectedIndex === 3 ? <ChildAllergies route={route} /> : false}
       </View>
     </View>
   );

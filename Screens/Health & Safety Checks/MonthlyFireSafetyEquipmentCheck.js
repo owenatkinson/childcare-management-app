@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, ScrollView, TextInput, Text } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
+import { View, ScrollView, TextInput, Text } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 const styles = require("../../Styles/general");
@@ -11,8 +11,7 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
     this.state = {
       isLoading: true,
       monthlyFireSafetyDate: "",
-      monthlyFireSafetyNote: "",
-      monthlyFireSafetyIsCompleted: "",
+      monthlyFireSafetyNote: ""
     };
   }
 
@@ -28,7 +27,6 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
           key: result.id,
           monthlyFireSafetyDate: data.monthly_fire_safety_date,
           monthlyFireSafetyNote: data.monthly_fire_safety_note,
-          monthlyFireSafetyIsCompleted: data.monthly_fire_safety_is_completed,
           isLoading: false,
         });
       } else {
@@ -54,8 +52,7 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
     documentUpdate
       .set({
         monthly_fire_safety_date: this.state.monthlyFireSafetyDate,
-        monthly_fire_safety_note: this.state.monthlyFireSafetyNote,
-        monthly_fire_safety_is_completed: this.state.monthlyFireSafetyIsCompleted,
+        monthly_fire_safety_note: this.state.monthlyFireSafetyNote
       })
       .then(() => {
         this.setState({
@@ -87,17 +84,14 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
             value={this.state.monthlyFireSafetyNote}
             onChangeText={(value) => this.inputEl(value, "monthlyFireSafetyNote")}
           />
-          <View style={styles.checkBoxPositioning}>
-            <Text style={styles.bold}>Check Completed:</Text>
-            <CheckBox
-              style={styles.checkBox}
-              value={this.state.monthlyFireSafetyIsCompleted}
-              onValueChange={(value) => this.inputEl(value, "monthlyFireSafetyIsCompleted")}
-              tintColors={{ true: "#0B8FDC", false: "orange" }}
-            />
-          </View>
           <View style={styles.space}></View>
-          <Button title="Update" onPress={() => this.editCheck()} color="#0B8FDC" />
+          <Button 
+            mode="contained"
+            uppercase={false}
+            color="#0B8FDC"
+            onPress={() => this.editCheck()}>
+            <Text style={styles.buttonTextMenu}>Update</Text>
+          </Button>
         </ScrollView>
       </View>
     );

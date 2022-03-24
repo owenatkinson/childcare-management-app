@@ -87,12 +87,12 @@ export default class ViewMiles extends Component {
                   bottomDivider
                 >
                   <ListItem.Content>
-                    <ListItem.Title>£{result.mileage_amount}</ListItem.Title>
-                    <ListItem.Subtitle>
+                    <ListItem.Title style={styles.navyBoldText}>£{result.mileage_amount}</ListItem.Title>
+                    <ListItem.Subtitle style={styles.navyStandardText}>
                       Date: {parseDate(result.date_of_mileage)}
                     </ListItem.Subtitle>
                   </ListItem.Content>
-                  <ListItem.Chevron color="black" />
+                  <ListItem.Chevron color="#02314D" />
                 </ListItem>
               );
             }

@@ -3,6 +3,7 @@ import { ScrollView } from "react-native";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import { ListItem } from "react-native-elements";
+const styles = require("../../Styles/general");
 
 export default class ListLogs extends Component {
   constructor() {
@@ -57,12 +58,12 @@ export default class ListLogs extends Component {
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{result.child_name}</ListItem.Title>
-                  <ListItem.Subtitle>
+                  <ListItem.Title style={styles.navyBoldText}>{result.child_name}</ListItem.Title>
+                  <ListItem.Subtitle style={styles.navyStandardText}>
                     {result.check_in_time}-{result.check_out_time}
                   </ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron color="black" />
+                <ListItem.Chevron color="#02314D" />
               </ListItem>
             );
           }

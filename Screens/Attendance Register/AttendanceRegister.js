@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
@@ -170,7 +171,14 @@ function AttendanceRegister({ navigation }) {
         onChangeText={setAdditionalNotes}
       />
       <View style={styles.space}></View>
-      <Button title="Log Attendance" onPress={() => addAttendanceLog()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addAttendanceLog()}>
+        <Text style={styles.buttonTextMenu}>Log Attendance</Text>
+      </Button>
+      <View style={styles.submitButtonSpace}></View>
     </ScrollView>
   );
 }

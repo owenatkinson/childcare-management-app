@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from "react-native";
+import { View, TouchableOpacity, ScrollView, TextInput, Text } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
@@ -147,14 +148,9 @@ export default class UpdateChildDetails extends Component {
     return (
       <ScrollView>
         <View style={styles.space}></View>
-        <Text style={styles.bold}>Child Name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={"Name"}
-          value={this.state.name}
-          onChangeText={(value) => this.inputEl(value, "name")}
-        />
-        <Text style={styles.bold}>Child DOB</Text>
+        <Text style={styles.bold}>Child's Name: {this.state.name}</Text>
+        <View style={styles.space}></View>
+        <Text style={styles.bold}>Child's Date of Birth</Text>
         <View>
           <TouchableOpacity style={styles.button} onPress={() => this.showDatepicker()}>
             {this.state.show && (
@@ -168,14 +164,14 @@ export default class UpdateChildDetails extends Component {
             <Text style={styles.buttonText}>Choose a Date: {this.state.dob}</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.bold}>Child Allergies</Text>
+        <Text style={styles.bold}>Child's Allergies</Text>
         <TextInput
           style={styles.input}
           placeholder={"List Child's Allergies"}
           value={this.state.allergies}
           onChangeText={(value) => this.inputEl(value, "allergies")}
         />
-        <Text style={styles.bold}>Child Allergy Details</Text>
+        <Text style={styles.bold}>Allergy Details</Text>
         <TextInput
           multiline={true}
           numberOfLines={4}
@@ -184,7 +180,7 @@ export default class UpdateChildDetails extends Component {
           value={this.state.allergiesDetails}
           onChangeText={(value) => this.inputEl(value, "allergiesDetails")}
         />
-        <Text style={styles.bold}>Child Medical Conditions</Text>
+        <Text style={styles.bold}>Child's Medical Conditions</Text>
         <TextInput
           style={styles.input}
           placeholder={"List Child's Medical Conditions"}
@@ -210,7 +206,7 @@ export default class UpdateChildDetails extends Component {
             tintColors={{ true: "#0B8FDC", false: "orange" }}
           />
         </View>
-        <Text style={styles.boldTextCheckbox}>Child Home Address</Text>
+        <Text style={styles.boldTextCheckbox}>Child's Home Address</Text>
         <TextInput
           style={styles.input}
           placeholder={"Child Home Address"}
@@ -309,8 +305,14 @@ export default class UpdateChildDetails extends Component {
           onChangeText={(value) => this.inputEl(value, "doctorNumber")}
         />
         <View style={styles.space}></View>
-        <Button title="Update" onPress={() => this.editChild()} color="#0B8FDC" />
-        <View style={styles.space}></View>
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={() => this.editChild()}>
+          <Text style={styles.buttonTextMenu}>Update</Text>
+        </Button>
+        <View style={styles.submitButtonSpace}></View>
       </ScrollView>
     );
   }

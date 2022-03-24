@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
+import { View, ScrollView, TextInput, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -11,7 +11,6 @@ export default function AddMonthlyDrillList({ route, navigation }) {
   const { changeDate } = route.params;
   const [monthlyFireDrillNumberOfPeople, setMonthlyFireDrillNumberOfPeople] = useState("");
   const [monthlyFireDrillNote, setMonthlyFireDrillNote] = useState("");
-  const [monthlyFireDrillIsCompleted, setMonthlyFireDrillIsCompleted] = useState("");
   const monthlyFireDrillTimeCompleted = useInput();
   const fireDB = app.firestore().collection("monthlyFireDrill");
 
@@ -26,8 +25,7 @@ export default function AddMonthlyDrillList({ route, navigation }) {
         monthly_fire_drill_date: changeDate,
         monthly_fire_drill_num_of_people: monthlyFireDrillNumberOfPeople,
         monthly_fire_drill_time_completed: monthlyFireDrillTimeCompleted.date,
-        monthly_fire_drill_note: monthlyFireDrillNote,
-        monthly_fire_drill_is_completed: monthlyFireDrillIsCompleted,
+        monthly_fire_drill_note: monthlyFireDrillNote
       });
       navigation.navigate("HealthSafetyChecks");
     }
@@ -75,19 +73,14 @@ export default function AddMonthlyDrillList({ route, navigation }) {
           value={monthlyFireDrillNote}
           onChangeText={setMonthlyFireDrillNote}
         />
-        <View style={styles.checkBoxPositioning}>
-          <Text style={styles.bold}>Check Completed:</Text>
-          <CheckBox
-            style={styles.checkBox}
-            value={monthlyFireDrillIsCompleted}
-            onValueChange={(monthlyFireDrillIsCompleted) =>
-              setMonthlyFireDrillIsCompleted(monthlyFireDrillIsCompleted)
-            }
-            tintColors={{ true: "#0B8FDC", false: "orange" }}
-          />
-        </View>
         <View style={styles.space}></View>
-        <Button title="Submit Check" onPress={() => addCheck()} />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={() => addCheck()}>
+          <Text style={styles.buttonTextMenu}>Submit Check</Text>
+        </Button>
       </ScrollView>
     </View>
   );

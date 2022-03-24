@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -205,14 +206,21 @@ export default class UpdateMiles extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.space}></View>
-        <Button
-          style={styles.buttonText}
-          title="Update"
-          onPress={() => {this.calculateAndAlert()}}
+        <Button 
+          mode="contained"
+          uppercase={false}
           color="#0B8FDC"
-        />
+          onPress={() => {this.calculateAndAlert()}}>
+          <Text style={styles.buttonTextMenu}>Update</Text>
+        </Button>
         <View style={styles.space}></View>
-        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#EE752E"
+          onPress={this.alertDialog}>
+          <Text style={styles.buttonTextMenu}>Delete</Text>
+        </Button>
       </ScrollView>
     );
   }

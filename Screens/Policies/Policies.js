@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, Share, Alert, ScrollView } from "react-native";
+import { View, Share, Alert, ScrollView, Text } from "react-native";
+import { Button } from "react-native-paper";
 import { ListItem, Icon } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 import app from "../../Components/firebase";
@@ -135,7 +136,13 @@ const Policies = (props) => {
   return (
     <ScrollView>
       <View>
-        <Button title="Upload Policy" onPress={uploadImage} />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={uploadImage}>
+          <Text style={styles.buttonTextMenu}>Upload Policy</Text>
+        </Button>
       </View>
       {progress >= 0 || progress == 1 ?
       <Progress.Bar
@@ -176,7 +183,7 @@ const Policies = (props) => {
         >
           <Icon name="assignment" />
           <ListItem.Content>
-            <ListItem.Title>{item.fileName}</ListItem.Title>
+            <ListItem.Title style={styles.navyStandardText}>{item.fileName}</ListItem.Title>
           </ListItem.Content>
         </ListItem.Swipeable>
       ))}
