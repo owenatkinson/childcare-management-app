@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from "react-native";
+import { View, TouchableOpacity, ScrollView, TextInput, Alert, Text } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
@@ -70,14 +71,14 @@ export default class UpdateAccidentReport extends Component {
         const data = result.data();
         this.setState({
           key: result.id,
-          childName: user.child_name,
-          accidentDate: parseDate(user.accident_date),
-          accidentTime: user.accident_time,
-          accidentNotes: user.accident_notes,
-          accidentLocation: user.accident_location,
-          accidentDetail: user.accident_detail,
-          accidentAction: user.accident_action,
-          accidentMedicalAttention: user.accident_medical_attention,
+          childName: data.child_name,
+          accidentDate: parseDate(data.accident_date),
+          accidentTime: data.accident_time,
+          accidentNotes: data.accident_notes,
+          accidentLocation: data.accident_location,
+          accidentDetail: data.accident_detail,
+          accidentAction: data.accident_action,
+          accidentMedicalAttention: data.accident_medical_attention,
           isLoading: false,
         });
       } else {
@@ -161,7 +162,7 @@ export default class UpdateAccidentReport extends Component {
   render() {
     return (
       <ScrollView>
-        <Text style={styles.bold}>Child Name</Text>
+        <Text style={styles.bold}>Child Name:</Text>
         <View>
           <ModalSelector
             style={styles.dropdown}
@@ -237,13 +238,22 @@ export default class UpdateAccidentReport extends Component {
           onChangeText={(value) => this.inputEl(value, "accidentNotes")}
         />
         <View style={styles.space}></View>
-        <Button
-          title="Update"
-          onPress={() => this.editAccidentReport()}
+        <Button 
+          mode="contained"
+          uppercase={false}
           color="#0B8FDC"
-        />
+          onPress={() => this.editAccidentReport()}>
+          <Text style={styles.buttonTextMenu}>Update</Text>
+        </Button>
         <View style={styles.space}></View>
-        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#EE752E"
+          onPress={this.alertDialog}>
+          <Text style={styles.buttonTextMenu}>Delete</Text>
+        </Button>
+        <View style={styles.submitButtonSpace}></View>
       </ScrollView>
     );
   }

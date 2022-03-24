@@ -81,6 +81,7 @@ export default class ViewMedicalInfo extends Component {
       <ScrollView style={styles.wrapper}>
         <View>
           <ModalSelector
+            style={styles.navyText}
             data={this.state.childNames}
             initValue="Select Child"
             onChange={(option) => {
@@ -101,10 +102,10 @@ export default class ViewMedicalInfo extends Component {
                 bottomDivider
               >
                 <ListItem.Content>
-                  <ListItem.Title>{result.medicine_title}</ListItem.Title>
-                  <ListItem.Subtitle>Date: {parseDate(result.medicine_date)}</ListItem.Subtitle>
+                  <ListItem.Title style={styles.navyBoldText}>{result.medicine_title}</ListItem.Title>
+                  <ListItem.Subtitle style={styles.navyStandardText}>Date: {parseDate(result.medicine_date)}</ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron color="black" />
+                <ListItem.Chevron color="#02314D" />
               </ListItem>
             );
           } else {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, Share } from "react-native";
+import { View, Share, Alert, ScrollView, Text } from "react-native";
+import { Button } from "react-native-paper";
 import { ListItem, Icon } from "react-native-elements";
 import * as DocumentPicker from "expo-document-picker";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import "firebase/database";
-import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Progress from 'react-native-progress';
 const styles = require("../../Styles/general");
@@ -83,6 +83,24 @@ const Policies = (props) => {
     }
   };
 
+  const alertDialog = (file) => {
+    Alert.alert(
+      "Delete Policy",
+      "Really?",
+      [
+        { text: "Yes", onPress: () => deletePolicy(file) },
+        {
+          text: "No",
+          onPress: () => console.log("Item not deleted"),
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
   function deletePolicy(fileName) {
     let deletePolicyDatabase = app.database().ref("policies/" + removeFileExtension(fileName));
     var storage = app.storage();
@@ -118,7 +136,13 @@ const Policies = (props) => {
   return (
     <ScrollView>
       <View>
-        <Button title="Upload Policy" onPress={uploadImage} />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={uploadImage}>
+          <Text style={styles.buttonTextMenu}>Upload Policy</Text>
+        </Button>
       </View>
       {progress >= 0 || progress == 1 ?
       <Progress.Bar
@@ -145,7 +169,8 @@ const Policies = (props) => {
               alignItems="center"
               justifyContent="center"
               style={styles.swipeableItem}
-              onPress={() => deletePolicy(item.fileName)}
+              alertDialog
+              onPress={() => alertDialog(item.fileName)}
             ></FontAwesome.Button>
           }
           key={index}
@@ -158,7 +183,7 @@ const Policies = (props) => {
         >
           <Icon name="assignment" />
           <ListItem.Content>
-            <ListItem.Title>{item.fileName}</ListItem.Title>
+            <ListItem.Title style={styles.navyStandardText}>{item.fileName}</ListItem.Title>
           </ListItem.Content>
         </ListItem.Swipeable>
       ))}

@@ -46,6 +46,8 @@ import LogMiles from "../Screens/Finances/Mileage/LogMiles";
 import UpdateMiles from "../Screens/Finances/Mileage/UpdateMiles";
 import ViewMiles from "../Screens/Finances/Mileage/ViewMiles";
 import ProductScreen from "../Screens/Allergy Detection/ProductScreen";
+import ViewEmergencyContacts from "../Screens/Emergency Contacts/ViewEmergencyContacts";
+import Attendance from "../Screens/Attendance Register/Attendance";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -143,7 +145,7 @@ const StackNavigator = () => {
         options={{ title: "Fire Safety Equipment Check" }}
       />
       <Stack.Screen
-        name="Attendance"
+        name="Attendance Register"
         component={AttendanceRegister}
         options={{ title: "Attendance Register" }}
       />
@@ -248,6 +250,16 @@ const StackNavigator = () => {
         name="ProductScreen"
         component={ProductScreen}
         options={{ title: "Product Information" }}
+      />
+      <Stack.Screen
+        name="ViewEmergencyContacts"
+        component={ViewEmergencyContacts}
+        options={{ title: "Emergency Contacts" }}
+      />
+      <Stack.Screen
+        name="Attendance"
+        component={Attendance}
+        options={{ title: "Attendance" }}
       />
     </Stack.Navigator>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, TouchableOpacity, Text, ScrollView, Button } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, ScrollView } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -124,7 +125,14 @@ export default function LogMedicine({ navigation }) {
         onChangeText={setMedicineNotes}
       />
       <View style={styles.space}></View>
-      <Button title="Log Medicine Administration" onPress={() => addLog()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addLog()}>
+        <Text style={styles.buttonTextMenu}>Log Medicine Administration</Text>
+      </Button>
+      <View style={styles.submitButtonSpace}></View>
     </ScrollView>
   );
 }

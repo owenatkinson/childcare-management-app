@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, TouchableOpacity, ScrollView, TextInput, Text } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
+import { View, TouchableOpacity, ScrollView, TextInput, Text } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import moment from "moment";
@@ -17,7 +17,6 @@ export default class MonthlyFireDrill extends Component {
       monthlyFireDrillNumberOfPeople: "",
       monthlyFireDrillTimeCompleted: new Date(),
       monthlyFireDrillNote: "",
-      monthlyFireDrillIsCompleted: "",
       date: new Date(),
       show: false,
     };
@@ -65,8 +64,7 @@ export default class MonthlyFireDrill extends Component {
           monthlyFireDrillNumberOfPeople: data.monthly_fire_drill_num_of_people,
           monthlyFireDrillTimeCompleted: this.convertToTimestamp(data.monthly_fire_drill_time_completed),
           monthlyFireDrillNote: data.monthly_fire_drill_note,
-          monthlyFireDrillIsCompleted: data.monthly_fire_drill_is_completed,
-          isLoading: false,
+          isLoading: false
         });
       } else {
         console.log("No document found.");
@@ -81,9 +79,11 @@ export default class MonthlyFireDrill extends Component {
   };
 
   editCheck() {
-    if (this.state.monthlyFireDrillNumberOfPeople.length == 0 || !isNumeric(this.state.monthlyFireDrillNumberOfPeople) ) {
+    if (this.state.monthlyFireDrillNumberOfPeople.length == 0) {
       missingDataAlert();
       return;
+    } else if (!isNumeric(this.state.monthlyFireDrillNumberOfPeople)){
+      numericDataAlert();
     } else {
       this.setState({
         isLoading: true,
@@ -94,8 +94,7 @@ export default class MonthlyFireDrill extends Component {
           monthly_fire_drill_date: this.state.monthlyFireDrillDate,
           monthly_fire_drill_num_of_people: this.state.monthlyFireDrillNumberOfPeople,
           monthly_fire_drill_time_completed: this.state.monthlyFireDrillTimeCompleted,
-          monthly_fire_drill_note: this.state.monthlyFireDrillNote,
-          monthly_fire_drill_is_completed: this.state.monthlyFireDrillIsCompleted,
+          monthly_fire_drill_note: this.state.monthlyFireDrillNote
         })
         .then(() => {
           this.setState({
@@ -151,19 +150,14 @@ export default class MonthlyFireDrill extends Component {
             value={this.state.monthlyFireDrillNote}
             onChangeText={(value) => this.inputEl(value, "monthlyFireDrillNote")}
           />
-          <View style={styles.checkBoxPositioning}>
-            <Text style={styles.bold}>Check Completed:</Text>
-            <CheckBox
-              style={styles.checkBox}
-              value={this.state.monthlyFireDrillIsCompleted}
-              onValueChange={(value) => this.inputEl(value, "monthlyFireDrillIsCompleted")}
-              tintColors={{ true: "#0B8FDC", false: "orange" }}
-            />
-          </View>
           <View style={styles.space}></View>
-          <Button title="Update" onPress={() => this.editCheck()} color="#0B8FDC" />
-          <View style={styles.space}></View>
-          <View style={styles.space}></View>
+          <Button 
+            mode="contained"
+            uppercase={false}
+            color="#0B8FDC"
+            onPress={() => this.editCheck()}>
+            <Text style={styles.buttonTextMenu}>Update</Text>
+          </Button>
         </ScrollView>
       </View>
     );

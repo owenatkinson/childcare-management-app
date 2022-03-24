@@ -7,6 +7,7 @@ module.exports = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: "#DADADA",
+    color: "#02314D",
   },
   extendedInput: {
     backgroundColor: "#DADADA",
@@ -19,6 +20,7 @@ module.exports = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 12,
     marginTop: 15,
+    color: "#02314D",
   },
   standardText: {
     marginLeft: 12,
@@ -27,6 +29,7 @@ module.exports = StyleSheet.create({
     marginTop: 20,
     fontWeight: "bold",
     alignSelf: "center",
+    fontSize: 20
   },
   boldCentre: {
     fontWeight: "bold",
@@ -54,14 +57,17 @@ module.exports = StyleSheet.create({
   buttonSpace: {
     height: 60,
   },
+  submitButtonSpace: {
+    height: 40,
+  },
   horizontalRule: {
     height: 20,
-    borderBottomColor: "black",
+    borderBottomColor: "#02314D",
     borderBottomWidth: 1,
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#ee752e",
+    backgroundColor: "#02314D",
     margin: 12,
     padding: 10,
     height: 40,
@@ -72,7 +78,7 @@ module.exports = StyleSheet.create({
   },
   dropdown: {
     margin: 12,
-    backgroundColor: "#ee752e",
+    backgroundColor: "#02314D",
     color: "#FFFFFF",
   },
   dropdownText: {
@@ -126,6 +132,7 @@ module.exports = StyleSheet.create({
   paddedText: {
     fontSize: 18,
     paddingLeft: 15,
+    color: "#02314D",
   },
   quantityText: {
     fontSize: 18,
@@ -155,23 +162,34 @@ module.exports = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 50,
-    backgroundColor: "#ee752e",
+    backgroundColor: "#EE752E",
   },
   paddingCenter: {
     fontSize: 40,
-    padding: 30,
+    paddingTop: 30,
+    paddingHorizontal: 30,
     alignSelf: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#02314D",
   },
   textBold: {
     fontSize: 20,
     fontWeight: "bold",
     paddingLeft: 15,
+    color: "#02314D",
   },
   productName: {
     fontSize: 22,
+    paddingHorizontal: 15,
     fontWeight: "bold",
     alignSelf: "center",
+    color: "#02314D",
+  },
+  productHeader: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignSelf: "center",
+    color: "#02314D",
   },
   allNutrients: {
     flexDirection: "row",
@@ -182,9 +200,11 @@ module.exports = StyleSheet.create({
     justifyContent: "flex-start",
   },
   ingredientsList: {
-    padding: 30,
-    alignItems: "center",
-    fontSize: 20,
+    paddingTop: 30,
+    paddingHorizontal: 30,
+    alignSelf: "center",
+    fontSize: 18,
+    color: "#02314D",
   },
   inlineDisplay: {
     flexDirection: "row",
@@ -196,15 +216,77 @@ module.exports = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginLeft: 12,
+    color: "#02314D",
   },
   nutritionDetail: {
     fontSize: 20,
     marginLeft: 12,
+    color: "#02314D",
+  },
+  navyStandardText: {
+    color: "#02314D",
+  },
+  navyTextWithLeftMargin: {
+    fontSize: 18,
+    color: "#02314D",
+    marginLeft: 12,
+  },
+  navyBoldText: {
+    color: "#02314D",
+    fontWeight: 'bold'
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
-  }
+  },
+  boldBlueText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 12,
+    color: "#0B64A9"
+  },
+  phoneIcon: {
+    marginRight: 15,
+  },
+  iconPadding: {
+    flexDirection: "row", 
+    justifyContent: "space-between"
+  },
+  alignItemsCenter:{
+    alignItems: "center"
+  },
+  menuShapes: {
+    marginVertical: 15,
+    marginHorizontal: 40,
+    backgroundColor: "#DADADA",
+    width: 90,
+    height: 90,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  menuImage: {
+    height: 50,
+    width: 50
+  },
+  menuTitle: {
+    marginBottom: 10,
+    justifyContent: "center"
+  },
+  menuBackground: {
+    flex: 1,
+  },
+  menuText: {
+    fontSize: 16,
+    color: "#696969",
+    fontWeight: "bold",
+    color: "#02314D"
+  },
+  buttonTextMenu: {
+    color: "#FFFFFF",
+    fontSize: 17,
+    alignSelf: "center"
+  },
 });

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -93,7 +94,13 @@ export default function LogVisitor({ navigation }) {
         onChangeText={setVisitPurpose}
       />
       <View style={styles.space}></View>
-      <Button title="Log Visitor" onPress={() => addVisitorLog()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addVisitorLog()}>
+        <Text style={styles.buttonTextMenu}>Log Visitor</Text>
+      </Button>
     </ScrollView>
   );
 }

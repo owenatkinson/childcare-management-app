@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
@@ -15,23 +16,25 @@ export default function AddNewChild({ navigation }) {
   const [childMedicalConditions, setChildMedicalConditions] = useState("");
   const [childMedicalConditionsDetails, setChildMedicalConditionsDetails] = useState("");
   const [childIsActive, setChildIsActive] = useState("");
-  const [childEmergencyContactName, setChildEmergencyContactName] = useState("");
-  const [childEmergencyNumber, setChildEmergencyNumber] = useState("");
-  const [childEmergencyRelation, setChildEmergencyRelation] = useState("");
   const [doctorName, setDoctorName] = useState("");
   const [doctorAddress, setDoctorAddress] = useState("");
   const [doctorNumber, setDoctorNumber] = useState("");
   const [childHomeAddress, setChildHomeAddress] = useState("");
-  const [parentNumber1, setParentNumber1] = useState("");
-  const [parentName1, setParentName1] = useState("");
-  const [parentNumber2, setParentNumber2] = useState("");
-  const [parentName2, setParentName2] = useState("");
+  const [childEmergencyContactName1, setChildEmergencyContactName1] = useState("");
+  const [childEmergencyNumber1, setChildEmergencyNumber1] = useState("");
+  const [childEmergencyRelation1, setChildEmergencyRelation1] = useState("");
+  const [childEmergencyContactName2, setChildEmergencyContactName2] = useState("");
+  const [childEmergencyNumber2, setChildEmergencyNumber2] = useState("");
+  const [childEmergencyRelation2, setChildEmergencyRelation2] = useState("");
+  const [childEmergencyContactName3, setChildEmergencyContactName3] = useState("");
+  const [childEmergencyNumber3, setChildEmergencyNumber3] = useState("");
+  const [childEmergencyRelation3, setChildEmergencyRelation3] = useState("");
   const fireDB = app.firestore().collection("children");
 
   async function addChild() {
-    if (doctorName.length == 0 || childHomeAddress.length == 0 || childName == undefined || childEmergencyContactName.length == 0 || childEmergencyNumber.length == 0 
-      || childEmergencyRelation.length == 0 || doctorAddress.length == 0 || doctorNumber.length == 0 || parentNumber1.length == 0 || parentName1.length == 0 
-      || parentNumber2.length == 0 || parentName2.length == 0) {
+    if (doctorName.length == 0 || childHomeAddress.length == 0 || childName == undefined || childEmergencyContactName1.length == 0 || childEmergencyNumber1.length == 0 
+      || childEmergencyRelation1.length == 0 || doctorAddress.length == 0 || doctorNumber.length == 0 || childEmergencyContactName2.length == 0 || childEmergencyNumber2.length == 0 
+      || childEmergencyRelation2.length == 0 || childEmergencyRelation3.length == 0 || childEmergencyContactName3.length == 0 || childEmergencyNumber3.length == 0) {
       missingDataAlert();
       return;
     } else {
@@ -43,17 +46,19 @@ export default function AddNewChild({ navigation }) {
         child_medical_conditions: childMedicalConditions,
         child_medical_conditions_details: childMedicalConditionsDetails,
         child_is_active: childIsActive,
-        child_emergency_contact_name: childEmergencyContactName,
-        child_emergency_contact_number: childEmergencyNumber,
-        child_emergency_contact_relation: childEmergencyRelation,
+        child_emergency_contact_name_1: childEmergencyContactName1,
+        child_emergency_contact_number_1: childEmergencyNumber1,
+        child_emergency_contact_relation_1: childEmergencyRelation1,
+        child_emergency_contact_name_2: childEmergencyContactName2,
+        child_emergency_contact_number_2: childEmergencyNumber2,
+        child_emergency_contact_relation_2: childEmergencyRelation2,
+        child_emergency_contact_name_3: childEmergencyContactName3,
+        child_emergency_contact_number_3: childEmergencyNumber3,
+        child_emergency_contact_relation_3: childEmergencyRelation3,
         doctor_name: doctorName,
         doctor_address: doctorAddress,
         doctor_number: doctorNumber,
-        child_home_address: childHomeAddress,
-        parent_number_1: parentNumber1,
-        parent_name_1: parentName1,
-        parent_number_2: parentNumber2,
-        parent_name_2: parentName2,
+        child_home_address: childHomeAddress
       });
       navigation.navigate("ManageChildren");
     }
@@ -70,7 +75,7 @@ export default function AddNewChild({ navigation }) {
         value={childName}
         onChangeText={setChildName}
       />
-      <Text style={styles.bold}>Child DOB</Text>
+      <Text style={styles.bold}>Child's Date of Birth</Text>
       <View>
         <TouchableOpacity style={styles.button} onPress={childDOB.showDatepicker}>
           {childDOB.show && (
@@ -85,7 +90,7 @@ export default function AddNewChild({ navigation }) {
           <Text style={styles.buttonText}>Choose a Date: {convertDate(childDOB.date)}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bold}>Child Allergies</Text>
+      <Text style={styles.bold}>Child's Allergies</Text>
       <TextInput
         style={styles.input}
         placeholder={"List Child's Allergies"}
@@ -101,7 +106,7 @@ export default function AddNewChild({ navigation }) {
         value={childAllergiesDetails}
         onChangeText={setChildAllergiesDetails}
       />
-      <Text style={styles.bold}>Child Medical Conditions</Text>
+      <Text style={styles.bold}>Child's Medical Conditions</Text>
       <TextInput
         style={styles.input}
         placeholder={"List Child's Medical Conditions"}
@@ -135,56 +140,73 @@ export default function AddNewChild({ navigation }) {
         onChangeText={setChildHomeAddress}
       />
       <View style={styles.horizontalRule}></View>
-      <Text style={styles.bold}>Parent #1 Name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={"Parent Name"}
-        value={parentName1}
-        onChangeText={setParentName1}
-      />
-      <Text style={styles.bold}>Parent #1 Phone Number</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={"Parent Phone Number"}
-        value={parentNumber1}
-        onChangeText={setParentNumber1}
-      />
-      <View style={styles.horizontalRule}></View>
-      <Text style={styles.bold}>Parent #2 Name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={"Parent Name"}
-        value={parentName2}
-        onChangeText={setParentName2}
-      />
-      <Text style={styles.bold}>Parent #2 Phone Number</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={"Parent Phone Number"}
-        value={parentNumber2}
-        onChangeText={setParentNumber2}
-      />
-      <View style={styles.horizontalRule}></View>
-      <Text style={styles.bold}>Emergency Contact Name</Text>
+      <Text style={styles.bold}>Emergency Contact 1</Text>
+      <Text style={styles.bold}>Name</Text>
       <TextInput
         style={styles.input}
         placeholder={"Emergency Contact Name"}
-        value={childEmergencyContactName}
-        onChangeText={setChildEmergencyContactName}
+        value={childEmergencyContactName1}
+        onChangeText={setChildEmergencyContactName1}
       />
-      <Text style={styles.bold}>Emergency Contact Phone Number</Text>
+      <Text style={styles.bold}>Phone Number</Text>
       <TextInput
         style={styles.input}
         placeholder={"Emergency Contact Phone Number"}
-        value={childEmergencyNumber}
-        onChangeText={setChildEmergencyNumber}
+        value={childEmergencyNumber1}
+        onChangeText={setChildEmergencyNumber1}
       />
-      <Text style={styles.bold}>Emergency Contact Relation</Text>
+      <Text style={styles.bold}>Relation</Text>
       <TextInput
         style={styles.input}
         placeholder={"Relation to Child"}
-        value={childEmergencyRelation}
-        onChangeText={setChildEmergencyRelation}
+        value={childEmergencyRelation1}
+        onChangeText={setChildEmergencyRelation1}
+      />
+      <View style={styles.horizontalRule}></View>
+      <Text style={styles.bold}>Emergency Contact 2</Text>
+      <Text style={styles.bold}>Name</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={"Emergency Contact Name"}
+        value={childEmergencyContactName2}
+        onChangeText={setChildEmergencyContactName2}
+      />
+      <Text style={styles.bold}>Phone Number</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={"Emergency Contact Phone Number"}
+        value={childEmergencyNumber2}
+        onChangeText={setChildEmergencyNumber2}
+      />
+      <Text style={styles.bold}>Relation</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={"Relation to Child"}
+        value={childEmergencyRelation2}
+        onChangeText={setChildEmergencyRelation2}
+      />
+      <View style={styles.horizontalRule}></View>
+      <Text style={styles.bold}>Emergency Contact 3</Text>
+      <Text style={styles.bold}>Name</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={"Emergency Contact Name"}
+        value={childEmergencyContactName3}
+        onChangeText={setChildEmergencyContactName3}
+      />
+      <Text style={styles.bold}>Phone Number</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={"Emergency Contact Phone Number"}
+        value={childEmergencyNumber3}
+        onChangeText={setChildEmergencyNumber3}
+      />
+      <Text style={styles.bold}>Relation</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={"Relation to Child"}
+        value={childEmergencyRelation3}
+        onChangeText={setChildEmergencyRelation3}
       />
       <View style={styles.horizontalRule}></View>
       <Text style={styles.bold}>Doctor's Name</Text>
@@ -209,7 +231,14 @@ export default function AddNewChild({ navigation }) {
         onChangeText={setDoctorNumber}
       />
       <View style={styles.space}></View>
-      <Button title="Add Child" onPress={() => addChild()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addChild()}>
+        <Text style={styles.buttonTextMenu}>Add Child</Text>
+      </Button>
+      <View style={styles.submitButtonSpace}></View>
     </ScrollView>
   );
 }

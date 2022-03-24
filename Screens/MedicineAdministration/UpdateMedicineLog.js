@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -207,9 +208,22 @@ export default class UpdateMedicineLog extends Component {
           onChangeText={(value) => this.inputEl(value, "medicineNotes")}
         />
         <View style={styles.space}></View>
-        <Button title="Update" onPress={() => this.editMedicineLog()} color="#0B8FDC" />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={() => {this.editMedicineLog()}}>
+          <Text style={styles.buttonTextMenu}>Update</Text>
+        </Button>
         <View style={styles.space}></View>
-        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#EE752E"
+          onPress={this.alertDialog}>
+          <Text style={styles.buttonTextMenu}>Delete</Text>
+        </Button>
+        <View style={styles.submitButtonSpace}></View>
       </ScrollView>
     );
   }

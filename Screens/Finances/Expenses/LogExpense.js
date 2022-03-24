@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, TextInput, Button, Text, TouchableOpacity, Image } from "react-native";
+import { View, ScrollView, TextInput, Text, TouchableOpacity, Image } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, missingDataAlert, isNumeric } from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric, numericDataAlert } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogExpense = ({ navigation }) => {
@@ -19,9 +20,11 @@ const LogExpense = ({ navigation }) => {
   const fireDB = app.firestore().collection("expenseLogs");
 
   async function addExpenseLog() {
-    if (expenseTitle.length == 0 || expenseAmount.length == 0 || !isNumeric(expenseAmount) || category == undefined) {
+    if (expenseTitle.length == 0 || expenseAmount.length == 0 || category == undefined) {
       missingDataAlert();
       return;
+    } else if (!isNumeric(expenseAmount)){
+      numericDataAlert();
     } else {
       await fireDB.add({
         expense_title: expenseTitle,
@@ -175,7 +178,14 @@ const LogExpense = ({ navigation }) => {
       </View>
       {image && <Image source={{ uri: image }} style={styles.receiptPreview} />}
       <View style={styles.space}></View>
-      <Button title="Log Expense" onPress={() => addExpenseLog()} />
+      <Button 
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => addExpenseLog()}>
+        <Text style={styles.buttonTextMenu}>Log Expense</Text>
+      </Button>
+      <View style={styles.submitButtonSpace}></View>
     </ScrollView>
   );
 };

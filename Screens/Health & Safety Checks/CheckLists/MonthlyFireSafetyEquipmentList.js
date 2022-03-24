@@ -3,6 +3,7 @@ import { ScrollView, View } from "react-native";
 import app from "../../../Components/firebase";
 import { ListItem } from "react-native-elements";
 import { getMonday } from "../../../Components/Functionality";
+const styles = require("../../../Styles/general");
 
 export default class MonthlyFireSafetyEquipmentList extends Component {
   constructor() {
@@ -69,10 +70,10 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
                     bottomDivider
                   >
                     <ListItem.Content>
-                      <ListItem.Title>Monthly Fire Safety Equipment Check</ListItem.Title>
-                      <ListItem.Subtitle>Is Completed: Yes</ListItem.Subtitle>
+                      <ListItem.Title style={styles.navyBoldText}>Monthly Fire Safety Equipment Check</ListItem.Title>
+                      <ListItem.Subtitle style={styles.navyStandardText}>Is Completed: Yes</ListItem.Subtitle>
                     </ListItem.Content>
-                    <ListItem.Chevron color="black" />
+                    <ListItem.Chevron color="#02314D" />
                   </ListItem>
                 );
               }
@@ -90,10 +91,10 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
             bottomDivider
           >
             <ListItem.Content>
-              <ListItem.Title>Monthly Fire Safety Equipment Check</ListItem.Title>
-              <ListItem.Subtitle>Is Completed: No</ListItem.Subtitle>
+              <ListItem.Title style={styles.navyBoldText}>Monthly Fire Safety Equipment Check</ListItem.Title>
+              <ListItem.Subtitle style={styles.navyStandardText}>Is Completed: No</ListItem.Subtitle>
             </ListItem.Content>
-            <ListItem.Chevron color="black" />
+            <ListItem.Chevron color="#02314D" />
           </ListItem>
         );
       } else {

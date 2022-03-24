@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Button, View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, calculationAlert } from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, calculationAlert, numericDataAlert } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateMiles extends Component {
@@ -64,11 +65,11 @@ export default class UpdateMiles extends Component {
   };
 
   editMileageLog() {
-    if (this.state.mileageRate.length == 0 || !isNumeric(this.state.mileageRate) || this.state.milesTravelled.length == 0 || !isNumeric(this.state.milesTravelled)) {
+    if (this.state.mileageRate.length == 0 || this.state.milesTravelled.length == 0) {
       missingDataAlert();
       return;
-    } else if (this.state.mileageAmount.length == 0 || !isNumeric(this.state.mileageAmount)) {
-      calculationAlert();
+    } else if (!isNumeric(this.state.mileageRate) || !isNumeric(this.state.milesTravelled)){
+      numericDataAlert();
     } else {
       this.setState({
         isLoading: true,
@@ -127,6 +128,32 @@ export default class UpdateMiles extends Component {
     );
   };
 
+  confirmDialog = () => {
+    Alert.alert(
+      "Log Mileage",
+      "Confirm",
+      [
+        { text: "Log", onPress: () => this.editMileageLog() }
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  calculateMileage(){
+    this.setState({
+      mileageAmount: parseFloat(this.state.milesTravelled * parseFloat(this.state.mileageRate)).toFixed(2),
+    });
+  }
+
+  calculateAndAlert(){
+    this.setState({
+      mileageAmount: parseFloat(this.state.milesTravelled * parseFloat(this.state.mileageRate)).toFixed(2),
+    });
+    this.confirmDialog();
+  }
+
   render() {
     return (
       <ScrollView>
@@ -149,11 +176,7 @@ export default class UpdateMiles extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              this.setState({
-                mileageAmount: parseFloat(
-                  this.state.milesTravelled * parseFloat(this.state.mileageRate)
-                ).toFixed(2),
-              });
+              this.calculateMileage();
             }}
           >
             <Text style={styles.buttonText}>Calculate</Text>
@@ -183,14 +206,21 @@ export default class UpdateMiles extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.space}></View>
-        <Button
-          style={styles.buttonText}
-          title="Update"
-          onPress={() => this.editMileageLog()}
+        <Button 
+          mode="contained"
+          uppercase={false}
           color="#0B8FDC"
-        />
+          onPress={() => {this.calculateAndAlert()}}>
+          <Text style={styles.buttonTextMenu}>Update</Text>
+        </Button>
         <View style={styles.space}></View>
-        <Button title="Delete" onPress={this.alertDialog} color="#EE752E" />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#EE752E"
+          onPress={this.alertDialog}>
+          <Text style={styles.buttonTextMenu}>Delete</Text>
+        </Button>
       </ScrollView>
     );
   }

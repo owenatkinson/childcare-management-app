@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text } from "react-native";
+import { Button } from "react-native-paper";
 import CheckBox from "@react-native-community/checkbox";
 import app from "../../Components/firebase";
 import "firebase/firestore";
@@ -464,7 +465,14 @@ export default class DailyCovidAssessment extends Component {
             />
           </View>
           <View style={styles.space}></View>
-          <Button title="Update" onPress={() => this.editCheck()} color="#0B8FDC" />
+          <Button 
+            mode="contained"
+            uppercase={false}
+            color="#0B8FDC"
+            onPress={() => this.editCheck()}>
+            <Text style={styles.buttonTextMenu}>Update</Text>
+          </Button>
+          <View style={styles.space}></View>
           <View style={styles.buttonSpace}></View>
         </ScrollView>
       </View>

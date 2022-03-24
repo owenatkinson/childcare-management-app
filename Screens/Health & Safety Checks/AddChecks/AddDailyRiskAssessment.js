@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, ScrollView, Button, Text } from "react-native";
+import { View, ScrollView, Text } from "react-native";
+import { Button } from "react-native-paper";
 import CheckBox from "@react-native-community/checkbox";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
@@ -451,7 +452,14 @@ export default function AddDailyRiskAssessment({ route, navigation }) {
           />
         </View>
         <View style={styles.space}></View>
-        <Button title="Submit Check" onPress={() => addCheck()} />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={() => addCheck()}>
+          <Text style={styles.buttonTextMenu}>Submit Check</Text>
+        </Button>
+        <View style={styles.space}></View>
         <View style={styles.buttonSpace}></View>
       </ScrollView>
     </View>

@@ -1,20 +1,29 @@
 import React from "react";
-import { View, Button } from "react-native";
+import { View, Text } from "react-native";
+import { Button } from "react-native-paper";
 const styles = require("../../Styles/general");
 
 export default function AccidentReports({ navigation }) {
   return (
     <View style={styles.fitToText}>
       <View style={styles.space}></View>
-      <Button
-        title="Log Accident Report"
-        onPress={() => navigation.navigate("LogAccidentReport")}
-      />
+      <Button 
+        icon="plus"
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => navigation.navigate("LogAccidentReport")}>
+        <Text style={styles.buttonTextMenu}>Log Accident Report</Text>
+      </Button>
       <View style={styles.space}></View>
-      <Button
-        title="View Accident Reports"
-        onPress={() => navigation.navigate("ViewAccidentReports")}
-      />
+      <Button 
+        icon="card-search"
+        mode="contained"
+        uppercase={false}
+        color="#0B8FDC"
+        onPress={() => navigation.navigate("ViewAccidentReports")}>
+        <Text style={styles.buttonTextMenu}>View Accident Reports</Text>
+      </Button>
     </View>
   );
 }
