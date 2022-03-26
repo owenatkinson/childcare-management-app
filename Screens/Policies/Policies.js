@@ -7,7 +7,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import "firebase/database";
 import { FontAwesome } from "@expo/vector-icons";
-import * as Progress from 'react-native-progress';
+import * as Progress from "react-native-progress";
 const styles = require("../../Styles/general");
 
 const Policies = (props) => {

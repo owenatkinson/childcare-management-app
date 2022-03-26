@@ -90,7 +90,7 @@ export default class ViewEmergencyContacts extends Component {
             return (
               <View key={id}>
                 <View style={styles.space}></View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={styles.iconPadding}>
                   <Text style={styles.navyTextWithLeftMargin}>Name: {contact.child_emergency_contact_name_1} ({contact.child_emergency_contact_relation_1})</Text>
                   <MaterialIcons
                     name={"phone"}

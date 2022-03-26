@@ -64,11 +64,11 @@ export const getMonday = (date) => {
 };
 
 export const missingDataAlert = () => {
-  Alert.alert('Missing input', 'There are fields that are missing input, please fill these before trying again. Use \'N/A\' if applicable.');
+  Alert.alert("Missing input", "There are fields that are missing input, please fill these before trying again. Use \'N/A\' if applicable.");
 }
 
 export const numericDataAlert = () => {
-  Alert.alert('Numeric input required', 'You have entered non-numeric input where numeric input is required, please review your input and try again.');
+  Alert.alert("Numeric input required", "You have entered non-numeric input where numeric input is required, please review your input and try again.");
 }
 
 export const isNumeric = (input) => {
