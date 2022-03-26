@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Platform } from "react-native";
+import { View, Button } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DailyCovidList from "./CheckLists/DailyCovidList";
 import DailyRiskList from "./CheckLists/DailyRiskList";

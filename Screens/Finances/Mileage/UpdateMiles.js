@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, calculationAlert, numericDataAlert } from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, numericDataAlert } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateMiles extends Component {

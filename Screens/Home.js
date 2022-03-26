@@ -1,11 +1,5 @@
-import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  FlatList,
-} from 'react-native';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity, Image, FlatList } from "react-native";
 const styles = require("../Styles/general");
 
 export default class Home extends Component {

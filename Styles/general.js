@@ -233,7 +233,7 @@ module.exports = StyleSheet.create({
   },
   navyBoldText: {
     color: "#02314D",
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   row: {
     flexDirection: "row",
