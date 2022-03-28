@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function AddNewChild({ navigation }) {
@@ -32,9 +32,9 @@ export default function AddNewChild({ navigation }) {
   const fireDB = app.firestore().collection("children");
 
   async function addChild() {
-    if (doctorName.length == 0 || childHomeAddress.length == 0 || childName == undefined || childEmergencyContactName1.length == 0 || childEmergencyNumber1.length == 0 
-      || childEmergencyRelation1.length == 0 || doctorAddress.length == 0 || doctorNumber.length == 0 || childEmergencyContactName2.length == 0 || childEmergencyNumber2.length == 0 
-      || childEmergencyRelation2.length == 0 || childEmergencyRelation3.length == 0 || childEmergencyContactName3.length == 0 || childEmergencyNumber3.length == 0) {
+    if (isInputEmpty(doctorName) || isInputEmpty(childHomeAddress) || childName == undefined || isInputEmpty(childEmergencyContactName1) || isInputEmpty(childEmergencyNumber1)
+      || isInputEmpty(childEmergencyRelation1) || isInputEmpty(doctorAddress) || isInputEmpty(doctorNumber) || isInputEmpty(childEmergencyContactName2) || isInputEmpty(childEmergencyNumber2) 
+      || isInputEmpty(childEmergencyRelation2) || isInputEmpty(childEmergencyRelation3) || isInputEmpty(childEmergencyContactName3) || isInputEmpty(childEmergencyNumber3)) {
       missingDataAlert();
       return;
     } else {

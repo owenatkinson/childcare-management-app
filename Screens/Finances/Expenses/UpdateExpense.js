@@ -6,7 +6,7 @@ import "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, numericDataAlert } from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateExpense extends Component {
@@ -71,7 +71,7 @@ export default class UpdateExpense extends Component {
   };
 
   editExpenseLog() {
-    if (this.state.expenseTitle == 0 || this.state.category == undefined || this.state.expenseAmount.length == 0 ) {
+    if (isInputEmpty(this.state.expenseTitle) || isInputEmpty(this.state.expenseAmount) || this.state.category == undefined) {
       missingDataAlert();
       return;
     } else if (!isNumeric(this.state.expenseAmount) || !isNumeric(milesTravelled)){

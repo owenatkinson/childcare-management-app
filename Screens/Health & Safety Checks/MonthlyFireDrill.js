@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { missingDataAlert, isNumeric } from "../../Components/Functionality";
+import { missingDataAlert, isNumeric, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class MonthlyFireDrill extends Component {
@@ -79,7 +79,7 @@ export default class MonthlyFireDrill extends Component {
   };
 
   editCheck() {
-    if (this.state.monthlyFireDrillNumberOfPeople.length == 0) {
+    if (isInputEmpty(this.state.monthlyFireDrillNumberOfPeople)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(this.state.monthlyFireDrillNumberOfPeople)){

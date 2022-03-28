@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, parseDate, convertToTimestamp, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, parseDate, convertToTimestamp, missingDataAlert, invalidTimeAlert, isValidTime } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateAccidentReport extends Component {
@@ -94,9 +94,11 @@ export default class UpdateAccidentReport extends Component {
   };
 
   editAccidentReport() {
-    if (this.state.accidentLocation.length == 0 || this.state.accidentDetail.length == 0 || this.state.accidentAction.length == 0 || this.state.accidentMedicalAttention.length == 0 ) {
+    if (isInputEmpty(this.state.accidentTime) || isInputEmpty(this.state.accidentLocation) || isInputEmpty(this.state.accidentDetail) || isInputEmpty(this.state.accidentAction) || isInputEmpty(this.state.accidentMedicalAttention)) {
       missingDataAlert();
       return;
+    } else if (!isValidTime(this.state.accidentTime)) {
+      invalidTimeAlert();
     } else {
       this.setState({
         isLoading: true,

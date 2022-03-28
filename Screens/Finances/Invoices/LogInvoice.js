@@ -5,7 +5,7 @@ import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, missingDataAlert, isNumeric, numericDataAlert } from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogInvoice = ({ navigation }) => {
@@ -39,7 +39,7 @@ const LogInvoice = ({ navigation }) => {
   const fireDB = app.firestore().collection("invoiceLogs");
 
   async function addInvoiceLog() {
-    if (invoiceAmount.length == 0 || childName == undefined) {
+    if (isInputEmpty(invoiceAmount) || childName == undefined) {
       missingDataAlert();
       return;
     } else if (!isNumeric(invoiceAmount)){

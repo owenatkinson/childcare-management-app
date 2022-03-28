@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function LogAccidentReport({ navigation }) {
@@ -44,7 +44,7 @@ export default function LogAccidentReport({ navigation }) {
   const fireDB = app.firestore().collection("accidentReports");
 
   async function addAccidentReport() {
-    if (accidentLocation.length == 0 || accidentDetail.length == 0 || accidentAction.length == 0 || accidentMedicalAttention.length == 0 || childName == undefined) {
+    if (isInputEmpty(accidentLocation) || isInputEmpty(accidentDetail) || isInputEmpty(accidentAction) || isInputEmpty(accidentMedicalAttention) || childName == undefined) {
       missingDataAlert();
       return;
     } else {

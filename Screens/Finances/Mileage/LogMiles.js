@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, missingDataAlert, isNumeric, numericDataAlert} from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogMiles = ({ navigation }) => {
@@ -15,7 +15,7 @@ const LogMiles = ({ navigation }) => {
   const fireDB = app.firestore().collection("mileageLogs");
 
   async function addMileageLog() {
-    if (mileageRate.length == 0 || milesTravelled.length == 0) {
+    if (isInputEmpty(mileageRate) || isInputEmpty(milesTravelled)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(mileageRate) || !isNumeric(milesTravelled)){

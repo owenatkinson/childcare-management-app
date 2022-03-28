@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, parseDate, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, parseDate, missingDataAlert, invalidTimeAlert, isValidTime, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateVisitorLog extends Component {
@@ -70,9 +70,11 @@ export default class UpdateVisitorLog extends Component {
   };
 
   editVisitorLog() {
-    if (this.state.visitorName.length == 0 || this.state.visitPurpose.length == 0) {
+    if (isInputEmpty(this.state.visitorName) || isInputEmpty(this.state.visitPurpose) || isInputEmpty(this.state.timeIn) || isInputEmpty(this.state.timeOut)) {
       missingDataAlert();
       return;
+    } else if (!isValidTime(this.state.timeIn) || !isValidTime(this.state.timeOut)) {
+      invalidTimeAlert();
     } else {
       this.setState({
         isLoading: true,

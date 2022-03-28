@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertTime, missingDataAlert, isNumeric } from "../../../Components/Functionality";
+import { convertTime, missingDataAlert, isNumeric, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default function AddMonthlyDrillList({ route, navigation }) {
@@ -15,7 +15,7 @@ export default function AddMonthlyDrillList({ route, navigation }) {
   const fireDB = app.firestore().collection("monthlyFireDrill");
 
   async function addCheck() {
-    if (monthlyFireDrillNumberOfPeople.length == 0) {
+    if (isInputEmpty(monthlyFireDrillNumberOfPeople)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(monthlyFireDrillNumberOfPeople)){
