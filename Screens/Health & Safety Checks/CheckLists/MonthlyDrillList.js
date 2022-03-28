@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ScrollView, View } from "react-native";
 import app from "../../../Components/firebase";
 import { ListItem } from "react-native-elements";
-import { getMonday } from "../../../Components/Functionality";
+import { getMonday, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class MonthlyDrillList extends Component {
@@ -41,7 +41,7 @@ export default class MonthlyDrillList extends Component {
   };
 
   render() {
-    if (this.state.monthlyFireDrill === undefined || this.state.monthlyFireDrill.length == 0) {
+    if (this.state.monthlyFireDrill === undefined || isInputEmpty(this.state.monthlyFireDrill)) {
       return <View></View>;
     } else {
       const newArray = this.state.monthlyFireDrill.filter(

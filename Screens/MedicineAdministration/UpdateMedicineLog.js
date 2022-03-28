@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, parseDate, convertToTimestamp, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, parseDate, convertToTimestamp, missingDataAlert, invalidTimeAlert, isValidTime, isInputEmpty } from "../../Components/Functionality";
 import ModalSelector from "react-native-modal-selector";
 const styles = require("../../Styles/general");
 
@@ -90,9 +90,11 @@ export default class UpdateMedicineLog extends Component {
   };
 
   editMedicineLog() {
-    if (this.state.medicineTitle.length == 0 || this.state.medicineReason.length == 0 || this.state.medicineTime.length == 0 ) {
+    if (isInputEmpty(this.state.medicineTitle) || isInputEmpty(this.state.medicineReason) || isInputEmpty(this.state.medicineTime)) {
       missingDataAlert();
       return;
+    } else if (!isValidTime(this.state.medicineTime)) {
+      invalidTimeAlert();
     } else {
       this.setState({
         isLoading: true,

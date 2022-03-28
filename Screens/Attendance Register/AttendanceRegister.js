@@ -6,7 +6,7 @@ import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 function AttendanceRegister({ navigation }) {
@@ -44,7 +44,7 @@ function AttendanceRegister({ navigation }) {
   }, []);
 
   async function addAttendanceLog() {
-    if (droppedBy.length == 0 || collectedBy.length == 0 || childName == undefined) {
+    if (isInputEmpty(droppedBy) || isInputEmpty(collectedBy) || childName == undefined) {
       missingDataAlert();
       return;
     } else {

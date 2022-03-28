@@ -67,13 +67,25 @@ export const missingDataAlert = () => {
   Alert.alert("Missing input", "There are fields that are missing input, please fill these before trying again. Use \'N/A\' if applicable.");
 }
 
+export const invalidTimeAlert = () => {
+  Alert.alert("Invalid Time", "You have entered an invalid time within this form, please correct this before trying again. Use this format - '14:00'");
+}
+
 export const numericDataAlert = () => {
   Alert.alert("Numeric input required", "You have entered non-numeric input where numeric input is required, please review your input and try again.");
 }
 
+export const isValidTime = (input) => {  
+  return moment(input, "HH:mm").isValid() && (input.length == 5 || input.length == 4);
+}
+
+export const isInputEmpty = (input) => {
+  return input.length == 0;
+}
+
 export const isNumeric = (input) => {
-  if (typeof input != "string") return false
-  return !isNaN(input) && !isNaN(parseFloat(input))
+  if (typeof input != "string") return false;
+  return !isNaN(input) && !isNaN(parseFloat(input));
 }
 
 export const trimAllergyString = (input) => {

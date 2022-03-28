@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function LogMedicine({ navigation }) {
@@ -41,7 +41,7 @@ export default function LogMedicine({ navigation }) {
   }, []);
 
   async function addLog() {
-    if (medicineTitle.length == 0 || medicineReason.length == 0 || childName == undefined) {
+    if (isInputEmpty(medicineTitle) || isInputEmpty(medicineReason) || childName == undefined) {
       missingDataAlert();
       return;
     } else {

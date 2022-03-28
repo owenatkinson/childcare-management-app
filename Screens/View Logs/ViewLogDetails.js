@@ -6,7 +6,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, missingDataAlert, invalidTimeAlert, isInputEmpty, isValidTime } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class ViewLogDetails extends Component {
@@ -96,9 +96,11 @@ export default class ViewLogDetails extends Component {
   };
 
   editLog() {
-    if (this.state.checkInTime.length == 0 || this.state.checkOutTime.length == 0 || this.state.droppedBy.length == 0 || this.state.collectedBy.length == 0) {
+    if (isInputEmpty(this.state.checkInTime) || isInputEmpty(this.state.checkOutTime) || isInputEmpty(this.state.droppedBy) || isInputEmpty(this.state.collectedBy)) {
       missingDataAlert();
       return;
+    } else if (!isValidTime(this.state.checkOutTime) || !isValidTime(this.state.checkInTime)) {
+      invalidTimeAlert();
     } else {
       this.setState({
         isLoading: true,

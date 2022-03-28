@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, convertTime, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default function LogVisitor({ navigation }) {
@@ -16,7 +16,7 @@ export default function LogVisitor({ navigation }) {
   const fireDB = app.firestore().collection("visitorLogs");
 
   async function addVisitorLog() {
-    if (visitorName.length == 0 || visitPurpose.length == 0) {
+    if (isInputEmpty(visitorName) || isInputEmpty(visitPurpose)) {
       missingDataAlert();
       return;
     } else {

@@ -5,7 +5,7 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import CheckBox from "@react-native-community/checkbox";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, missingDataAlert } from "../../Components/Functionality";
+import { convertDate, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateChildDetails extends Component {
@@ -95,10 +95,10 @@ export default class UpdateChildDetails extends Component {
   };
 
   editChild() {
-    if (this.state.name.length == 0 || this.state.emergencyName1.length == 0 || this.state.emergencyNumber1.length == 0 || this.state.emergencyRelation1.length == 0 
-      || this.state.doctorName.length == 0 || this.state.doctorAddress.length == 0 || this.state.doctorNumber.length == 0 || this.state.childAddress.length == 0 
-      || this.state.emergencyName2.length == 0 || this.state.emergencyNumber2.length == 0 || this.state.emergencyRelation2.length == 0 || this.state.emergencyName3.length == 0
-      || this.state.emergencyNumber3.length == 0 || this.state.emergencyRelation3.length == 0) {
+    if (isInputEmpty(this.state.name) || isInputEmpty(this.state.emergencyName1) || isInputEmpty(this.state.emergencyNumber1) || isInputEmpty(this.state.emergencyRelation1) 
+      || isInputEmpty(this.state.doctorName) || isInputEmpty(this.state.doctorAddress) || isInputEmpty(this.state.doctorNumber) || isInputEmpty(this.state.childAddress) 
+      || isInputEmpty(this.state.emergencyName2) || isInputEmpty(this.state.emergencyNumber2) || isInputEmpty(this.state.emergencyRelation2) || isInputEmpty(this.state.emergencyName3)
+      || isInputEmpty(this.state.emergencyNumber3) || isInputEmpty(this.state.emergencyRelation3)) {
       missingDataAlert();
       return;
     } else {

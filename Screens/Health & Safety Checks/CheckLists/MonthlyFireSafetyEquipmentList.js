@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ScrollView, View } from "react-native";
 import app from "../../../Components/firebase";
 import { ListItem } from "react-native-elements";
-import { getMonday } from "../../../Components/Functionality";
+import { getMonday, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class MonthlyFireSafetyEquipmentList extends Component {
@@ -43,7 +43,7 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
   render() {
     if (
       this.state.monthlyFireSafetyEquipmentCheck === undefined ||
-      this.state.monthlyFireSafetyEquipmentCheck.length == 0
+      isInputEmpty(this.state.monthlyFireSafetyEquipmentCheck)
     ) {
       return <View></View>;
     } else {

@@ -6,7 +6,7 @@ import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import ModalSelector from "react-native-modal-selector";
-import { convertDate, missingDataAlert, isNumeric, numericDataAlert } from "../../../Components/Functionality";
+import { convertDate, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 const LogExpense = ({ navigation }) => {
@@ -20,7 +20,7 @@ const LogExpense = ({ navigation }) => {
   const fireDB = app.firestore().collection("expenseLogs");
 
   async function addExpenseLog() {
-    if (expenseTitle.length == 0 || expenseAmount.length == 0 || category == undefined) {
+    if (isInputEmpty(expenseTitle) || isInputEmpty(expenseAmount) || category == undefined) {
       missingDataAlert();
       return;
     } else if (!isNumeric(expenseAmount)){

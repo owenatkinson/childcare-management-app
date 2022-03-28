@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, numericDataAlert } from "../../../Components/Functionality";
+import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
 export default class UpdateMiles extends Component {
@@ -65,7 +65,7 @@ export default class UpdateMiles extends Component {
   };
 
   editMileageLog() {
-    if (this.state.mileageRate.length == 0 || this.state.milesTravelled.length == 0) {
+    if (isInputEmpty(this.state.mileageRate) || isInputEmpty(this.state.milesTravelled)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(this.state.mileageRate) || !isNumeric(this.state.milesTravelled)){
