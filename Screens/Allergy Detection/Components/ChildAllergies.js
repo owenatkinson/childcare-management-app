@@ -18,7 +18,7 @@ export default function ChildAllergies({ route }) {
     app
       .firestore()
       .collection("children")
-      .orderBy("child_name", "asc")
+      .where("child_is_active", "==", true)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((document) => {

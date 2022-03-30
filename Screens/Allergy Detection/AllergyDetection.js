@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, Text, View, StyleSheet, Vibration } from "react-native";
+import { Text, View, StyleSheet, Vibration } from "react-native";
+import { Button } from "react-native-paper";
 import { BarCodeScanner } from "expo-barcode-scanner";
 const styles = require("../../Styles/general");
 
@@ -46,7 +47,13 @@ export default function AllergyDetection({ navigation }) {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
-        <Button title={"Scan code"} onPress={() => setScanned(false)} />
+        <Button 
+          mode="contained"
+          uppercase={false}
+          color="#0B8FDC"
+          onPress={() => setScanned(false)}>
+          <Text style={styles.buttonTextMenu}>Scan Barcode</Text>
+        </Button>
       )}
     </View>
   );
