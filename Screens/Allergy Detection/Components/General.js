@@ -15,9 +15,7 @@ export default function General({ route }) {
       </Text>
       <View style={styles.space}></View>
       <Image source={{ uri: image_front_url }} style={styles.foodItemImage} />
-
       <View style={styles.buttonSpace}></View>
-
       {nutrient_levels.sugars != null && (
         <View style={styles.allNutrients}>
           <View>
@@ -37,7 +35,6 @@ export default function General({ route }) {
           </View>
         </View>
       )}
-
       <View style={styles.space}></View>
       {nutrient_levels.salt != null && (
         <View style={styles.allNutrients}>
@@ -78,7 +75,6 @@ export default function General({ route }) {
           </View>
         </View>
       )}
-
       <View style={styles.space}></View>
       {nutrient_levels["saturated-fat"] != null && (
         <View style={styles.allNutrients}>

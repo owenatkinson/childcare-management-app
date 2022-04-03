@@ -3,7 +3,6 @@ import { View, ScrollView, TextInput, Alert, Text, TouchableOpacity } from "reac
 import { Button } from "react-native-paper";
 import app from "../../../Components/firebase";
 import "firebase/firestore";
-import * as ImagePicker from "expo-image-picker";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
@@ -134,20 +133,6 @@ export default class UpdateExpense extends Component {
         cancelable: true,
       }
     );
-  };
-
-  pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-
-    uploadImage(result.uri);
   };
 
   render() {
