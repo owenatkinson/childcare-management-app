@@ -15,7 +15,7 @@ export default function AllergyDetection({ navigation }) {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ data }) => {
+  const barcodeScan = ({ data }) => {
     setScanned(true);
     Vibration.vibrate();
 
@@ -34,7 +34,7 @@ export default function AllergyDetection({ navigation }) {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>Requesting camera permission</Text>;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
@@ -43,7 +43,7 @@ export default function AllergyDetection({ navigation }) {
   return (
     <View style={styles.barCodeScan}>
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={scanned ? undefined : barcodeScan}
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
