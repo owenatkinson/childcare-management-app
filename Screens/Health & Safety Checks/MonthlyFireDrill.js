@@ -9,10 +9,10 @@ import { missingDataAlert, isNumeric, isInputEmpty } from "../../Components/Func
 const styles = require("../../Styles/general");
 
 export default class MonthlyFireDrill extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       monthlyFireDrillDate: "",
       monthlyFireDrillNumberOfPeople: "",
       monthlyFireDrillTimeCompleted: new Date(),
@@ -22,7 +22,8 @@ export default class MonthlyFireDrill extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -31,6 +32,7 @@ export default class MonthlyFireDrill extends Component {
     });
   };
 
+  // If input isn't a string, it uses moment to convert a date into a time in "HH:mm" format and then returns it as a string
   convertToTime(dateInput) {
     if (typeof dateInput !== "string") {
       dateInput = moment(dateInput).format("HH:mm").toString();
@@ -38,12 +40,14 @@ export default class MonthlyFireDrill extends Component {
     return dateInput;
   }
 
-  convertToTimestamp(dateInput) {
+  // Converts a timestamp into time format
+  trimTimestamp(dateInput) {
     var timeConvert = dateInput.toDate().toLocaleTimeString();
     timeConvert = timeConvert.split(":");
     return timeConvert[0] + ":" + timeConvert[1];
   }
 
+  // Display time picker
   showTimepicker() {
     this.setState({
       show: true,
@@ -51,10 +55,12 @@ export default class MonthlyFireDrill extends Component {
   }
 
   componentDidMount() {
+    // Query the database to gather monthly fire drill data, using userkey as an identifier
     const documentReference = app
       .firestore()
       .collection("monthlyFireDrill")
       .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -62,9 +68,8 @@ export default class MonthlyFireDrill extends Component {
           key: result.id,
           monthlyFireDrillDate: data.monthly_fire_drill_date,
           monthlyFireDrillNumberOfPeople: data.monthly_fire_drill_num_of_people,
-          monthlyFireDrillTimeCompleted: this.convertToTimestamp(data.monthly_fire_drill_time_completed),
+          monthlyFireDrillTimeCompleted: this.trimTimestamp(data.monthly_fire_drill_time_completed),
           monthlyFireDrillNote: data.monthly_fire_drill_note,
-          isLoading: false
         });
       } else {
         console.log("No document found.");
@@ -72,42 +77,38 @@ export default class MonthlyFireDrill extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editCheck() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.monthlyFireDrillNumberOfPeople)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(this.state.monthlyFireDrillNumberOfPeople)){
       numericDataAlert();
-    } else {
-      this.setState({
-        isLoading: true,
+    // If inputs are valid, update variable values to the database
+  } else {
+    const documentUpdate = app.firestore().collection("monthlyFireDrill").doc(this.state.key);
+    documentUpdate
+      .set({
+        monthly_fire_drill_date: this.state.monthlyFireDrillDate,
+        monthly_fire_drill_num_of_people: this.state.monthlyFireDrillNumberOfPeople,
+        monthly_fire_drill_time_completed: this.state.monthlyFireDrillTimeCompleted,
+        monthly_fire_drill_note: this.state.monthlyFireDrillNote
+      })
+      // Navigate the user back to the HealthSafetyChecks page
+      .then(() => {
+        this.props.navigation.navigate("HealthSafetyChecks");
+      })
+      // If an error occurs during this process, print an error
+      .catch((error) => {
+        console.error(error);
       });
-      const documentUpdate = app.firestore().collection("monthlyFireDrill").doc(this.state.key);
-      documentUpdate
-        .set({
-          monthly_fire_drill_date: this.state.monthlyFireDrillDate,
-          monthly_fire_drill_num_of_people: this.state.monthlyFireDrillNumberOfPeople,
-          monthly_fire_drill_time_completed: this.state.monthlyFireDrillTimeCompleted,
-          monthly_fire_drill_note: this.state.monthlyFireDrillNote
-        })
-        .then(() => {
-          this.setState({
-            isLoading: false,
-          });
-          this.props.navigation.navigate("HealthSafetyChecks");
-        })
-        .catch((error) => {
-          console.error(error);
-          this.setState({
-            isLoading: false,
-          });
-        });
     }
   }
 
@@ -124,7 +125,7 @@ export default class MonthlyFireDrill extends Component {
             placeholder={"Number of People present"}
             style={styles.input}
             value={this.state.monthlyFireDrillNumberOfPeople}
-            onChangeText={(value) => this.inputEl(value, "monthlyFireDrillNumberOfPeople")}
+            onChangeText={(value) => this.updateStateValue(value, "monthlyFireDrillNumberOfPeople")}
           />
           <Text style={styles.bold}>Time Completed:</Text>
           <View>
@@ -133,7 +134,7 @@ export default class MonthlyFireDrill extends Component {
                 <DateTimePicker
                   value={this.state.date}
                   mode="time"
-                  onChange={this.onChange}
+                  onChange={this.onDateChange}
                 />
               )}
               <Text style={styles.buttonText}>
@@ -148,7 +149,7 @@ export default class MonthlyFireDrill extends Component {
             multiline={true}
             numberOfLines={4}
             value={this.state.monthlyFireDrillNote}
-            onChangeText={(value) => this.inputEl(value, "monthlyFireDrillNote")}
+            onChangeText={(value) => this.updateStateValue(value, "monthlyFireDrillNote")}
           />
           <View style={styles.space}></View>
           <Button 

@@ -9,10 +9,10 @@ import { convertDate, missingDataAlert, isInputEmpty } from "../../Components/Fu
 const styles = require("../../Styles/general");
 
 export default class UpdateChildDetails extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       name: "",
       dob: "",
       allergies: "",
@@ -38,7 +38,8 @@ export default class UpdateChildDetails extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -47,14 +48,21 @@ export default class UpdateChildDetails extends Component {
     });
   };
 
+  // Display the date picker
   showDatepicker() {
     this.setState({
       show: true,
     });
   }
 
+  // This runs after the render function and loads child data from the database into the page
   componentDidMount() {
-    const documentReference = app.firestore().collection("children").doc(this.props.route.params.userkey);
+    // Query the database to gather child data, using userkey as an identifier
+    const documentReference = app
+      .firestore()
+      .collection("children")
+      .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -80,7 +88,6 @@ export default class UpdateChildDetails extends Component {
           doctorAddress: data.doctor_address,
           doctorNumber: data.doctor_number,
           childAddress: data.child_home_address,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -88,23 +95,23 @@ export default class UpdateChildDetails extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editChild() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.name) || isInputEmpty(this.state.emergencyName1) || isInputEmpty(this.state.emergencyNumber1) || isInputEmpty(this.state.emergencyRelation1) 
       || isInputEmpty(this.state.doctorName) || isInputEmpty(this.state.doctorAddress) || isInputEmpty(this.state.doctorNumber) || isInputEmpty(this.state.childAddress) 
       || isInputEmpty(this.state.emergencyName2) || isInputEmpty(this.state.emergencyNumber2) || isInputEmpty(this.state.emergencyRelation2) || isInputEmpty(this.state.emergencyName3)
       || isInputEmpty(this.state.emergencyNumber3) || isInputEmpty(this.state.emergencyRelation3)) {
       missingDataAlert();
       return;
+    // If inputs are valid, update variable values to the database
     } else {
-      this.setState({
-        isLoading: true,
-      });
       const documentUpdate = app.firestore().collection("children").doc(this.state.key);
       documentUpdate
         .set({
@@ -129,17 +136,13 @@ export default class UpdateChildDetails extends Component {
           doctor_number: this.state.doctorNumber,
           child_home_address: this.state.childAddress
         })
+        // Navigate the user back to the ViewExpenses page
         .then(() => {
-          this.setState({
-            isLoading: false,
-          });
           this.props.navigation.navigate("ManageChildren");
         })
+        // If an error occurs during this process, print an error
         .catch((error) => {
           console.error(error);
-          this.setState({
-            isLoading: false,
-          });
         });
     }
   }
@@ -158,7 +161,7 @@ export default class UpdateChildDetails extends Component {
                 maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                onChange={this.onChange}
+                onChange={this.onDateChange}
               />
             )}
             <Text style={styles.buttonText}>Choose a Date: {this.state.dob}</Text>
@@ -169,7 +172,7 @@ export default class UpdateChildDetails extends Component {
           style={styles.input}
           placeholder={"List Child's Allergies"}
           value={this.state.allergies}
-          onChangeText={(value) => this.inputEl(value, "allergies")}
+          onChangeText={(value) => this.updateStateValue(value, "allergies")}
         />
         <Text style={styles.bold}>Allergy Details</Text>
         <TextInput
@@ -178,14 +181,14 @@ export default class UpdateChildDetails extends Component {
           style={styles.extendedInput}
           placeholder={"Insert details of the child's allergies"}
           value={this.state.allergiesDetails}
-          onChangeText={(value) => this.inputEl(value, "allergiesDetails")}
+          onChangeText={(value) => this.updateStateValue(value, "allergiesDetails")}
         />
         <Text style={styles.bold}>Child's Medical Conditions</Text>
         <TextInput
           style={styles.input}
           placeholder={"List Child's Medical Conditions"}
           value={this.state.medicalConditions}
-          onChangeText={(value) => this.inputEl(value, "medicalConditions")}
+          onChangeText={(value) => this.updateStateValue(value, "medicalConditions")}
         />
         <Text style={styles.bold}>Medical Condition Details</Text>
         <TextInput
@@ -194,7 +197,7 @@ export default class UpdateChildDetails extends Component {
           style={styles.extendedInput}
           placeholder={"Insert details of the child's medical conditions"}
           value={this.state.medicalConditionsDetails}
-          onChangeText={(value) => this.inputEl(value, "medicalConditionsDetails")}
+          onChangeText={(value) => this.updateStateValue(value, "medicalConditionsDetails")}
         />
         <View style={styles.checkBoxPositioning}>
           <Text style={styles.bold}>Child is actively under your care:</Text>
@@ -202,7 +205,7 @@ export default class UpdateChildDetails extends Component {
             style={styles.checkBox}
             disabled={false}
             value={this.state.isActive}
-            onValueChange={(value) => this.inputEl(value, "isActive")}
+            onValueChange={(value) => this.updateStateValue(value, "isActive")}
             tintColors={{ true: "#0B8FDC", false: "orange" }}
           />
         </View>
@@ -211,7 +214,7 @@ export default class UpdateChildDetails extends Component {
           style={styles.input}
           placeholder={"Child Home Address"}
           value={this.state.childAddress}
-          onChangeText={(value) => this.inputEl(value, "childAddress")}
+          onChangeText={(value) => this.updateStateValue(value, "childAddress")}
         />
         <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Emergency Contact 1</Text>
@@ -220,21 +223,21 @@ export default class UpdateChildDetails extends Component {
           style={styles.input}
           placeholder={"Emergency Contact Name"}
           value={this.state.emergencyName1}
-          onChangeText={(value) => this.inputEl(value, "emergencyName1")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyName1")}
         />
         <Text style={styles.bold}>Phone Number</Text>
         <TextInput
           style={styles.input}
           placeholder={"Emergency Contact Number"}
           value={this.state.emergencyNumber1}
-          onChangeText={(value) => this.inputEl(value, "emergencyNumber1")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyNumber1")}
         />
         <Text style={styles.bold}>Emergency Contact Relation</Text>
         <TextInput
           style={styles.input}
           placeholder={"Emergency Contact Relation"}
           value={this.state.emergencyRelation1}
-          onChangeText={(value) => this.inputEl(value, "emergencyRelation1")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyRelation1")}
         />
         <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Emergency Contact 2</Text>
@@ -243,21 +246,21 @@ export default class UpdateChildDetails extends Component {
           style={styles.input}
           placeholder={"Parent #2 Name"}
           value={this.state.emergencyName2}
-          onChangeText={(value) => this.inputEl(value, "emergencyName2")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyName2")}
         />
         <Text style={styles.bold}>Phone Number</Text>
         <TextInput
           style={styles.input}
           placeholder={"Parent #2 Number"}
           value={this.state.emergencyNumber2}
-          onChangeText={(value) => this.inputEl(value, "emergencyNumber2")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyNumber2")}
         />
         <Text style={styles.bold}>Relation</Text>
         <TextInput
           style={styles.input}
           placeholder={"Emergency Contact Relation"}
           value={this.state.emergencyRelation2}
-          onChangeText={(value) => this.inputEl(value, "emergencyRelation2")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyRelation2")}
         />
         <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Emergency Contact 3</Text>
@@ -266,21 +269,21 @@ export default class UpdateChildDetails extends Component {
           style={styles.input}
           placeholder={"Emergency Contact Name"}
           value={this.state.emergencyName3}
-          onChangeText={(value) => this.inputEl(value, "emergencyName3")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyName3")}
         />
         <Text style={styles.bold}>Emergency Contact Phone Number</Text>
         <TextInput
           style={styles.input}
           placeholder={"Emergency Contact Number"}
           value={this.state.emergencyNumber3}
-          onChangeText={(value) => this.inputEl(value, "emergencyNumber3")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyNumber3")}
         />
         <Text style={styles.bold}>Emergency Contact Relation</Text>
         <TextInput
           style={styles.input}
           placeholder={"Emergency Contact Relation"}
           value={this.state.emergencyRelation3}
-          onChangeText={(value) => this.inputEl(value, "emergencyRelation3")}
+          onChangeText={(value) => this.updateStateValue(value, "emergencyRelation3")}
         />
         <View style={styles.horizontalRule}></View>
         <Text style={styles.bold}>Doctor's Name</Text>
@@ -288,21 +291,21 @@ export default class UpdateChildDetails extends Component {
           style={styles.input}
           placeholder={"Doctor's Name"}
           value={this.state.doctorName}
-          onChangeText={(value) => this.inputEl(value, "doctorName")}
+          onChangeText={(value) => this.updateStateValue(value, "doctorName")}
         />
         <Text style={styles.bold}>Doctor's Address</Text>
         <TextInput
           style={styles.input}
           placeholder={"Doctor's Address"}
           value={this.state.doctorAddress}
-          onChangeText={(value) => this.inputEl(value, "doctorAddress")}
+          onChangeText={(value) => this.updateStateValue(value, "doctorAddress")}
         />
         <Text style={styles.bold}>Doctor's Phone Number</Text>
         <TextInput
           style={styles.input}
           placeholder={"Doctor's Number"}
           value={this.state.doctorNumber}
-          onChangeText={(value) => this.inputEl(value, "doctorNumber")}
+          onChangeText={(value) => this.updateStateValue(value, "doctorNumber")}
         />
         <View style={styles.space}></View>
         <Button 

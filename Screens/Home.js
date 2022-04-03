@@ -6,6 +6,7 @@ export default class Home extends Component {
 
   constructor(props) {
     super(props);
+    // Initialise home screen buttons through data array
     this.state = {
       data: [
         {id:1, name: "Accidents", title: "AccidentReports", image:"https://img.icons8.com/external-itim2101-lineal-color-itim2101/64/000000/external-plaster-medical-and-health-itim2101-lineal-color-itim2101.png"},
@@ -28,7 +29,6 @@ export default class Home extends Component {
         <FlatList
           contentContainerStyle={styles.alignItemsCenter}
           data={this.state.data}
-          horizontal={false}
           numColumns={2}
           keyExtractor= {(item) => {
             return item.id;
@@ -39,7 +39,6 @@ export default class Home extends Component {
                 <TouchableOpacity style={styles.menuShapes} onPress={() => this.props.navigation.navigate(item.title)}>
                   <Image style={styles.menuImage} source={{uri:item.image}}/>
                 </TouchableOpacity>
-
                 <View style={styles.menuTitle}>
                   <View style={{alignItems:"center", justifyContent:"center"}}>
                     <Text style={styles.menuText}>{item.name}</Text>

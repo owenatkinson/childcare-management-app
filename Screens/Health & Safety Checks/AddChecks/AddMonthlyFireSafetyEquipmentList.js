@@ -5,11 +5,15 @@ import app from "../../../Components/firebase";
 import "firebase/firestore";
 const styles = require("../../../Styles/general");
 
+// navigation parameter to navigate the user to a new page, route parameter to set the date 
 export default function AddMonthlyFireSafetyEquipmentList({ route, navigation }) {
   const { changeDate } = route.params;
+  // Initialising the state value of variables
   const [monthlyFireSafetyNote, setMonthlyFireSafetyNote] = useState("");
+  // Initialising connection to monthlyFireSafetyEquipmentCheck database table
   const fireDB = app.firestore().collection("monthlyFireSafetyEquipmentCheck");
 
+  // Add variable values to the database and navigate the user to HealthSafetyChecks page
   async function addCheck() {
     await fireDB.add({
       monthly_fire_safety_date: changeDate,

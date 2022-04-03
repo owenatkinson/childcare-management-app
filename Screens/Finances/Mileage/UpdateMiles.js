@@ -8,10 +8,10 @@ import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric
 const styles = require("../../../Styles/general");
 
 export default class UpdateMiles extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       dateOfMileage: "",
       mileageAmount: "",
       mileageRate: "",
@@ -21,7 +21,8 @@ export default class UpdateMiles extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -30,17 +31,20 @@ export default class UpdateMiles extends Component {
     });
   };
 
+  // Display the date picker
   showDatepicker() {
     this.setState({
       show: true,
     });
   }
 
+  // This runs after the render function and loads mileage data from the database into the page
   componentDidMount() {
     const documentReference = app
       .firestore()
       .collection("mileageLogs")
       .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -50,7 +54,6 @@ export default class UpdateMiles extends Component {
           mileageAmount: data.mileage_amount,
           mileageRate: data.mileage_rate,
           milesTravelled: data.miles_travelled,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -58,22 +61,22 @@ export default class UpdateMiles extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editMileageLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.mileageRate) || isInputEmpty(this.state.milesTravelled)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(this.state.mileageRate) || !isNumeric(this.state.milesTravelled)){
       numericDataAlert();
+    // If inputs are valid, update variable values to the database
     } else {
-      this.setState({
-        isLoading: true,
-      });
       const documentUpdate = app
         .firestore()
         .collection("mileageLogs")
@@ -85,31 +88,30 @@ export default class UpdateMiles extends Component {
           mileage_rate: this.state.mileageRate,
           miles_travelled: this.state.milesTravelled,
         })
+        // Navigate the user back to the ViewMiles page
         .then(() => {
-          this.setState({
-            isLoading: false,
-          });
           this.props.navigation.navigate("ViewMiles");
         })
+        // If an error occurs during this process, print an error
         .catch((error) => {
           console.error(error);
-          this.setState({
-            isLoading: false,
-          });
         });
     }
   }
 
+  // Delete the mileage log from the database, using userkey as an identifier & navigate the user back to the ViewMiles page 
   deleteMileageLog() {
     const documentReference = app
       .firestore()
       .collection("mileageLogs")
       .doc(this.props.route.params.userkey);
+      
     documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewMiles");
     });
   }
 
+  // Display alert to confirm if the user wants to delete the item from the database
   alertDialog = () => {
     Alert.alert(
       "Delete",
@@ -128,6 +130,7 @@ export default class UpdateMiles extends Component {
     );
   };
 
+  // Display alert to confirm if the user wants to log mileage data to the database
   confirmDialog = () => {
     Alert.alert(
       "Log Mileage",
@@ -141,12 +144,14 @@ export default class UpdateMiles extends Component {
     );
   };
 
+  // calculates the mileage amount based on the milesTravelled and mileageRate variables
   calculateMileage(){
     this.setState({
       mileageAmount: parseFloat(this.state.milesTravelled * parseFloat(this.state.mileageRate)).toFixed(2),
     });
   }
 
+  // calculates the mileage amount and displays alert dialog
   calculateAndAlert(){
     this.setState({
       mileageAmount: parseFloat(this.state.milesTravelled * parseFloat(this.state.mileageRate)).toFixed(2),
@@ -163,14 +168,14 @@ export default class UpdateMiles extends Component {
           style={styles.input}
           placeholder={"Miles Travelled"}
           value={this.state.milesTravelled}
-          onChangeText={(value) => this.inputEl(value, "milesTravelled")}
+          onChangeText={(value) => this.updateStateValue(value, "milesTravelled")}
         />
         <Text style={styles.bold}>Rate (pence per mile)</Text>
         <TextInput
           style={styles.input}
           placeholder={"0.00"}
           value={this.state.mileageRate}
-          onChangeText={(value) => this.inputEl(value, "mileageRate")}
+          onChangeText={(value) => this.updateStateValue(value, "mileageRate")}
         />
         <View>
           <TouchableOpacity
@@ -197,7 +202,7 @@ export default class UpdateMiles extends Component {
                 maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                onChange={this.onChange}
+                onChange={this.onDateChange}
               />
             )}
             <Text style={styles.buttonText}>

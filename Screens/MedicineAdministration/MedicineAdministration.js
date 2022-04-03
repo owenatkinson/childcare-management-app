@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 const styles = require("../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 export default function MedicineAdministration({ navigation }) {
   return (
     <View style={(styles.fitToText, styles.space)}>

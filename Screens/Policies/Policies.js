@@ -10,12 +10,16 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Progress from "react-native-progress";
 const styles = require("../../Styles/general");
 
+// props parameter used for navigation to a new page
 const Policies = (props) => {
+  // Initialising the state value of variables
   const [fileList, setFileList] = useState([]);
   const [progress, setProgress] = useState(-1);
 
   async function uploadImage() {
+    // Launch document picker
     let file = await DocumentPicker.getDocumentAsync({});
+    // Use a blob to store XML information regarding the document being uploaded
     if (file.uri != null) {
       const blob = await new Promise((resolve, reject) => {
         const xml = new XMLHttpRequest();
@@ -30,11 +34,13 @@ const Policies = (props) => {
         xml.send(null);
       });
 
+      // Provide firebase storage location to store the document
       const ref = app.storage().ref(`/policies/${removeFileExtension(file.name)}`);
       const snapshot = ref.put(blob);
 
       snapshot.on(
         "state_changed",
+        // Next callback monitors the progress of the document upload to firebase storage
         function (snapshot) {
           let progress = (snapshot.bytesTransferred / snapshot.totalBytes);
           setProgress(progress);
@@ -42,11 +48,13 @@ const Policies = (props) => {
             setProgress(-1);
           }
         },
+        // Error callback used to capture error
         function (error) {
           console.log(error);
           blob.close();
           return;
         },
+        // Complete callback used save the document to firebase realtime database and navigate to the FilePreview page, passing the downloadURL as fileData.fileURL variable
         function () {
           snapshot.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             saveFileToRealtimeDatabase(downloadURL, file);
@@ -61,6 +69,7 @@ const Policies = (props) => {
     }
   }
 
+  // Saving to firebase realtime database is required to acquire a URL for opening & sharing the document
   function saveFileToRealtimeDatabase(downloadURL, file) {
     let trimFileName = removeFileExtension(file.name);
     app.database().ref(`policies/${trimFileName}`).update({
@@ -69,10 +78,12 @@ const Policies = (props) => {
     });
   }
 
+  // Trim the filename into an appropriate format to be stored on firebase realtime database
   function removeFileExtension(fileWithExtension) {
     return fileWithExtension.replace(/\.[^/.]+$/, "");
   }
 
+  // Using Share to provide a feature that opens the device's sharing component
   const sharePolicy = async (fileShareableURL) => {
     try {
       const result = await Share.share({
@@ -83,6 +94,7 @@ const Policies = (props) => {
     }
   };
 
+  // Display alert to confirm if the user wants to delete the policy from the system
   const alertDialog = (file) => {
     Alert.alert(
       "Delete Policy",
@@ -106,9 +118,12 @@ const Policies = (props) => {
     var storage = app.storage();
     var storageRef = storage.ref();
     var policyRef = storageRef.child(`policies/${removeFileExtension(fileName)}`);
+    // Delete the policy from the firebase realtime database
     deletePolicyDatabase.remove();
+    // Delete the policy from the firebase storage container
     policyRef.delete();
     setFileList([]);
+    // Refresh the list of policies
     const onChildDeleted = app
       .database()
       .ref(`policies`)
@@ -121,7 +136,7 @@ const Policies = (props) => {
   }
 
   useEffect(() => {
-    setFileList([]);
+    // Refresh the list of policies
     const onChildAdded = app
       .database()
       .ref(`policies`)
@@ -144,14 +159,17 @@ const Policies = (props) => {
           <Text style={styles.buttonTextMenu}>Upload Policy</Text>
         </Button>
       </View>
+      {/* If a policy upload is in progress, display a progress bar showing its progress */}
       {progress >= 0 || progress == 1 ?
       <Progress.Bar
         width={412}
         progress={progress}
         borderRadius={0}
       /> : (null)}
+      {/* Display a list of all policies stored within the database */}
       {fileList.map((item, index) => (
         <ListItem.Swipeable
+          // Swipeable component that reveals an option to share the policy
           leftContent={
             <FontAwesome.Button
               name="share-alt"
@@ -162,6 +180,7 @@ const Policies = (props) => {
               onPress={() => sharePolicy(item.fileURL)}
             ></FontAwesome.Button>
           }
+          // Swipeable component that reveals an option to delete the policy
           rightContent={
             <FontAwesome.Button
               name="trash"
@@ -175,6 +194,7 @@ const Policies = (props) => {
           }
           key={index}
           onPress={() =>
+            // Pressing on the file's ListItem component will navigate the user to the FilePreview page and display the selected policy through passing the fileData variable
             props.navigation.navigate("FilePreview", {
               fileData: item,
             })

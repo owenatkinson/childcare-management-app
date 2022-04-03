@@ -6,20 +6,22 @@ import "firebase/firestore";
 const styles = require("../../Styles/general");
 
 export default class MonthlyFireSafetyEquipmentCheck extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       monthlyFireSafetyDate: "",
       monthlyFireSafetyNote: ""
     };
   }
 
   componentDidMount() {
+    // Query the database to gather monthly fire safety equipment check data, using userkey as an identifier
     const documentReference = app
       .firestore()
       .collection("monthlyFireSafetyEquipmentCheck")
       .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -27,7 +29,6 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
           key: result.id,
           monthlyFireSafetyDate: data.monthly_fire_safety_date,
           monthlyFireSafetyNote: data.monthly_fire_safety_note,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -35,16 +36,15 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editCheck() {
-    this.setState({
-      isLoading: true,
-    });
+    // Update variable values to the database
     const documentUpdate = app
       .firestore()
       .collection("monthlyFireSafetyEquipmentCheck")
@@ -54,17 +54,13 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
         monthly_fire_safety_date: this.state.monthlyFireSafetyDate,
         monthly_fire_safety_note: this.state.monthlyFireSafetyNote
       })
+      // Navigate the user back to the HealthSafetyChecks page
       .then(() => {
-        this.setState({
-          isLoading: false,
-        });
         this.props.navigation.navigate("HealthSafetyChecks");
       })
+      // If an error occurs during this process, print an error
       .catch((error) => {
         console.error(error);
-        this.setState({
-          isLoading: false,
-        });
       });
   }
 
@@ -82,7 +78,7 @@ export default class MonthlyFireSafetyEquipmentCheck extends Component {
             multiline={true}
             numberOfLines={4}
             value={this.state.monthlyFireSafetyNote}
-            onChangeText={(value) => this.inputEl(value, "monthlyFireSafetyNote")}
+            onChangeText={(value) => this.updateStateValue(value, "monthlyFireSafetyNote")}
           />
           <View style={styles.space}></View>
           <Button 

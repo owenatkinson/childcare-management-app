@@ -9,7 +9,9 @@ import ModalSelector from "react-native-modal-selector";
 import { convertDate, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 const LogExpense = ({ navigation }) => {
+  // Initialising the state value of variables
   const [expenseTitle, setExpenseTitle] = useState("");
   const [expenseNote, setExpenseNote] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
@@ -17,14 +19,17 @@ const LogExpense = ({ navigation }) => {
   const dateOfExpense = useInput(new Date());
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
+  // Initialising connection to expenseLogs database table
   const fireDB = app.firestore().collection("expenseLogs");
 
   async function addExpenseLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(expenseTitle) || isInputEmpty(expenseAmount) || category == undefined) {
       missingDataAlert();
       return;
     } else if (!isNumeric(expenseAmount)){
       numericDataAlert();
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         expense_title: expenseTitle,
@@ -34,11 +39,13 @@ const LogExpense = ({ navigation }) => {
         receipt_url: receiptURL,
         expense_category: category,
       });
+      // Navigate the user back to the Finances page
       navigation.navigate("Finances");
     }
   }
 
   useEffect(() => {
+    // Seek permission to access the user's camera to enable bar code scanning
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== "granted") {
@@ -48,12 +55,14 @@ const LogExpense = ({ navigation }) => {
   }, []);
 
   const pickImage = async () => {
+    // Launch image picker
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       quality: 1,
     });
 
+    // If the image picker isn't cancelled, set the image variable to equal the uri of the selected image
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -62,6 +71,7 @@ const LogExpense = ({ navigation }) => {
   };
 
   async function uploadImage(file) {
+    // Use a blob to store XML information regarding image being uploaded
     const blob = await new Promise((resolve, reject) => {
       const xml = new XMLHttpRequest();
       xml.onload = function () {
@@ -75,19 +85,24 @@ const LogExpense = ({ navigation }) => {
       xml.send(null);
     });
 
+    // Trim the filename into an appropriate format to be stored on firebase storage
     let trimFileName = /[^/]*$/.exec(file)[0];
+    // Provide firebase storage location to store the receipt
     const ref = app.storage().ref(`/receipts/${trimFileName}`);
     const snapshot = ref.put(blob);
 
     snapshot.on(
       "state_changed",
+      // Next callback can be blank here
       function () {
       },
+      // Error callback used to capture error
       function (error) {
         console.log(error);
         blob.close();
         return;
       },
+      // Complete callback used set the ReceiptURL variable value
       function () {
         snapshot.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           setReceiptURL(downloadURL);
@@ -98,6 +113,7 @@ const LogExpense = ({ navigation }) => {
     );
   }
 
+  // Values to be used when populating ModalSelector for expense category
   let index = 0;
   const selectorData = [
     { key: index++, section: true, label: "Categories" },
@@ -141,6 +157,7 @@ const LogExpense = ({ navigation }) => {
         >
           {dateOfExpense.show && (
             <DateTimePicker
+              // The latest date value that the user can use is today's date
               maximumDate={new Date()}
               value={dateOfExpense.date}
               mode={dateOfExpense.mode}
@@ -190,6 +207,7 @@ const LogExpense = ({ navigation }) => {
   );
 };
 
+// used to generate functionality for dateOfExpense
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -208,6 +226,7 @@ function useInput() {
     setShow(false);
     setDate(currentDate);
   };
+
   return {
     date,
     showDatepicker,

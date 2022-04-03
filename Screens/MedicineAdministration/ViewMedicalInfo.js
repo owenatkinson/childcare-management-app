@@ -10,18 +10,20 @@ const styles = require("../../Styles/general");
 export default class ViewMedicalInfo extends Component {
   constructor() {
     super();
+    // Query the database to gather all medicine log data and store in a variable
     this.docs = app
       .firestore()
       .collection("medicineAdministration")
       .orderBy("medicine_date", "desc");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       medicineLogs: [],
       childNames: [],
       activeChildName: "",
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -30,7 +32,9 @@ export default class ViewMedicalInfo extends Component {
     this.unsubscribe();
   }
 
+  // Query the database to gather medicine data, store this in the visitorLogs array and set the state value
   fetchCollection = (querySnapshot) => {
+    // Query the database to gather names of all children and store these names in childNames array
     const childNames = [];
     let index = 0;
     app
@@ -72,7 +76,6 @@ export default class ViewMedicalInfo extends Component {
     });
     this.setState({
       medicineLogs,
-      isLoading: false,
     });
   };
 
@@ -80,6 +83,7 @@ export default class ViewMedicalInfo extends Component {
     return (
       <ScrollView style={styles.wrapper}>
         <View>
+          {/* ModalSelector populated with children names from childNameArr */}
           <ModalSelector
             style={styles.navyText}
             data={this.state.childNames}
@@ -89,12 +93,15 @@ export default class ViewMedicalInfo extends Component {
             }}
           />
         </View>
+        {/* For each item in medicineLogs */}
         {this.state.medicineLogs.map((result, id) => {
+          // Display the medicine info regarding the child name selected the modal selector
           if (result.child_name == this.state.activeChildName) {
             return (
               <ListItem
                 key={id}
                 onPress={() => {
+                  // Navigate to the UpdateMedicineLog page and populate fields data using the userkey variable as an identifier
                   this.props.navigation.navigate("UpdateMedicineLog", {
                     userkey: result.key,
                   });

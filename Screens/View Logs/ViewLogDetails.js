@@ -10,10 +10,10 @@ import { convertDate, missingDataAlert, invalidTimeAlert, isInputEmpty, isValidT
 const styles = require("../../Styles/general");
 
 export default class ViewLogDetails extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       childName: "",
       dateOfAttendance: "",
       checkInTime: "",
@@ -28,7 +28,8 @@ export default class ViewLogDetails extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -37,20 +38,18 @@ export default class ViewLogDetails extends Component {
     });
   };
 
+  // Display the date picker
   showDatepicker() {
     this.setState({
       show: true,
     });
   }
 
+  // This runs after the render function and loads attendance log data from the database into the page
   componentDidMount() {
-    const documentReference = app
-      .firestore()
-      .collection("attendanceRegister")
-      .doc(this.props.route.params.userkey);
     const childNames = [];
     let index = 0;
-
+    // Query the database to gather names of all children and store these names in childNames array
     app
       .firestore()
       .collection("children")
@@ -68,6 +67,12 @@ export default class ViewLogDetails extends Component {
         });
       });
 
+    // Query the database to gather attendance log data, using userkey as an identifier
+    const documentReference = app
+      .firestore()
+      .collection("attendanceRegister")
+      .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const log = result.data();
@@ -81,7 +86,6 @@ export default class ViewLogDetails extends Component {
           collectedBy: log.collected_by,
           temperatureChecked: log.temperature_checked,
           additionalNotes: log.additional_notes,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -89,22 +93,22 @@ export default class ViewLogDetails extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
-  editLog() {
+  editAttendanceLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.checkInTime) || isInputEmpty(this.state.checkOutTime) || isInputEmpty(this.state.droppedBy) || isInputEmpty(this.state.collectedBy)) {
       missingDataAlert();
       return;
     } else if (!isValidTime(this.state.checkOutTime) || !isValidTime(this.state.checkInTime)) {
       invalidTimeAlert();
+    // If inputs are valid, update variable values to the database
     } else {
-      this.setState({
-        isLoading: true,
-      });
       const documentUpdate = app.firestore().collection("attendanceRegister").doc(this.state.key);
       documentUpdate
         .set({
@@ -118,37 +122,33 @@ export default class ViewLogDetails extends Component {
           additional_notes: this.state.additionalNotes,
         })
         .then(() => {
-          this.setState({
-            isLoading: false,
-          });
           this.props.navigation.navigate("ViewLogs");
         })
         .catch((error) => {
           console.error(error);
-          this.setState({
-            isLoading: false,
-          });
         });
     }
   }
 
-  deleteLog() {
+  // Delete the attendance log from the database, using userkey as an identifier & navigate the user back to the ViewLogs page 
+  deleteAttendanceLog() {
     const documentReference = app
       .firestore()
       .collection("attendanceRegister")
       .doc(this.props.route.params.userkey);
+
     documentReference.delete().then(() => {
-      console.log("Doc deleted.");
       this.props.navigation.navigate("ViewLogs");
     });
   }
 
+  // Display alert to confirm if the user wants to delete the item from the database
   alertDialog = () => {
     Alert.alert(
       "Delete",
       "Really?",
       [
-        { text: "Yes", onPress: () => this.deleteLog() },
+        { text: "Yes", onPress: () => this.deleteAttendanceLog() },
         { text: "No", onPress: () => console.log("Item not deleted"), style: "cancel" },
       ],
       {
@@ -163,6 +163,7 @@ export default class ViewLogDetails extends Component {
         <View style={styles.space}></View>
         <Text style={styles.bold}>Child Name</Text>
         <View>
+          {/* ModalSelector populated with children names from childNameArr */}
           <ModalSelector
             style={styles.dropdown}
             data={this.state.childNames}
@@ -181,7 +182,7 @@ export default class ViewLogDetails extends Component {
                 maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                onChange={this.onChange}
+                onChange={this.onDateChange}
               />
             )}
             <Text style={styles.buttonText}>Choose a Date: {this.state.dateOfAttendance}</Text>
@@ -192,28 +193,28 @@ export default class ViewLogDetails extends Component {
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.checkInTime}
-          onChangeText={(value) => this.inputEl(value, "checkInTime")}
+          onChangeText={(value) => this.updateStateValue(value, "checkInTime")}
         />
         <Text style={styles.bold}>Check-out Time</Text>
         <TextInput
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.checkOutTime}
-          onChangeText={(value) => this.inputEl(value, "checkOutTime")}
+          onChangeText={(value) => this.updateStateValue(value, "checkOutTime")}
         />
         <Text style={styles.bold}>Dropped By</Text>
         <TextInput
           style={styles.input}
           placeholder={"Dropped By"}
           value={this.state.droppedBy}
-          onChangeText={(value) => this.inputEl(value, "droppedBy")}
+          onChangeText={(value) => this.updateStateValue(value, "droppedBy")}
         />
         <Text style={styles.bold}>Collected By</Text>
         <TextInput
           style={styles.input}
           placeholder={"Collected By"}
           value={this.state.collectedBy}
-          onChangeText={(value) => this.inputEl(value, "collectedBy")}
+          onChangeText={(value) => this.updateStateValue(value, "collectedBy")}
         />
         <View style={styles.checkBoxPositioning}>
           <Text style={styles.bold}>Temperature Checked:</Text>
@@ -221,7 +222,7 @@ export default class ViewLogDetails extends Component {
             style={styles.checkBox}
             disabled={false}
             value={this.state.temperatureChecked}
-            onValueChange={(value) => this.inputEl(value, "temperatureChecked")}
+            onValueChange={(value) => this.updateStateValue(value, "temperatureChecked")}
             tintColors={{ true: "#0B8FDC", false: "orange" }}
           />
         </View>
@@ -232,14 +233,14 @@ export default class ViewLogDetails extends Component {
           numberOfLines={4}
           placeholder={"Insert any additional information"}
           value={this.state.additionalNotes}
-          onChangeText={(value) => this.inputEl(value, "additionalNotes")}
+          onChangeText={(value) => this.updateStateValue(value, "additionalNotes")}
         />
         <View style={styles.space}></View>
         <Button 
           mode="contained"
           uppercase={false}
           color="#0B8FDC"
-          onPress={() => this.editLog()}>
+          onPress={() => this.editAttendanceLog()}>
           <Text style={styles.buttonTextMenu}>Update</Text>
         </Button>
         <View style={styles.space}></View>

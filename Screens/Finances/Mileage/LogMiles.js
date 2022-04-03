@@ -7,31 +7,37 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertDate, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 const LogMiles = ({ navigation }) => {
+  // Initialising the state value of variables
   const [mileageAmount, setMileageAmount] = useState(0);
   const [mileageRate, setMileageRate] = useState("");
   const [milesTravelled, setMilesTravelled] = useState("");
   const dateOfMileage = useInput(new Date());
+  // Initialising connection to mileageLogs database table
   const fireDB = app.firestore().collection("mileageLogs");
 
   async function addMileageLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(mileageRate) || isInputEmpty(milesTravelled)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(mileageRate) || !isNumeric(milesTravelled)){
       numericDataAlert();
-    }
-    else {
+    // If inputs are valid, add variable values to the database
+    } else {
       await fireDB.add({
         mileage_amount: mileageAmount,
         mileage_rate: mileageRate,
         miles_travelled: milesTravelled,
         date_of_mileage: dateOfMileage.date,
       });
+      // Navigate the user back to the Finances page
       navigation.navigate("Finances");
     }
   }
 
+  // Display alert to confirm if the user wants to log mileage data to the database
   const alertDialog = () => {
     Alert.alert(
       "Log Mileage",
@@ -45,16 +51,16 @@ const LogMiles = ({ navigation }) => {
     );
   };
 
-  function calculateMileage(){
+  // calculates the mileage amount based on the milesTravelled and mileageRate variables
+  function calculateMileageAmount(){
     setMileageAmount(
       parseFloat(milesTravelled * parseFloat(mileageRate)).toFixed(2)
     );
   }
 
+  // calculates the mileage amount and displays alert dialog
   function calculateAndAlert(){
-    setMileageAmount(
-      parseFloat(milesTravelled * parseFloat(mileageRate)).toFixed(2)
-    );
+    calculateMileageAmount();
     alertDialog();
   }
 
@@ -79,7 +85,7 @@ const LogMiles = ({ navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            calculateMileage();
+            calculateMileageAmount();
           }}
         >
           <Text style={styles.buttonText}>Calculate</Text>
@@ -119,6 +125,7 @@ const LogMiles = ({ navigation }) => {
   );
 };
 
+// used to generate functionality for dateOfMileage
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");

@@ -7,10 +7,10 @@ import "firebase/firestore";
 const styles = require("../../Styles/general");
 
 export default class DailyCovidAssessment extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       dailyCovidAssessmentDate: "",
       dailyCovidAssessmentIsCompleted: "",
       dailyCovidAssessmentCheck1: "",
@@ -47,10 +47,12 @@ export default class DailyCovidAssessment extends Component {
   }
 
   componentDidMount() {
+    // Query the database to gather daily covid assessment data, using userkey as an identifier
     const documentReference = app
       .firestore()
       .collection("dailyCovidAssessment")
       .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -88,7 +90,6 @@ export default class DailyCovidAssessment extends Component {
           dailyCovidAssessmentCheck28: data.daily_covid_assessment_check_28,
           dailyCovidAssessmentCheck29: data.daily_covid_assessment_check_29,
           dailyCovidAssessmentCheck30: data.daily_covid_assessment_check_30,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -96,16 +97,15 @@ export default class DailyCovidAssessment extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editCheck() {
-    this.setState({
-      isLoading: true,
-    });
+    // Update variable values to the database
     const documentUpdate = app.firestore().collection("dailyCovidAssessment").doc(this.state.key);
     documentUpdate
       .set({
@@ -142,17 +142,13 @@ export default class DailyCovidAssessment extends Component {
         daily_covid_assessment_check_29: this.state.dailyCovidAssessmentCheck29,
         daily_covid_assessment_check_30: this.state.dailyCovidAssessmentCheck30,
       })
+      // Navigate the user back to the HealthSafetyChecks page
       .then(() => {
-        this.setState({
-          isLoading: false,
-        });
         this.props.navigation.navigate("HealthSafetyChecks");
       })
+      // If an error occurs during this process, print an error
       .catch((error) => {
         console.error(error);
-        this.setState({
-          isLoading: false,
-        });
       });
   }
 
@@ -168,7 +164,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck1}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck1")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck1")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -178,7 +174,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck2}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck2")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck2")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -188,7 +184,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck3}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck3")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck3")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -198,7 +194,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck4}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck4")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck4")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -208,7 +204,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck5}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck5")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck5")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -218,7 +214,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck6}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck6")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck6")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -228,7 +224,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck7}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck7")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck7")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -238,7 +234,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck8}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck8")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck8")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -248,7 +244,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck9}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck9")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck9")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -258,7 +254,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck10}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck10")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck10")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -268,7 +264,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck11}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck11")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck11")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -278,7 +274,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck12}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck12")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck12")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -288,7 +284,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck13}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck13")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck13")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -298,7 +294,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck14}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck14")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck14")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -308,7 +304,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck15}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck15")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck15")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -318,7 +314,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck16}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck16")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck16")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -328,7 +324,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck17}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck17")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck17")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -339,7 +335,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck18}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck18")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck18")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -350,7 +346,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck19}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck19")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck19")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -360,7 +356,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck20}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck20")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck20")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -370,7 +366,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck21}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck21")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck21")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -380,7 +376,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck22}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck22")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck22")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -390,7 +386,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck23}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck23")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck23")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -400,7 +396,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck24}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck24")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck24")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -410,7 +406,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck25}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck25")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck25")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -420,7 +416,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck26}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck26")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck26")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -430,7 +426,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck27}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck27")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck27")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -440,7 +436,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck28}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck28")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck28")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -450,7 +446,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck29}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck29")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck29")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -460,7 +456,7 @@ export default class DailyCovidAssessment extends Component {
             <CheckBox
               style={styles.checkBoxAlignRight}
               value={this.state.dailyCovidAssessmentCheck30}
-              onValueChange={(value) => this.inputEl(value, "dailyCovidAssessmentCheck30")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyCovidAssessmentCheck30")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>

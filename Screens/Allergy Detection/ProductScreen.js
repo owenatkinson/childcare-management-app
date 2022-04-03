@@ -7,7 +7,9 @@ import Nutrition from "./Components/Nutrition";
 import ChildAllergies from "./Components/ChildAllergies";
 
 export default function ProductScreen({ route }) {
-  const [selectedIndex, setIndex] = useState(0);
+  // Initialising the state value of index variable
+  const [index, setIndex] = useState(0);
+  // Array used to populate ButtonGroup
   const buttons = [
     "General",
     "Ingredients",
@@ -19,17 +21,14 @@ export default function ProductScreen({ route }) {
     <View>
       <ButtonGroup
         onPress={setIndex}
-        selectedIndex={selectedIndex}
+        index={index}
         buttons={buttons}
-        containerStyle={{
-          height: 50,
-        }}
       />
       <View>
-        {selectedIndex === 0 ? <General route={route} /> : false}
-        {selectedIndex === 1 ? <Ingredients route={route} /> : false}
-        {selectedIndex === 2 ? <Nutrition route={route} /> : false}
-        {selectedIndex === 3 ? <ChildAllergies route={route} /> : false}
+        {index === 0 ? <General route={route} /> : false}
+        {index === 1 ? <Ingredients route={route} /> : false}
+        {index === 2 ? <Nutrition route={route} /> : false}
+        {index === 3 ? <ChildAllergies route={route} /> : false}
       </View>
     </View>
   );
