@@ -10,14 +10,19 @@ const styles = require("../../Styles/general");
 export default class ViewVisitorLogs extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection("visitorLogs").orderBy("date_of_visit", "desc");
+    // Query the database to gather all vistor log data and store in a variable
+    this.docs = app
+      .firestore()
+      .collection("visitorLogs")
+      .orderBy("date_of_visit", "desc");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       visitorLogs: [],
       date: new Date(),
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -26,6 +31,7 @@ export default class ViewVisitorLogs extends Component {
     this.unsubscribe();
   }
 
+  // Query the database to gather vistor log data, store this in the visitorLogs array and set the state value
   fetchCollection = (querySnapshot) => {
     const visitorLogs = [];
     querySnapshot.forEach((result) => {
@@ -41,13 +47,13 @@ export default class ViewVisitorLogs extends Component {
     });
     this.setState({
       visitorLogs,
-      isLoading: false,
     });
   };
 
   render() {
     return (
       <View style={styles.wrapper}>
+        {/* MonthPick used to filter visitor logs into a month & year */}
         <SafeAreaView edges={["bottom", "left", "right"]}>
           <FlatList
             ListHeaderComponent={
@@ -60,7 +66,9 @@ export default class ViewVisitorLogs extends Component {
           />
         </SafeAreaView>
         <ScrollView>
+          {/* For each visitor log in visitorLogs */}
           {this.state.visitorLogs.map((result, id) => {
+            // Only display vistor logs that match the year and month values of the MonthPick component
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
@@ -75,6 +83,7 @@ export default class ViewVisitorLogs extends Component {
                 <ListItem
                   key={id}
                   onPress={() => {
+                    // Navigate to the UpdateVisitorLog page and populate fields data using the userkey variable as an identifier
                     this.props.navigation.navigate("UpdateVisitorLog", {
                       userkey: result.key,
                     });

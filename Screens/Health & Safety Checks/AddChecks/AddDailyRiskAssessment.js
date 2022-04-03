@@ -6,8 +6,10 @@ import app from "../../../Components/firebase";
 import "firebase/firestore";
 const styles = require("../../../Styles/general");
 
+// navigation parameter to navigate the user to a new page, route parameter to set the date 
 export default function AddDailyRiskAssessment({ route, navigation }) {
   const { changeDate } = route.params;
+  // Initialising the state value of variables
   const [dailyRiskAssessmentCheck1, setDailyRiskAssessmentCheck1] = useState("");
   const [dailyRiskAssessmentCheck2, setDailyRiskAssessmentCheck2] = useState("");
   const [dailyRiskAssessmentCheck3, setDailyRiskAssessmentCheck3] = useState("");
@@ -42,9 +44,10 @@ export default function AddDailyRiskAssessment({ route, navigation }) {
   const [dailyRiskAssessmentCheck32, setDailyRiskAssessmentCheck32] = useState("");
   const [dailyRiskAssessmentCheck33, setDailyRiskAssessmentCheck33] = useState("");
   const [dailyRiskAssessmentCheck34, setDailyRiskAssessmentCheck34] = useState("");
-
+  // Initialising connection to dailyRiskAssessment database table
   const fireDB = app.firestore().collection("dailyRiskAssessment");
 
+  // Add variable values to the database and navigate the user to HealthSafetyChecks page
   async function addCheck() {
     await fireDB.add({
       daily_risk_assessment_date: changeDate,

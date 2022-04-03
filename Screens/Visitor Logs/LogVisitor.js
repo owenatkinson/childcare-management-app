@@ -7,18 +7,23 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 export default function LogVisitor({ navigation }) {
+  // Initialising the state value of variables
   const [visitorName, setVisitorName] = useState("");
   const [visitPurpose, setVisitPurpose] = useState("");
   const dateOfVisit = useInput(new Date());
   const timeIn = useInput();
   const timeOut = useInput();
+  // Initialising connection to visitorLogs database table
   const fireDB = app.firestore().collection("visitorLogs");
 
   async function addVisitorLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(visitorName) || isInputEmpty(visitPurpose)) {
       missingDataAlert();
       return;
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         visitor_name: visitorName,
@@ -27,6 +32,7 @@ export default function LogVisitor({ navigation }) {
         time_out: convertTime(timeOut.date),
         visit_purpose: visitPurpose,
       });
+      // Navigate the user back to the VisitorLogs page
       navigation.navigate("VisitorLogs");
     }
   }
@@ -105,6 +111,7 @@ export default function LogVisitor({ navigation }) {
   );
 }
 
+// used to generate functionality for dateOfVisit
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");

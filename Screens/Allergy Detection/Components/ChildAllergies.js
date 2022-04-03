@@ -5,16 +5,19 @@ const styles = require("../../../Styles/general");
 import app from "../../../Components/firebase";
 import { trimAllergyString } from "../../../Components/Functionality";
 
+// route paramater passed from ProductScreen includes product info
 export default function ChildAllergies({ route }) {
+  // Store allergen and ingredient information from product info
   const { allergens_tags, ingredients_text } = route.params.item;
+  // Initialising the state value of childNameArr variable
   const [childNameArr, setChildNameArr] = useState([]);
   let childArr = [];
 
   useEffect(() => {
     const childNames = [];
-    setChildNameArr([]);
     let index = 0;
 
+    // Query the database for all children actively in care and store their name and allergies in childNames array
     app
       .firestore()
       .collection("children")
@@ -32,10 +35,12 @@ export default function ChildAllergies({ route }) {
       });    
   }, []);
 
+  // Add name to childArr array
   function addToArr(name){
     childArr.push(name);
   }
 
+  // Remove duplicate names from the array
   function removeDuplicates(){
     childArr = [...new Set(childArr)];
   }
@@ -50,14 +55,12 @@ export default function ChildAllergies({ route }) {
       </Text>
       <View style={styles.space}></View>
       {ingredients_text ? (
-        allergens_tags.map((allergen, id) => (
+        // For each allergy within the scanned product
+        allergens_tags.map((allergen) => (
+            // For each child within childNameArr
             childNameArr.map(child => (
-                child.allergies.toLowerCase().includes(trimAllergyString(allergen)) ? (
-                    addToArr(child.name),
-                    null
-                ) : (
-                    null
-                ))
+                // If the child's allergy is contained within the product, add the child's name to childArr
+                child.allergies.toLowerCase().includes(trimAllergyString(allergen)) ? (addToArr(child.name)) : null )
             )
         ))
       ) : (
@@ -66,6 +69,7 @@ export default function ChildAllergies({ route }) {
 
       {removeDuplicates()}
       
+      {/* For each child's name in childArr, display it in a Text element */}
       {childArr.map((child) => (
         <Text style={styles.productName}>
             {child}

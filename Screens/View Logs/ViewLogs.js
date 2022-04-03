@@ -5,24 +5,21 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ListLogs from "./ListLogs";
 import { convertDate } from "../../Components/Functionality";
 
+// navigation parameter to navigate the user to a new page
 export default function ViewLogs({ navigation }) {
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
+  // Display the date picker
   const showDatepicker = () => {
-    showMode("date");
+    setShow(true);
   };
 
   return (
@@ -36,9 +33,10 @@ export default function ViewLogs({ navigation }) {
           value={date}
           mode="date"
           is24Hour={true}
-          onChange={onChange}
+          onChange={onDateChange}
         />
       )}
+      {/* ListLogs component used to list logs depending on changeDate variable */}
       <ListLogs navigation={navigation} changeDate={convertDate(date)}></ListLogs>
     </View>
   );

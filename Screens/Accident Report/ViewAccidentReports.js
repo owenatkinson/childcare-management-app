@@ -10,18 +10,20 @@ const styles = require("../../Styles/general");
 export default class ViewAccidentReports extends Component {
   constructor() {
     super();
+    // Query the database to gather all accident report data and store in a variable
     this.docs = app
       .firestore()
       .collection("accidentReports")
       .orderBy("accident_date", "desc");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       accidentReports: [],
       childNames: [],
       activeChildName: "",
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -31,9 +33,10 @@ export default class ViewAccidentReports extends Component {
   }
 
   fetchCollection = (querySnapshot) => {
-    const accidentReports = [];
-    const childNames = [];
+    const childNames = [], accidentReports = [];
     let index = 0;
+
+    // Query the database to gather names of all children, store these names in childNames array and set the state value
     app
       .firestore()
       .collection("children")
@@ -51,6 +54,7 @@ export default class ViewAccidentReports extends Component {
         });
       });
 
+    // Gather accident report data, store it to the accidentReports array and set the state value
     querySnapshot.forEach((result) => {
       const { child_name, accident_date, accident_time, accident_notes } = result.data();
       accidentReports.push({
@@ -62,8 +66,7 @@ export default class ViewAccidentReports extends Component {
       });
     });
     this.setState({
-      accidentReports,
-      isLoading: false,
+      accidentReports: accidentReports,
     });
   };
 
@@ -71,6 +74,7 @@ export default class ViewAccidentReports extends Component {
     return (
       <ScrollView style={styles.wrapper}>
         <View>
+          {/* ModalSelector populated with children names from childNames */}
           <ModalSelector
             data={this.state.childNames}
             initValue="Select Child"
@@ -80,12 +84,15 @@ export default class ViewAccidentReports extends Component {
             }}
           />
         </View>
+        {/* For each item in accidentReports */}
         {this.state.accidentReports.map((report, id) => {
+          // If the child name within the report matches the child name in the modal selector, display it
           if (report.child_name == this.state.activeChildName) {
             return (
               <ListItem
                 key={id}
                 onPress={() => {
+                  // Navigate to UpdateAccidentReport and pass userkey variable
                   this.props.navigation.navigate("UpdateAccidentReport", {
                     userkey: report.key,
                   });

@@ -7,10 +7,10 @@ import "firebase/firestore";
 const styles = require("../../Styles/general");
 
 export default class DailyRiskAssessment extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       dailyRiskAssessmentDate: "",
       dailyRiskAssessmentIsCompleted: "",
       dailyRiskAssessmentNote: "",
@@ -52,10 +52,12 @@ export default class DailyRiskAssessment extends Component {
   }
 
   componentDidMount() {
+    // Query the database to gather monthly fire drill data, using userkey as an identifier
     const documentReference = app
       .firestore()
       .collection("dailyRiskAssessment")
       .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -98,7 +100,6 @@ export default class DailyRiskAssessment extends Component {
           dailyRiskAssessmentCheck32: data.daily_risk_assessment_check_32,
           dailyRiskAssessmentCheck33: data.daily_risk_assessment_check_33,
           dailyRiskAssessmentCheck34: data.daily_risk_assessment_check_34,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -106,16 +107,14 @@ export default class DailyRiskAssessment extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editCheck() {
-    this.setState({
-      isLoading: true,
-    });
     const documentUpdate = app.firestore().collection("dailyRiskAssessment").doc(this.state.key);
     documentUpdate
       .set({
@@ -158,16 +157,10 @@ export default class DailyRiskAssessment extends Component {
         daily_risk_assessment_check_34: this.state.dailyRiskAssessmentCheck34,
       })
       .then(() => {
-        this.setState({
-          isLoading: false,
-        });
         this.props.navigation.navigate("HealthSafetyChecks");
       })
       .catch((error) => {
         console.error(error);
-        this.setState({
-          isLoading: false,
-        });
       });
   }
 
@@ -187,7 +180,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck1}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck1")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck1")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -197,7 +190,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck2}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck2")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck2")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -207,7 +200,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck3}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck3")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck3")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -217,7 +210,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck4}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck4")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck4")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -227,7 +220,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck5}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck5")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck5")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -237,7 +230,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck6}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck6")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck6")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -247,7 +240,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck7}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck7")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck7")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -257,7 +250,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck8}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck8")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck8")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -267,7 +260,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck9}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck9")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck9")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -277,7 +270,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck10}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck10")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck10")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -287,7 +280,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck11}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck11")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck11")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -297,7 +290,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck12}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck12")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck12")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -307,7 +300,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck13}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck13")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck13")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -321,7 +314,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck14}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck14")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck14")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -331,7 +324,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck15}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck15")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck15")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -341,7 +334,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck16}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck16")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck16")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -351,7 +344,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck17}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck17")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck17")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -365,7 +358,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck18}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck18")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck18")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -375,7 +368,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck19}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck19")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck19")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -385,7 +378,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck20}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck20")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck20")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -399,7 +392,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck21}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck21")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck21")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -409,7 +402,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck22}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck22")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck22")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -419,7 +412,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck23}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck23")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck23")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -429,7 +422,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck24}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck24")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck24")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -443,7 +436,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck25}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck25")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck25")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -453,7 +446,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck26}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck26")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck26")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -463,7 +456,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck27}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck27")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck27")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -473,7 +466,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck28}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck28")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck28")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -483,7 +476,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck29}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck29")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck29")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -493,7 +486,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck30}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck30")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck30")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -503,7 +496,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck31}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck31")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck31")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -513,7 +506,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck32}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck32")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck32")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -523,7 +516,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck33}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck33")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck33")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>
@@ -533,7 +526,7 @@ export default class DailyRiskAssessment extends Component {
               style={styles.checkBoxAlignRight}
               disabled={false}
               value={this.state.dailyRiskAssessmentCheck34}
-              onValueChange={(value) => this.inputEl(value, "dailyRiskAssessmentCheck34")}
+              onValueChange={(value) => this.updateStateValue(value, "dailyRiskAssessmentCheck34")}
               tintColors={{ true: "#0B8FDC", false: "orange" }}
             />
           </View>

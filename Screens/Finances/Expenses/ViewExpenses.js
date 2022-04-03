@@ -10,18 +10,20 @@ const styles = require("../../../Styles/general");
 export default class ViewExpenses extends Component {
   constructor() {
     super();
+    // Query the database to gather all expense data and store in a variable
     this.docs = app
       .firestore()
       .collection("expenseLogs")
       .orderBy("date_of_expense", "desc");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       expenseLogs: [],
       date: new Date(),
       expenseTotal: 0,
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -30,6 +32,7 @@ export default class ViewExpenses extends Component {
     this.unsubscribe();
   }
 
+  // Query the database to gather expense data, store this in the expenseLogs array and set the state value
   fetchCollection = (querySnapshot) => {
     this.state.expenseTotal = 0;
     const expenseLogs = [];
@@ -45,14 +48,14 @@ export default class ViewExpenses extends Component {
       });
     });
     this.setState({
-      expenseLogs,
-      isLoading: false,
+      expenseLogs: expenseLogs,
     });
   };
 
   render() {
     return (
       <View style={styles.wrapper}>
+        {/* MonthPick used to filter expense logs into a month & year */}
         <SafeAreaView edges={["bottom", "left", "right"]}>
           <FlatList
             ListHeaderComponent={
@@ -67,7 +70,9 @@ export default class ViewExpenses extends Component {
           />
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
+          {/* For each expense in expenseLogs */}
           {this.state.expenseLogs.map((result, id) => {
+            // Only display expense logs that match the year and month values of the MonthPick component
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
@@ -78,11 +83,13 @@ export default class ViewExpenses extends Component {
                 getYear(convertDateCheckType(result.date_of_expense))
               )
             ) {
+              // Increment the expenseTotal by accumulatively adding the expense_amount of each expense
               this.state.expenseTotal += parseFloat(result.expense_amount);
               return (
                 <ListItem
                   key={id}
                   onPress={() => {
+                    // Navigate to the UpdateExpense page and populate fields data using the userkey variable as an identifier
                     this.props.navigation.navigate("UpdateExpense", {
                       userkey: result.key,
                     });
@@ -105,6 +112,7 @@ export default class ViewExpenses extends Component {
           })}
         </ScrollView>
         <Text style={styles.boldLargeText}>
+          {/* Display the expenseTotal in a Text component */}
           Monthly Total: £{parseFloat(this.state.expenseTotal).toFixed(2)}
         </Text>
       </View>

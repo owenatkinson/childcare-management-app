@@ -8,13 +8,18 @@ const styles = require("../../Styles/general");
 export default class ViewInactiveChildren extends Component {
   constructor() {
     super();
-    this.docs = app.firestore().collection("children").orderBy("child_name", "asc");
+    // Query the database to gather all child data and store in a variable
+    this.docs = app
+      .firestore()
+      .collection("children")
+      .orderBy("child_name", "asc");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       children: [],
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -23,6 +28,7 @@ export default class ViewInactiveChildren extends Component {
     this.unsubscribe();
   }
 
+  // Query the database to gather child data, store this in the children array and set the state value
   fetchCollection = (querySnapshot) => {
     const children = [];
     querySnapshot.forEach((result) => {
@@ -34,20 +40,22 @@ export default class ViewInactiveChildren extends Component {
       });
     });
     this.setState({
-      children,
-      isLoading: false,
+      children: children,
     });
   };
 
   render() {
     return (
       <ScrollView style={styles.wrapper}>
+        {/* For each child in children array */}
         {this.state.children.map((result, id) => {
+          // If child is not actively in care, display them
           if (result.child_is_active == false || result.child_is_active == "") {
             return (
               <ListItem
                 key={id}
                 onPress={() => {
+                  // Navigate to the UpdateChildDetails page and populate fields data using the userkey variable as an identifier
                   this.props.navigation.navigate("UpdateChildDetails", {
                     userkey: result.key,
                   });

@@ -9,10 +9,10 @@ import ModalSelector from "react-native-modal-selector";
 const styles = require("../../Styles/general");
 
 export default class UpdateMedicineLog extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       childName: "",
       medicineDate: new Date(),
       medicineTitle: "",
@@ -25,7 +25,8 @@ export default class UpdateMedicineLog extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -34,19 +35,19 @@ export default class UpdateMedicineLog extends Component {
     });
   };
 
+  // Display the date picker
   showDatepicker() {
     this.setState({
       show: true,
     });
   }
 
+  // This runs after the render function and loads medicine data from the database into the page
   componentDidMount() {
-    const documentReference = app
-      .firestore()
-      .collection("medicineAdministration")
-      .doc(this.props.route.params.userkey);
     const childNames = [];
     let index = 0;
+
+    // Query the database to gather names of all children and store these names in childNames array
     app
     .firestore()
     .collection("children")
@@ -63,7 +64,12 @@ export default class UpdateMedicineLog extends Component {
         childNames: childNames,
       });
     });
-    
+    // Query the database to gather medicine log data, using userkey as an identifier
+    const documentReference = app
+      .firestore()
+      .collection("medicineAdministration")
+      .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -75,7 +81,6 @@ export default class UpdateMedicineLog extends Component {
           medicineTime: data.medicine_time,
           medicineReason: data.medicine_reason,
           medicineNotes: data.medicine_notes,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -83,22 +88,22 @@ export default class UpdateMedicineLog extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editMedicineLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.medicineTitle) || isInputEmpty(this.state.medicineReason) || isInputEmpty(this.state.medicineTime)) {
       missingDataAlert();
       return;
     } else if (!isValidTime(this.state.medicineTime)) {
       invalidTimeAlert();
-    } else {
-      this.setState({
-        isLoading: true,
-      });
+    // If inputs are valid, update variable values to the database
+  } else {
       const documentUpdate = app.firestore().collection("medicineAdministration").doc(this.state.key);
       documentUpdate
         .set({
@@ -109,31 +114,30 @@ export default class UpdateMedicineLog extends Component {
           medicine_reason: this.state.medicineReason,
           medicine_notes: this.state.medicineNotes,
         })
+        // Navigate the user back to the ViewMedicalInfo page
         .then(() => {
-          this.setState({
-            isLoading: false,
-          });
           this.props.navigation.navigate("ViewMedicalInfo");
         })
+        // If an error occurs during this process, print an error
         .catch((error) => {
           console.error(error);
-          this.setState({
-            isLoading: false,
-          });
         });
     }
   }
 
+  // Delete the medicine log from the database, using userkey as an identifier & navigate the user back to the ViewMedicalInfo page 
   deleteMedicineLog() {
     const documentReference = app
       .firestore()
       .collection("medicineAdministration")
       .doc(this.props.route.params.userkey);
+
     documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewMedicalInfo");
     });
   }
 
+  // Display alert to confirm if the user wants to delete the item from the database
   alertDialog = () => {
     Alert.alert(
       "Delete",
@@ -153,6 +157,7 @@ export default class UpdateMedicineLog extends Component {
       <ScrollView>
         <Text style={styles.bold}>Child Name</Text>
         <View>
+          {/* ModalSelector populated with children names from childNameArr */}
           <ModalSelector
             style={styles.dropdown}
             data={this.state.childNames}
@@ -168,7 +173,7 @@ export default class UpdateMedicineLog extends Component {
           style={styles.input}
           placeholder={"Medicine"}
           value={this.state.medicineTitle}
-          onChangeText={(value) => this.inputEl(value, "medicineTitle")}
+          onChangeText={(value) => this.updateStateValue(value, "medicineTitle")}
         />
         <Text style={styles.bold}>Date Administered</Text>
         <View>
@@ -178,7 +183,7 @@ export default class UpdateMedicineLog extends Component {
                 maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                onChange={this.onChange}
+                onChange={this.onDateChange}
               />
             )}
             <Text style={styles.buttonText}>
@@ -191,14 +196,14 @@ export default class UpdateMedicineLog extends Component {
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.medicineTime}
-          onChangeText={(value) => this.inputEl(value, "medicineTime")}
+          onChangeText={(value) => this.updateStateValue(value, "medicineTime")}
         />
         <Text style={styles.bold}>What was the reason for administering medication?</Text>
         <TextInput
           style={styles.input}
           placeholder={"Reason for medicine administration"}
           value={this.state.medicineReason}
-          onChangeText={(value) => this.inputEl(value, "medicineReason")}
+          onChangeText={(value) => this.updateStateValue(value, "medicineReason")}
         />
         <Text style={styles.bold}>Additional Notes</Text>
         <TextInput
@@ -207,7 +212,7 @@ export default class UpdateMedicineLog extends Component {
           style={styles.extendedInput}
           placeholder={"Insert any additional information"}
           value={this.state.medicineNotes}
-          onChangeText={(value) => this.inputEl(value, "medicineNotes")}
+          onChangeText={(value) => this.updateStateValue(value, "medicineNotes")}
         />
         <View style={styles.space}></View>
         <Button 

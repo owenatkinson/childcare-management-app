@@ -8,16 +8,19 @@ import ModalSelector from "react-native-modal-selector";
 import { convertDate, missingDataAlert, isNumeric, numericDataAlert, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 const LogInvoice = ({ navigation }) => {
+  // Initialising the state value of variables
   const [childName, setChildName] = useState("");
   const [invoiceAmount, setInvoiceAmount] = useState("");
   const dateOfInvoice = useInput(new Date());
   const [childNameArr, setChildNameArr] = useState([]);
+  // Initialising connection to invoiceLogs database table
+  const fireDB = app.firestore().collection("invoiceLogs");
 
+  // Query the database to gather names of children who are marked as actively in care and store these names in childNameArr array
   useEffect(() => {
     const childNames = [];
-    setChildNameArr([]);
-    setChildName();
     let index = 0;
 
     app
@@ -36,20 +39,21 @@ const LogInvoice = ({ navigation }) => {
       });
   }, []);
 
-  const fireDB = app.firestore().collection("invoiceLogs");
-
   async function addInvoiceLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(invoiceAmount) || childName == undefined) {
       missingDataAlert();
       return;
     } else if (!isNumeric(invoiceAmount)){
       numericDataAlert();
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         child_name: childName,
         invoice_amount: invoiceAmount,
         date_of_invoice: dateOfInvoice.date,
       });
+      // Navigate the user back to the Finances page
       navigation.navigate("Finances");
     }
   }
@@ -59,6 +63,7 @@ const LogInvoice = ({ navigation }) => {
       <View style={styles.space}></View>
       <Text style={styles.bold}>Child Name</Text>
       <View>
+        {/* ModalSelector populated with children names from childNameArr */}
         <ModalSelector
           style={styles.dropdown}
           data={childNameArr}
@@ -109,6 +114,7 @@ const LogInvoice = ({ navigation }) => {
   );
 };
 
+// used to generate functionality for dateOfInvoice
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");

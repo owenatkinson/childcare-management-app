@@ -9,10 +9,10 @@ import { parseDate, convertDate, convertToTimestamp, missingDataAlert, isNumeric
 const styles = require("../../../Styles/general");
 
 export default class UpdateInvoice extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       childName: "",
       dateOfInvoice: "",
       invoiceAmount: "",
@@ -22,7 +22,8 @@ export default class UpdateInvoice extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -31,20 +32,18 @@ export default class UpdateInvoice extends Component {
     });
   };
 
+  // Display the date picker
   showDatepicker() {
     this.setState({
       show: true,
     });
   }
 
+  // This runs after the render function and loads invoice data from the database into the page
   componentDidMount() {
-    const documentReference = app
-      .firestore()
-      .collection("invoiceLogs")
-      .doc(this.props.route.params.userkey);
     const childNames = [];
     let index = 0;
-
+    // Query the database to gather names of all children and store these names in childNames array
     app
       .firestore()
       .collection("children")
@@ -62,6 +61,12 @@ export default class UpdateInvoice extends Component {
         });
       });
 
+    // Query the database to gather invoice log data, using userkey as an identifier
+    const documentReference = app
+    .firestore()
+    .collection("invoiceLogs")
+    .doc(this.props.route.params.userkey);
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -70,7 +75,6 @@ export default class UpdateInvoice extends Component {
           dateOfInvoice: parseDate(data.date_of_invoice),
           childName: data.child_name,
           invoiceAmount: data.invoice_amount,
-          isLoading: false,
         });
       } else {
         console.log("No document found.");
@@ -78,57 +82,57 @@ export default class UpdateInvoice extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editInvoiceLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.invoiceAmount)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(this.state.invoiceAmount)){
       numericDataAlert();
+    // If inputs are valid, update variable values to the database
     } else {
-      this.setState({
-        isLoading: true,
-      });
       const documentUpdate = app
         .firestore()
         .collection("invoiceLogs")
         .doc(this.state.key);
+
       documentUpdate
         .set({
           date_of_invoice: convertToTimestamp(this.state.dateOfInvoice),
           child_name: this.state.childName,
           invoice_amount: this.state.invoiceAmount,
         })
+        // Navigate the user back to the ViewInvoice page
         .then(() => {
-          this.setState({
-            isLoading: false,
-          });
           this.props.navigation.navigate("ViewInvoice");
         })
+        // If an error occurs during this process, print an error
         .catch((error) => {
           console.error(error);
-          this.setState({
-            isLoading: false,
-          });
         });
     }
   }
 
+  // Delete the invoice log from the database, using userkey as an identifier & navigate the user back to the ViewInvoice page 
   deleteInvoiceLog() {
     const documentReference = app
       .firestore()
       .collection("invoiceLogs")
       .doc(this.props.route.params.userkey);
+
     documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewInvoice");
     });
   }
 
+  // Display alert to confirm if the user wants to delete the item from the database
   alertDialog = () => {
     Alert.alert(
       "Delete",
@@ -152,6 +156,7 @@ export default class UpdateInvoice extends Component {
       <ScrollView>
         <Text style={styles.bold}>Child Name</Text>
         <View>
+          {/* ModalSelector populated with children names from childNameArr */}
           <ModalSelector
             style={styles.dropdown}
             data={this.state.childNames}
@@ -173,7 +178,7 @@ export default class UpdateInvoice extends Component {
                 maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                onChange={this.onChange}
+                onChange={this.onDateChange}
               />
             )}
             <Text style={styles.buttonText}>
@@ -186,7 +191,7 @@ export default class UpdateInvoice extends Component {
           style={styles.input}
           placeholder={"0.00"}
           value={this.state.invoiceAmount}
-          onChangeText={(value) => this.inputEl(value, "invoiceAmount")}
+          onChangeText={(value) => this.updateStateValue(value, "invoiceAmount")}
         />
         <View style={styles.space}></View>
         <Button 

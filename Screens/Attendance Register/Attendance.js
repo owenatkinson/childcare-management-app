@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 const styles = require("../../Styles/general");
 
+// navigation parameter enables the user to navigate to a new page depending on the button that they press on
 export default function Attendance({ navigation }) {
   return (
     <View style={(styles.fitToText, styles.space)}>

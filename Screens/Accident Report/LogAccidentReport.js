@@ -8,7 +8,9 @@ import ModalSelector from "react-native-modal-selector";
 import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 export default function LogAccidentReport({ navigation }) {
+  // Initialising the state value of variables
   const [childName, setChildName] = useState("");
   const [accidentNotes, setAccidentNotes] = useState("");
   const [accidentLocation, setAccidentLocation] = useState("");
@@ -18,11 +20,12 @@ export default function LogAccidentReport({ navigation }) {
   const dateOfAccident = useInput(new Date());
   const timeOfAccident = useInput();
   const [childNameArr, setChildNameArr] = useState([]);
+  // Initialising connection to accidentReports database table
+  const fireDB = app.firestore().collection("accidentReports");
 
+  // Query the database to gather names of children who are marked as actively in care and store these names in childNameArr array
   useEffect(() => {
     const childNames = [];
-    setChildNameArr([]);
-    setChildName();
     let index = 0;
 
     app
@@ -41,12 +44,12 @@ export default function LogAccidentReport({ navigation }) {
       });
   }, []);
 
-  const fireDB = app.firestore().collection("accidentReports");
-
   async function addAccidentReport() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(accidentLocation) || isInputEmpty(accidentDetail) || isInputEmpty(accidentAction) || isInputEmpty(accidentMedicalAttention) || childName == undefined) {
       missingDataAlert();
       return;
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         child_name: childName,
@@ -58,6 +61,7 @@ export default function LogAccidentReport({ navigation }) {
         accident_action: accidentAction,
         accident_medical_attention: accidentMedicalAttention,
       });
+      // Navigate the user back to the AccidentReports page
       navigation.navigate("AccidentReports");
     }
   }
@@ -66,6 +70,7 @@ export default function LogAccidentReport({ navigation }) {
     <ScrollView>
       <Text style={styles.bold}>Child Name:</Text>
       <View>
+        {/* ModalSelector populated with children names from childNameArr */}
         <ModalSelector
           style={styles.dropdown}
           data={childNameArr}
@@ -172,6 +177,7 @@ export default function LogAccidentReport({ navigation }) {
   );
 }
 
+// used to generate functionality for dateOfAccident and timeOfAccident
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -194,6 +200,7 @@ function useInput() {
     setShow(false);
     setDate(currentDate);
   };
+
   return {
     date,
     showDatepicker,

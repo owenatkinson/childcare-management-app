@@ -9,7 +9,9 @@ import ModalSelector from "react-native-modal-selector";
 import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
+// Uses parameter to navigate the user to a new page
 function AttendanceRegister({ navigation }) {
+  // Initialising the state value of variables
   const [additionalNotes, setAdditionalNotes] = useState("");
   const [childName, setChildName] = useState("");
   const [collectedBy, setCollectedBy] = useState("");
@@ -21,10 +23,9 @@ function AttendanceRegister({ navigation }) {
   const [childNameArr, setChildNameArr] = useState([]);
   const fireDB = app.firestore().collection("attendanceRegister");
 
+  // Query the database to gather names of children who are marked as actively in care and store these names in childNameArr array
   useEffect(() => {
     const childNames = [];
-    setChildNameArr([]);
-    setChildName();
     let index = 0;
 
     app
@@ -44,9 +45,11 @@ function AttendanceRegister({ navigation }) {
   }, []);
 
   async function addAttendanceLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(droppedBy) || isInputEmpty(collectedBy) || childName == undefined) {
       missingDataAlert();
       return;
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         additional_notes: additionalNotes,
@@ -58,6 +61,7 @@ function AttendanceRegister({ navigation }) {
         dropped_by: droppedBy,
         temperature_checked: temperatureChecked,
       });
+      // Navigate the user back to the AccidentReports page
       navigation.navigate("Home");
     }
   }
@@ -66,6 +70,7 @@ function AttendanceRegister({ navigation }) {
     <ScrollView>
       <Text style={styles.bold}>Child Name:</Text>
       <View>
+        {/* ModalSelector populated with children names from childNameArr */}
         <ModalSelector
           style={styles.dropdown}
           data={childNameArr}
@@ -183,6 +188,7 @@ function AttendanceRegister({ navigation }) {
   );
 }
 
+// used to generate functionality for dateOfAttendance
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");

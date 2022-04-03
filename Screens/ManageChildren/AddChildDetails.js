@@ -8,7 +8,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertDate, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 export default function AddNewChild({ navigation }) {
+  // Initialising the state value of variables
   const [childName, setChildName] = useState("");
   const childDOB = useInput(new Date());
   const [childAllergies, setChildAllergies] = useState("");
@@ -29,14 +31,17 @@ export default function AddNewChild({ navigation }) {
   const [childEmergencyContactName3, setChildEmergencyContactName3] = useState("");
   const [childEmergencyNumber3, setChildEmergencyNumber3] = useState("");
   const [childEmergencyRelation3, setChildEmergencyRelation3] = useState("");
+  // Initialising connection to medicineAdministration database table
   const fireDB = app.firestore().collection("children");
 
   async function addChild() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(doctorName) || isInputEmpty(childHomeAddress) || childName == undefined || isInputEmpty(childEmergencyContactName1) || isInputEmpty(childEmergencyNumber1)
       || isInputEmpty(childEmergencyRelation1) || isInputEmpty(doctorAddress) || isInputEmpty(doctorNumber) || isInputEmpty(childEmergencyContactName2) || isInputEmpty(childEmergencyNumber2) 
       || isInputEmpty(childEmergencyRelation2) || isInputEmpty(childEmergencyRelation3) || isInputEmpty(childEmergencyContactName3) || isInputEmpty(childEmergencyNumber3)) {
       missingDataAlert();
       return;
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         child_name: childName,
@@ -60,6 +65,7 @@ export default function AddNewChild({ navigation }) {
         doctor_number: doctorNumber,
         child_home_address: childHomeAddress
       });
+      // Navigate the user back to the ManageChildren page
       navigation.navigate("ManageChildren");
     }
   }
@@ -243,6 +249,7 @@ export default function AddNewChild({ navigation }) {
   );
 }
 
+// used to generate functionality for childDOB
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");

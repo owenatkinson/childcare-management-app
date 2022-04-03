@@ -5,14 +5,14 @@ import app from "../../Components/firebase";
 import "firebase/firestore";
 import ModalSelector from "react-native-modal-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { convertDate, parseDate, convertToTimestamp, missingDataAlert, invalidTimeAlert, isValidTime } from "../../Components/Functionality";
+import { convertDate, parseDate, convertToTimestamp, missingDataAlert, invalidTimeAlert, isValidTime, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
 export default class UpdateAccidentReport extends Component {
+  // Initialising the state value of variables
   constructor() {
     super();
     this.state = {
-      isLoading: true,
       childName: "",
       accidentDate: "",
       accidentTime: "",
@@ -27,7 +27,8 @@ export default class UpdateAccidentReport extends Component {
     };
   }
 
-  onChange = (event, selectedDate) => {
+  // When date value is changed via date picker, set the new value here
+  onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({
       date: currentDate,
@@ -36,20 +37,19 @@ export default class UpdateAccidentReport extends Component {
     });
   };
 
+  // Display the date picker
   showDatepicker() {
     this.setState({
       show: true,
     });
   }
 
+  // This runs after the render function and loads mileage data from the database into the page
   componentDidMount() {
-    const documentReference = app
-      .firestore()
-      .collection("accidentReports")
-      .doc(this.props.route.params.userkey);
     const childNames = [];
     let index = 0;
-
+    
+    // Query the database to gather names of all children and store these names in childNames array
     app
       .firestore()
       .collection("children")
@@ -66,6 +66,14 @@ export default class UpdateAccidentReport extends Component {
           childNames: childNames,
         });
       });
+
+    // Query the database to gather accident report data, using userkey as an identifier
+    const documentReference = app
+      .firestore()
+      .collection("accidentReports")
+      .doc(this.props.route.params.userkey);
+    
+    // Once the database query has retrieved results, assign them to state variable values
     documentReference.get().then((result) => {
       if (result.exists) {
         const data = result.data();
@@ -78,8 +86,7 @@ export default class UpdateAccidentReport extends Component {
           accidentLocation: data.accident_location,
           accidentDetail: data.accident_detail,
           accidentAction: data.accident_action,
-          accidentMedicalAttention: data.accident_medical_attention,
-          isLoading: false,
+          accidentMedicalAttention: data.accident_medical_attention
         });
       } else {
         console.log("No document found.");
@@ -87,22 +94,22 @@ export default class UpdateAccidentReport extends Component {
     });
   }
 
-  inputEl = (value, prop) => {
+  // Set the state variable value to the value supplied from the input
+  updateStateValue = (value, prop) => {
     const state = this.state;
     state[prop] = value;
     this.setState(state);
   };
 
   editAccidentReport() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(this.state.accidentTime) || isInputEmpty(this.state.accidentLocation) || isInputEmpty(this.state.accidentDetail) || isInputEmpty(this.state.accidentAction) || isInputEmpty(this.state.accidentMedicalAttention)) {
       missingDataAlert();
       return;
     } else if (!isValidTime(this.state.accidentTime)) {
       invalidTimeAlert();
+    // If inputs are valid, update variable values to the database
     } else {
-      this.setState({
-        isLoading: true,
-      });
       const documentUpdate = app
         .firestore()
         .collection("accidentReports")
@@ -118,31 +125,30 @@ export default class UpdateAccidentReport extends Component {
           accident_action: this.state.accidentAction,
           accident_medical_attention: this.state.accidentMedicalAttention,
         })
+        // Navigate the user back to the ViewAccidentReports page
         .then(() => {
-          this.setState({
-            isLoading: false,
-          });
           this.props.navigation.navigate("ViewAccidentReports");
         })
+        // If an error occurs during this process, print an error
         .catch((error) => {
           console.error(error);
-          this.setState({
-            isLoading: false,
-          });
         });
     }
   }
 
+  // Delete the accident report log from the database, using userkey as an identifier & navigate the user back to the ViewAccidentReports page 
   deleteAccidentReport() {
     const documentReference = app
       .firestore()
       .collection("accidentReports")
       .doc(this.props.route.params.userkey);
+
     documentReference.delete().then(() => {
       this.props.navigation.navigate("ViewAccidentReports");
     });
   }
 
+  // Display alert to confirm if the user wants to delete the item from the database
   alertDialog = () => {
     Alert.alert(
       "Delete",
@@ -166,6 +172,7 @@ export default class UpdateAccidentReport extends Component {
       <ScrollView>
         <Text style={styles.bold}>Child Name:</Text>
         <View>
+          {/* ModalSelector populated with children names from childNameArr */}
           <ModalSelector
             style={styles.dropdown}
             data={this.state.childNames}
@@ -187,7 +194,7 @@ export default class UpdateAccidentReport extends Component {
                 maximumDate={new Date()}
                 value={this.state.date}
                 mode="date"
-                onChange={this.onChange}
+                onChange={this.onDateChange}
               />
             )}
             <Text style={styles.buttonText}>
@@ -200,35 +207,35 @@ export default class UpdateAccidentReport extends Component {
           style={styles.input}
           placeholder={"00:00"}
           value={this.state.accidentTime}
-          onChangeText={(value) => this.inputEl(value, "accidentTime")}
+          onChangeText={(value) => this.updateStateValue(value, "accidentTime")}
         />
         <Text style={styles.bold}>Accident Location:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Location"}
           value={this.state.accidentLocation}
-          onChangeText={(value) => this.inputEl(value, "accidentLocation")}
+          onChangeText={(value) => this.updateStateValue(value, "accidentLocation")}
         />
         <Text style={styles.bold}>Accident Details:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Detail"}
           value={this.state.accidentDetail}
-          onChangeText={(value) => this.inputEl(value, "accidentDetail")}
+          onChangeText={(value) => this.updateStateValue(value, "accidentDetail")}
         />
         <Text style={styles.bold}>Actions Taken:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Action"}
           value={this.state.accidentAction}
-          onChangeText={(value) => this.inputEl(value, "accidentAction")}
+          onChangeText={(value) => this.updateStateValue(value, "accidentAction")}
         />
         <Text style={styles.bold}>Medication Administered:</Text>
         <TextInput
           style={styles.input}
           placeholder={"Accident Medical Attention"}
           value={this.state.accidentMedicalAttention}
-          onChangeText={(value) => this.inputEl(value, "accidentMedicalAttention")}
+          onChangeText={(value) => this.updateStateValue(value, "accidentMedicalAttention")}
         />
         <Text style={styles.bold}>Accident Notes:</Text>
         <TextInput
@@ -237,7 +244,7 @@ export default class UpdateAccidentReport extends Component {
           style={styles.extendedInput}
           placeholder={"Insert any additional information"}
           value={this.state.accidentNotes}
-          onChangeText={(value) => this.inputEl(value, "accidentNotes")}
+          onChangeText={(value) => this.updateStateValue(value, "accidentNotes")}
         />
         <View style={styles.space}></View>
         <Button 

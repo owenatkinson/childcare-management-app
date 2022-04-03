@@ -8,7 +8,9 @@ import ModalSelector from "react-native-modal-selector";
 import { convertDate, convertTime, missingDataAlert, isInputEmpty } from "../../Components/Functionality";
 const styles = require("../../Styles/general");
 
+// navigation parameter to navigate the user to a new page
 export default function LogMedicine({ navigation }) {
+  // Initialising the state value of variables
   const [medicineTitle, setMedicineTitle] = useState("");
   const medicineDate = useInput(new Date());
   const medicineTime = useInput(new Date());
@@ -16,12 +18,12 @@ export default function LogMedicine({ navigation }) {
   const [medicineNotes, setMedicineNotes] = useState("");
   const [childNameArr, setChildNameArr] = useState([]);
   const [childName, setChildName] = useState("");
+  // Initialising connection to medicineAdministration database table
   const fireDB = app.firestore().collection("medicineAdministration");
 
+  // Query the database to gather names of children who are marked as actively in care and store these names in childNameArr array
   useEffect(() => {
     const childNames = [];
-    setChildNameArr([]);
-    setChildName();
     let index = 0;
 
     app
@@ -41,9 +43,11 @@ export default function LogMedicine({ navigation }) {
   }, []);
 
   async function addLog() {
+    // Complete validation checks, if any are invalid an alert will be displayed
     if (isInputEmpty(medicineTitle) || isInputEmpty(medicineReason) || childName == undefined) {
       missingDataAlert();
       return;
+    // If inputs are valid, add variable values to the database
     } else {
       await fireDB.add({
         child_name: childName,
@@ -53,6 +57,7 @@ export default function LogMedicine({ navigation }) {
         medicine_reason: medicineReason,
         medicine_notes: medicineNotes,
       });
+      // Navigate the user back to the MedicineAdministration page
       navigation.navigate("MedicineAdministration");
     }
   }
@@ -62,6 +67,7 @@ export default function LogMedicine({ navigation }) {
       <View style={styles.space}></View>
       <Text style={styles.bold}>Child's Name</Text>
       <View>
+        {/* ModalSelector populated with children names from childNameArr */}
         <ModalSelector
           style={styles.dropdown}
           data={childNameArr}
@@ -137,6 +143,7 @@ export default function LogMedicine({ navigation }) {
   );
 }
 
+// used to generate functionality for medicineDate and medicineTime
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");

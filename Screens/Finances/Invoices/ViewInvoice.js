@@ -10,18 +10,20 @@ const styles = require("../../../Styles/general");
 export default class ViewInvoice extends Component {
   constructor() {
     super();
+    // Query the database to gather all invoice data and store in a variable
     this.docs = app
       .firestore()
       .collection("invoiceLogs")
       .orderBy("date_of_invoice", "desc");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       invoiceLogs: [],
       date: new Date(),
       invoiceAmount: 0,
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -30,6 +32,7 @@ export default class ViewInvoice extends Component {
     this.unsubscribe();
   }
 
+  // Query the database to gather invoice data, store this in the invoiceLogs array and set the state value
   fetchCollection = (querySnapshot) => {
     this.state.invoiceAmount = 0;
     const invoiceLogs = [];
@@ -43,14 +46,14 @@ export default class ViewInvoice extends Component {
       });
     });
     this.setState({
-      invoiceLogs,
-      isLoading: false,
+      invoiceLogs: invoiceLogs,
     });
   };
 
   render() {
     return (
       <View style={styles.wrapper}>
+        {/* MonthPick used to filter invoice logs into a month & year */}
         <SafeAreaView edges={["bottom", "left", "right"]}>
           <FlatList
             ListHeaderComponent={
@@ -65,7 +68,9 @@ export default class ViewInvoice extends Component {
           />
         </SafeAreaView>
         <ScrollView style={styles.wrapper}>
+          {/* For each invoice in invoiceLogs */}
           {this.state.invoiceLogs.map((result, id) => {
+            // Only display invoice logs that match the year and month values of the MonthPick component
             if (
               doNumbersMatch(
                 getMonth(convertDateCheckType(this.state.date)),
@@ -76,6 +81,7 @@ export default class ViewInvoice extends Component {
                 getYear(convertDateCheckType(result.date_of_invoice))
               )
             ) {
+              // Increment the invoiceAmount by accumulatively adding the invoice_amount of each expense
               this.state.invoiceAmount += parseFloat(result.invoice_amount);
               return (
                 <ListItem
@@ -103,6 +109,7 @@ export default class ViewInvoice extends Component {
           })}
         </ScrollView>
         <Text style={styles.boldLargeText}>
+          {/* Display the invoiceAmount in a Text component */}
           Monthly Total: £{parseFloat(this.state.invoiceAmount).toFixed(2)}
         </Text>
       </View>

@@ -9,17 +9,19 @@ const styles = require("../../Styles/general");
 export default class ViewEmergencyContacts extends Component {
   constructor() {
     super();
+    // Query the database to gather all children data and store in a variable
     this.docs = app
       .firestore()
       .collection("children");
+    // Initialising the state value of variables
     this.state = {
-      isLoading: true,
       contactDetails: [],
       childNames: [],
       activeChildName: "",
     };
   }
 
+  // This runs after the render function and runs fetchCollection to load data from the database into the page
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.fetchCollection);
   }
@@ -28,10 +30,16 @@ export default class ViewEmergencyContacts extends Component {
     this.unsubscribe();
   }
 
+  // Forward the user to their phonebook, auto-filling the phone with the contact details that they clicked on
+  forwardToPhonebook(source) {
+    Linking.openURL(`tel:${source}`);
+  }
+
   fetchCollection = (querySnapshot) => {
-    const contactDetails = [];
-    const childNames = [];
+    const contactDetails = [], childNames = [];
     let index = 0;
+
+    // Query the database to gather names of all children, store these names in childNames array and set the state value
     app
       .firestore()
       .collection("children")
@@ -49,6 +57,7 @@ export default class ViewEmergencyContacts extends Component {
         });
       });
 
+    // Gather emergency contact data, store it to the contactDetails array and set the state value
     querySnapshot.forEach((result) => {
       const { child_name, child_emergency_contact_name_1, child_emergency_contact_name_2, child_emergency_contact_name_3, child_emergency_contact_number_1, 
         child_emergency_contact_number_2, child_emergency_contact_number_3, child_emergency_contact_relation_1, child_emergency_contact_relation_2, child_emergency_contact_relation_3 } = result.data();
@@ -67,8 +76,7 @@ export default class ViewEmergencyContacts extends Component {
       });
     });
     this.setState({
-      contactDetails,
-      isLoading: false,
+      contactDetails: contactDetails,
     });
   };
 
@@ -76,6 +84,7 @@ export default class ViewEmergencyContacts extends Component {
     return (
       <View style={styles.wrapper}>
         <View>
+          {/* ModalSelector populated with children names from childNames */}
           <ModalSelector
             data={this.state.childNames}
             style={styles.navyText}
@@ -85,7 +94,9 @@ export default class ViewEmergencyContacts extends Component {
             }}
           />
         </View>
+        {/* For each item in contactDetails */}
         {this.state.contactDetails.map((contact, id, i) => {
+          // Display the emergency contact info regarding the child name selected the modal selector
           if (contact.child_name == this.state.activeChildName) {
             return (
               <View key={id}>
@@ -98,13 +109,13 @@ export default class ViewEmergencyContacts extends Component {
                     color="#EE752E"
                     style={styles.phoneIcon}
                     onPress={() => {
-                      Linking.openURL(`tel:${contact.child_emergency_contact_number_1}`);
+                      this.forwardToPhonebook(contact.child_emergency_contact_number_1);
                     }}
                   />
                 </View>
                 <Text style={styles.boldBlueText} 
                   onPress={() => {
-                    Linking.openURL(`tel:${contact.child_emergency_contact_number_1}`);
+                    this.forwardToPhonebook(contact.child_emergency_contact_number_1);
                   }}>Phone Number: {contact.child_emergency_contact_number_1}
                 </Text>
                 <View style={styles.horizontalRule}></View>
@@ -117,13 +128,13 @@ export default class ViewEmergencyContacts extends Component {
                     color="#EE752E"
                     style={styles.phoneIcon}
                     onPress={() => {
-                      Linking.openURL(`tel:${contact.child_emergency_contact_number_2}`);
+                      this.forwardToPhonebook(contact.child_emergency_contact_number_2);
                     }}
                   />
                 </View>
                 <Text style={styles.boldBlueText} 
                   onPress={() => {
-                    Linking.openURL(`tel:${contact.child_emergency_contact_number_2}`);
+                    this.forwardToPhonebook(contact.child_emergency_contact_number_2);
                   }}>Phone Number: {contact.child_emergency_contact_number_2}
                 </Text>
                 <View style={styles.horizontalRule}></View>
@@ -136,13 +147,13 @@ export default class ViewEmergencyContacts extends Component {
                     color="#EE752E"
                     style={styles.phoneIcon}
                     onPress={() => {
-                      Linking.openURL(`tel:${contact.child_emergency_contact_number_3}`);
+                      this.forwardToPhonebook(contact.child_emergency_contact_number_3);
                     }}
                   />
                 </View>
                 <Text style={styles.boldBlueText} 
                   onPress={() => {
-                    Linking.openURL(`tel:${contact.child_emergency_contact_number_3}`);
+                    this.forwardToPhonebook(contact.child_emergency_contact_number_3);
                   }}>Phone Number: {contact.child_emergency_contact_number_3}
                 </Text>
               </View>

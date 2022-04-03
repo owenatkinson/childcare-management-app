@@ -7,19 +7,24 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertTime, missingDataAlert, isNumeric, isInputEmpty } from "../../../Components/Functionality";
 const styles = require("../../../Styles/general");
 
+// navigation parameter to navigate the user to a new page, route parameter to set the date 
 export default function AddMonthlyDrillList({ route, navigation }) {
   const { changeDate } = route.params;
+  // Initialising the state value of variables
   const [monthlyFireDrillNumberOfPeople, setMonthlyFireDrillNumberOfPeople] = useState("");
   const [monthlyFireDrillNote, setMonthlyFireDrillNote] = useState("");
   const monthlyFireDrillTimeCompleted = useInput();
+  // Initialising connection to monthlyFireDrill database table
   const fireDB = app.firestore().collection("monthlyFireDrill");
 
   async function addCheck() {
+    // If inputs are valid, add variable values to the database
     if (isInputEmpty(monthlyFireDrillNumberOfPeople)) {
       missingDataAlert();
       return;
     } else if (!isNumeric(monthlyFireDrillNumberOfPeople)){
       numericDataAlert();
+  // Add variable values to the database and navigate the user to HealthSafetyChecks page
     } else {
       await fireDB.add({
         monthly_fire_drill_date: changeDate,
@@ -86,6 +91,7 @@ export default function AddMonthlyDrillList({ route, navigation }) {
   );
 }
 
+// used to generate functionality for monthlyFireDrillTimeCompleted
 function useInput() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
