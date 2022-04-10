@@ -21,6 +21,7 @@ function AttendanceRegister({ navigation }) {
   const checkInTime = useInput();
   const checkOutTime = useInput();
   const [childNameArr, setChildNameArr] = useState([]);
+  // Initialising connection to attendanceRegister database table
   const fireDB = app.firestore().collection("attendanceRegister");
 
   // Query the database to gather names of children who are marked as actively in care and store these names in childNameArr array

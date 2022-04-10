@@ -29,11 +29,10 @@ export default class DailyCovidList extends Component {
     const dailyCovidAssessment = [];
     // Query the database to gather names of all daily covid assessments, store these names in dailyCovidAssessment array and sets the state value
     querySnapshot.forEach((result) => {
-      const { daily_covid_assessment_date, daily_covid_assessment_is_completed } = result.data();
+      const { daily_covid_assessment_date } = result.data();
       dailyCovidAssessment.push({
         key: result.id,
-        daily_covid_assessment_date,
-        daily_covid_assessment_is_completed,
+        daily_covid_assessment_date
       });
     });
     this.setState({

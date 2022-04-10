@@ -64,8 +64,6 @@ export default class DailyRiskAssessment extends Component {
         this.setState({
           key: result.id,
           dailyRiskAssessmentDate: data.daily_risk_assessment_date,
-          dailyRiskAssessmentIsCompleted: data.daily_risk_assessment_is_completed,
-          dailyRiskAssessmentNote: data.daily_risk_assessment_note,
           dailyRiskAssessmentCheck1: data.daily_risk_assessment_check_1,
           dailyRiskAssessmentCheck2: data.daily_risk_assessment_check_2,
           dailyRiskAssessmentCheck3: data.daily_risk_assessment_check_3,
@@ -119,8 +117,6 @@ export default class DailyRiskAssessment extends Component {
     documentUpdate
       .set({
         daily_risk_assessment_date: this.state.dailyRiskAssessmentDate,
-        daily_risk_assessment_is_completed: this.state.dailyRiskAssessmentIsCompleted,
-        daily_risk_assessment_note: this.state.dailyRiskAssessmentNote,
         daily_risk_assessment_check_1: this.state.dailyRiskAssessmentCheck1,
         daily_risk_assessment_check_2: this.state.dailyRiskAssessmentCheck2,
         daily_risk_assessment_check_3: this.state.dailyRiskAssessmentCheck3,
@@ -156,9 +152,11 @@ export default class DailyRiskAssessment extends Component {
         daily_risk_assessment_check_33: this.state.dailyRiskAssessmentCheck33,
         daily_risk_assessment_check_34: this.state.dailyRiskAssessmentCheck34,
       })
+      // Navigate the user back to the HealthSafetyChecks page
       .then(() => {
         this.props.navigation.navigate("HealthSafetyChecks");
       })
+      // If an error occurs during this process, print an error
       .catch((error) => {
         console.error(error);
       });
