@@ -29,11 +29,10 @@ export default class MonthlyFireSafetyEquipmentList extends Component {
     const monthlyFireSafetyEquipmentCheck = [];
     // Query the database to gather names of all monthly fire safety equipment checks, store these names in monthlyFireSafetyEquipmentCheck array and sets the state value
     querySnapshot.forEach((result) => {
-      const { monthly_fire_safety_date, monthly_fire_safety_is_completed } = result.data();
+      const { monthly_fire_safety_date } = result.data();
       monthlyFireSafetyEquipmentCheck.push({
         key: result.id,
         monthly_fire_safety_date,
-        monthly_fire_safety_is_completed,
       });
     });
     this.setState({

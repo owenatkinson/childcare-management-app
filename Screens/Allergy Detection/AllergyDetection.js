@@ -52,7 +52,6 @@ export default function AllergyDetection({ navigation }) {
 
   return (
     <View style={styles.barCodeScan}>
-
       <BarCodeScanner
         // If scanned variable is false, run barcodeScan const
         onBarCodeScanned={scanned ? undefined : barcodeScan}

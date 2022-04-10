@@ -31,7 +31,7 @@ export default function AddNewChild({ navigation }) {
   const [childEmergencyContactName3, setChildEmergencyContactName3] = useState("");
   const [childEmergencyNumber3, setChildEmergencyNumber3] = useState("");
   const [childEmergencyRelation3, setChildEmergencyRelation3] = useState("");
-  // Initialising connection to medicineAdministration database table
+  // Initialising connection to children database table
   const fireDB = app.firestore().collection("children");
 
   async function addChild() {

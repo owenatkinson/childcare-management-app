@@ -79,7 +79,7 @@ export default class UpdateExpense extends Component {
     if (isInputEmpty(this.state.expenseTitle) || isInputEmpty(this.state.expenseAmount) || this.state.category == undefined) {
       missingDataAlert();
       return;
-    } else if (!isNumeric(this.state.expenseAmount) || !isNumeric(milesTravelled)){
+    } else if (!isNumeric(this.state.expenseAmount)){
       numericDataAlert();
     // If inputs are valid, update variable values to the database
     } else {

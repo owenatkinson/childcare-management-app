@@ -66,15 +66,13 @@ export default function ChildAllergies({ route }) {
       ) : (
         <Text style={styles.title}>Information Unavailable</Text>
       )}
-
       {removeDuplicates()}
-      
       {/* For each child's name in childArr, display it in a Text element */}
       {childArr.map((child) => (
         <Text style={styles.productName}>
             {child}
         </Text>
-        ))}
+      ))}
     </View>
   );
 }

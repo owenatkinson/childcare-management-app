@@ -16,7 +16,7 @@ const Policies = (props) => {
   const [fileList, setFileList] = useState([]);
   const [progress, setProgress] = useState(-1);
 
-  async function uploadImage() {
+  async function uploadPolicy() {
     // Launch document picker
     let file = await DocumentPicker.getDocumentAsync({});
     // Use a blob to store XML information regarding the document being uploaded
@@ -155,7 +155,7 @@ const Policies = (props) => {
           mode="contained"
           uppercase={false}
           color="#0B8FDC"
-          onPress={uploadImage}>
+          onPress={uploadPolicy}>
           <Text style={styles.buttonTextMenu}>Upload Policy</Text>
         </Button>
       </View>

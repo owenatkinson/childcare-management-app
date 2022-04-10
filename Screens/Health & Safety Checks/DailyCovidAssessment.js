@@ -12,7 +12,6 @@ export default class DailyCovidAssessment extends Component {
     super();
     this.state = {
       dailyCovidAssessmentDate: "",
-      dailyCovidAssessmentIsCompleted: "",
       dailyCovidAssessmentCheck1: "",
       dailyCovidAssessmentCheck2: "",
       dailyCovidAssessmentCheck3: "",
@@ -59,7 +58,6 @@ export default class DailyCovidAssessment extends Component {
         this.setState({
           key: result.id,
           dailyCovidAssessmentDate: data.daily_covid_assessment_date,
-          dailyCovidAssessmentIsCompleted: data.daily_covid_assessment_is_completed,
           dailyCovidAssessmentCheck1: data.daily_covid_assessment_check_1,
           dailyCovidAssessmentCheck2: data.daily_covid_assessment_check_2,
           dailyCovidAssessmentCheck3: data.daily_covid_assessment_check_3,
@@ -110,7 +108,6 @@ export default class DailyCovidAssessment extends Component {
     documentUpdate
       .set({
         daily_covid_assessment_date: this.state.dailyCovidAssessmentDate,
-        daily_covid_assessment_is_completed: this.state.dailyCovidAssessmentIsCompleted,
         daily_covid_assessment_check_1: this.state.dailyCovidAssessmentCheck1,
         daily_covid_assessment_check_2: this.state.dailyCovidAssessmentCheck2,
         daily_covid_assessment_check_3: this.state.dailyCovidAssessmentCheck3,
