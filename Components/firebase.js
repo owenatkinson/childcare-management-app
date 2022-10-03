@@ -5,12 +5,12 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "____________",
-  authDomain: "____________.firebaseapp.com",
-  projectId: "____________",
-  storageBucket: "____________.appspot.com",
-  messagingSenderId: "____________",
-  appId: "____________",
+  apiKey: "AIzaSyBuR3h3vEsZC0n41jcjIYIokzoIrQaPJbg",
+  authDomain: "childcaremanagementapp.firebaseapp.com",
+  projectId: "childcaremanagementapp",
+  storageBucket: "childcaremanagementapp.appspot.com",
+  messagingSenderId: "371907641004",
+  appId: "1:371907641004:web:9a5fed153fff0485c02909",
 };
 
 let app;

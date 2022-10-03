@@ -1,11 +1,18 @@
 {
   "expo": {
-    "name": "childcare-management-app",
+    "name": "Care 4 Kids",
+    "icon": "icon.png",
     "slug": "childcare-management-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.owenatkinson.childcaremanagementapp"
+    },
+    "ios": {
+      "bundleIdentifier": "com.owenatkinson.childcaremanagementapp"
+    }
   },
   "name": "childcare-management-app"
 }

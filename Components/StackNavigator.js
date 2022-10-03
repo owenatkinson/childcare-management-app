@@ -61,7 +61,7 @@ const StackNavigator = () => {
         headerTitleStyle: { color: "#fff", fontWeight: "bold", fontSize: 22 },
       }}
     >
-      <Stack.Screen name="Home" component={Home} options={{ title: "My Childcare App" }} />
+      <Stack.Screen name="Home" component={Home} options={{ title: "Care 4 Kids" }} />
       <Stack.Screen
         name="Allergy"
         component={AllergyDetection}
