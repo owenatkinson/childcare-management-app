@@ -97,13 +97,13 @@ const Policies = (props) => {
   // Display alert to confirm if the user wants to delete the policy from the system
   const alertDialog = (file) => {
     Alert.alert(
-      "Delete Policy",
+      "Delete Document",
       "Really?",
       [
         { text: "Yes", onPress: () => deletePolicy(file) },
         {
           text: "No",
-          onPress: () => console.log("Item not deleted"),
+          onPress: () => console.log("Document not deleted"),
           style: "cancel",
         },
       ],
@@ -156,7 +156,7 @@ const Policies = (props) => {
           uppercase={false}
           color="#0B8FDC"
           onPress={uploadPolicy}>
-          <Text style={styles.buttonTextMenu}>Upload Policy</Text>
+          <Text style={styles.buttonTextMenu}>Upload Document</Text>
         </Button>
       </View>
       {/* If a policy upload is in progress, display a progress bar showing its progress */}

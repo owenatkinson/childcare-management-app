@@ -206,8 +206,8 @@ const StackNavigator = () => {
         component={ViewVisitorLogs}
         options={{ title: "View Visitor Logs" }}
       />
-      <Stack.Screen name="Policies" component={Policies} options={{ title: "Policies" }} />
-      <Stack.Screen name="FilePreview" component={FilePreview} options={{ title: "View Policy" }} />
+      <Stack.Screen name="Policies" component={Policies} options={{ title: "Documents" }} />
+      <Stack.Screen name="FilePreview" component={FilePreview} options={{ title: "View Document" }} />
       <Stack.Screen name="LogExpense" component={LogExpense} options={{ title: "Log Expense" }} />
       <Stack.Screen
         name="ViewExpenses"
